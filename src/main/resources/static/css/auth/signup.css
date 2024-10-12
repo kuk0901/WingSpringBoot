@@ -1,0 +1,58 @@
+/* form-container */
+.form-container .signup-form .signup-container .input-container {
+  width: 400px;
+  height: 35px;
+  background-color: #fff;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container
+.signup-form
+.signup-container
+.input-container.input-container__s {
+  width: 130px;
+}
+
+.form-container .signup-form .signup-container .input-container input {
+  display: block;
+  width: 380px;
+  padding: 5px;
+  border: none;
+  outline: none;
+  font-size: 17px;
+}
+
+.form-container .signup-form .signup-container:has(.salary-container) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-container
+.signup-form
+.signup-container
+.salary-container
+.style-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.form-container .signup-form .signup-container .input-container input.input__s {
+  width: 100px;
+}
+
+.form-container .signin-container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container .signin-container a:hover {
+  text-decoration: underline;
+}

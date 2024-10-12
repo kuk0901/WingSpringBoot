@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: WingSpringBoot
+  main:
+    web-application-type: servlet
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+server:
+  port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+# 외부 이미지 경로 설정 추가
+external:
+  image:
+    path: C:/upload/
