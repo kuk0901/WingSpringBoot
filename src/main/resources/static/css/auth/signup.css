@@ -1,7 +1,15 @@
+.title-container {
+  margin-top: 35px;
+}
+
 /* form-container */
+.form-container {
+  width: 600px;
+}
+
 .form-container .signup-form .signup-container .input-container {
   width: 400px;
-  height: 35px;
+  height: 45px;
   background-color: #fff;
   text-align: center;
   display: flex;
@@ -18,7 +26,7 @@
 
 .form-container .signup-form .signup-container .input-container input {
   display: block;
-  width: 380px;
+  width: 360px;
   padding: 5px;
   border: none;
   outline: none;
@@ -55,4 +63,8 @@
 
 .form-container .signin-container a:hover {
   text-decoration: underline;
+}
+
+.btn__sign {
+  margin-bottom: 30px;
 }

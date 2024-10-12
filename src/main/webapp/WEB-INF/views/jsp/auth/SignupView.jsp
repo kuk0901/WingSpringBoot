@@ -164,11 +164,11 @@ pageEncoding="UTF-8"%>
     </div>
   </form>
 
-  <div class="sub-container">
-    <div class="signin-container">
-      <a href="/" class="text__white">로그인</a>
-    </div>
-  </div>
+<%--  <div class="sub-container">--%>
+<%--    <div class="signin-container">--%>
+<%--      <a href="/" class="text__white">로그인</a>--%>
+<%--    </div>--%>
+<%--  </div>--%>
 </div>
 </body>
 </html>
