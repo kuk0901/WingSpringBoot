@@ -1,4 +1,4 @@
-package com.edu.dp.wingspringboot.auth.controller;
+package com.edu.wing.auth.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

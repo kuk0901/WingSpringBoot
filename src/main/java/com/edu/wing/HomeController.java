@@ -1,4 +1,4 @@
-package com.edu.dp.wingspringboot;
+package com.edu.wing;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

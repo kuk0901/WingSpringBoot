@@ -8,7 +8,7 @@
         <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.edu.dp</groupId>
+    <groupId>com.edu.wing</groupId>
     <artifactId>WingSpringBoot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>

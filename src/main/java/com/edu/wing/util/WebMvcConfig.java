@@ -1,4 +1,4 @@
-package com.edu.dp.wingspringboot.util;
+package com.edu.wing.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

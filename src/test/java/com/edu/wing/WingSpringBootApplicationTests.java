@@ -1,4 +1,4 @@
-package com.edu.dp.wingspringboot;
+package com.edu.wing;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
