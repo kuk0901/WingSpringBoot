@@ -1,22 +1,28 @@
-import { formatNumber } from "../util/fotmat.js";
+import {formatNumber, formatPhoneNumber} from "../util/fotmat.js";
 
 const $form = $("#signupForm");
-const $pwd = $("#pwd");
+const $pwdInput = $("#pwd");
 const $pwdCheck = $("#pwdCheck");
 const $errorMsg = $("#pwdError");
-const $submitBtn = $("#submitBtn");
+const $phoneInput = $("#phone");
 const $salaryInput = $("#salary");
 const $payInput = $("#pay");
+const $submitBtn = $("#submitBtn");
+
 
 // 비밀번호 유효성 검사
 function validatePassword() {
-  const isValid = $pwd.val() === $pwdCheck.val();
+  const isValid = $pwdInput.val() === $pwdCheck.val();
   $errorMsg.text(isValid ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.")
       .removeClass("text__correct text__error")
       .addClass(isValid ? "text__correct" : "text__error");
   $submitBtn.prop("disabled", !isValid);
   return isValid;
 }
+
+$phoneInput.on("blur", function ()  {
+  formatPhoneNumber(this)
+})
 
 // salary와 pay 입력 필드에 이벤트 리스너 추가
 $salaryInput.on("blur", function() {
