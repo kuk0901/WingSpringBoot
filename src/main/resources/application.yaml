@@ -18,8 +18,8 @@ spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
-    username: edu
-    password: edu12
+    username: wing
+    password: 1234
 
 server:
   port: 8888
