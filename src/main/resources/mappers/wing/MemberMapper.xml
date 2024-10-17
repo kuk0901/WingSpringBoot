@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.auth">
+
+	<resultMap type="com.edu.wing.auth.domain.AuthVo" id="authResultMap">
+		<id column="MEMBER_NO" property="memberNo" />
+		<result column="EMAIL" property="email" />
+		<result column="NAME" property="memberName" />
+		<result column="PWD" property="password" />
+		<result column="CRE_DATE" property="createdDate"
+			javaType="java.util.Date" />
+		<result column="MOD_DATE" property="modifiedDate"
+			javaType="java.util.Date" />
+		<result column="PHONE" property="phone" />
+		<result column="GRADE" property="grade" />
+		<result column="YEARLY_SALARY" property="yearlySalary" />
+		<result column="MONTH_SALARY" property="monthlySalary" />
+		<result column="QUIT_APPLY" property="quitApply" />
+		<result column="PRODUCT_PURCHASE" property="productPurchase" />
+	</resultMap>
+
+
+	<select id="memberExist" parameterType="map"
+		resultMap="authResultMap">
+		SELECT MEMBER_NO,NAME, EMAIL
+		FROM MEMBER
+		WHERE EMAIL = #{email}
+		AND PWD = #{password}
+	</select>
+
+	<insert id="memberInsertOne" parameterType="com.edu.wing.auth.domain.AuthVo">
+		INSERT INTO MEMBER (
+		MEMBER_NO,EMAIL,PWD,NAME, PHONE, GRADE, YEARLY_SALARY,MONTH_SALARY, CRE_DATE,
+		MOD_DATE,
+		QUIT_APPLY, PRODUCT_PURCHASE
+		) VALUES (
+		MEMBER_NO_SEQ.NEXTVAL,#{email},#{password}, #{memberName}, #{phone},#{grade},
+		#{yearlySalary},#{monthlySalary},
+		SYSDATE, SYSDATE,'N', 'N')
+	</insert>
+	
+	    <!-- 이메일 중복 체크 쿼리 -->
+    <select id="selectMemberByEmail" parameterType="String" resultMap="authResultMap">
+        SELECT *
+        FROM MEMBER
+        WHERE EMAIL = #{email} 
+    </select>
+
+
+
+</mapper>

@@ -68,7 +68,7 @@ $form.on("submit", function(e) {
   $(this).serializeArray().forEach(function(item) {
     formData[item.name] = item.value;
   });
-
+console.log(formData)
   $.ajax({
     type: "POST",
     url: "/api/auth/signup",
@@ -83,6 +83,7 @@ $form.on("submit", function(e) {
     }
   });
 });
+
 
 // 비밀번호 확인 필드에 blur 이벤트 리스너 추가
 $pwdCheck.on("blur", validatePassword);

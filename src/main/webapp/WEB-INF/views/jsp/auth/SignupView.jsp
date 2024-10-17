@@ -75,12 +75,12 @@ pageEncoding="UTF-8"%>
 
     <div class="signup-container">
       <div class="label-container">
-        <label for="userName" class="text__white">성명</label>
+        <label for="memberName" class="text__white">성명</label>
       </div>
       <div class="input-container">
         <input
-            id="userName"
-            name="userName"
+            id="memberName"
+            name="memberName"
             type="text"
             required
             pattern="[가-힣]{2,7}"
@@ -103,9 +103,9 @@ pageEncoding="UTF-8"%>
             id="phone"
             name="phone"
             required
-            pattern="^01[016789][0-9]{3,4}[0-9]{4}$"
+            pattern="^01[016789]-[0-9]{3,4}-[0-9]{4}$"
             placeholder="ex) 01012345678"
-            maxlength="12"
+            maxlength="15"
         />
       </div>
     </div>
