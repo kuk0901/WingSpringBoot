@@ -103,9 +103,9 @@ pageEncoding="UTF-8"%>
             id="phone"
             name="phone"
             required
-            pattern="^01[016789][0-9]{3,4}[0-9]{4}$"
+            pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
             placeholder="ex) 01012345678"
-            maxlength="12"
+            maxlength="14"
         />
       </div>
     </div>
