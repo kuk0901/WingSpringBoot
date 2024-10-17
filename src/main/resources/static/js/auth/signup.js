@@ -84,5 +84,28 @@ $form.on("submit", function(e) {
   });
 });
 
+//이메일 검증
+$("#checkEmailBtn").on("click", function() {
+  const email = $("#email").val(); // 이메일 입력값 가져오기
+
+  // 이메일 검증 요청
+  $.ajax({
+    type: "POST",
+    url: "/api/auth/check-email", // 이메일 검증 요청 URL
+    data: JSON.stringify({ email: email }), // 요청 데이터
+    contentType: "application/json",
+    dataType: "json",
+    success: function(res) {
+      if (res.status === "failed") {
+        alert(res.message); // 이메일 중복 메시지 표시
+      } else {
+        alert("사용 가능한 이메일입니다."); // 사용 가능 메시지 표시
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log("이메일 검증 중 오류 발생: " + error.message); // 오류 메시지 표시
+    }
+  });
+});
 // 비밀번호 확인 필드에 blur 이벤트 리스너 추가
 $pwdCheck.on("blur", validatePassword);

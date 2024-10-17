@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <configuration scan="true" scanPeriod="60 seconds"> -->
+<configuration>
+
+	<!--로그 파일 저장 위치 -->
+	<property name="LOGS_PATH" value="c:/logs/SpringBootHome"/>
+
+	<appender name="fileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+<!-- 		<file>src/main/resources/logs/board_logback.log</file> -->
+		<file>${LOGS_PATH}/board_logback.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+<!-- 				src/main/resources/logs/board_logback_%d{yyyy-MM-dd}.%i.log.gz -->
+				${LOGS_PATH}/board_logback_%d{yyyy-MM-dd}.%i.log.gz
+			</fileNamePattern>
+
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>5MB</maxFileSize>
+				<!-- kb, mb, gb -->
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+		</rollingPolicy>
+
+		<encoder>
+<!-- 		%ex{full} short, full이 있는데 예외 발생 로그를 출력해준다 -->
+			<pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level
+				%logger{35} - %msg%n%ex{full}</pattern>
+		</encoder>
+
+	</appender>
+
+<!-- 	%highlight()에 예약어를 넣으면 부분 색상을 적용할 수 있다 -->
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.classic.PatternLayout">
+				<pattern>[%d{HH:mm}] %-5level %logger{36} - 
+				%highlight(%msg) %n%highlight(%ex{full}) %C</pattern>
+			</layout>
+		</encoder>
+	</appender>
+
+	
+
+	<!-- additivify는 로그 파일과 관련없다.  -->
+<!-- 	<logger name="com.edu" level="info" additivity="false"> -->
+		<!-- 콘솔과 파일에 모두 로그를 출력하도록 설정 -->
+<!-- 		<appender-ref ref="STDOUT" /> -->
+<!-- 		2.주석처리 및 logs 폴더 삭제-->
+
+<!-- 		<appender-ref ref="fileAppender" /> -->
+<!-- 	</logger> -->
+
+	<logger name="org.springframework.core" level="info">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="org.springframework.beans" level="info">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<logger name="org.springframework.context" level="info">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+<!-- 
+	중복을 완전히 방지하기 위해 만약 특정 로거에서만 로그를 출력하고 싶다면, 
+	다음과 같이 additivity="false"를 추가할 수 있습니다: 
+	이렇게 하면, org.springframework.web에서 발생한 로그는 
+	root로 전달되지 않아 중복 로그가 발생하지 않게 됩니다.
+-->
+	<logger name="org.springframework.web" level="info" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+<!-- 	sqlonly나 resultsettable에서는 겹치는 메시지가 좀 있네 -->
+<!-- 	<logger name="jdbc.sqlonly" level="info"> -->
+<!-- 		<appender-ref ref="STDOUT" /> -->
+<!-- 	</logger> -->
+	
+<!-- 	<logger name="jdbc.resultsettable" level="info"> -->
+<!-- 		<appender-ref ref="SQL_STDOUT" /> -->
+<!-- 	</logger> -->
+	
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
