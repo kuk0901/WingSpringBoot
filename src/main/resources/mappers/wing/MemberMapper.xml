@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wing.auth">
+<mapper namespace="com.edu.wing.auth">
 
-	<resultMap type="com.wing.auth.domain.AuthVo" id="authResultMap">
+	<resultMap type="com.edu.wing.auth.domain.AuthVo" id="authResultMap">
 		<id column="MEMBER_NO" property="memberNo" />
 		<result column="EMAIL" property="email" />
 		<result column="NAME" property="memberName" />
@@ -28,7 +28,7 @@
 		AND PWD = #{password}
 	</select>
 
-	<insert id="memberInsertOne" parameterType="com.wing.auth.domain.AuthVo">
+	<insert id="memberInsertOne" parameterType="com.edu.wing.auth.domain.AuthVo">
 		INSERT INTO MEMBER (
 		MEMBER_NO,EMAIL,PWD,NAME, PHONE, GRADE, YEARLY_SALARY,MONTH_SALARY, CRE_DATE,
 		MOD_DATE,
@@ -40,8 +40,8 @@
 	</insert>
 	
 	    <!-- 이메일 중복 체크 쿼리 -->
-    <select id="findByEmail" parameterType="String" resultType="Integer">
-        SELECT EMAIL
+    <select id="selectMemberByEmail" parameterType="String" resultMap="authResultMap">
+        SELECT *
         FROM MEMBER
         WHERE EMAIL = #{email} 
     </select>

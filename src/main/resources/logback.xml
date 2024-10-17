@@ -88,7 +88,8 @@
 <!-- 	<logger name="jdbc.resultsettable" level="info"> -->
 <!-- 		<appender-ref ref="SQL_STDOUT" /> -->
 <!-- 	</logger> -->
-	
+
+
 	<root level="info">
 		<appender-ref ref="STDOUT" />
 	</root>

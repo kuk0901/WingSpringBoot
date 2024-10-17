@@ -32,7 +32,10 @@ public class AuthApiController {
     Map<String, String> result = new HashMap<>();
 
     try {
-
+      if (authService.isEmailAlreadyRegistered(authVo.getEmail())) {
+        return ResponseEntity.badRequest().body("이미 가입된 이메일입니다.");
+      }
+      //이메일 검증로직
       authVo.setGrade("회원");  // 회원 등급 설정
 
       // DB에 insert

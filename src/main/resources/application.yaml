@@ -29,7 +29,9 @@ server:
       force: true
   tomcat:
     uri-encoding: UTF-8
-
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/**/*.xml
 # 외부 이미지 경로 설정 추가
 external:
   image:

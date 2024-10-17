@@ -35,9 +35,9 @@ public class AuthServiceImpl implements AuthService {
 
 
 	@Override
-	public Integer findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return authDao.findByEmail(email);
+	public boolean isEmailAlreadyRegistered(String email) {
+		AuthVo authVo = authDao.selectMemberByEmail(email);
+		return authVo != null;  // 이미 가입된 이메일이면 true 반환
 	}
 	
 //	@Override

@@ -3,7 +3,7 @@
 <configuration>
   
 	<typeAliases>
-		<package name="com.wing.auth.domain"/>
+		<package name="com.edu.wing.auth.domain"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/wing/MemberMapper.xml" />

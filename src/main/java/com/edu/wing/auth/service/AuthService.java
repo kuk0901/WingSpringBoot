@@ -10,7 +10,7 @@ public interface AuthService {
 	public AuthVo memberExist(String email, String password);
 	public int memberInsertOne(AuthVo authVo);
 	 // 이메일 중복 체크 메소드
-    public Integer findByEmail(String email);
+	 boolean isEmailAlreadyRegistered(String email);
 //	public AuthVo memberSelectOne(int no);
 //	public int memberUpdateOne(AuthVo memberVo);
 //	public int memberDeleteOne(int no);

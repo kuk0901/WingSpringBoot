@@ -16,7 +16,7 @@ public class AuthDaoImpl implements AuthDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	String namespace = "com.wing.auth.";
+	String namespace = "com.edu.wing.auth.";
 	
 	
 
@@ -41,10 +41,8 @@ public class AuthDaoImpl implements AuthDao {
 
 
 	@Override
-	public Integer findByEmail(String email) {
-		// TODO Auto-generated method stub
-		
-		return sqlSession.selectOne(namespace+"findByEmail",email);
+	public AuthVo selectMemberByEmail(String email) {
+		return sqlSession.selectOne(namespace + "selectMemberByEmail", email);
 	}
 
 //	@Override
