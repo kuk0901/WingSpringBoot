@@ -1,0 +1,306 @@
+:root {
+  /* default */
+  --color-bg: #49667a;
+  --color-white: #fff;
+  --color-darkwhite: #faf7f7;
+  --color-black: #000;
+  --color-gray: #d9d9d9;
+  --color-darkgray: #a29d9d;
+  --color-error: #fd4242;
+  --color-correct: #1fff50;
+  --color-navy: #001f3f;
+
+  /* btn */
+  --btn-coral: #fc7f7f;
+  --btn-yellow: #ffc107;
+  --btn-blue: #6a70ef;
+  --btn-skyblue: #00a3ff;
+  --btn-red: #ff6f61;
+  --btn-primary: #052c55;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* bg */
+.bg__black {
+  background-color: var(--color-black);
+}
+
+.bg__white {
+  background-color: var(--color-white);
+}
+
+.bg__red {
+  background-color: var(--btn-red);
+}
+
+.bg__coral {
+  background-color: var(--btn-coral);
+}
+
+/* text */
+.text__white {
+  color: var(--color-white);
+}
+
+.text__black {
+  color: var(--color-black);
+}
+
+.text__navy {
+  color: var(--color-navy);
+}
+
+.text__gray {
+  color: var(--color-gray);
+}
+
+.text__error {
+  color: var(--color-error);
+}
+
+.text__correct {
+  color: var(--color-correct);
+}
+
+/* btn */
+.btn {
+  text-align: center;
+  padding: 7px 19px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+/* FIXME: 일반 btn ui 확인 후 수정
+.btn__p {
+  padding: 7px 19px;
+}
+*/
+
+.btn__generate {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: 1px solid black;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.btn--admin__my {
+  background-color: var(--btn-coral);
+  color: var(--color-white);
+  border-radius: 12px;
+}
+
+.btn--member__my {
+  background-color: var(--btn-blue);
+  color: var(--color-white);
+  border-radius: 12px;
+}
+
+.btn__blue {
+  background-color: var(--btn-blue);
+  color: var(--color-white);
+}
+
+.btn__yellow {
+  background-color: var(--btn-yellow);
+  color: var(--color-white);
+}
+
+.btn__sign {
+  background-color: var(--btn-red);
+  display: block;
+  width: 200px;
+  height: 55px;
+  border: none;
+  margin: 50px auto;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  border-radius: 50%;
+}
+
+.btn__signout {
+  text-align: center;
+}
+
+/* help text */
+.help-text {
+  font-size: 14px;
+  margin: 5px;
+}
+
+/* nav */
+.admin-nav,
+.member-nav {
+  background-color: var(--color-bg);
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.white-line {
+  width: 100%;
+  height: 1px;
+  display: inline-block;
+  background-color: var(--color-white);
+}
+
+.btn-container {
+  padding: 10px 0;
+}
+
+.btn-container li {
+  margin: 10px 0;
+}
+
+.btn-container li a {
+  display: block;
+  width: 150px;
+  padding: 13px 20px;
+}
+
+.logo-container {
+  width: 120px; /* logo 너비 + 여백 */
+  height: 100px;
+  padding: 0;
+}
+
+.logo-container li {
+  height: 100px;
+  width: 100%;
+  margin: 0;
+}
+
+.logo-container li a {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container .logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.admin-signout {
+  transform: translateY(50px);
+}
+
+.member-signout {
+  transform: translateY(400px);
+}
+
+/* main section */
+#root {
+  display: flex;
+}
+
+/* footer */
+footer {
+  width: 87vw;
+  height: 7vh;
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+footer .cs {
+  color: var(--color-white);
+}
+
+footer .cs:hover {
+  text-decoration: underline;
+}
+
+/* main-container */
+#main-container {
+  background-color: var(--color-bg);
+}
+
+.form-container {
+  background-color: var(--color-bg);
+}
+
+.form-container .title-container {
+  background-color: var(--btn-red);
+}
+
+/* signup, signin */
+.title-container {
+  width: 500px;
+  margin: 50px auto 10px;
+}
+
+.title-container .title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.form-container {
+  width: 520px;
+  margin: 10px auto;
+  padding: 20px 30px;
+}
+
+.form-container .subject-container {
+  width: 400px;
+  margin: 10px auto 35px;
+  padding: 20px;
+}
+
+.form-container .subject-container .subject {
+  text-align: center;
+}
+
+.form-container .signup-form .signup-container,
+.form-container .signin-form .signin-container {
+  width: 400px;
+  margin: 20px auto;
+}
+
+.form-container .signup-form .signup-container .label-container,
+.form-container .signin-form .signin-container .label-container {
+  margin: 10px auto;
+}
+
+/* scroll to tap 클릭 시 화면 최상단으로 이동 */
+#to-top {
+  width: 42px;
+  height: 42px;
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 20;
+}
+
+#to-top .arrow_upward {}

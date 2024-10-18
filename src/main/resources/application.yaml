@@ -1,0 +1,35 @@
+server:
+  port: 8888
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: WingSpringBoot
+  main:
+    web-application-type: servlet
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+    username: wing
+    password: 1234
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          format_sql: true
+        enable_lazy_load_no_trans: true
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mappers/*.xml
