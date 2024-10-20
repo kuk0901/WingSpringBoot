@@ -1,11 +1,11 @@
-package com.edu.wing.minusCategory.domain;
+package com.edu.wing.category.domain;
 
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-public class MinusCategoryVo {
+public class MinusCategoryVo implements CategoryVo {
 
     @Id
     private int categoryNo;

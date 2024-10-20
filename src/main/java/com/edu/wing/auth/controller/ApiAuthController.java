@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("api/auth")
 public class ApiAuthController {
 
-  private final Logger log = LoggerFactory.getLogger(AuthController.class);
+  private final Logger log = LoggerFactory.getLogger(ApiAuthController.class);
   private final String logTitleMsg = "==ApiAuthController==";
 
   @PostMapping("/signup")
