@@ -9,35 +9,35 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Qualifier("minusCategoryService")
-public class MinusCategoryServiceImpl implements CategoryService {
+@Qualifier("plusCategoryService")
+public class PlusCategoryServiceImpl implements CategoryService {
 
   @Autowired
-  @Qualifier("minusCategoryDao")
-  private CategoryDao minusCategoryDao;
+  @Qualifier("plusCategoryDao")
+  private CategoryDao plusCategoryDao;
 
   @Override
   public List<CategoryVo> categorySelectList() {
-    return minusCategoryDao.categorySelectList();
+    return plusCategoryDao.categorySelectList();
   }
 
   @Override
   public int categoryInsertOne(CategoryVo categoryVo) {
-    return minusCategoryDao.categoryInsertOne(categoryVo);
+    return plusCategoryDao.categoryInsertOne(categoryVo);
   }
 
   @Override
   public CategoryVo categorySelectOne(int no) {
-    return minusCategoryDao.categorySelectOne(no);
+    return plusCategoryDao.categorySelectOne(no);
   }
 
   @Override
   public int categoryUpdateOne(CategoryVo categoryVo) {
-    return minusCategoryDao.categoryUpdateOne(categoryVo);
+    return plusCategoryDao.categoryUpdateOne(categoryVo);
   }
 
   @Override
   public int categoryDeleteOne(int no) {
-    return minusCategoryDao.categoryDeleteOne(no);
+    return plusCategoryDao.categoryDeleteOne(no);
   }
 }

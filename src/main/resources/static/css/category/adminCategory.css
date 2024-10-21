@@ -1,0 +1,48 @@
+#content .title-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#content .title-container .title {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.main-container {
+    margin: 20px;
+}
+
+.one-line {
+    justify-content: flex-end;
+}
+
+.one-line .btn-container {
+    margin-right: 20px;
+}
+
+.list--title {
+    font-size: 17px;
+    padding: 17px 13px;
+}
+
+.list-container .list--div {
+    display: inline-block;
+    width: 200px;
+    margin: 5px 5px 5px 200px;
+}
+
+.list-content {
+    margin: 5px 5px 5px 20px;
+}
+
+.box__s {
+    width: 200px;
+}
+
+.box__l {
+    width: 200px;
+}

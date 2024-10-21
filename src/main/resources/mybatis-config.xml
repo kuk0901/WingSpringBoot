@@ -17,7 +17,7 @@
         <mapper resource="mappers/card/SellingCardMapper.xml"/>
         <mapper resource="mappers/card/CardMapper.xml" />
         <mapper resource="mappers/category/MinusCategoryMapper.xml" />
-<!--        <mapper resource="mappers/category/PlusCategoryMapper.xml" />-->
+        <mapper resource="mappers/category/PlusCategoryMapper.xml" />
     </mappers>
 
 </configuration>

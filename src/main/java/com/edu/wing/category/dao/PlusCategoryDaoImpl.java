@@ -1,7 +1,6 @@
 package com.edu.wing.category.dao;
 
 import com.edu.wing.category.domain.CategoryVo;
-import com.edu.wing.category.domain.MinusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@Qualifier("minusCategoryDao")
-public class MinusCategoryDaoImpl implements CategoryDao {
+@Qualifier("plusCategoryDao")
+public class PlusCategoryDaoImpl implements CategoryDao {
 
   @Autowired
   private SqlSession sqlSession;
@@ -20,26 +19,26 @@ public class MinusCategoryDaoImpl implements CategoryDao {
 
   @Override
   public List<CategoryVo> categorySelectList() {
-    return sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
+    return sqlSession.selectList(NAMESPACE + "plusCategorySelectList");
   }
 
   @Override
   public int categoryInsertOne(CategoryVo categoryVo) {
-    return sqlSession.insert(NAMESPACE + "minusCategoryInsertOne", categoryVo);
+    return sqlSession.insert(NAMESPACE + "plusCategoryInsertOne", categoryVo);
   }
 
   @Override
   public CategoryVo categorySelectOne(int no) {
-    return sqlSession.selectOne(NAMESPACE + "minusCategorySelectOne", no);
+    return sqlSession.selectOne(NAMESPACE + "plusCategorySelectOne", no);
   }
 
   @Override
   public int categoryUpdateOne(CategoryVo categoryVo) {
-    return sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", categoryVo);
+    return sqlSession.update(NAMESPACE + "plusCategoryUpdateOne", categoryVo);
   }
 
   @Override
   public int categoryDeleteOne(int no) {
-    return sqlSession.delete(NAMESPACE + "minusCategoryDeleteOne", no);
+    return sqlSession.delete(NAMESPACE + "plusCategoryDeleteOne", no);
   }
 }
