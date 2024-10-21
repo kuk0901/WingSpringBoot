@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.card">
+
+    <resultMap type="cardVo" id="cardResultMap">
+        <id column="CARD_NO" property="cardNo" />
+        <result column="CARD_NAME" property="cardName"/>
+        <result column="CARD_COMPANY" property="cardCompany"/>
+        <result column="CATEGORY_NO" property="categoryNo"/>
+        <result column="STORED_FILE_NAME" property="storedFileName"/>
+        <result column="ORIGINAL_FILE_NAME" property="originalFileName"/>
+        <result column="SUMMATION_BENEFIT" property="summationBenefit"/>
+        <result column="MAIN_BENEFIT" property="mainBenefit" />
+        <result column="REGISTER_DATE" property="registerDate" javaType="java.util.Date" />
+        <result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+
+    <sql id="search">
+        <if test="categoryName != null and categoryName != 'all'">
+            AND CASE MC.CATEGORY_NAME
+            WHEN '교통' THEN 'Traffic'
+            WHEN '쇼핑' THEN 'Shopping'
+            WHEN '일반' THEN 'Daily'
+            ELSE MC.CATEGORY_NAME
+            END = #{categoryName}
+        </if>
+    </sql>
+
+    <select id="cardSelectList" parameterType="map" resultMap="cardResultMap">
+        SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
+             , SUMMATION_BENEFIT, REGISTER_DATE, CATEGORY_NAME
+        FROM (
+                SELECT ROWNUM AS RNUM
+                , C.CARD_NO
+                , C.CARD_NAME
+                , C.STORED_FILE_NAME
+                , C.ORIGINAL_FILE_NAME
+                , C.SUMMATION_BENEFIT
+                , C.REGISTER_DATE
+                , CASE MC.CATEGORY_NAME
+                WHEN '교통' THEN 'Traffic'
+                WHEN '쇼핑' THEN 'Shopping'
+                WHEN '일반' THEN 'Daily'
+                ELSE MC.CATEGORY_NAME
+                END AS CATEGORY_NAME
+                FROM CARD C
+                JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+                <where>
+                    <include refid="search" />
+                </where>
+                ORDER BY C.REGISTER_DATE DESC
+             )
+        WHERE RNUM BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="cardSelectTotalCount" parameterType="String" resultType="int">
+        SELECT COUNT(CARD_NO)
+        FROM CARD C JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+        WHERE MC.CATEGORY_NAME = '교통'
+        <where>
+            <include refid="search" />
+        </where>
+    </select>
+
+</mapper>

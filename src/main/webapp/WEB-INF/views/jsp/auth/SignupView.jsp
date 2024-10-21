@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/jsp/common/common.jsp" %><!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SignUp</title>
-  <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />
   <link rel="stylesheet" href="/css/auth/signup.css" />
   <script defer type="module" src="/js/auth/signup.js"></script>
 </head>
@@ -24,6 +22,7 @@ pageEncoding="UTF-8"%>
     <div class="signup-container">
       <div class="label-container">
         <label for="email" class="text__white">이메일</label>
+        <span id="emailError"></span>
       </div>
       <div class="input-container email-check-porision">
         <input

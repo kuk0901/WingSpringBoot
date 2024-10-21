@@ -1,19 +1,33 @@
 import {formatNumber, formatPhoneNumber} from "../util/fotmat.js";
 
 const $form = $("#signupForm");
+const $email = $("#email");
+const $emailError = $("#emailError");
 const $pwdInput = $("#pwd");
 const $pwdCheck = $("#pwdCheck");
-const $errorMsg = $("#pwdError");
+const $pwdError = $("#pwdError");
 const $phoneInput = $("#phone");
 const $salaryInput = $("#salary");
 const $payInput = $("#pay");
 const $submitBtn = $("#submitBtn");
 
 
+// email error 처리용 변수
+let emailValCheck = $email.val();
+
+$email.on("blur", function() {
+  emailValCheck = $(this).val();
+  updateEmailUI($(this).val());
+});
+
+$email.on("input", function() {
+  updateEmailUI($(this).val());
+});
+
 // 비밀번호 유효성 검사
 function validatePassword() {
   const isValid = $pwdInput.val() === $pwdCheck.val();
-  $errorMsg.text(isValid ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.")
+  $pwdError.text(isValid ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.")
       .removeClass("text__correct text__error")
       .addClass(isValid ? "text__correct" : "text__error");
   $submitBtn.prop("disabled", !isValid);
@@ -76,14 +90,34 @@ console.log(formData)
     contentType: "application/json",
     dataType: "json",
     success: function(res) {
-      console.log(res.message);
+      console.log(res.msg);
     },
     error: function(xhr, status, error) {
-      console.log(error.message);
+
+      let msg = xhr.responseJSON ? xhr.responseJSON.msg : "알 수 없는 오류가 발생했습니다.";
+
+      if (xhr.responseJSON.emailMsg) {
+        msg = xhr.responseJSON.emailMsg;
+
+        $emailError.text(msg ? msg : "")
+            .removeClass("text__transparent text__error")
+            .addClass(msg ? "text__error" : "text__transparent" );
+
+        emailValCheck = $email.val(); // 서버 검증 후 emailValCheck 업데이트
+      }
+
+      console.log(msg);
     }
   });
 });
 
-
 // 비밀번호 확인 필드에 blur 이벤트 리스너 추가
 $pwdCheck.on("blur", validatePassword);
+
+function updateEmailUI(currentValue) {
+  if (currentValue !== emailValCheck) {
+    $emailError.removeClass("text__error").addClass("text__transparent");
+  } else {
+    $emailError.removeClass("text__transparent").addClass("text__error");
+  }
+}

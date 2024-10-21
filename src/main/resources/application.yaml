@@ -25,6 +25,7 @@ spring:
       show-sql: true
       hibernate:
         ddl-auto: update
+        dialect: org.hibernate.dialect.Oracle12cDialect # 추가된 부분
       properties:
         hibernate:
           format_sql: true
@@ -33,3 +34,4 @@ spring:
 mybatis:
   config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mappers/*.xml
+

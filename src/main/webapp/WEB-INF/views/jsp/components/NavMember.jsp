@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- Member Nav -->
 <nav
@@ -10,21 +11,28 @@
 >
   <ul class="btn-container logo-container">
     <li>
-      <a href="${pageContext.request.contextPath}/member/main">
+      <a href="${pageContext.request.contextPath}/member/main" id="logoLink">
         <img src="/img/logo.png" alt="WING_ logo" class="logo" />
       </a>
     </li>
   </ul>
 
   <ul class="btn-container user-container">
-    <li>
-      <a
-          href="#"
-          class="btn btn--member__my btn__p"
-          aria-label="사용자 프로필"
-      >@@@님</a
-      >
-    </li>
+    <c:if test="${not empty sessionScope.member}">
+      <li>
+        <a href="#" id="userName" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+            ${sessionScope.member.name}님
+        </a>
+      </li>
+    </c:if>
+
+    <c:if test="${empty sessionScope.member}">
+      <li>
+        <a href="#" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+          @@@님
+        </a>
+      </li>
+    </c:if>
   </ul>
 
   <span class="white-line"></span>
