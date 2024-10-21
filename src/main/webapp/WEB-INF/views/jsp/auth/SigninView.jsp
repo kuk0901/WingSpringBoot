@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SignIn</title>
-  <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />
   <link rel="stylesheet" href="/css/auth/signin.css" />
   <script defer src="/js/auth/signin.js"></script>
 </head>
@@ -46,7 +45,7 @@ pageEncoding="UTF-8"%>
       <div class="input-container">
         <input
             id="pwd"
-            name="password"
+            name="pwd"
             type="password"
             placeholder="비밀번호를 작성해 주세요."
             required

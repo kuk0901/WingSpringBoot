@@ -5,11 +5,11 @@
     <resultMap type="memberVo" id="memberResultMap">
         <id column="MEMBER_NO" property="memberNo" />
         <result column="EMAIL" property="email" />
-        <result column="NAME" property="memberName" />
-        <result column="PWD" property="password" />
-        <result column="CRE_DATE" property="createdDate"
+        <result column="NAME" property="name" />
+        <result column="PWD" property="pwd" />
+        <result column="CRE_DATE" property="creDate"
                 javaType="java.util.Date" />
-        <result column="MOD_DATE" property="modifiedDate"
+        <result column="MOD_DATE" property="modDate"
                 javaType="java.util.Date" />
         <result column="PHONE" property="phone" />
         <result column="GRADE" property="grade" />
@@ -22,10 +22,16 @@
 
     <select id="memberExist" parameterType="map"
             resultMap="memberResultMap">
-        SELECT MEMBER_NO,NAME, EMAIL
+        SELECT MEMBER_NO, NAME, EMAIL, GRADE
         FROM MEMBER
         WHERE EMAIL = #{email}
-          AND PWD = #{password}
+          AND PWD = #{pwd}
+    </select>
+
+    <select id="memberSelectOne" parameterType="String" resultMap="memberResultMap">
+        SELECT MEMBER_NO, EMAIL
+        FROM MEMBER
+        WHERE EMAIL = #{email}
     </select>
 
     <insert id="memberInsertOne" parameterType="memberVo">
@@ -34,14 +40,14 @@
             MOD_DATE,
             QUIT_APPLY, PRODUCT_PURCHASE
         ) VALUES (
-                     MEMBER_NO_SEQ.NEXTVAL,#{email},#{password}, #{memberName}, #{phone},#{grade},
+                     MEMBER_NO_SEQ.NEXTVAL,#{email},#{pwd}, #{name}, #{phone},#{grade},
                      #{yearlySalary},#{monthlySalary},
                      SYSDATE, SYSDATE,'N', 'N')
     </insert>
 
     <!-- 이메일 중복 체크 쿼리 -->
     <select id="selectMemberByEmail" parameterType="String" resultMap="memberResultMap">
-        SELECT *
+        SELECT MEMBER_NO
         FROM MEMBER
         WHERE EMAIL = #{email}
     </select>
