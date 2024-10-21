@@ -4,9 +4,11 @@
 
     <typeAliases>
         <package name="com.edu.wing.member.domain"/>
+        <package name="com.edu.wing.accountbook.domain"/>
     </typeAliases>
     <mappers>
         <mapper resource="mappers/member/MemberMapper.xml" />
+        <mapper resource="mappers/accountBook/AccountBookMapper.xml"/>
     </mappers>
 
 </configuration>
