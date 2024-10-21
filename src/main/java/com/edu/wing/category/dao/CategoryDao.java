@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface CategoryDao {
 
-    List<CategoryVo> categorySelectList();
+  List<CategoryVo> categorySelectList();
 
-    int categoryInsertOne(CategoryVo categoryVo);
+  int categoryInsertOne(CategoryVo categoryVo);
 
-    MinusCategoryVo minusCategorySelectOne(int no);
+  MinusCategoryVo minusCategorySelectOne(int no);
 
-    int minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
+  int minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
 
-    int minusCategoryDeleteOne(int no);
+  int minusCategoryDeleteOne(int no);
 }

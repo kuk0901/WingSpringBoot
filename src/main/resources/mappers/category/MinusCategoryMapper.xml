@@ -13,7 +13,7 @@
         ORDER BY CATEGORY_NO
     </select>
 
-    <insert id="categoryInsertOne" parameterType="categoryVo">
+    <insert id="categoryInsertOne" parameterType="minusCategoryVo">
         INSERT INTO MINUS_CATEGORY
             (CATEGORY_NO, CATEGORY_NAME)
         VALUES(MINUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})

@@ -2,7 +2,6 @@ package com.edu.wing.category.controller;
 
 
 import com.edu.wing.category.domain.CategoryVo;
-import com.edu.wing.category.domain.MinusCategoryVo;
 import com.edu.wing.category.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,53 +19,53 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-    private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
-    private static final String LOG_TITLE = "==AdminCategoryController==";
+  private static final Logger log = LoggerFactory.getLogger(CategoryController.class);
+  private static final String LOG_TITLE = "==AdminCategoryController==";
 
-    @Autowired
-    @Qualifier("minusCategoryService")
-    private CategoryService minusCategoryService;
+  @Autowired
+  @Qualifier("minusCategoryService")
+  private CategoryService minusCategoryService;
 
 //    @Autowired
 //    @Qualifier("plusCategoryService")
 //    private CategoryService plusCategoryService;
 
-    @GetMapping(value = "/list")
-    public String categoryList(Model model) {
-        log.info("{} - Retrieving all categories", LOG_TITLE);
+  @GetMapping(value = "/list")
+  public String categoryList(Model model) {
+    log.info("{} - Retrieving all categories", LOG_TITLE);
 
-        List<CategoryVo> minusCategoryList = minusCategoryService.categorySelectList();
+    List<CategoryVo> minusCategoryList = minusCategoryService.categorySelectList();
 //        List<CategoryVo> plusCategoryList = plusCategoryService.categorySelectList();
 
-        model.addAttribute("minusCategoryList", minusCategoryList);
+    model.addAttribute("minusCategoryList", minusCategoryList);
 //        model.addAttribute("plusCategoryList", plusCategoryList);
 
-        return "jsp/category/CategoryListView";
+    return "jsp/admin/category/CategoryListView";
+  }
+
+  @GetMapping("/add")
+  public String categoryAdd(Model model) {
+    log.info("{} - Showing category add form", LOG_TITLE);
+    return "jsp/admin/category/CategoryAdd";
+  }
+
+  @PostMapping("/add")
+  public String categoryAdd(@RequestParam("type") String type, CategoryVo categoryVo, Model model) {
+    log.info("{} - Adding new category: {}", LOG_TITLE, categoryVo);
+
+    if ("minus".equals(type)) {
+      minusCategoryService.categoryInsertOne(categoryVo);
     }
-
-    @GetMapping("/add")
-    public String categoryAdd(Model model) {
-        log.info("{} - Showing category add form", LOG_TITLE);
-        return "jsp/category/CategoryAdd";
-    }
-
-    @PostMapping("/add")
-    public String categoryAdd(@RequestParam("type") String type, CategoryVo categoryVo, Model model) {
-        log.info("{} - Adding new category: {}", LOG_TITLE, categoryVo);
-
-        if ("minus".equals(type)) {
-            minusCategoryService.categoryInsertOne(categoryVo);
-        }
 //        else if ("plus".equals(type)) {
 //            plusCategoryService.categoryInsertOne(categoryVo);
 //        }
 
-        return "redirect:/category/list";
-    }
+    return "redirect:/category/list";
+  }
 
-    @GetMapping("/update")
-    public String categoryUpdate(@RequestParam("type") String type, @RequestParam("categoryNo") int categoryNo, Model model) {
-        log.info("{} - Showing update form for category: {}", LOG_TITLE, categoryNo);
+  @GetMapping("/update")
+  public String categoryUpdate(@RequestParam("type") String type, @RequestParam("categoryNo") int categoryNo, Model model) {
+    log.info("{} - Showing update form for category: {}", LOG_TITLE, categoryNo);
 
 //        CategoryVo categoryVo;
 //        if ("minus".equals(type)) {
@@ -76,14 +75,14 @@ public class CategoryController {
 //        }
 
 //        model.addAttribute("categoryVo", categoryVo);
-        model.addAttribute("type", type);
+    model.addAttribute("type", type);
 
-        return "jsp/category/CategoryUpdateView";
-    }
+    return "jsp/admin/category/CategoryUpdateView";
+  }
 
-    @PostMapping(value = "/update")
-    public String categoryUpdate(@RequestParam("type") String type, CategoryVo categoryVo, RedirectAttributes redirectAttributes) {
-        log.info("{} - Updating category: {}", LOG_TITLE, categoryVo);
+  @PostMapping(value = "/update")
+  public String categoryUpdate(@RequestParam("type") String type, CategoryVo categoryVo, RedirectAttributes redirectAttributes) {
+    log.info("{} - Updating category: {}", LOG_TITLE, categoryVo);
 
 //        if ("minus".equals(type)) {
 //            minusCategoryService.categoryUpdateOne(categoryVo);
@@ -93,12 +92,12 @@ public class CategoryController {
 //
 //        redirectAttributes.addAttribute("categoryNo", categoryVo.getCategoryNo());
 
-        return "redirect:/category/list";
-    }
+    return "redirect:/category/list";
+  }
 
-    @DeleteMapping("/delete/{type}/{categoryNo}")
-    public ResponseEntity<String> categoryDelete(@PathVariable("type") String type, @PathVariable("categoryNo") int categoryNo) {
-        log.info("{} - Deleting category: {} of type: {}", LOG_TITLE, categoryNo, type);
+  @DeleteMapping("/delete/{type}/{categoryNo}")
+  public ResponseEntity<String> categoryDelete(@PathVariable("type") String type, @PathVariable("categoryNo") int categoryNo) {
+    log.info("{} - Deleting category: {} of type: {}", LOG_TITLE, categoryNo, type);
 
 //        if ("minus".equals(type)) {
 //            minusCategoryService.categoryDeleteOne(categoryNo);
@@ -106,6 +105,6 @@ public class CategoryController {
 //            plusCategoryService.categoryDeleteOne(categoryNo);
 //        }
 
-        return ResponseEntity.ok("카테고리 삭제 성공");
-    }
+    return ResponseEntity.ok("카테고리 삭제 성공");
+  }
 }
