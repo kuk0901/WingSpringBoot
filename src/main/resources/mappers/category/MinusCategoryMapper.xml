@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.category">
+
+    <resultMap type="minusCategoryVo" id="minusCategoryResultMap">
+        <id column="CATEGORY_NO" property="categoryNo" />
+        <result column="CATEGORY_NAME" property="categoryName" />
+    </resultMap>
+
+    <select id="categorySelectList" resultMap="minusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM MINUS_CATEGORY
+        ORDER BY CATEGORY_NO
+    </select>
+
+    <insert id="categoryInsertOne" parameterType="minusCategoryVo">
+        INSERT INTO MINUS_CATEGORY
+            (CATEGORY_NO, CATEGORY_NAME)
+        VALUES(MINUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
+    </insert>
+
+    <select id="minusCategorySelectOne" parameterType="int"
+            resultMap="minusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO = #{no}
+    </select>
+
+    <update id="updateMinusCategory" parameterType="minusCategoryVo">
+        UPDATE MINUS_CATEGORY
+        <set>
+            <if test="categoryName != null and categoryName != ''">
+                CATEGORY_NAME = #{categoryName}
+            </if>
+        </set>
+        WHERE CATEGORY_NO = #{categoryNo}
+    </update>
+
+    <delete id="minusCategoryDeleteOne" parameterType="int">
+        DELETE 	FROM MINUS_CATEGORY
+        WHERE 	CATEGORY_NO = #{categoryNo}
+    </delete>
+
+</mapper>

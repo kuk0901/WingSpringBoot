@@ -39,10 +39,22 @@ $form.on("submit", function(e) {
     contentType: "application/json",
     dataType: "json",
     success: function(res) {
-      console.log(res.message);
+      alert(res.msg);
+
+      switch (res.grade) {
+        case "ADMIN":
+          location.href = "/admin/api/salesDashboard/list";
+          break;
+        case "MEMBER":
+          location.href = "/member";
+          break;
+        default: location.reload();
+      }
+
     },
     error: function(xhr, status, error) {
-      console.log(error.message);
+      const msg = xhr.responseJSON ? xhr.responseJSON.msg : "알 수 없는 오류가 발생했습니다.";
+      console.log(msg);
     }
   });
 });
