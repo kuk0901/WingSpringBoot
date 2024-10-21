@@ -32,17 +32,33 @@ public class CategoryController {
   @Qualifier("plusCategoryService")
   private CategoryService plusCategoryService;
 
+//  @GetMapping(value = "/list")
+//  public ResponseEntity<?> categoryList() {
+//    log.info("{} - Retrieving all categories", LOG_TITLE);
+//
+//    Map<String, Object> resultMap = new HashMap<>();
+//
+//    // minusCategoryService의 allCategorySelectList() 호출
+//    Map<String, Object> minusCategories = minusCategoryService.allCategorySelectList();
+//    resultMap.putAll(minusCategories);
+//
+//    // plusCategoryService의 allCategorySelectList() 호출
+//    Map<String, Object> plusCategories = plusCategoryService.allCategorySelectList();
+//    resultMap.putAll(plusCategories);
+//
+//    return ResponseEntity.ok().body(resultMap);
+//  }
+
   @GetMapping(value = "/list")
   public ResponseEntity<?> categoryList() {
     log.info("{} - Retrieving all categories", LOG_TITLE);
 
-    List<CategoryVo> minusCategoryList = minusCategoryService.categorySelectList();
-    List<CategoryVo> plusCategoryList = plusCategoryService.categorySelectList();
+    Map<String, Object> minusCategories = minusCategoryService.allCategorySelectList();
+    Map<String, Object> plusCategories = plusCategoryService.allCategorySelectList();
 
     Map<String, Object> resultMap = new HashMap<>();
-
-    resultMap.put("minusCategoryList", minusCategoryList);
-    resultMap.put("plusCategoryList", plusCategoryList);
+    resultMap.putAll(minusCategories);
+    resultMap.putAll(plusCategories);
 
     return ResponseEntity.ok().body(resultMap);
   }

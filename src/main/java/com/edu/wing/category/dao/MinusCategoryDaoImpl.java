@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 @Qualifier("minusCategoryDao")
@@ -16,11 +19,30 @@ public class MinusCategoryDaoImpl implements CategoryDao {
   @Autowired
   private SqlSession sqlSession;
 
-  private static final String NAMESPACE = "com.edu.wing.category.";
+  private static final String NAMESPACE = "com.edu.wing.category.dao.CategoryDao.";
 
   @Override
   public List<CategoryVo> categorySelectList() {
     return sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
+  }
+
+//  @Override
+//  public Map<String, Object> allCategorySelectList() {
+//    Map<String, Object> resultMap = new HashMap<>();
+//    List<CategoryVo> minusCategoryList = sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
+//    resultMap.put("minusCategoryList", minusCategoryList);
+//    return resultMap;
+//  }
+
+  @Override
+  public Map<String, Object> allCategorySelectList() {
+    List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
+    List<Map<String, Object>> minusCategories = categories.stream()
+            .filter(cat -> "MINUS".equals(cat.get("category")))
+            .collect(Collectors.toList());
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("minusCategoryList", minusCategories);
+    return resultMap;
   }
 
   @Override

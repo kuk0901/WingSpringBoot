@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Qualifier("minusCategoryService")
@@ -19,6 +20,11 @@ public class MinusCategoryServiceImpl implements CategoryService {
   @Override
   public List<CategoryVo> categorySelectList() {
     return minusCategoryDao.categorySelectList();
+  }
+
+  @Override
+  public Map<String, Object> allCategorySelectList() {
+    return minusCategoryDao.allCategorySelectList();
   }
 
   @Override
