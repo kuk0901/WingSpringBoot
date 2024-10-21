@@ -25,7 +25,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.Oracle12cDialect
+      dialect: org.hibernate.dialect.Oracle12cDialect # 추가된 부분
       properties:
         hibernate:
           format_sql: true
