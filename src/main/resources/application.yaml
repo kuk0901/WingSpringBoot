@@ -21,11 +21,7 @@ spring:
     url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
     username: wing
     password: 1234
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.Oracle12cDialect # 추가된 부분
+
       properties:
         hibernate:
           format_sql: true
