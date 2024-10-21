@@ -19,7 +19,7 @@
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>
-        <a href="#" id="userName" class="btn btn--admin__my btn__p text__semibold" aria-label="사용자 프로필">
+        <a href="/api/admin/member/mypage/${sessionScope.member.memberNo}" id="userName" class="btn btn--admin__my btn__p text__semibold" aria-label="사용자 프로필">
           ${sessionScope.member.name}님
         </a>
       </li>

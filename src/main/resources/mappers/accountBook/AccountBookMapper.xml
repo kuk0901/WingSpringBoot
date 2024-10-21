@@ -99,5 +99,9 @@
         WHERE ROWNUM <= 3
         ]]>
 </select>
+    <delete id="accountBookDelete" parameterType="int">
+        DELETE FROM ACCOUNT_BOOK
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
 
 </mapper>

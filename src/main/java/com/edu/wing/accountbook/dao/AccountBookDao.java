@@ -16,4 +16,5 @@ public interface AccountBookDao {
 
     List<AccountBookVo> getTopPaymentMethods(); // 상위 3개 결제 방법 조회
     List<AccountBookVo> getTopCategories();
+    void accountBookDelete(int memberNo); // 회원 번호로 가계부 삭제 메서드
 }

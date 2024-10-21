@@ -26,48 +26,8 @@
             text-align: left; /* 텍스트 정렬 */
         }
     </style>
-
-    <script type="text/javascript">
-
-        function sortTable(column) {
-            let sortDirection = $('#sortDirection').val();
-            //정렬변경
-            console.log('현재 sortDirection 값:', sortDirection);
-            if (sortDirection == 'ASC') {
-                sortDirection = 'DESC';
-            } else {
-                sortDirection = 'ASC';
-            }
-            console.log('변경된 sortDirection 값:', sortDirection);
-
-            $('#sortDirection').val(sortDirection);
-            console.log('업데이트된 hidden input 값:', $('#sortDirection').val());
-            location.href = './list?orderBy=' + column + '&sortDirection=' + sortDirection;
-
-        }
-
-        // 		$.ajax({
-        // 	        url: './list',
-        // 	        type: 'GET',
-        // 	        data: {
-        // 	            orderBy: column,
-        // 	            sortDirection: sortDirection
-        // 	        },
-        // 	        success: function(data) {
-
-        //
-
-        // 	        },
-        // 	        error: function() {
-        // 	            alert('데이터를 불러오는데 실패했습니다.');
-        // 	        }
-        // 	    });
-
-
-    </script>
     <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
-    <link rel="stylesheet" href="/css/auth/signup.css"/>
-    <script defer type="module" src="/js/auth/signup.js"></script>
+    <link rel="stylesheet" href="/css/accountbook/accountbook.css"/>
 </head>
 
 

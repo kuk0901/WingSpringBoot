@@ -60,4 +60,19 @@ public class MemberServiceImpl implements MemberService {
     return resultMap;
   }
 
+
+  @Override
+  public boolean adminDeleteMember(int memberNo) {
+    int deletedCount = memberDao.adminDeleteMember(memberNo);
+    return deletedCount > 0; // 삭제된 행 수가 0보다 크면 성공
+  }
+
+  @Override
+  public MemberVo getAdminMypageInfo(int memberNo) {
+    return memberDao.selectAdminMypageInfo(memberNo);
+  }
+  @Override
+  public int updateMember(MemberVo memberVo) {
+    return memberDao.updateMember(memberVo);
+  }
 }

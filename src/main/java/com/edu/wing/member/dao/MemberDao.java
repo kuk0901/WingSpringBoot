@@ -12,4 +12,9 @@ public interface MemberDao {
   List<MemberVo> selectAllMembersForAdmin(int start, int end);
   int selectTotalMembersCount();
   MemberVo selectMemberDetailForAdmin(int memberNo);
+
+  int adminDeleteMember(int memberNo); // 관리자 삭제 메소드
+
+  MemberVo selectAdminMypageInfo(int memberNo);//관리자 마이페이지용
+  int updateMember(MemberVo memberVo);//관리자마이페이지수정용
 }

@@ -32,4 +32,5 @@ public class MemberVo implements Serializable {
   private String terminationReason; // 해지 사유
   private int accountBookCount;   // 가계부 작성 수
   private int postCount;          // 게시글 작성 수
+  private String memberCardNo;      //보유 카드번호
 }

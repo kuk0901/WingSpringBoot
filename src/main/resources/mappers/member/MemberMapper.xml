@@ -24,6 +24,7 @@
         <result column="TERMINATION_REASON" property="terminationReason" />
         <result column="ACCOUNT_BOOK_COUNT" property="accountBookCount" />
         <result column="POST_COUNT" property="postCount" />
+        <result column="MEMBER_CARD_NO" property="memberCardNo" />
     </resultMap>
 
 
@@ -60,6 +61,7 @@
                  SELECT MEMBER_NO, EMAIL,NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,
                         ROW_NUMBER() OVER (ORDER BY MEMBER_NO) AS RNUM
                  FROM MEMBER
+                 WHERE GRADE = 'MEMBER'
              ) MEMBER_WITH_RNUM
         WHERE RNUM >= #{start} AND RNUM <= #{end}
         ]]>
@@ -97,4 +99,28 @@
     </select>
 
 
+
+
+
+    <!-- 관리자의 삭제 쿼리 -->
+    <delete id="adminDeleteMember" parameterType="int">
+        DELETE FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+    <!-- 관리자의 마이페이지 조회쿼리 -->
+    <select id="selectAdminMypageInfo" parameterType="int" resultType="MemberVo">
+        SELECT MEMBER_NO, EMAIL, NAME, PWD, PHONE, CRE_DATE
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo} AND GRADE='ADMIN'
+    </select>
+
+    <update id="updateMember" parameterType="MemberVo">
+        UPDATE MEMBER
+        SET EMAIL = #{email},
+            NAME = #{name},
+            PWD = #{pwd},
+            PHONE = #{phone}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
 </mapper>

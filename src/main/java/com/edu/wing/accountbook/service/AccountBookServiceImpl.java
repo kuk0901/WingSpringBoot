@@ -45,4 +45,9 @@ public class AccountBookServiceImpl implements AccountBookService {
     public List<AccountBookVo> getTopCategories() {
         return accountBookDao.getTopCategories();
     }
+
+    @Override
+    public void accountBookDelete(int memberNo) {
+        accountBookDao.accountBookDelete(memberNo);
+    }
 }

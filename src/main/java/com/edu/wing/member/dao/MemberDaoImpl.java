@@ -58,4 +58,19 @@ public class MemberDaoImpl implements MemberDao {
   public MemberVo selectMemberDetailForAdmin(int memberNo) {
     return sqlSession.selectOne(namespace + "selectMemberDetailForAdmin", memberNo);
   }
+
+
+  @Override
+  public int adminDeleteMember(int memberNo) {
+    return sqlSession.delete(namespace + "adminDeleteMember", memberNo);
+  }
+
+  @Override
+  public MemberVo selectAdminMypageInfo(int memberNo) {
+    return sqlSession.selectOne(namespace + "selectAdminMypageInfo", memberNo);
+  }
+  @Override
+  public int updateMember(MemberVo memberVo) {
+    return sqlSession.update(namespace + "updateMember", memberVo);
+  }
 }
