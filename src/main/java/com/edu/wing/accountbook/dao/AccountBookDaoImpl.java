@@ -37,4 +37,14 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectList(NAMESPACE+"selectPaymentMethods");
     }
 
+    @Override
+    public List<AccountBookVo> getTopPaymentMethods() {
+        return sqlSession.selectList(NAMESPACE+"getTopPaymentMethods");
+    }
+
+    @Override
+    public List<AccountBookVo> getTopCategories() {
+        return sqlSession.selectList(NAMESPACE + "getTopCategories");
+    }
+
 }

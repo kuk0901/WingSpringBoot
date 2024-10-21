@@ -11,4 +11,6 @@ public interface AccountBookService {
     List<AccountBookVo> getAccountBooks(Map<String, Object> params);
     List<String> getCategoryList(); // 카테고리 조회 메소드
     List<String> getPaymentMethodList(); // 결제 방법 조회 메소드
+    List<AccountBookVo> getTopPaymentMethods(); // 상위 3개 결제 방법 조회
+    List<AccountBookVo> getTopCategories();
 }

@@ -35,4 +35,14 @@ public class AccountBookServiceImpl implements AccountBookService {
     public List<String> getPaymentMethodList() {
         return accountBookDao.selectPaymentMethods();
     }
+
+    @Override
+    public List<AccountBookVo> getTopPaymentMethods() {
+        return accountBookDao.getTopPaymentMethods();
+    }
+
+    @Override
+    public List<AccountBookVo> getTopCategories() {
+        return accountBookDao.getTopCategories();
+    }
 }

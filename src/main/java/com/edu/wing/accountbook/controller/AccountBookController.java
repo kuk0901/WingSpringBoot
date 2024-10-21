@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/accountBook")
+@RequestMapping("/admin/accountBook")
 @Controller
 public class AccountBookController {
     private Logger log = LoggerFactory.getLogger(AccountBookController.class);
@@ -25,7 +25,7 @@ public class AccountBookController {
     private AccountBookService accountBookService;
 
     //초기화면용
-    @GetMapping("/admin/list")
+    @GetMapping("/list")
     public String getAccountBookList(Model model) {
         log.info(logTitleMsg);
         // 초기 화면 데이터 조회

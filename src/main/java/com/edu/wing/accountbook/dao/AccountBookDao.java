@@ -13,4 +13,7 @@ public interface AccountBookDao {
     List<AccountBookVo> selectAccountBooks(Map<String, Object> params);
     List<String> selectCategories();
     List<String> selectPaymentMethods();
+
+    List<AccountBookVo> getTopPaymentMethods(); // 상위 3개 결제 방법 조회
+    List<AccountBookVo> getTopCategories();
 }

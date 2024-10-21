@@ -30,6 +30,7 @@
         LEFT JOIN MEMBER m ON ab.MEMBER_NO = m.MEMBER_NO
         LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
         where ab.PLUS_CATEGORY_NO = 1  -- PLUS_CATEGORY_NO가 1인 경우
+        ORDER BY ACCOUNT_BOOK_NO
     </select>
 
 
@@ -58,8 +59,45 @@
             (#{category} ='all' OR mc.CATEGORY_NAME = #{category}) AND
             (#{paymentMethod} ='all' OR pm.PAYMENT_METHOD_NAME = #{paymentMethod}) AND
             ab.PLUS_CATEGORY_NO = 1 --가계부 소비만출력
+        ORDER BY ACCOUNT_BOOK_NO
     </select>
 
+    <!-- 상위 3개 결제 방법 조회 쿼리 -->
+    <select id="getTopPaymentMethods" resultType="AccountBookVo">
+    <![CDATA[
+        SELECT PAYMENT_METHOD_NAME, usage_count
+        FROM (
+                 SELECT
+                     ab.PAYMENT_METHOD_NO,
+                     pm.PAYMENT_METHOD_NAME,
+                     COUNT(*) AS usage_count
+                 FROM ACCOUNT_BOOK ab
+                          JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                 GROUP BY ab.PAYMENT_METHOD_NO, pm.PAYMENT_METHOD_NAME
+                 ORDER BY COUNT(*) DESC
+             )
+        WHERE ROWNUM <= 3
+        ]]>
+</select>
 
+    <select id="getTopCategories" resultType="AccountBookVo">
+  <![CDATA[
+        SELECT *
+        FROM (
+                 SELECT
+                     mc.CATEGORY_NAME AS minusCategoryName,
+                     COUNT(ab.MINUS_CATEGORY_NO) AS usage_count
+                 FROM
+                     ACCOUNT_BOOK ab
+                    JOIN
+                     MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                 GROUP BY
+                     mc.CATEGORY_NAME
+                 ORDER BY
+                     COUNT(ab.MINUS_CATEGORY_NO) DESC
+             )
+        WHERE ROWNUM <= 3
+        ]]>
+</select>
 
 </mapper>
