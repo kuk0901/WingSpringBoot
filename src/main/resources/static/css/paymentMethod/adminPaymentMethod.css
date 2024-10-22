@@ -15,6 +15,7 @@
 
 .main-container {
     margin: 20px;
+    height: 600px;
 }
 
 .one-line {
@@ -33,17 +34,30 @@
 .list-container .list--div {
     display: inline-block;
     width: 200px;
-    margin: 5px 5px 5px 200px;
+    margin: 5px 5px 5px 20px;
+}
+
+.container-title{
+    margin-left: 20px;
 }
 
 .list-content {
     margin: 5px 5px 5px 20px;
 }
 
-.box__s {
-    width: 200px;
+.box__i {
+    width: 100px;
+    height: 20px;
 }
 
-.box__l {
-    width: 200px;
+.box__o {
+    width: 100px;
+}
+
+.content_margin {
+    margin-left: 50px;
+}
+
+.btn_margin {
+    margin-right: 20px;
 }

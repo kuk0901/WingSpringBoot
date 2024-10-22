@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.paymentMethod">
+
+    <resultMap type="paymentMethodVo" id="paymentMethodResultMap">
+        <id column="PAYMENT_METHOD_NO" property="paymentMethodNo" />
+        <result column="PAYMENT_METHOD_NAME" property="paymentMethodName" />
+    </resultMap>
+
+    <select id="paymentMethodSelectList" resultMap="paymentMethodResultMap">
+        SELECT PAYMENT_METHOD_NO, PAYMENT_METHOD_NAME
+        FROM PAYMENT_METHOD
+    </select>
+
+    <select id="countByPaymentMethodName" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM PAYMENT_METHOD
+        WHERE PAYMENT_METHOD_NAME = #{paymentMethodName}
+    </select>
+
+    <insert id="insertPaymentMethod" parameterType="String">
+        INSERT INTO PAYMENT_METHOD (PAYMENT_METHOD_NO, PAYMENT_METHOD_NAME)
+        VALUES (PAYMENT_METHOD_NO_SEQ.NEXTVAL, #{paymentMethodName})
+    </insert>
+
+    <select id="paymentMethodExist" parameterType="String" resultMap="paymentMethodResultMap">
+        SELECT PAYMENT_METHOD_NO, PAYMENT_METHOD_NAME
+        FROM PAYMENT_METHOD
+        WHERE PAYMENT_METHOD_NAME = #{name}
+    </select>
+
+    <select id="selectPaymentMethodNoByName" parameterType="String" resultType="int">
+        SELECT PAYMENT_METHOD_NO
+        FROM PAYMENT_METHOD
+        WHERE PAYMENT_METHOD_NAME = #{paymentMethodName}
+    </select>
+
+    <select id="pmTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(ACCOUNT_BOOK_NO)
+        FROM ACCOUNT_BOOK AB
+        WHERE AB.PAYMENT_METHOD_NO = #{paymentMethodNo}
+    </select>
+
+    <select id="paymentMethodSelectOne" parameterType="int" resultMap="paymentMethodResultMap">
+        SELECT PAYMENT_METHOD_NO, PAYMENT_METHOD_NAME
+        FROM PAYMENT_METHOD
+        WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
+    </select>
+
+    <delete id="paymentMethodDeleteOne" parameterType="paymentMethodResultMap">
+        DELETE FROM PAYMENT_METHOD
+        WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
+    </delete>
+</mapper>

@@ -32,6 +32,19 @@ public class CategoryController {
   @Qualifier("plusCategoryService")
   private CategoryService plusCategoryService;
 
+  @GetMapping(value = "/list")
+  public String categoryList(Model model) {
+    log.info("{} - Retrieving all categories", LOG_TITLE);
+
+    List<CategoryVo> minusCategoryList = minusCategoryService.categorySelectList();
+    List<CategoryVo> plusCategoryList = plusCategoryService.categorySelectList();
+
+    model.addAttribute("minusCategoryList", minusCategoryList);
+    model.addAttribute("plusCategoryList", plusCategoryList);
+
+    return "jsp/admin/category/CategoryListView";
+  }
+
 //  @GetMapping(value = "/list")
 //  public ResponseEntity<?> categoryList() {
 //    log.info("{} - Retrieving all categories", LOG_TITLE);
@@ -49,19 +62,19 @@ public class CategoryController {
 //    return ResponseEntity.ok().body(resultMap);
 //  }
 
-  @GetMapping(value = "/list")
-  public ResponseEntity<?> categoryList() {
-    log.info("{} - Retrieving all categories", LOG_TITLE);
-
-    Map<String, Object> minusCategories = minusCategoryService.allCategorySelectList();
-    Map<String, Object> plusCategories = plusCategoryService.allCategorySelectList();
-
-    Map<String, Object> resultMap = new HashMap<>();
-    resultMap.putAll(minusCategories);
-    resultMap.putAll(plusCategories);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
+//  @GetMapping(value = "/list")
+//  public ResponseEntity<?> categoryList() {
+//    log.info("{} - Retrieving all categories", LOG_TITLE);
+//
+//    Map<String, Object> minusCategories = minusCategoryService.allCategorySelectList();
+//    Map<String, Object> plusCategories = plusCategoryService.allCategorySelectList();
+//
+//    Map<String, Object> resultMap = new HashMap<>();
+//    resultMap.putAll(minusCategories);
+//    resultMap.putAll(plusCategories);
+//
+//    return ResponseEntity.ok().body(resultMap);
+//  }
 
   @GetMapping("/add")
   public String categoryAdd(Model model) {
