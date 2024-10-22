@@ -157,13 +157,44 @@ public class PaymentMethodController {
     log.info("deletePaymentMethod paymentMethodNo: {}", paymentMethodNo);
 
     Map<String, Object> resultMap = new HashMap<>();
+    PaymentMethodVo paymentMethod = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
 
-//    이곳에 paymentMethodSelectOne 이 함수를 불러올 로직 완성해야 함
-//    그 후에 service, dao, 각 impl들에도 추가해야 함
+    if (paymentMethod == null) {
+      resultMap.put("status", "error");
+      resultMap.put("message", "결제 방법을 찾을 수 없습니다.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
+    }
 
-    paymentMethodService.paymentMethodDeleteOne(paymentMethodNo);
+    resultMap.put("status", "success");
+    resultMap.put("paymentMethodName", paymentMethod.getPaymentMethodName());
+    resultMap.put("message", "결제 방법을 삭제할 수 있습니다.");
+    return ResponseEntity.ok(resultMap);
+  }
 
-    return ResponseEntity.ok(paymentMethodNo);
+  @DeleteMapping("/finalDelete/{paymentMethodNo}")
+  public ResponseEntity<?> finalDeletePaymentMethod(@PathVariable int paymentMethodNo) {
+    log.info("{} - Final deletion for paymentMethodNo: {}", LOG_TITLE, paymentMethodNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+    PaymentMethodVo paymentMethod = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
+
+    if (paymentMethod == null) {
+      resultMap.put("status", "error");
+      resultMap.put("message", "결제 방법을 찾을 수 없습니다.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
+    }
+
+    boolean isDeleted = paymentMethodService.paymentMethodDeleteOne(paymentMethodNo);
+
+    if (isDeleted) {
+      resultMap.put("status", "success");
+      resultMap.put("message", "'" + paymentMethod.getPaymentMethodName() + "' 결제 방법이 성공적으로 삭제되었습니다.");
+      return ResponseEntity.ok(resultMap);
+    } else {
+      resultMap.put("status", "error");
+      resultMap.put("message", "결제 방법 삭제에 실패했습니다.");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+    }
   }
 
 }

@@ -47,7 +47,7 @@
         WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
     </select>
 
-    <delete id="paymentMethodDeleteOne" parameterType="paymentMethodResultMap">
+    <delete id="paymentMethodDeleteOne" parameterType="int">
         DELETE FROM PAYMENT_METHOD
         WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
     </delete>

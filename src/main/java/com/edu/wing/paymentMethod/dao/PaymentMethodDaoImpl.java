@@ -48,7 +48,14 @@ public class PaymentMethodDaoImpl implements PaymentMethodDao {
   }
 
   @Override
-  public int paymentMethodDeleteOne(int paymentMethodNo) {
-    return sqlSession.delete(NAMESPACE + "paymentMethodDeleteOne", paymentMethodNo);
+  public PaymentMethodVo paymentMethodSelectOne(int paymentMethodNo){
+    return sqlSession.selectOne(NAMESPACE + "paymentMethodSelectOne", paymentMethodNo);
+  }
+
+  @Override
+  public boolean paymentMethodDeleteOne(int paymentMethodNo) {
+    int result = sqlSession.update(NAMESPACE + "paymentMethodDeleteOne", paymentMethodNo);
+
+    return result > 0;
   }
 }

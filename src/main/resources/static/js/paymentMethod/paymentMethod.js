@@ -74,10 +74,34 @@ function moveDelFunc(no) {
 function paymentMethodDelete(deleteNo) {
   $.ajax({
     url: `/admin/api/paymentMethod/delete/${deleteNo}`,
-    type: 'POST',
+    type: 'DELETE',
     success: function (res) {
-      alert("")
-    //   이곳에 no 뿐만이 아니라 name도 들어가서 name이 삭제 되었습니다 라고 알려줘야 한다
+      if (res.status === "success") {
+        // 삭제가 성공한 경우, 실제로 삭제할 것인지 다시 한 번 확인합니다.
+        if (confirm(`${res.paymentMethodName} 결제 방법을 실제로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
+          // 사용자가 최종 확인을 한 경우, 실제 삭제를 진행합니다.
+          $.ajax({
+            url: `/admin/api/paymentMethod/finalDelete/${deleteNo}`,
+            type: 'DELETE',
+            success: function (finalRes) {
+              if (finalRes.status === "success") {
+                alert(finalRes.message);
+                location.reload(); // 페이지 새로고침
+              } else {
+                alert(finalRes.message || "결제 방법 삭제에 실패했습니다.");
+              }
+            },
+            error: function (xhr, status, error) {
+              alert("오류가 발생했습니다: " + error);
+            }
+          });
+        }
+      } else {
+        alert(res.message || "결제 방법을 찾을 수 없습니다.");
+      }
+    },
+    error: function (xhr, status, error) {
+      alert("오류가 발생했습니다: " + error);
     }
-  })
+  });
 }

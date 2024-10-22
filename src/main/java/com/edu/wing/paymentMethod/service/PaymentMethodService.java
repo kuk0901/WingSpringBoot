@@ -14,5 +14,7 @@ public interface PaymentMethodService {
 
   int pmTotalCount(int paymentMethodNo);
 
-  int paymentMethodDeleteOne(int paymentMethodNo);
+  PaymentMethodVo paymentMethodSelectOne(int paymentMethodNo);
+
+  boolean paymentMethodDeleteOne(int paymentMethodNo);
 }

@@ -43,7 +43,12 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
   }
 
   @Override
-  public int paymentMethodDeleteOne(int paymentMethodNo) {
-    return  paymentMethodDao.paymentDeleteOne(paymentMethodNo);
+  public PaymentMethodVo paymentMethodSelectOne(int paymentMethodNo) {
+    return paymentMethodDao.paymentMethodSelectOne(paymentMethodNo);
+  }
+
+  @Override
+  public boolean paymentMethodDeleteOne(int paymentMethodNo) {
+    return  paymentMethodDao.paymentMethodDeleteOne(paymentMethodNo);
   }
 }
