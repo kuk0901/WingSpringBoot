@@ -1,12 +1,10 @@
 package com.edu.wing.paymentMethod.dao;
 
-import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.paymentMethod.domain.PaymentMethodVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -25,11 +23,6 @@ public class PaymentMethodDaoImpl implements PaymentMethodDao {
   @Override
   public PaymentMethodVo paymentMethodExist(String paymentMethodName) {
     return sqlSession.selectOne(NAMESPACE + "paymentMethodExist", paymentMethodName);
-  }
-
-  @Override
-  public int countByPaymentMethodName(String paymentMethodName) {
-    return sqlSession.selectOne(NAMESPACE + "countByPaymentMethodName", paymentMethodName);
   }
 
   @Override
@@ -54,8 +47,16 @@ public class PaymentMethodDaoImpl implements PaymentMethodDao {
 
   @Override
   public boolean paymentMethodDeleteOne(int paymentMethodNo) {
-    int result = sqlSession.update(NAMESPACE + "paymentMethodDeleteOne", paymentMethodNo);
+    int result = sqlSession.delete(NAMESPACE + "paymentMethodDeleteOne", paymentMethodNo);
 
     return result > 0;
+  }
+
+  @Override
+  public PaymentMethodVo paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
+
+    sqlSession.update(NAMESPACE + "paymentMethodUpdateOne", paymentMethodVo);
+
+    return paymentMethodVo;
   }
 }

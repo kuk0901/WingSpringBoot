@@ -13,18 +13,51 @@
     font-size: 20px;
 }
 
-.main-container {
+.main-container.payment-method__list {
     margin: 20px;
     height: 600px;
 }
 
-.one-line {
+.main-container.payment-method__change{
+    margin: 145px 20px;
+    height: 600px;
+}
+
+/*.one-line-end .one-line-start {*/
+/*    display: flex;*/
+/*}*/
+
+#content .one-line-end {
+    display: flex;
     justify-content: flex-end;
+}
+
+#content .one-line-start {
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px;
+}
+
+/*.one-line-end {*/
+/*    justify-content: flex-end;*/
+/*}*/
+
+/*.one-line-start {*/
+/*    justify-content: flex-start;*/
+/*    gap: 100px;*/
+/*}*/
+
+.label-size {
+    display: flex;
+    width: 300px;
+    height: 25px;
 }
 
 .one-line .btn-container {
     margin-right: 20px;
 }
+
+/*#content .ma*/
 
 .list--title {
     font-size: 17px;
@@ -60,4 +93,10 @@
 
 .btn_margin {
     margin-right: 20px;
+}
+
+.btn--margin {
+    margin: 150px 20px 50px 200px;
+    width: 150px;
+    height: 40px;
 }

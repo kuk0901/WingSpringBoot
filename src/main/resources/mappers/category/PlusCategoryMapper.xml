@@ -13,6 +13,17 @@
         ORDER BY CATEGORY_NO
     </select>
 
+    <select id="categoryExists" parameterType="string" resultType="int">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM PLUS_CATEGORY
+        WHERE categoryname = #{categoryName}
+    </select>
+
+    <insert id="categoryInsertOne" parameterType="string">
+        INSERT INTO PLUS_CATEGORY (CATEGORY_NAME)
+        VALUES (PLUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
+    </insert>
+
     <insert id="plusCategoryInsertOne" parameterType="plusCategoryVo">
         INSERT INTO PLUS_CATEGORY
             (CATEGORY_NO, CATEGORY_NAME)

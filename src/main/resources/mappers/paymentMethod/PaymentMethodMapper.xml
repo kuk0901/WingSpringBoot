@@ -51,4 +51,11 @@
         DELETE FROM PAYMENT_METHOD
         WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
     </delete>
+    
+    <update id="paymentMethodUpdateOne" parameterType="paymentMethodVo">
+        UPDATE PAYMENT_METHOD
+        SET
+            PAYMENT_METHOD_NAME = #{paymentMethodName}
+        WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
+    </update>
 </mapper>

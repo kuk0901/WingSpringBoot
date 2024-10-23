@@ -21,15 +21,15 @@
       </div>
     </div>
 
-    <div class="one-line">
-      <div class="btn-container">
+    <div class="one-line-start">
+      <div class="btn-container one-line-end">
         <a class="btn btn__generate" href="./add">
           결제 수단 추가
         </a>
       </div>
     </div>
 
-    <main class="main-container bg__white">
+    <main class="main-container payment-method__list bg__white">
       <div class="list-container list-container--title container-title">
         <div class="list--title list--div text__semibold box__s text__center">결제수단명</div>
         <div class="list--title list--div text__semibold box__l text__center">비고</div>
@@ -42,8 +42,8 @@
               <div class="list--div box__i text__center">${paymentMethod.paymentMethodName}</div>
               <div class="list--div box__o text__center">
 <%--                <button class="btn btn__generate btn__blue btn_margin" onclick="moveModFunc(${paymentMethod.paymentMethodNo})">수정</button>--%>
-                <button class="btn btn__generate btn__blue btn_margin">수정</button>
-                <button class="btn btn__generate btn__red" onclick="moveDelFunc(${paymentMethod.paymentMethodNo})">삭제</button>
+                <button class="btn btn__generate btn__blue btn_margin" onclick="paymentMethodUpdate(${paymentMethod.paymentMethodNo});">수정</button>
+                <button class="btn btn__generate btn__red" onclick="moveDelFunc(${paymentMethod.paymentMethodNo});">삭제</button>
               </div>
             </div>
           </c:forEach>

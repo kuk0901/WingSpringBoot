@@ -1,11 +1,8 @@
 package com.edu.wing.paymentMethod.service;
 
-import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.paymentMethod.dao.PaymentMethodDao;
-import com.edu.wing.paymentMethod.dao.PaymentMethodDaoImpl;
 import com.edu.wing.paymentMethod.domain.PaymentMethodVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +47,13 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
   @Override
   public boolean paymentMethodDeleteOne(int paymentMethodNo) {
     return  paymentMethodDao.paymentMethodDeleteOne(paymentMethodNo);
+  }
+
+  @Override
+  public PaymentMethodVo paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
+    // 3. 데이터베이스 업데이트 수행
+
+    return paymentMethodDao.paymentMethodUpdateOne(paymentMethodVo);
+
   }
 }

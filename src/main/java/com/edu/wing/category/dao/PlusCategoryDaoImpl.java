@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Repository
@@ -26,14 +25,6 @@ public class PlusCategoryDaoImpl implements CategoryDao {
     return sqlSession.selectList(NAMESPACE + "plusCategorySelectList");
   }
 
-//  @Override
-//  public Map<String, Object> allCategorySelectList() {
-//    Map<String, Object> resultMap = new HashMap<>();
-//    List<CategoryVo> plusCategoryList = sqlSession.selectList(NAMESPACE + "plusCategorySelectList");
-//    resultMap.put("plusCategoryList", plusCategoryList);
-//    return resultMap;
-//  }
-
   @Override
   public Map<String, Object> allCategorySelectList() {
     List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
@@ -46,8 +37,17 @@ public class PlusCategoryDaoImpl implements CategoryDao {
   }
 
   @Override
-  public int categoryInsertOne(CategoryVo categoryVo) {
-    return sqlSession.insert(NAMESPACE + "plusCategoryInsertOne", categoryVo);
+  public boolean categoryExists(Map<String, String> categoryMap) {
+    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
+
+    return count != null && count > 0;
+  }
+
+  @Override
+  public boolean categoryInsertOne(Map<String, String> categoryMap) {
+    int result = sqlSession.insert(NAMESPACE + "insertCategory", categoryMap);
+
+    return result > 0;
   }
 
   @Override

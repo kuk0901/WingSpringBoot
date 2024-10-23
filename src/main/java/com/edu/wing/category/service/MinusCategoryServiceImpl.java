@@ -28,8 +28,13 @@ public class MinusCategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public int categoryInsertOne(CategoryVo categoryVo) {
-    return minusCategoryDao.categoryInsertOne(categoryVo);
+  public boolean categoryExists(Map<String, String> categoryMap) {
+    return minusCategoryDao.categoryExists(categoryMap);
+  }
+
+  @Override
+  public boolean categoryInsertOne(Map<String, String> categoryMap) {
+    return minusCategoryDao.categoryInsertOne(categoryMap);
   }
 
   @Override

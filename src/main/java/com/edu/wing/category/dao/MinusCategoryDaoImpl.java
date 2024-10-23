@@ -1,7 +1,6 @@
 package com.edu.wing.category.dao;
 
 import com.edu.wing.category.domain.CategoryVo;
-import com.edu.wing.category.domain.MinusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,14 +25,6 @@ public class MinusCategoryDaoImpl implements CategoryDao {
     return sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
   }
 
-//  @Override
-//  public Map<String, Object> allCategorySelectList() {
-//    Map<String, Object> resultMap = new HashMap<>();
-//    List<CategoryVo> minusCategoryList = sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
-//    resultMap.put("minusCategoryList", minusCategoryList);
-//    return resultMap;
-//  }
-
   @Override
   public Map<String, Object> allCategorySelectList() {
     List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
@@ -46,8 +37,17 @@ public class MinusCategoryDaoImpl implements CategoryDao {
   }
 
   @Override
-  public int categoryInsertOne(CategoryVo categoryVo) {
-    return sqlSession.insert(NAMESPACE + "minusCategoryInsertOne", categoryVo);
+  public boolean categoryExists(Map<String, String> categoryMap) {
+    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
+
+    return count != null && count > 0;
+  }
+
+  @Override
+  public boolean categoryInsertOne(Map<String, String> categoryMap) {
+    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
+
+    return count != null && count > 0;
   }
 
   @Override
