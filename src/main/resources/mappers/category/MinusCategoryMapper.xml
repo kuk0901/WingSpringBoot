@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.edu.wing.category.dao.CategoryDao">
+<mapper namespace="com.edu.wing.category">
 
     <resultMap type="minusCategoryVo" id="minusCategoryResultMap">
         <id column="CATEGORY_NO" property="categoryNo" />
@@ -10,23 +10,24 @@
     <select id="minusCategorySelectList" resultMap="minusCategoryResultMap">
         SELECT CATEGORY_NO, CATEGORY_NAME
         FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO != 1
         ORDER BY CATEGORY_NO
     </select>
 
-    <select id="categoryExists" parameterType="string" resultType="int">
+    <select id="minusCategoryExists" parameterType="String" resultMap="minusCategoryResultMap">
         SELECT CATEGORY_NO, CATEGORY_NAME
         FROM MINUS_CATEGORY
-        WHERE categoryname = #{categoryName}
+        WHERE CATEGORY_NAME = #{categoryName}
     </select>
 
-    <insert id="categoryInsertOne" parameterType="string">
-        INSERT INTO MINUS_CATEGORY (CATEGORY_NAME)
-        VALUES (MINUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
-    </insert>
+    <select id="selectMinusCategoryNoByName" parameterType="String" resultType="int">
+        SELECT CATEGORY_NO
+        FROM MINUS_CATEGORY
+        WHERE CATEGORY_NAME = #{categoryName}
+    </select>
 
-    <insert id="minusCategoryInsertOne" parameterType="minusCategoryVo">
-        INSERT INTO MINUS_CATEGORY
-            (CATEGORY_NO, CATEGORY_NAME)
+    <insert id="minusCategoryInsertOne" parameterType="map">
+        INSERT INTO MINUS_CATEGORY (CATEGORY_NO, CATEGORY_NAME)
         VALUES(MINUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
     </insert>
 
@@ -47,9 +48,14 @@
         WHERE CATEGORY_NO = #{categoryNo}
     </update>
 
-    <delete id="minusCategoryDeleteOne" parameterType="int">
-        DELETE 	FROM MINUS_CATEGORY
-        WHERE 	CATEGORY_NO = #{categoryNo}
-    </delete>
+    <select id="minusCategoryTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(ACCOUNT_BOOK_NO)
+        FROM ACCOUNT_BOOK AB
+        WHERE AB.MINUS_CATEGORY_NO = #{categoryNo}
+    </select>
 
+    <delete id="minusCategoryDeleteOne" parameterType="int">
+        DELETE FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO = #{categoryNo}
+    </delete>
 </mapper>

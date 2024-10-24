@@ -21,12 +21,10 @@
       </div>
     </div>
 
-    <div class="one-line-start">
-      <div class="btn-container one-line-end">
-        <a class="btn btn__generate" href="./add">
-          결제 수단 추가
-        </a>
-      </div>
+    <div class="btn-container text__right">
+      <a class="btn btn__generate btn__paymentMethod" href="./add">
+        결제 수단 추가
+      </a>
     </div>
 
     <main class="main-container payment-method__list bg__white">

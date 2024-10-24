@@ -1,9 +1,9 @@
 package com.edu.wing.category.dao;
 
-import com.edu.wing.category.domain.CategoryVo;
+import com.edu.wing.category.domain.MinusCategoryVo;
+import com.edu.wing.category.domain.PlusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -12,16 +12,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-@Qualifier("minusCategoryDao")
-public class MinusCategoryDaoImpl implements CategoryDao {
+public class MinusCategoryDaoImpl implements MinusCategoryDao {
 
   @Autowired
   private SqlSession sqlSession;
 
-  private static final String NAMESPACE = "com.edu.wing.category.dao.CategoryDao.";
+  private static final String NAMESPACE = "com.edu.wing.category.";
 
   @Override
-  public List<CategoryVo> categorySelectList() {
+  public List<MinusCategoryVo> minusCategorySelectList() {
     return sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
   }
 
@@ -37,31 +36,41 @@ public class MinusCategoryDaoImpl implements CategoryDao {
   }
 
   @Override
-  public boolean categoryExists(Map<String, String> categoryMap) {
-    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
-
-    return count != null && count > 0;
+  public MinusCategoryVo minusCategoryExists(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "minusCategoryExists", categoryName);
   }
 
   @Override
-  public boolean categoryInsertOne(Map<String, String> categoryMap) {
-    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
-
-    return count != null && count > 0;
+  public int selectMinusCategoryNoByName(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "selectMinusCategoryNoByName", categoryName);
   }
 
   @Override
-  public CategoryVo categorySelectOne(int no) {
-    return sqlSession.selectOne(NAMESPACE + "minusCategorySelectOne", no);
+  public void minusCategoryInsertOne(String categoryName) {
+    sqlSession.insert(NAMESPACE + "minusCategoryInsertOne", categoryName);
   }
 
   @Override
-  public int categoryUpdateOne(CategoryVo categoryVo) {
-    return sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", categoryVo);
+  public MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
+    sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", minusCategoryVo);
+
+    return minusCategoryVo;
   }
 
   @Override
-  public int categoryDeleteOne(int no) {
-    return sqlSession.delete(NAMESPACE + "minusCategoryDeleteOne", no);
+  public MinusCategoryVo minusCategorySelectOne(int categooryNo) {
+    return sqlSession.selectOne(NAMESPACE + "minusCategorySelectOne", categooryNo);
+  }
+
+  @Override
+  public int minusCategoryTotalCount(int categoryNo){
+    return sqlSession.selectOne(NAMESPACE + "minusCategoryTotalCount", categoryNo);
+  }
+
+  @Override
+  public boolean minusCategoryDeleteOne(int categoryNo) {
+    int result = sqlSession.delete(NAMESPACE + "minusCategoryDeleteOne", categoryNo);
+
+    return result > 0;
   }
 }

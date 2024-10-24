@@ -1,7 +1,9 @@
 package com.edu.wing.category.service;
 
-import com.edu.wing.category.dao.CategoryDao;
-import com.edu.wing.category.domain.CategoryVo;
+import com.edu.wing.category.dao.MinusCategoryDao;
+import com.edu.wing.category.dao.PlusCategoryDao;
+import com.edu.wing.category.domain.MinusCategoryVo;
+import com.edu.wing.category.domain.PlusCategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,15 +13,14 @@ import java.util.Map;
 
 @Service
 @Qualifier("minusCategoryService")
-public class MinusCategoryServiceImpl implements CategoryService {
+public class MinusCategoryServiceImpl implements MinusCategoryService {
 
   @Autowired
-  @Qualifier("minusCategoryDao")
-  private CategoryDao minusCategoryDao;
+  private MinusCategoryDao minusCategoryDao;
 
   @Override
-  public List<CategoryVo> categorySelectList() {
-    return minusCategoryDao.categorySelectList();
+  public List<MinusCategoryVo> minusCategorySelectList() {
+    return minusCategoryDao.minusCategorySelectList();
   }
 
   @Override
@@ -28,27 +29,39 @@ public class MinusCategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public boolean categoryExists(Map<String, String> categoryMap) {
-    return minusCategoryDao.categoryExists(categoryMap);
+  public boolean minusCategoryExists(String categoryName) {
+    MinusCategoryVo minusCategoryVo = minusCategoryDao.minusCategoryExists(categoryName);
+
+    return minusCategoryVo != null;
   }
 
   @Override
-  public boolean categoryInsertOne(Map<String, String> categoryMap) {
-    return minusCategoryDao.categoryInsertOne(categoryMap);
+  public boolean minusCategoryInsertOne(String categoryName) {
+    minusCategoryDao.minusCategoryInsertOne(categoryName);
+
+    int categoryNo = minusCategoryDao.selectMinusCategoryNoByName(categoryName);
+
+    return categoryNo > 0;
+
   }
 
   @Override
-  public CategoryVo categorySelectOne(int no) {
-    return minusCategoryDao.categorySelectOne(no);
+  public MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
+    return minusCategoryDao.minusCategoryUpdateOne(minusCategoryVo);
   }
 
   @Override
-  public int categoryUpdateOne(CategoryVo categoryVo) {
-    return minusCategoryDao.categoryUpdateOne(categoryVo);
+  public MinusCategoryVo minusCategorySelectOne(int categoryNo) {
+    return minusCategoryDao.minusCategorySelectOne(categoryNo);
   }
 
   @Override
-  public int categoryDeleteOne(int no) {
-    return minusCategoryDao.categoryDeleteOne(no);
+  public int minusCategoryTotalCount(int categoryNo){
+    return minusCategoryDao.minusCategoryTotalCount(categoryNo);
+  }
+
+  @Override
+  public boolean minusCategoryDeleteOne(int categoryNo) {
+    return minusCategoryDao.minusCategoryDeleteOne(categoryNo);
   }
 }

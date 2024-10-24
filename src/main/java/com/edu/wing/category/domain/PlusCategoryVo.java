@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 @Data
-public class PlusCategoryVo implements CategoryVo {
+public class PlusCategoryVo {
 
   @Id
   private int categoryNo;

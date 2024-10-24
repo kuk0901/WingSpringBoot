@@ -3,6 +3,11 @@
     margin-top: 20px;
 }
 
+/* 삭제 예정 */
+.text__right {
+    text-align: right;
+}
+
 /*삭제예정*/
 #content .title-container .title {
     width: 250px;
@@ -23,9 +28,9 @@
     height: 600px;
 }
 
-/*.one-line-end .one-line-start {*/
-/*    display: flex;*/
-/*}*/
+.btn__paymentMethod {
+    padding: 13px 19px;
+}
 
 #content .one-line-end {
     display: flex;
@@ -37,15 +42,6 @@
     justify-content: flex-start;
     gap: 100px;
 }
-
-/*.one-line-end {*/
-/*    justify-content: flex-end;*/
-/*}*/
-
-/*.one-line-start {*/
-/*    justify-content: flex-start;*/
-/*    gap: 100px;*/
-/*}*/
 
 .label-size {
     display: flex;

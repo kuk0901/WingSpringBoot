@@ -1,9 +1,8 @@
 package com.edu.wing.category.dao;
 
-import com.edu.wing.category.domain.CategoryVo;
+import com.edu.wing.category.domain.PlusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -12,16 +11,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-@Qualifier("plusCategoryDao")
-public class PlusCategoryDaoImpl implements CategoryDao {
+public class PlusCategoryDaoImpl implements PlusCategoryDao {
 
   @Autowired
   private SqlSession sqlSession;
 
-  private static final String NAMESPACE = "com.edu.wing.category.dao.CategoryDao.";
+  private static final String NAMESPACE = "com.edu.wing.category.";
 
   @Override
-  public List<CategoryVo> categorySelectList() {
+  public List<PlusCategoryVo> plusCategorySelectList() {
     return sqlSession.selectList(NAMESPACE + "plusCategorySelectList");
   }
 
@@ -37,31 +35,41 @@ public class PlusCategoryDaoImpl implements CategoryDao {
   }
 
   @Override
-  public boolean categoryExists(Map<String, String> categoryMap) {
-    Integer count = sqlSession.selectOne(NAMESPACE + "categoryExists", categoryMap);
-
-    return count != null && count > 0;
+  public PlusCategoryVo plusCategoryExists(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "plusCategoryExists", categoryName);
   }
 
   @Override
-  public boolean categoryInsertOne(Map<String, String> categoryMap) {
-    int result = sqlSession.insert(NAMESPACE + "insertCategory", categoryMap);
+  public int selectPlusCategoryNoByName(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "selectPlusCategoryNoByName", categoryName);
+  }
+
+  @Override
+  public void plusCategoryInsertOne(String categoryName) {
+    sqlSession.insert(NAMESPACE + "plusCategoryInsertOne", categoryName);
+  }
+
+  @Override
+  public PlusCategoryVo plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo) {
+    sqlSession.update(NAMESPACE + "plusCategoryUpdateOne", plusCategoryVo);
+
+    return plusCategoryVo;
+  }
+
+  @Override
+  public PlusCategoryVo plusCategorySelectOne(int categoryNo) {
+    return sqlSession.selectOne(NAMESPACE + "plusCategorySelectOne", categoryNo);
+  }
+
+  @Override
+  public int plusCategoryTotalCount(int categoryNo) {
+    return sqlSession.selectOne(NAMESPACE + "plusCategoryTotalCount", categoryNo);
+  }
+
+  @Override
+  public boolean plusCategoryDeleteOne(int categoryNo) {
+    int result = sqlSession.delete(NAMESPACE + "plusCategoryDeleteOne", categoryNo);
 
     return result > 0;
-  }
-
-  @Override
-  public CategoryVo categorySelectOne(int no) {
-    return sqlSession.selectOne(NAMESPACE + "plusCategorySelectOne", no);
-  }
-
-  @Override
-  public int categoryUpdateOne(CategoryVo categoryVo) {
-    return sqlSession.update(NAMESPACE + "plusCategoryUpdateOne", categoryVo);
-  }
-
-  @Override
-  public int categoryDeleteOne(int no) {
-    return sqlSession.delete(NAMESPACE + "plusCategoryDeleteOne", no);
   }
 }
