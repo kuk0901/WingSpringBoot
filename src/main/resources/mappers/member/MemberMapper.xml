@@ -5,7 +5,7 @@
     <resultMap type="memberVo" id="memberResultMap">
         <id column="MEMBER_NO" property="memberNo" />
         <result column="EMAIL" property="email" />
-        <result column="NAME" property="name" />
+        <result column="NAME" property="userName" />
         <result column="PWD" property="pwd" />
         <result column="CRE_DATE" property="creDate"
                 javaType="java.util.Date" />
@@ -35,14 +35,8 @@
     </select>
 
     <insert id="memberInsertOne" parameterType="memberVo">
-        INSERT INTO MEMBER (
-            MEMBER_NO,EMAIL,PWD,NAME, PHONE, GRADE, YEARLY_SALARY,MONTH_SALARY, CRE_DATE,
-            MOD_DATE,
-            QUIT_APPLY, PRODUCT_PURCHASE
-        ) VALUES (
-                     MEMBER_NO_SEQ.NEXTVAL,#{email},#{pwd}, #{name}, #{phone},#{grade},
-                     #{yearlySalary},#{monthlySalary},
-                     SYSDATE, SYSDATE,'N', 'N')
+        INSERT INTO MEMBER (MEMBER_NO, EMAIL, PWD, NAME, PHONE, GRADE, YEARLY_SALARY, MONTH_SALARY)
+        VALUES (MEMBER_NO_SEQ.NEXTVAL, #{email}, #{pwd}, #{userName}, #{phone}, #{grade}, #{yearlySalary}, #{monthlySalary})
     </insert>
 
     <!-- 이메일 중복 체크 쿼리 -->

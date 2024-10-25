@@ -21,7 +21,7 @@
     <c:if test="${not empty sessionScope.member}">
       <li>
         <a href="#" id="userName" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
-            ${sessionScope.member.name}님
+            ${sessionScope.member.userName}님
         </a>
       </li>
     </c:if>
@@ -56,7 +56,7 @@
 
   <ul class="btn-container signout-container member-signout">
     <li>
-      <a href="#" class="btn btn__signout text__black bg-white">Sign Out</a>
+      <a href="/auth/signout" class="btn btn__signout text__black bg-white">Sign Out</a>
     </li>
   </ul>
 </nav>

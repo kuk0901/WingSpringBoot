@@ -17,10 +17,14 @@
   --btn-skyblue: #00a3ff;
   --btn-red: #ff6f61;
   --btn-primary: #052c55;
+
+  /* toast */
+  --toast-point: #1D72F3;
 }
 
 * {
   box-sizing: border-box;
+  word-break: keep-all;
 }
 
 a {
@@ -97,6 +101,11 @@ a {
   text-align: center;
 }
 
+.text-date__error {
+  display: inline-block;
+  margin: 10px auto;
+}
+
 /* btn */
 .btn {
   text-align: center;
@@ -106,12 +115,6 @@ a {
 .btn:hover {
   cursor: pointer;
 }
-
-/* FIXME: 일반 btn ui 확인 후 수정
-.btn__p {
-  padding: 7px 19px;
-}
-*/
 
 .btn__generate {
   background-color: var(--color-white);
@@ -135,6 +138,11 @@ a {
 
 .btn__blue {
   background-color: var(--btn-blue);
+  color: var(--color-white);
+}
+
+.btn__red {
+  background-color: var(--btn-red);
   color: var(--color-white);
 }
 
@@ -182,7 +190,7 @@ a {
 .admin-nav,
 .member-nav {
   background-color: var(--color-bg);
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 200px;
@@ -191,7 +199,6 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
 }
 
 .admin-nav .active-link {
@@ -276,15 +283,25 @@ a {
   gap: 15px;
 }
 
-#root #content {
+#root #sectionMember {
+  display: flex;
+  flex-direction: column;
+}
+
+#root #content,
+#root #sectionMember #content {
   background-color: var(--color-bg);
-  width: 100%;
+  width: 85%;
   height: 100vh;
+  position: fixed;
+  right: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* footer */
 footer {
-  width: 87vw;
+  width: 85%;
   height: 7vh;
   background-color: var(--color-bg);
   color: var(--color-white);
@@ -302,10 +319,6 @@ footer .cs:hover {
 }
 
 /* main-container */
-#main-container {
-  background-color: var(--color-bg);
-}
-
 .form-container {
   background-color: var(--color-bg);
 }
@@ -353,6 +366,21 @@ footer .cs:hover {
   margin: 10px auto;
 }
 
+/* AdminPage title line */
+#content .title-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#content .title-container .title {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
 /* paging */
 .paging .paging--list {
   list-style-type: none;
@@ -366,10 +394,6 @@ footer .cs:hover {
   margin: auto;
 }
 
-/*.paging .paging--list .paging--item {*/
-/*  */
-/*}*/
-
 .paging .paging--list .paging--item .btn__paging {
   display: block;
   color: var(--color-black);
@@ -379,6 +403,7 @@ footer .cs:hover {
 }
 
 .paging .paging--list .paging--item .btn__paging:hover {
+  color: var(--color-white);
   background-color: #5D5D5D;
   font-weight: bold;
 }
@@ -386,6 +411,77 @@ footer .cs:hover {
 .paging .paging--list .paging--item .btn__paging.paging__active {
   color: var(--color-correct);
   font-weight: bold;
+}
+
+/* alert */
+.toast {
+  text-align:left;
+  padding: 21px 0;
+  background-color:#fff;
+  border-radius:4px;
+  max-width: 500px;
+  top: 20px;
+  right: 50px;
+  position: absolute;
+  box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
+}
+
+.toast:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-top-left-radius:4px;
+  border-bottom-left-radius: 4px;
+}
+
+.toast__icon{
+  position:absolute;
+  top:50%;
+  left:22px;
+  transform:translateY(-50%);
+  width:14px;
+  height:14px;
+  padding: 7px;
+  border-radius:50%;
+  display:inline-block;
+}
+
+.toast__message {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.toast__content{
+  padding-left: 70px;
+  padding-right: 90px;;
+}
+
+.toast__close {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  width: 14px;
+  cursor:pointer;
+  height: 14px;
+  fill:#878787;
+  transform: translateY(-50%);
+}
+
+.toast__close .toast__img {
+  position: absolute;
+  top: -5px;
+}
+
+.toast--blue .toast__icon{
+  background-color:#1D72F3;
+}
+
+.toast--blue:before{
+  background-color:#1D72F3;
 }
 
 /* scroll to tap 클릭 시 화면 최상단으로 이동 */
@@ -409,4 +505,7 @@ footer .cs:hover {
   transition: transform 0.2s, opacity 0.2s;
 }
 
-#to-top .arrow_upward {}
+/* hidden */
+.hidden-ui {
+  height: 70px;
+}

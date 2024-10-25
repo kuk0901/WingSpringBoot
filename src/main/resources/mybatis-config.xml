@@ -11,6 +11,7 @@
         <package name="com.edu.wing.sellingCard.domain"/>
         <package name="com.edu.wing.card.domain"/>
         <package name="com.edu.wing.category.domain"/>
+        <package name="com.edu.wing.cardBenefit.domain"/>
     </typeAliases>
     <mappers>
         <mapper resource="mappers/member/MemberMapper.xml" />
@@ -18,6 +19,7 @@
         <mapper resource="mappers/card/CardMapper.xml" />
         <mapper resource="mappers/category/MinusCategoryMapper.xml" />
 <!--        <mapper resource="mappers/category/PlusCategoryMapper.xml" />-->
+        <mapper resource="mappers/card/CardBenefitMapper.xml"/>
     </mappers>
 
 </configuration>

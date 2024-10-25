@@ -2,9 +2,18 @@ package com.edu.wing.card.service;
 
 import com.edu.wing.card.dao.CardDao;
 import com.edu.wing.card.domain.CardVo;
+import com.edu.wing.cardBenefit.dao.CardBenefitDao;
+import com.edu.wing.cardBenefit.domain.CardBenefitVo;
+import com.edu.wing.util.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +23,9 @@ public class CardServiceImpl implements CardService {
 
   @Autowired
   private CardDao cardDao;
+
+  @Autowired
+  private CardBenefitDao cardBenefitDao;
 
   @Override
   public List<CardVo> cardSelectList(int start, int end, String categoryName) {
@@ -28,5 +40,57 @@ public class CardServiceImpl implements CardService {
   @Override
   public int cardSelectTotalCount(String categoryName) {
     return cardDao.cardSelectTotalCount(categoryName);
+  }
+
+  @Override
+  public CardVo cardSelectOne(int cardNo) {
+    return cardDao.cardSelectOne(cardNo);
+  }
+
+  @Override
+  public boolean cardExist(String cardName) {
+    return cardDao.cardExist(cardName) != null;
+  }
+
+  @Override
+  @Transactional
+  public int insertCardAndBenefits(Map<String, String> formData, MultipartFile file, String benefitsJson) {
+    try {
+      // 파일 처리
+      FileUtils fileUtils = new FileUtils();
+      Map<String, String> cardImageInfo = fileUtils.parseInsertFileInfo(file);
+      formData.put("originalFileName", cardImageInfo.get("originalFileName"));
+      formData.put("storedFileName", cardImageInfo.get("storedFileName"));
+
+      Type listType = new TypeToken<List<CardBenefitVo>>() {}.getType();
+      List<CardBenefitVo> cardBenefitVoList = new Gson().fromJson(benefitsJson, listType);
+
+      // 기존 혜택 정보 제거
+      formData.remove("benefits");
+
+      // 카드 등록
+      cardDao.cardInsert(formData);
+
+      // 카드 등록됐는지 확인
+      CardVo cardVo = cardDao.cardExist(formData.get("cardName"));
+
+      if (cardVo == null) {
+        return 0;
+      }
+
+      int cardNo = cardVo.getCardNo(); // 카드 번호 가져오기
+
+      // benefit insert
+      for (CardBenefitVo benefit : cardBenefitVoList) {
+        benefit.setCardNo(cardNo);
+        cardBenefitDao.cardBenefitInsertOne(benefit);
+      }
+
+      return cardNo;
+    } catch (IOException e) {
+      throw new RuntimeException("파일 처리 중 오류가 발생했습니다. 파일 형식이나 크기를 확인하고 다시 시도해 주세요.");
+    } catch (Exception e) {
+      throw e;
+    }
   }
 }

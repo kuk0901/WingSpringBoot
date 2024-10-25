@@ -20,7 +20,7 @@
     <c:if test="${not empty sessionScope.member}">
       <li>
         <a href="#" id="userName" class="btn btn--admin__my btn__p text__semibold" aria-label="사용자 프로필">
-          ${sessionScope.member.name}님
+          ${sessionScope.member.userName}님
         </a>
       </li>
     </c:if>
@@ -41,10 +41,10 @@
       >
     </li>
     <li>
-      <a href="${pageContext.request.contextPath}/admin/api/salesDashboard/list" class="btn btn__blue btn__p">판매 카드 현황</a>
+      <a href="${pageContext.request.contextPath}/admin/salesDashboard/list" class="btn btn__blue btn__p">판매 카드 현황</a>
     </li>
     <li>
-      <a href="${pageContext.request.contextPath}/admin/api/productManagement/list" class="btn btn__blue btn__p">카드 관리</a>
+      <a href="${pageContext.request.contextPath}/admin/productManagement/list" class="btn btn__blue btn__p">카드 관리</a>
     </li>
   </ul>
 
@@ -66,7 +66,7 @@
 
   <ul class="btn-container signout-container admin-signout">
     <li>
-      <a href="#" class="btn btn__signout text__black bg__white"><img class="signout__img" src="/img/lock_open.svg" alt="open"/>Sign Out</a>
+      <a href="/auth/signout" class="btn btn__signout text__black bg__white"><img class="signout__img" src="/img/lock_open.svg" alt="open"/>Sign Out</a>
     </li>
   </ul>
 </nav>

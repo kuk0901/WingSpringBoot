@@ -46,3 +46,56 @@ export function formatPhoneNumber(input) {
 
   input.value = number;
 }
+
+/**
+ * card 요약 혜택을 태그로 포맷팅
+ * @param {ajax.data} summBenefit
+ * @returns {string}
+ */
+export function formatCardBenefitSummaryToTags(summBenefit) {
+  let splitSummBenefit = summBenefit.split("^*^");
+
+  return splitSummBenefit
+      .filter(split => split.trim() !== '')
+      .map(split => `<li class="li--ui">${split}</li>`).join('').trim();
+}
+
+/**
+ * card 요약 혜택을 태그로 포맷팅
+ * @param {string} value
+ * @returns {string}
+ */
+export function unformatNumber(value) {
+  // 콤마 제거 후 숫자로 변환
+  return value.replace(/,/g, '');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

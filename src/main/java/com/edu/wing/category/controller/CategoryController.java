@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/admin/api/category")
 public class CategoryController {
 
   private static final Logger log = LoggerFactory.getLogger(CategoryController.class);

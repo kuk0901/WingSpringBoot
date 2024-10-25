@@ -1,19 +1,5 @@
 /* SellingCardList & CardList */
 /* content */
-#content .title-container {
-  width: 100%;
-  margin-top: 20px;
-}
-
-#content .title-container .title {
-  width: 250px;
-  height: 50px;
-  line-height: 50px;
-  margin-left: 20px;
-  margin-bottom: 30px;
-  font-size: 20px;
-}
-
 #content .one-line {
   justify-content: space-between;
 }
@@ -165,6 +151,32 @@
   padding: 10px 19px;
 }
 
+/* list style */
+.ul--ui .li--ui {
+  margin: 10px auto;
+  text-align: left;
+  position: relative;
+  line-height: 20px;
+}
+
+.ul--ui .li--ui::after {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: 5px;
+  left: -15px;
+  border-radius: 50%;
+  background-color: #000;
+  content: "";
+}
+
+.ul--ui .li--ui .list--style {
+  display: block;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -.65px;
+  padding-left: 12px;
+}
 
   /* flex-item size */
 .box__s {
@@ -176,6 +188,10 @@
 }
 
 .box__m {
+  width: 225px;
+}
+
+.box__ml {
   width: 250px;
 }
 

@@ -7,15 +7,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>salesDashboardList</title>
-  <link rel="stylesheet" href="/css/card/adminCard.css"></link>
-  <script defer src="/js/sellingCard/AjaxSellingCardDetail.js"></script>
+  <link rel="stylesheet" href="/css/admin/card/adminSalesDashboard.css"></link>
+  <script defer type="module" src="/js/admin/card/AjaxSellingCardDetail.js"></script>
 </head>
 <body>
+
+<jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
+  <jsp:param value="${alertMsg}" name="alertMsg" />
+</jsp:include>
 
 <section id="root">
   <jsp:include page="/WEB-INF/views/jsp/components/NavAdmin.jsp" />
 
-  <div id="content">
+  <div id="content" class="bg">
     <div class="title-container">
       <div class="title btn__yellow text__white">
         판매 카드 현황
@@ -35,8 +39,8 @@
       </form>
     </div>
 
-    <main class="main-container bg__white">
-      <div class="list-container list-container--title">
+    <main class="main-container">
+      <div class="list-container list-container--title bg__white">
         <div class="list--title list--div text__semibold box__s">번호</div>
         <div class="list--title list--div text__semibold box__l">판매 날짜</div>
         <div class="list--title list--div text__semibold box__s">판매 분류</div>
@@ -46,17 +50,19 @@
 
       <c:choose>
         <c:when test="${not empty sellingCardVoList}">
-          <c:forEach items="${sellingCardVoList}" var="sellingCard" >
-            <div class="list-container list-content" data-selling-card-no="${sellingCard.sellingCardNo}">
-              <div class="list--div box__s">${sellingCard.sellingCardNo}</div>
-              <div class="list--div box__l">
-                <fmt:formatDate value="${sellingCard.sellingDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+          <div class="bg__white">
+            <c:forEach items="${sellingCardVoList}" var="sellingCard" >
+              <div class="list-container list-content" data-selling-card-no="${sellingCard.sellingCardNo}">
+                <div class="list--div box__s">${sellingCard.sellingCardNo}</div>
+                <div class="list--div box__l">
+                  <fmt:formatDate value="${sellingCard.sellingDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                </div>
+                <div class="list--div box__s">${sellingCard.cardRecommend}</div>
+                <div class="list--div box__l">${sellingCard.email}</div>
+                <div class="list--div box__sm">${sellingCard.cardTermination}</div>
               </div>
-              <div class="list--div box__s">${sellingCard.cardRecommend}</div>
-              <div class="list--div box__l">${sellingCard.email}</div>
-              <div class="list--div box__sm">${sellingCard.cardTermination}</div>
+            </c:forEach>
             </div>
-          </c:forEach>
         </c:when>
         <c:otherwise>
           <div class="list-container">
