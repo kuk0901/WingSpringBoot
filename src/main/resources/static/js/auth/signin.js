@@ -50,7 +50,7 @@ $form.on("submit", function(e) {
           location.href = `/admin/salesDashboard/list?message=${message}`;
           break;
         case "MEMBER":
-          location.href = `/member?message=${message}`;
+          location.href = `/member/accountBook/list`;
           break;
         default: location.reload();
       }
