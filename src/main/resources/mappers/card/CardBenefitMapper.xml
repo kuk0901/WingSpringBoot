@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.cardBenefit">
+
+    <resultMap type="cardBenefitVo" id="cardBenefitResultMap">
+        <id column="CARD_BENEFIT_NO" property="cardBenefitNo" />
+        <result column="CARD_NO" property="cardNo"/>
+        <result column="CARD_BENEFIT_DIVISION" property="cardBenefitDivision"/>
+        <result column="CARD_BENEFIT_DETAIL" property="cardBenefitDetail"/>
+        <result column="CARD_PERCENTAGE" property="cardPercentage"/>
+    </resultMap>
+
+    <select id="cardBenefitSelectList" resultMap="cardBenefitResultMap">
+        SELECT CB.CARD_NO, SUBSTR(CARD_BENEFIT_DIVISION, 1, LENGTH(CARD_BENEFIT_DIVISION) - 2) AS CARD_BENEFIT_DIVISION
+             , CB.CARD_BENEFIT_DETAIL, CB.CARD_PERCENTAGE
+        FROM CARD_BENEFIT CB
+        JOIN CARD C ON C.CARD_NO = CB.CARD_NO
+        JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+        ORDER BY C.CARD_NO, CB.CARD_PERCENTAGE DESC
+    </select>
+
+    <select id="cardBenefitSelectOne" parameterType="int" resultMap="cardBenefitResultMap">
+        SELECT CB.CARD_NO, CB.CARD_BENEFIT_DIVISION, CB.CARD_BENEFIT_DETAIL, CB.CARD_PERCENTAGE
+        FROM CARD_BENEFIT CB
+                 JOIN CARD C ON C.CARD_NO = CB.CARD_NO
+        WHERE CB.CARD_NO = #{cardNo}
+        ORDER BY C.CARD_NO, CB.CARD_PERCENTAGE DESC
+    </select>
+
+    <insert id="cardBenefitInsertOne" parameterType="cardBenefitVo">
+        INSERT INTO CARD_BENEFIT (CARD_BENEFIT_NO, CARD_NO, CARD_BENEFIT_DIVISION, CARD_BENEFIT_DETAIL, CARD_PERCENTAGE)
+        VALUES (CARD_BENEFIT_NO_SEQ.NEXTVAL, #{cardNo}, #{cardBenefitDivision}, #{cardBenefitDetail}, #{cardPercentage})
+    </insert>
+</mapper>
+

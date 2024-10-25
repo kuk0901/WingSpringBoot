@@ -1,56 +1,78 @@
 package com.edu.wing.category.dao;
 
-
-import com.edu.wing.category.domain.CategoryVo;
 import com.edu.wing.category.domain.MinusCategoryVo;
+import com.edu.wing.category.domain.PlusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
-public class MinusCategoryDaoImpl implements CategoryDao {
+public class MinusCategoryDaoImpl implements MinusCategoryDao {
 
   @Autowired
   private SqlSession sqlSession;
 
-  String namespace = "com.edu.wing.category.";
-
-//    public List<CategoryVo> minusCategorySelectList(){
-//
-//
-//        return null;
-//    }
+  private static final String NAMESPACE = "com.edu.wing.category.";
 
   @Override
-  public List<CategoryVo> categorySelectList() {
-    return sqlSession.selectList(namespace + "categorySelectList");
+  public List<MinusCategoryVo> minusCategorySelectList() {
+    return sqlSession.selectList(NAMESPACE + "minusCategorySelectList");
   }
 
   @Override
-  public int categoryInsertOne(CategoryVo categoryVo) {
-    // TODO Auto-generated method stub
+  public Map<String, Object> allCategorySelectList() {
+    List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
+    List<Map<String, Object>> minusCategories = categories.stream()
+            .filter(cat -> "MINUS".equals(cat.get("category")))
+            .collect(Collectors.toList());
 
-    return sqlSession.insert(namespace + "categoryInsertOne", categoryVo);
-
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("minusCategoryList", minusCategories);
+    
+    return resultMap;
   }
 
   @Override
-  public MinusCategoryVo minusCategorySelectOne(int no) {
-    // TODO Auto-generated method stub
-    return sqlSession.selectOne(namespace + "minusCategorySelectOne", no);
+  public MinusCategoryVo minusCategoryExists(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "minusCategoryExists", categoryName);
   }
 
   @Override
-  public int minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
-    // TODO Auto-generated method stub
-    return sqlSession.update(namespace + "minusCategoryUpdateOne", minusCategoryVo);
+  public int selectMinusCategoryNoByName(String categoryName) {
+    return sqlSession.selectOne(NAMESPACE + "selectMinusCategoryNoByName", categoryName);
   }
 
   @Override
-  public int minusCategoryDeleteOne(int no) {
-    // TODO Auto-generated method stub
-    return sqlSession.delete(namespace + "minusCategoryDeleteOne", no);
+  public void minusCategoryInsertOne(String categoryName) {
+    sqlSession.insert(NAMESPACE + "minusCategoryInsertOne", categoryName);
+  }
+
+  @Override
+  public MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
+    sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", minusCategoryVo);
+
+    return minusCategoryVo;
+  }
+
+  @Override
+  public MinusCategoryVo minusCategorySelectOne(int categooryNo) {
+    return sqlSession.selectOne(NAMESPACE + "minusCategorySelectOne", categooryNo);
+  }
+
+  @Override
+  public int minusCategoryTotalCount(int categoryNo){
+    return sqlSession.selectOne(NAMESPACE + "minusCategoryTotalCount", categoryNo);
+  }
+
+  @Override
+  public boolean minusCategoryDeleteOne(int categoryNo) {
+    int result = sqlSession.delete(NAMESPACE + "minusCategoryDeleteOne", categoryNo);
+
+    return result > 0;
   }
 }

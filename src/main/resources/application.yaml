@@ -25,10 +25,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.Oracle12cDialect # 추가된 부분
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.OracleDialect # 추가된 부분
       enable_lazy_load_no_trans: true
 
 mybatis:

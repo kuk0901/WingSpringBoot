@@ -33,6 +33,7 @@
         JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO
         <where>
             <include refid="search" />
+            AND M.GRADE = 'MEMBER'
         </where>
         ORDER BY SC.SELLING_DATE DESC
         )
@@ -40,10 +41,12 @@
     </select>
 
     <select id="sellingCardSelectTotalCount" parameterType="int" resultType="int">
-        SELECT COUNT(SELLING_CARD_NO)
+        SELECT COUNT(SC.SELLING_CARD_NO)
         FROM SELLING_CARD SC
+        JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO
         <where>
             <include refid="search" />
+            AND M.GRADE = 'MEMBER'
         </where>
     </select>
 
@@ -58,5 +61,6 @@
                  JOIN CARD C ON SC.CARD_NO = C.CARD_NO
                  JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO
         WHERE SELLING_CARD_NO = #{sellingCardNo}
+        AND M.GRADE = 'MEMBER'
     </select>
 </mapper>

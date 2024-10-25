@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class CardVo {
   @Id
-  private String cardNo;
+  private int cardNo;
 
   private String cardName;
   private String cardCompany;

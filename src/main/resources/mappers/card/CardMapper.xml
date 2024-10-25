@@ -28,14 +28,13 @@
 
     <select id="cardSelectList" parameterType="map" resultMap="cardResultMap">
         SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
-             , SUMMATION_BENEFIT, REGISTER_DATE, CATEGORY_NAME
-        FROM (
+            , REGISTER_DATE, CATEGORY_NAME
+            FROM (
                 SELECT ROWNUM AS RNUM
                 , C.CARD_NO
                 , C.CARD_NAME
                 , C.STORED_FILE_NAME
                 , C.ORIGINAL_FILE_NAME
-                , C.SUMMATION_BENEFIT
                 , C.REGISTER_DATE
                 , CASE MC.CATEGORY_NAME
                 WHEN '교통' THEN 'Traffic'
@@ -49,17 +48,48 @@
                     <include refid="search" />
                 </where>
                 ORDER BY C.REGISTER_DATE DESC
-             )
+            )
         WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
 
     <select id="cardSelectTotalCount" parameterType="String" resultType="int">
         SELECT COUNT(CARD_NO)
         FROM CARD C JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
-        WHERE MC.CATEGORY_NAME = '교통'
         <where>
             <include refid="search" />
         </where>
     </select>
 
+    <select id="cardSelectOne" parameterType="int" resultMap="cardResultMap">
+        SELECT C.CARD_NO
+             , C.CARD_NAME
+             , C.CARD_COMPANY
+             , C.STORED_FILE_NAME
+             , C.ORIGINAL_FILE_NAME
+             , C.REGISTER_DATE
+             , CASE MC.CATEGORY_NAME
+                   WHEN '교통' THEN 'Traffic'
+                   WHEN '쇼핑' THEN 'Shopping'
+                   WHEN '일반' THEN 'Daily'
+                   ELSE MC.CATEGORY_NAME
+            END AS CATEGORY_NAME
+        FROM CARD C
+                 JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+        WHERE C.CARD_NO = #{cardNo}
+    </select>
+
+    <select id="cardExist" parameterType="String" resultMap="cardResultMap">
+        SELECT CARD_NO, CARD_NAME, CARD_COMPANY
+        FROM CARD
+        WHERE CARD_NAME = #{cardName}
+    </select>
+
+    <insert id="cardInsertOne" parameterType="map">
+        INSERT INTO CARD (CARD_NO, CARD_NAME, CARD_COMPANY, CATEGORY_NO, STORED_FILE_NAME, ORIGINAL_FILE_NAME, REGISTER_DATE)
+        VALUES (CARD_NO_SEQ.NEXTVAL, #{cardName}, #{cardCompany}, #{categoryNo}, #{storedFileName}, #{originalFileName}, #{registerDate})
+    </insert>
+
+    <delete id="cardDeleteOne" parameterType="int">
+        DELETE FROM CARD WHERE CARD_NO = #{cardNo};
+    </delete>
 </mapper>

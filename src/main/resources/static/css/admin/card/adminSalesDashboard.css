@@ -1,0 +1,208 @@
+/* SellingCardList & CardList */
+/* content */
+#content .one-line {
+  justify-content: space-between;
+}
+
+#content .cardNoForm-container,
+#content .one-line .categoryForm-container {
+  width: 400px;
+  margin-left: 20px;
+}
+
+#content .cardNoForm-container #cardNoForm,
+#content .one-line .categoryForm-container #categoryForm {
+  display: flex;
+  align-items: center;
+}
+
+
+#content .cardNoForm-container #cardNoForm .selectCard,
+#content .cardNoForm-container #cardNoForm .cardNo,
+#content .one-line .categoryForm-container #categoryForm .selectCard,
+#content .one-line .categoryForm-container #categoryForm .categoryName {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+}
+
+#content .cardNoForm-container #cardNoForm .selectCard,
+#content .one-line .categoryForm-container #categoryForm .selectCard{
+  width: 120px;
+  height: 31px;
+  line-height: 33px;
+  font-weight: 700;
+}
+
+#content .cardNoForm-container #cardNoForm .cardNo,
+#content .one-line .categoryForm-container #categoryForm .categoryName {
+  width: 150px;
+  height: 32px;
+  line-height: 32px;
+  outline: none;
+  font-size: 17px;
+}
+
+#content .cardNoForm-container #cardNoForm .cardNo:hover,
+#content .one-line .categoryForm-container #categoryForm .categoryName:hover {
+  cursor: pointer;
+}
+
+#content .one-line .btn-container {
+  margin-right: 20px;
+}
+
+/* main-container */
+.main-container {
+  margin: 20px;
+  height: 70vh;
+}
+
+.main-container.card-list-container {
+  background-color: transparent;
+}
+
+.main-container .list-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.main-container .list-container.list-content:hover {
+  background-color: var(--color-gray);
+  cursor: pointer;
+}
+
+.main-container .list-container.list-content.card-content {
+  background-color: var(--color-gray);
+  margin: 10px 0;
+}
+
+.main-container .list-container.list-content.card-content:hover {
+  cursor: auto;
+}
+
+.main-container .list-container .list--div {
+  text-align: center;
+  padding: 10px;
+}
+
+.main-container .list-container .list--div .btn-container .btn {
+  display: inline-block;
+  width: 100px;
+  margin: 5px;
+}
+
+.main-container .list-container .list--title {
+  font-size: 17px;
+  padding: 17px 13px;
+}
+
+.main-container .list-container .card--name {
+  margin-bottom: 5px;
+  font-size: 19px;
+}
+
+.main-container .list-container .card--img {
+  width: 94%;
+  height: 120px;
+}
+
+/* sellingCardDetail */
+.flex-container {
+  margin-bottom: 30px;
+}
+
+.flex-container.flex-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-container .info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+.flex-container .info-item {
+  padding: 10px;
+  margin: 10px;
+}
+
+.flex-container .info-item:last-child {
+  margin-bottom: 0;
+}
+
+.flex-container .reason--title {
+  margin-bottom: 0;
+}
+
+.flex-container .reason--content {
+  height: 200px;
+}
+
+.btn-container {
+  text-align: center;
+}
+
+.btn-container .btn {
+  padding: 10px 19px;
+}
+
+/* list style */
+.ul--ui .li--ui {
+  margin: 10px auto;
+  text-align: left;
+  position: relative;
+  line-height: 20px;
+}
+
+.ul--ui .li--ui::after {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: 5px;
+  left: -15px;
+  border-radius: 50%;
+  background-color: #000;
+  content: "";
+}
+
+.ul--ui .li--ui .list--style {
+  display: block;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -.65px;
+  padding-left: 12px;
+}
+
+  /* flex-item size */
+.box__s {
+  width: 120px;
+}
+
+.box__sm {
+  width: 140px;
+}
+
+.box__m {
+  width: 225px;
+}
+
+.box__ml {
+  width: 250px;
+}
+
+.box__l {
+  width: 300px;
+}
+
+.box__xl {
+  width: 700px;
+}
+
+.h__m {
+  height: 160px;
+}
