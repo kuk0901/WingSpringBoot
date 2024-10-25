@@ -20,4 +20,3 @@
 <div id="to-top">
   <img class="arrow_upward" src="/img/arrow_upward.svg" alt="arrow" />
 </div>
-

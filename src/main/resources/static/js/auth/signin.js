@@ -50,11 +50,10 @@ $form.on("submit", function(e) {
           location.href = `/admin/salesDashboard/list?message=${message}`;
           break;
         case "MEMBER":
-          location.href = `/member/accountBook/list`;
+          location.href = `/member/accountBook/list?message=${message}`;
           break;
         default: location.reload();
       }
-
     },
     error: function(xhr, status, error) {
       const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";

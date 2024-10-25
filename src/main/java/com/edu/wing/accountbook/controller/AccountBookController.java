@@ -9,34 +9,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/admin/accountBook")
 @Controller
 public class AccountBookController {
-  private Logger log = LoggerFactory.getLogger(AccountBookController.class);
-  private final String logTitleMsg = "==AccountBookController==";
 
-  @Autowired
-  private AccountBookServiceImpl accountBookService;
+    private Logger log = LoggerFactory.getLogger(AccountBookController.class);
+    private final String logTitleMsg = "==AccountBookController==";
 
-  //초기화면용
-  @GetMapping("/list")
-  public String getAccountBookList(Model model) {
-    log.info(logTitleMsg);
-    // 초기 화면 데이터 조회
-    List<AccountBookVo> accountBookList = accountBookService.selectAccountBook();
+    @Autowired
+    private AccountBookService accountBookService;
 
-    // 카테고리와 결제 방법 리스트 가져오기
-    List<String> categoryList = accountBookService.getMinusCategoryList();
-    List<String> paymentMethodList = accountBookService.getPaymentMethodList();
+    //초기화면용
+    @GetMapping("/list")
+    public String getAccountBookList(Model model) {
+        log.info(logTitleMsg);
+        // 초기 화면 데이터 조회
+        List<AccountBookVo> accountBookList = accountBookService.selectAccountBook();
 
-    // 모델에 데이터를 담아 JSP로 전달
-    model.addAttribute("accountBookList", accountBookList);
-    model.addAttribute("categoryList", categoryList);
-    model.addAttribute("paymentMethodList", paymentMethodList);
+        // 카테고리와 결제 방법 리스트 가져오기
+        List<String> categoryList = accountBookService.getMinusCategoryList();
+        List<String> paymentMethodList = accountBookService.getPaymentMethodList();
 
-    return "jsp/admin/accountBook/accountBook";  // JSP 파일 경로
-  }
+        // 모델에 데이터를 담아 JSP로 전달
+        model.addAttribute("accountBookList", accountBookList);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("paymentMethodList", paymentMethodList);
+
+        return "jsp/admin/accountBook/accountBook";  // JSP 파일 경로
+    }
 }
+

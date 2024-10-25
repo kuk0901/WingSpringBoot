@@ -1,6 +1,7 @@
 package com.edu.wing.category.dao;
 
 import com.edu.wing.category.domain.MinusCategoryVo;
+import com.edu.wing.category.domain.PlusCategoryVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,10 +28,12 @@ public class MinusCategoryDaoImpl implements MinusCategoryDao {
   public Map<String, Object> allCategorySelectList() {
     List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
     List<Map<String, Object>> minusCategories = categories.stream()
-        .filter(cat -> "MINUS".equals(cat.get("category")))
-        .collect(Collectors.toList());
+            .filter(cat -> "MINUS".equals(cat.get("category")))
+            .collect(Collectors.toList());
+
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("minusCategoryList", minusCategories);
+    
     return resultMap;
   }
 

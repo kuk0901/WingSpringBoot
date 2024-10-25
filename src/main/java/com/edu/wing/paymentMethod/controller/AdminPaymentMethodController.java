@@ -1,0 +1,68 @@
+package com.edu.wing.paymentMethod.controller;
+
+import com.edu.wing.category.controller.AdminCategoryController;
+import com.edu.wing.paymentMethod.domain.PaymentMethodVo;
+import com.edu.wing.paymentMethod.service.PaymentMethodService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("admin/paymentMethod")
+public class AdminPaymentMethodController {
+  private static final Logger log = LoggerFactory.getLogger(AdminCategoryController.class);
+  private static final String LOG_TITLE = "==PaymentMethodController==";
+
+  @Autowired
+  private PaymentMethodService paymentMethodService;
+
+  @RequestMapping(value = "/list")
+  public ModelAndView paymentMethodSelectList() {
+    log.info("{} - Retrieving paymentMethod list", LOG_TITLE);
+
+    List<PaymentMethodVo> paymentMethodVoList = paymentMethodService.paymentMethodSelectList();
+
+    ModelAndView mav = new ModelAndView("jsp/admin/paymentMethod/PaymentMethodListView");
+    mav.addObject("paymentMethodVoList", paymentMethodVoList);
+
+    return mav;
+  }
+
+  @GetMapping("/add")
+  public ModelAndView paymentMethodAdd() {
+    log.info("{} - Retrieving @GetMapping paymentMethod add", LOG_TITLE);
+
+    return new ModelAndView("jsp/admin/paymentMethod/PaymentMethodAddView");
+  }
+
+  @GetMapping("/delete/{paymentMethodNo}")
+  public ResponseEntity<?> getPaymentMethodTotalCount(@PathVariable int paymentMethodNo) {
+    log.info(LOG_TITLE);
+    log.info("paymentMethodTotalCount paymentMethodNo: {}", paymentMethodNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    int count = paymentMethodService.pmTotalCount(paymentMethodNo);
+
+    if (count > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", count);
+      resultMap.put("msg", "해당 결제수단으로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 결제수단을 삭제할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+
+
+}

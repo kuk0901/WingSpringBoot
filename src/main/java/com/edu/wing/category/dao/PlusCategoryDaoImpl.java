@@ -27,10 +27,12 @@ public class PlusCategoryDaoImpl implements PlusCategoryDao {
   public Map<String, Object> allCategorySelectList() {
     List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
     List<Map<String, Object>> plusCategories = categories.stream()
-        .filter(cat -> "PLUS".equals(cat.get("category")))
-        .collect(Collectors.toList());
+            .filter(cat -> "PLUS".equals(cat.get("category")))
+            .collect(Collectors.toList());
+
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("plusCategoryList", plusCategories);
+    
     return resultMap;
   }
 

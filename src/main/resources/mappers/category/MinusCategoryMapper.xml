@@ -7,15 +7,27 @@
         <result column="CATEGORY_NAME" property="categoryName" />
     </resultMap>
 
-    <select id="categorySelectList" resultMap="minusCategoryResultMap">
+    <select id="minusCategorySelectList" resultMap="minusCategoryResultMap">
         SELECT CATEGORY_NO, CATEGORY_NAME
         FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO != 1
         ORDER BY CATEGORY_NO
     </select>
 
-    <insert id="categoryInsertOne" parameterType="minusCategoryVo">
-        INSERT INTO MINUS_CATEGORY
-            (CATEGORY_NO, CATEGORY_NAME)
+    <select id="minusCategoryExists" parameterType="String" resultMap="minusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM MINUS_CATEGORY
+        WHERE CATEGORY_NAME = #{categoryName}
+    </select>
+
+    <select id="selectMinusCategoryNoByName" parameterType="String" resultType="int">
+        SELECT CATEGORY_NO
+        FROM MINUS_CATEGORY
+        WHERE CATEGORY_NAME = #{categoryName}
+    </select>
+
+    <insert id="minusCategoryInsertOne" parameterType="map">
+        INSERT INTO MINUS_CATEGORY (CATEGORY_NO, CATEGORY_NAME)
         VALUES(MINUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
     </insert>
 
@@ -26,7 +38,7 @@
         WHERE CATEGORY_NO = #{no}
     </select>
 
-    <update id="updateMinusCategory" parameterType="minusCategoryVo">
+    <update id="minusCategoryUpdateOne" parameterType="minusCategoryVo">
         UPDATE MINUS_CATEGORY
         <set>
             <if test="categoryName != null and categoryName != ''">
@@ -36,9 +48,14 @@
         WHERE CATEGORY_NO = #{categoryNo}
     </update>
 
-    <delete id="minusCategoryDeleteOne" parameterType="int">
-        DELETE 	FROM MINUS_CATEGORY
-        WHERE 	CATEGORY_NO = #{categoryNo}
-    </delete>
+    <select id="minusCategoryTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(ACCOUNT_BOOK_NO)
+        FROM ACCOUNT_BOOK AB
+        WHERE AB.MINUS_CATEGORY_NO = #{categoryNo}
+    </select>
 
+    <delete id="minusCategoryDeleteOne" parameterType="int">
+        DELETE FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO = #{categoryNo}
+    </delete>
 </mapper>

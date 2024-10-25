@@ -1,0 +1,120 @@
+#content .title-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* 삭제 예정 */
+.text__right {
+    text-align: right;
+}
+
+/*삭제예정*/
+#content .title-container .title {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.main-container.payment-method__list {
+    margin: 20px;
+    height: 600px;
+}
+
+.main-container.payment-method__change{
+    margin: 145px 20px;
+    height: 600px;
+}
+
+.btn__paymentMethod {
+    padding: 13px 19px;
+}
+
+#content .main-container .paymentMethod-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+    margin-top: 50px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form {
+    margin: 100px auto 200px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .one-line {
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .label-container {
+    margin: 10px;
+    padding: 10px 20px;
+    width: 300px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .input-container {
+    margin: 10px;
+    padding: 10px 20px;
+    width: 300px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .input-container .info-item {
+    border: none;
+    outline: none;
+}
+
+.one-line .btn-container {
+    margin-right: 20px;
+}
+
+/*#content .ma*/
+
+.list--title {
+    font-size: 17px;
+    padding: 17px 13px;
+}
+
+#content .main-container .list-container .list--div {
+    width: 450px;
+    padding: 20px;
+}
+
+#content .main-container .list-container .list--note {
+    padding: 20px;
+}
+
+#content .main-container .addPaymentMethodForm .btn-container .btn--margin {
+    margin: auto 100px auto 400px;
+    padding: 13px 19px;
+    width: 150px;
+}
+
+#content .main-container .list-container .btn-container .btn--margin {
+    margin: auto 100px auto 400px;
+    padding: 13px 19px;
+    width: 150px;
+}
+
+.container-title{
+    margin-left: 20px;
+}
+
+.list-content {
+    margin: 5px 5px 10px 20px;
+}
+
+.content_margin {
+    margin-left: 50px;
+}
+
+.box__l {
+    width: 200px;
+}
+
+#content .btn-container {
+    margin-right: 20px;
+}
