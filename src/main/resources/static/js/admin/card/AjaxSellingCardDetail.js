@@ -68,6 +68,6 @@ function createDetailView(data) {
   $("#listMove").click(function() {
     const curPage = $(this).data('cur-page');
     const cardNo = $(this).data('card-no');
-    window.location.href = `/admin/api/salesDashboard/list?curPage=${curPage}&cardNo=${cardNo}`;
+    window.location.href = `/admin/salesDashboard/list?curPage=${curPage}&cardNo=${cardNo}`;
   });
 }

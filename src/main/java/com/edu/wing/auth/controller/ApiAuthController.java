@@ -44,21 +44,21 @@ public class ApiAuthController {
       }
 
       memberVo.setGrade("MEMBER");
-      if (memberService.memberInsertOne(memberVo)) {
-        resultMap.put("status", "failed");
-        resultMap.put("msg", "회원가입에 실패했습니다. 잠시 후 다시 시도해 주세요.");
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+      if (memberService.memberInsertOne(memberVo)) {
+        resultMap.put("status", "success");
+        resultMap.put("alertMsg", "회원가입이 완료되었습니다.");
+        return ResponseEntity.ok().body(resultMap);
       }
 
-      resultMap.put("status", "success");
-      resultMap.put("msg", "회원가입에 성공했습니다.");
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "회원가입에 실패했습니다. 잠시 후 다시 시도해 주세요.");
 
-      return ResponseEntity.ok().body(resultMap);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     } catch (Exception e) {
       log.error("회원가입 중 오류 발생: ", e);
       resultMap.put("status", "error");
-      resultMap.put("msg", "서버 오류로 인해 회원가입이 처리되지 못했습니다. 다시 시도해 주세요.");
+      resultMap.put("alertMsg", "서버 오류로 인해 회원가입이 처리되지 못했습니다. 다시 시도해 주세요.");
 
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     }
@@ -83,19 +83,19 @@ public class ApiAuthController {
          * 사용자 -> 문구 5개 중에서 랜덤
         */
         resultMap.put("status", "success");
-        resultMap.put("msg", "로그인에 성공했습니다.");
+        resultMap.put("alertMsg", user.getGrade().equals("ADMIN") ? user.getUserName() + "관리자님 환영합니다!" : "나의 슬기로운 소비 생활 기록하기!");
         resultMap.put("grade", user.getGrade());
 
         return ResponseEntity.ok().body(resultMap);
       } else {
         resultMap.put("status", "fail");
-        resultMap.put("msg", "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.");
+        resultMap.put("alertMsg", "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resultMap);
       }
     } catch (Exception e) {
       log.error(logTitleMsg, e);
       resultMap.put("status", "error");
-      resultMap.put("msg", "서버 오류가 발생했습니다.");
+      resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
   }

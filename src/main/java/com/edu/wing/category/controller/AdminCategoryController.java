@@ -1,6 +1,5 @@
 package com.edu.wing.category.controller;
 
-
 import com.edu.wing.category.domain.MinusCategoryVo;
 import com.edu.wing.category.domain.PlusCategoryVo;
 import com.edu.wing.category.service.MinusCategoryService;
@@ -95,5 +94,5 @@ public class AdminCategoryController {
 
     return ResponseEntity.ok().body(resultMap);
   }
-
 }
+

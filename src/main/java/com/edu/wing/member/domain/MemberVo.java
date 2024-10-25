@@ -16,7 +16,7 @@ public class MemberVo implements Serializable {
   private int memberNo;                 // 회원번호 (기본키)
   private String email;                // 이메일
   private String pwd;             // 비밀번호
-  private String name;           // 성명
+  private String userName;           // 성명
   private String phone;                // 휴대폰 번호
   private String grade;                // 등급
   private int yearlySalary;            // 연봉

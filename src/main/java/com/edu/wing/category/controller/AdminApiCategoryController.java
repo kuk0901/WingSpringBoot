@@ -1,6 +1,5 @@
 package com.edu.wing.category.controller;
 
-
 import com.edu.wing.category.domain.MinusCategoryVo;
 import com.edu.wing.category.domain.PlusCategoryVo;
 import com.edu.wing.category.service.MinusCategoryService;
@@ -101,8 +100,7 @@ public class AdminApiCategoryController {
   }
 
   @PatchMapping("/updatePlus/{categoryNo}")
-  public ResponseEntity<?> plusCategoryUpdateOne(@PathVariable int categoryNo,
-                                                  @RequestParam Map<String, String> plusCategoryMap) {
+  public ResponseEntity<?> plusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> plusCategoryMap) {
     log.info(LOG_TITLE);
     log.info("updatePlusCategory Patch paymentMethodNo: {}, paymentMethodMap: {}",
         categoryNo, plusCategoryMap);

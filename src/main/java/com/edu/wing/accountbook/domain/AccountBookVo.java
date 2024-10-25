@@ -1,3 +1,4 @@
+
 package com.edu.wing.accountbook.domain;
 
 import lombok.Data;

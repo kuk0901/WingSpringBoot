@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import com.edu.wing.accountbook.domain.AccountBookVo;
-import com.edu.wing.accountbook.service.AccountBookService;
+import com.edu.wing.accountbook.service.AccountBookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +18,7 @@ import java.util.Map;
 @RequestMapping("/admin/accountBook")
 @Controller
 public class AccountBookController {
+
     private Logger log = LoggerFactory.getLogger(AccountBookController.class);
     private final String logTitleMsg = "==AccountBookController==";
 
@@ -43,3 +44,4 @@ public class AccountBookController {
         return "jsp/admin/accountBook/accountBook";  // JSP 파일 경로
     }
 }
+

@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.edu.wing.accountbook">
@@ -16,6 +17,7 @@
         <result property="paymentMethodName" column="PAYMENT_METHOD_NAME"/>
         <result property="plusCategoryName" column="PLUS_CATEGORY_NAME"/>
     </resultMap>
+  
     <!-- 밑에3개는 추후수정-->
 
     <select id="selectAccountBook" resultType="AccountBookVo">
@@ -38,6 +40,7 @@
         SELECT CATEGORY_NAME
         FROM MINUS_CATEGORY
     </select>
+  
     <select id="selectPlusCategories" resultType="String">
         SELECT CATEGORY_NAME
         FROM PLUS_CATEGORY
@@ -67,92 +70,87 @@
 
     <!-- 상위 3개 결제 방법 조회 쿼리 -->
     <select id="getTopPaymentMethods" resultType="AccountBookVo">
-    <![CDATA[
-        SELECT PAYMENT_METHOD_NAME, usage_count
-        FROM (SELECT ab.PAYMENT_METHOD_NO,
-                     pm.PAYMENT_METHOD_NAME,
-                     COUNT(*) AS usage_count
-              FROM ACCOUNT_BOOK ab
-                       JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
-              GROUP BY ab.PAYMENT_METHOD_NO, pm.PAYMENT_METHOD_NAME
-              ORDER BY COUNT(*) DESC)
-        WHERE ROWNUM <= 3
+      <![CDATA[
+          SELECT PAYMENT_METHOD_NAME, usage_count
+          FROM (SELECT ab.PAYMENT_METHOD_NO,
+                       pm.PAYMENT_METHOD_NAME,
+                       COUNT(*) AS usage_count
+                FROM ACCOUNT_BOOK ab
+                         JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                GROUP BY ab.PAYMENT_METHOD_NO, pm.PAYMENT_METHOD_NAME
+                ORDER BY COUNT(*) DESC)
+          WHERE ROWNUM <= 3
         ]]>
-</select>
+    </select>
 
     <select id="getTopCategories" resultType="AccountBookVo">
-  <![CDATA[
-        SELECT *
-        FROM (SELECT mc.CATEGORY_NAME            AS minusCategoryName,
-                     COUNT(ab.MINUS_CATEGORY_NO) AS usage_count
-              FROM ACCOUNT_BOOK ab
-                       JOIN
-                   MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
-              GROUP BY mc.CATEGORY_NAME
-              ORDER BY COUNT(ab.MINUS_CATEGORY_NO) DESC)
-        WHERE ROWNUM <= 3
+      <![CDATA[
+            SELECT *
+            FROM (SELECT mc.CATEGORY_NAME            AS minusCategoryName,
+                         COUNT(ab.MINUS_CATEGORY_NO) AS usage_count
+                  FROM ACCOUNT_BOOK ab
+                           JOIN
+                       MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                  GROUP BY mc.CATEGORY_NAME
+                  ORDER BY COUNT(ab.MINUS_CATEGORY_NO) DESC)
+            WHERE ROWNUM <= 3
         ]]>
-</select>
+    </select>
+  
     <delete id="accountBookDelete" parameterType="int">
         DELETE
         FROM ACCOUNT_BOOK
         WHERE MEMBER_NO = #{memberNo}
     </delete>
+  
     <!--여기서부터 member영역-->
     <!--이건 날짜호출용-->
     <select id="selectAccountBookByMonth" resultType="AccountBookVo">
     <![CDATA[
         SELECT *
         FROM (
-                 SELECT ab.ACCOUNT_BOOK_NO,
-                        ab.PLUS_CATEGORY_NO,
-                        ab.MINUS_CATEGORY_NO,
-                        ab.MEMBER_NO,
-                        ab.PAYMENT_METHOD_NO,
-                        ab.CREDATE,
-                        ab.CONTENT,
-                        ab.PAYMENT_AMOUNT,
-                        mc.CATEGORY_NAME       AS minusCategoryName,
-                        pc.CATEGORY_NAME       AS plusCategoryName,
-                        pm.PAYMENT_METHOD_NAME AS paymentMethodName
-                 FROM ACCOUNT_BOOK ab
-                          LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
-                          LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
-                          LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
-                 WHERE ab.CREDATE >= #{startDate}
-                   AND ab.CREDATE < #{endDate}
-                   AND ab.MEMBER_NO = #{memberNo}
-                 ORDER BY ab.CREDATE DESC -- 작성일 기준 내림차순 정렬
+               SELECT ab.ACCOUNT_BOOK_NO,
+                      ab.PLUS_CATEGORY_NO,
+                      ab.MINUS_CATEGORY_NO,
+                      ab.MEMBER_NO,
+                      ab.PAYMENT_METHOD_NO,
+                      ab.CREDATE,
+                      ab.CONTENT,
+                      ab.PAYMENT_AMOUNT,
+                      mc.CATEGORY_NAME       AS minusCategoryName,
+                      pc.CATEGORY_NAME       AS plusCategoryName,
+                      pm.PAYMENT_METHOD_NAME AS paymentMethodName
+               FROM ACCOUNT_BOOK ab
+                        LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                        LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
+                        LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+               WHERE ab.CREDATE >= #{startDate}
+                 AND ab.CREDATE < #{endDate}
+                 AND ab.MEMBER_NO = #{memberNo}
+               ORDER BY ab.CREDATE DESC -- 작성일 기준 내림차순 정렬
              )
         WHERE ROWNUM <= #{limit} -- 최근 N개 선택
         ]]>
-</select>
-
+    </select>
+  
     <!--이건 초기화면용 최근몇개호출함-->
     <select id="selectAccountBookByRecentDate" resultType="AccountBookVo">
     <![CDATA[
         SELECT *
-        FROM (SELECT ab.ACCOUNT_BOOK_NO,
-                     ab.PLUS_CATEGORY_NO,
-                     ab.MINUS_CATEGORY_NO,
-                     ab.MEMBER_NO,
-                     ab.PAYMENT_METHOD_NO,
-                     ab.CREDATE,
-                     ab.CONTENT,
-                     ab.PAYMENT_AMOUNT,
-                     mc.CATEGORY_NAME       AS minusCategoryName,
-                     pc.CATEGORY_NAME       AS plusCategoryName,
-                     pm.PAYMENT_METHOD_NAME AS paymentMethodName
+        FROM (SELECT ab.ACCOUNT_BOOK_NO, ab.PLUS_CATEGORY_NO, ab.MINUS_CATEGORY_NO, ab.MEMBER_NO, ab.PAYMENT_METHOD_NO
+              , ab.CREDATE, ab.CONTENT, ab.PAYMENT_AMOUNT, mc.CATEGORY_NAME AS minusCategoryName
+              , pc.CATEGORY_NAME AS plusCategoryName, pm.PAYMENT_METHOD_NAME AS paymentMethodName
               FROM ACCOUNT_BOOK ab
-                       LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
-                       LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
-                       LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                 LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                 LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
+                 LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
               WHERE ab.MEMBER_NO = #{memberNo}
               ORDER BY ab.CREDATE DESC -- 작성일 기준 내림차순 정렬
              )
         WHERE ROWNUM <= #{limit} -- 최근 N개 선택
         ]]>
-            </select>
+    </select>
+  
     <!-- 월별 가계부 세기용 -->
     <select id="selectMonthlyEntryCount" resultType="int">
     <![CDATA[
@@ -167,73 +165,45 @@
     <!-- 월별 가계부 총지출/수입내역 가져오기 -->
     <select id="getMonthlyEntries" parameterType="map" resultType="AccountBookVo">
         <![CDATA[
-        SELECT
-            ab.PLUS_CATEGORY_NO,
-            ab.MINUS_CATEGORY_NO,
-            ab.PAYMENT_AMOUNT
-        FROM ACCOUNT_BOOK ab
-        WHERE ab.CREDATE >= #{startDate}
-          AND ab.CREDATE < #{endDate}
-          AND ab.MEMBER_NO = #{memberNo}
+          SELECT
+              ab.PLUS_CATEGORY_NO,
+              ab.MINUS_CATEGORY_NO,
+              ab.PAYMENT_AMOUNT
+          FROM ACCOUNT_BOOK ab
+          WHERE ab.CREDATE >= #{startDate}
+            AND ab.CREDATE < #{endDate}
+            AND ab.MEMBER_NO = #{memberNo}
         ]]>
     </select>
     <!-- 가계부 추가 -->
     <insert id="insertAccountBook" parameterType="map">
-        INSERT INTO ACCOUNT_BOOK (
-            ACCOUNT_BOOK_NO,
-            PLUS_CATEGORY_NO,
-            MINUS_CATEGORY_NO,
-            MEMBER_NO,
-            PAYMENT_METHOD_NO,
-            CREDATE,
-            CONTENT,
-            PAYMENT_AMOUNT
-        ) VALUES (
-                     ACCOUNT_BOOK_NO_SEQ.NEXTVAL,
-                     #{plusCategoryNo},
-                     #{minusCategoryNo},
-                     #{memberNo},
-                     #{paymentMethodNo},
-                     #{creDate},
-                     #{content},
-                     #{paymentAmount}
-                 )
+        INSERT INTO ACCOUNT_BOOK (ACCOUNT_BOOK_NO, PLUS_CATEGORY_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO
+            , CREDATE, CONTENT, PAYMENT_AMOUNT) 
+        VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, #{plusCategoryNo}, #{minusCategoryNo}, #{memberNo}, #{paymentMethodNo}
+            , #{creDate}, #{content}, #{paymentAmount})
     </insert>
         <!--디테일용-->
     <select id="selectAccountBookDetail" resultType="AccountBookVo">
-    <![CDATA[
-        SELECT ab.ACCOUNT_BOOK_NO,
-               ab.PLUS_CATEGORY_NO,
-               ab.MINUS_CATEGORY_NO,
-               ab.MEMBER_NO,
-               ab.PAYMENT_METHOD_NO,
-               ab.CREDATE,
-               ab.CONTENT,
-               ab.PAYMENT_AMOUNT,
-                mc.CATEGORY_NAME AS minusCategoryName, -- NULL인 경우 기본값
-               pc.CATEGORY_NAME AS plusCategoryName,  -- NULL인 경우 기본값
-               pm.PAYMENT_METHOD_NAME AS paymentMethodName
-        FROM ACCOUNT_BOOK ab
-                 LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
-                 LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
-                 LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
-        WHERE ab.ACCOUNT_BOOK_NO = #{accountBookNo}
-          AND ab.MEMBER_NO = #{memberNo}
-        ]]>
-</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <![CDATA[
+          SELECT ab.ACCOUNT_BOOK_NO,
+                 ab.PLUS_CATEGORY_NO,
+                 ab.MINUS_CATEGORY_NO,
+                 ab.MEMBER_NO,
+                 ab.PAYMENT_METHOD_NO,
+                 ab.CREDATE,
+                 ab.CONTENT,
+                 ab.PAYMENT_AMOUNT,
+                  mc.CATEGORY_NAME AS minusCategoryName, -- NULL인 경우 기본값
+                 pc.CATEGORY_NAME AS plusCategoryName,  -- NULL인 경우 기본값
+                 pm.PAYMENT_METHOD_NAME AS paymentMethodName
+          FROM ACCOUNT_BOOK ab
+                   LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                   LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
+                   LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+          WHERE ab.ACCOUNT_BOOK_NO = #{accountBookNo}
+            AND ab.MEMBER_NO = #{memberNo}
+          ]]>
+    </select>
 
 
 </mapper>

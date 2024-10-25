@@ -5,7 +5,7 @@
     <resultMap type="memberVo" id="memberResultMap">
         <id column="MEMBER_NO" property="memberNo" />
         <result column="EMAIL" property="email" />
-        <result column="NAME" property="name" />
+        <result column="NAME" property="userName" />
         <result column="PWD" property="pwd" />
         <result column="CRE_DATE" property="creDate"
                 javaType="java.util.Date" />
@@ -43,14 +43,8 @@
     </select>
 
     <insert id="memberInsertOne" parameterType="memberVo">
-        INSERT INTO MEMBER (
-            MEMBER_NO,EMAIL,PWD,NAME, PHONE, GRADE, YEARLY_SALARY,MONTH_SALARY, CRE_DATE,
-            MOD_DATE,
-            QUIT_APPLY, PRODUCT_PURCHASE
-        ) VALUES (
-                     MEMBER_NO_SEQ.NEXTVAL,#{email},#{pwd}, #{name}, #{phone},#{grade},
-                     #{yearlySalary},#{monthlySalary},
-                     SYSDATE, SYSDATE,'N', 'N')
+        INSERT INTO MEMBER (MEMBER_NO, EMAIL, PWD, NAME, PHONE, GRADE, YEARLY_SALARY, MONTH_SALARY)
+        VALUES (MEMBER_NO_SEQ.NEXTVAL, #{email}, #{pwd}, #{userName}, #{phone}, #{grade}, #{yearlySalary}, #{monthlySalary})
     </insert>
 
     <!-- 관리자용 회원 전체 조회 쿼리 (페이징 적용) -->
@@ -98,7 +92,76 @@
         WHERE M.MEMBER_NO = #{memberNo}
     </select>
 
+    <!-- 관리자용 회원 전체 조회 쿼리 (페이징 적용) -->
+    <select id="selectAllMembersForAdmin" parameterType="map" resultMap="memberResultMap">
+    <![CDATA[
+        SELECT MEMBER_NO, EMAIL, NAME,CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY
+        FROM (
+                 SELECT MEMBER_NO, EMAIL,NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,
+                        ROW_NUMBER() OVER (ORDER BY MEMBER_NO) AS RNUM
+                 FROM MEMBER
+                 WHERE GRADE = 'MEMBER'
+             ) MEMBER_WITH_RNUM
+        WHERE RNUM >= #{start} AND RNUM <= #{end}
+        ]]>
+    </select>
 
+    <!-- 회원 전체 수 조회 쿼리 -->
+    <select id="selectTotalMembersCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM MEMBER
+    </select>
+
+
+    <!-- 회원 상세 ID로 조회하는 쿼리 추후게시글 컬럼추가가능? -->
+    <select id="selectMemberDetailForAdmin" parameterType="int" resultMap="memberResultMap">
+        SELECT
+            M.MEMBER_NO,
+            M.EMAIL,
+            M.NAME,
+            M.PHONE,
+            M.CRE_DATE,
+            M.QUIT_APPLY,
+            M.YEARLY_SALARY,
+            M.MONTH_SALARY,
+            M.PRODUCT_PURCHASE,
+            (SELECT COUNT(*) FROM ACCOUNT_BOOK AB WHERE AB.MEMBER_NO = M.MEMBER_NO) AS ACCOUNT_BOOK_COUNT,
+            C.CARD_NAME,
+            SC.SELLING_DATE,
+            SC.TERMINATION_DATE,
+            SC.MEMBER_CARD_NO,
+            SC.TERMINATION_REASON
+        FROM MEMBER M
+                 LEFT JOIN SELLING_CARD SC ON M.MEMBER_NO = SC.MEMBER_NO
+                 LEFT JOIN CARD C ON SC.CARD_NO = C.CARD_NO
+        WHERE M.MEMBER_NO = #{memberNo}
+    </select>
+
+
+
+
+
+    <!-- 관리자의 삭제 쿼리 -->
+    <delete id="adminDeleteMember" parameterType="int">
+        DELETE FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+    <!-- 관리자의 마이페이지 조회쿼리 -->
+    <select id="selectAdminMypageInfo" parameterType="int" resultType="MemberVo">
+        SELECT MEMBER_NO, EMAIL, NAME, PWD, PHONE, CRE_DATE
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo} AND GRADE='ADMIN'
+    </select>
+
+    <update id="updateMember" parameterType="MemberVo">
+        UPDATE MEMBER
+        SET EMAIL = #{email},
+            NAME = #{name},
+            PWD = #{pwd},
+            PHONE = #{phone}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
 
 
 

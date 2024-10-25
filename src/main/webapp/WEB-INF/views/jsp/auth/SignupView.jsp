@@ -26,13 +26,13 @@
       </div>
       <div class="input-container email-check-porision">
         <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-            placeholder="ex) wing_@gmail.com"
-            autocomplete="off"
+          id="email"
+          name="email"
+          type="email"
+          required
+          pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+          placeholder="ex) wing_@gmail.com"
+          autocomplete="off"
         />
       </div>
     </div>
@@ -43,13 +43,13 @@
       </div>
       <div class="input-container">
         <input
-            id="pwd"
-            name="password"
-            type="password"
-            placeholder="비밀번호를 작성해 주세요."
-            required
-            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-            autocomplete="off"
+          id="pwd"
+          name="pwd"
+          type="password"
+          placeholder="비밀번호를 작성해 주세요."
+          required
+          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+          autocomplete="off"
         />
       </div>
     </div>
@@ -61,29 +61,29 @@
       </div>
       <div class="input-container">
         <input
-            id="pwdCheck"
-            name="pwdCheck"
-            type="password"
-            placeholder="동일한 비밀번호를 작성해 주세요."
-            required
-            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-            autocomplete="off"
+          id="pwdCheck"
+          name="pwdCheck"
+          type="password"
+          placeholder="동일한 비밀번호를 작성해 주세요."
+          required
+          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+          autocomplete="off"
         />
       </div>
     </div>
 
     <div class="signup-container">
       <div class="label-container">
-        <label for="memberName" class="text__white">성명</label>
+        <label for="userName" class="text__white">성명</label>
       </div>
       <div class="input-container">
         <input
-            id="memberName"
-            name="memberName"
-            type="text"
-            required
-            pattern="[가-힣]{2,7}"
-            placeholder="ex) 홍길동"
+          id="userName"
+          name="userName"
+          type="text"
+          required
+          pattern="[가-힣]{2,7}"
+          placeholder="ex) 홍길동"
         />
       </div>
     </div>
@@ -98,13 +98,13 @@
       </div>
       <div class="input-container">
         <input
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
-            placeholder="ex) 01012345678"
-            maxlength="14"
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
+          placeholder="ex) 01012345678"
+          maxlength="14"
         />
       </div>
     </div>
@@ -118,13 +118,13 @@
         <div class="style-container">
           <div class="input-container input-container__s">
             <input
-                type="text"
-                id="salary"
-                name="salary"
-                required
-                pattern="^[1-9]\d{0,3}(,\d{3})*$"
-                placeholder="ex) 4,500"
-                class="input__s"
+              type="text"
+              id="salary"
+              name="yearlySalary"
+              required
+              pattern="^[1-9]\d{0,3}(,\d{3})*$"
+              placeholder="ex) 4,500"
+              class="input__s"
             />
           </div>
           <span class="text__white">만원</span>
@@ -139,13 +139,13 @@
         <div class="style-container">
           <div class="input-container input-container__s">
             <input
-                type="text"
-                id="pay"
-                name="pay"
-                required
-                pattern="^[1-9]\d{0,3}(,\d{3})*$"
-                placeholder="ex) 375"
-                class="input__s"
+              type="text"
+              id="pay"
+              name="monthlySalary"
+              required
+              pattern="^[1-9]\d{0,3}(,\d{3})*$"
+              placeholder="ex) 375"
+              class="input__s"
             />
           </div>
           <span class="text__white">만원</span>
@@ -155,10 +155,10 @@
 
     <div class="submit-container">
       <input
-          id="submitBtn"
-          type="submit"
-          class="btn btn__sign text__white"
-          value="SignUp"
+        id="submitBtn"
+        type="submit"
+        class="btn btn__sign text__white"
+        value="SignUp"
       />
     </div>
   </form>

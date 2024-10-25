@@ -30,8 +30,10 @@ public class MinusCategoryDaoImpl implements MinusCategoryDao {
     List<Map<String, Object>> minusCategories = categories.stream()
             .filter(cat -> "MINUS".equals(cat.get("category")))
             .collect(Collectors.toList());
+
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("minusCategoryList", minusCategories);
+    
     return resultMap;
   }
 

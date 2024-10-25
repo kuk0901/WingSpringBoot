@@ -3,7 +3,7 @@ package com.edu.wing.accountbook.service;
 import com.edu.wing.accountbook.domain.AccountBookVo;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +28,3 @@ public interface AccountBookService {
 
     AccountBookVo getAccountBookDetail(int accountBookNo, int memberNo); //디테일
 }
-
-

@@ -24,4 +24,24 @@ public class CardDaoImpl implements CardDao {
   public int cardSelectTotalCount(String categoryName) {
     return sqlSession.selectOne(namespace + "cardSelectTotalCount", categoryName);
   }
+
+  @Override
+  public CardVo cardSelectOne(int cardNo) {
+    return sqlSession.selectOne(namespace + "cardSelectOne", cardNo);
+  }
+
+  @Override
+  public CardVo cardExist(String cardName) {
+    return sqlSession.selectOne(namespace + "cardExist", cardName);
+  }
+
+  @Override
+  public void cardInsert(Map<String, String> map) {
+    sqlSession.insert(namespace + "cardInsertOne", map);
+  }
+
+  @Override
+  public void cardDeleteOne(int cardNo) {
+    sqlSession.delete(namespace + "cardDeleteOne", cardNo);
+  }
 }

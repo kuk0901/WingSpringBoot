@@ -25,3 +25,4 @@ public interface PlusCategoryDao {
 
   boolean plusCategoryDeleteOne(int categoryNo);
 }
+

@@ -29,8 +29,10 @@ public class PlusCategoryDaoImpl implements PlusCategoryDao {
     List<Map<String, Object>> plusCategories = categories.stream()
             .filter(cat -> "PLUS".equals(cat.get("category")))
             .collect(Collectors.toList());
+
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("plusCategoryList", plusCategories);
+    
     return resultMap;
   }
 

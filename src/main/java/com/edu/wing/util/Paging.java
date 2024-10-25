@@ -49,6 +49,23 @@ public class Paging implements Serializable {
     setBlockRange();
   }
 
+  public Paging(int count, int curPage, int pageScale) {
+    this.pageScale = pageScale;
+    this.curBlock = 1;
+
+    setTotPage(count);
+
+    if (curPage > totPage) {
+      curPage = totPage;
+    }
+
+    this.curPage = curPage;
+
+    setPageRange();
+    setTotBlock();
+    setBlockRange();
+  }
+
   public void setBlockRange() {
     // TODO Auto-generated method stub
     curBlock = (int) Math.ceil((curPage - 1) / BLOCK_SCALE) + 1;

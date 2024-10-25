@@ -13,11 +13,10 @@ import java.util.Map;
 @Repository
 public class AccountBookDaoImpl implements AccountBookDao {
 
-    @Autowired
-    private SqlSession sqlSession;
+  @Autowired
+  private SqlSession sqlSession;
 
-    private static final String NAMESPACE = "com.edu.wing.accountbook.";
-
+  private static final String NAMESPACE = "com.edu.wing.accountbook.";
 
     @Override
     public List<AccountBookVo> selectAccountBook() {
@@ -57,9 +56,6 @@ public class AccountBookDaoImpl implements AccountBookDao {
     public void accountBookDelete(int memberNo) {
         sqlSession.delete(NAMESPACE + "accountBookDelete", memberNo);
     }
-
-
-
 
     @Override
     public List<AccountBookVo> selectAccountBookByRecentDate(Map<String, Object> params) {

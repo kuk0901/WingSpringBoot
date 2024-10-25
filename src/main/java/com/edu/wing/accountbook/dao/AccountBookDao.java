@@ -9,8 +9,6 @@ import java.util.Map;
 
 public interface AccountBookDao {
 
-
-
     List<AccountBookVo> selectAccountBook();
     List<AccountBookVo> selectAccountBooks(Map<String, Object> params);
     List<String> selectPlusCategories();
