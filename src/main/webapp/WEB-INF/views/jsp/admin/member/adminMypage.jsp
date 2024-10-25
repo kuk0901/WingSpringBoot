@@ -36,7 +36,10 @@
       <form id="updateForm" >
       <div class="line">
         <label class="form-label">이메일:</label>
-        <input type="email" name="email"  id="email" value="${memberInfo.email}" class="form-input" />
+        <input type="email" name="email"  id="email" value="${memberInfo.email}" class="form-input"
+               pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+               autocomplete="off"/>
+        <span id="emailError"></span>
       </div>
       <div class="line">
         <label class="form-label">이름:</label>
@@ -44,15 +47,25 @@
       </div>
       <div class="line">
         <label class="form-label">비밀번호:</label>
-        <input type="password" name="pwd" id="pwd" value="${memberInfo.pwd}" class="form-input" />
+        <input type="password" name="pwd" id="pwd" value="${memberInfo.pwd}" class="form-input"
+               pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+               autocomplete="off"/>
       </div>
       <div class="line">
         <label class="form-label">비밀번호 확인:</label>
-        <input type="password" id="pwdCheck" value="${memberInfo.pwd}" class="form-input" />
+        <input type="password" id="pwdCheck" value="${memberInfo.pwd}" class="form-input"
+               pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+               autocomplete="off"/>
+        <span id="pwdError"></span>
+
+
+
       </div>
       <div class="line">
         <label class="form-label">휴대폰번호:</label>
-        <input type="text" name="phone" id="phone" value="${memberInfo.phone}" class="form-input" />
+        <input type="text" name="phone" id="phone" value="${memberInfo.phone}" class="form-input"
+               pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
+               maxlength="14"/>
       </div>
       <div class="line">
         <label class="form-label">가입일자:</label>

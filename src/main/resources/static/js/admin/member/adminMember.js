@@ -15,7 +15,7 @@ function restRequestMemberDetail(tdElement) {
     var curPageInput = $('#curPage').val();
 
     $.ajax({
-        url: '/admin/member/' + memberNo + '?curPage=' + curPageInput,
+        url: '/api/admin/member/' + memberNo + '?curPage=' + curPageInput,
         method: 'GET',
         dataType: 'json',
         success: function (data) {

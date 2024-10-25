@@ -62,7 +62,7 @@ $form.on("submit", function(e) {
         formData[item.name] = item.value;
     });
 
-    console.log(formData)
+
     // memberNo를 정수형으로 변환
     formData.memberNo = parseInt($("#memberNo").val(), 10); // 여기에 로그인한관리자의 memberNo 값을 추가
     $.ajax({
@@ -72,7 +72,7 @@ $form.on("submit", function(e) {
         contentType: "application/json",
         dataType: "json",
         success: function(res) {
-            console.log(res.msg);
+            console.log('성공');
         },
         error: function(xhr, status, error) {
 

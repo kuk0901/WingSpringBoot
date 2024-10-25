@@ -32,7 +32,7 @@ public class AccountBookController {
         List<AccountBookVo> accountBookList = accountBookService.selectAccountBook();
 
         // 카테고리와 결제 방법 리스트 가져오기
-        List<String> categoryList = accountBookService.getCategoryList();
+        List<String> categoryList = accountBookService.getMinusCategoryList();
         List<String> paymentMethodList = accountBookService.getPaymentMethodList();
 
         // 모델에 데이터를 담아 JSP로 전달

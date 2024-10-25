@@ -61,6 +61,8 @@
         const paymentMethodsContainer = $('#topPaymentMethods');
         paymentMethodsContainer.empty(); // 기존 내용 삭제
 
+        // "Top 결제 수단" 텍스트 추가
+        paymentMethodsContainer.append('<span class="topPaymentMethodsBox">Top 결제 수단</span>');
         // 결제 방법 리스트를 화면에 출력
         data.forEach(function(method) {
           paymentMethodsContainer.append(`<span class="category-item text__semibold">${method.paymentMethodName} (사용 횟수: ${method.usageCount}회)</span> `);
@@ -79,7 +81,8 @@
           console.log("상위 카테고리:", data);
           const categoriesContainer = $('#topCategoriesContainer'); // 카테고리 컨테이너 선택 (id 변경)
           categoriesContainer.empty(); // 기존 내용 지우기
-
+          // "Top 카테고리" 텍스트 추가
+          categoriesContainer.append('<span class="topCategoriesBox">Top 카테고리</span>');
           // 데이터를 처리하여 화면에 출력
           data.forEach(category => {
             categoriesContainer.append(`<span class="category-item text__semibold">${category.minusCategoryName} (사용 횟수: ${category.usageCount}회)</span> `);

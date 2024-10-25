@@ -29,7 +29,7 @@ public class AdminAccountBookApiController {
     // 카테고리 목록 조회
     @GetMapping("/categories")
     public List<String> getCategories() {
-        return accountBookService.getCategoryList();
+        return accountBookService.getMinusCategoryList();
     }
 
     // 결제 방법 목록 조회

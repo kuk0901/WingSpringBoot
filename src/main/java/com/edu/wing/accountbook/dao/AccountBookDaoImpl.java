@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +30,12 @@ public class AccountBookDaoImpl implements AccountBookDao {
     }
 
     @Override
-    public List<String> selectCategories() {
-        return sqlSession.selectList(NAMESPACE+"selectCategories");
+    public List<String> selectPlusCategories() {
+        return sqlSession.selectList(NAMESPACE+"selectPlusCategories");
+    }
+    @Override
+    public List<String> selectMinusCategories() {
+        return sqlSession.selectList(NAMESPACE+"selectMinusCategories");
     }
 
     @Override
@@ -52,4 +58,46 @@ public class AccountBookDaoImpl implements AccountBookDao {
         sqlSession.delete(NAMESPACE + "accountBookDelete", memberNo);
     }
 
+
+
+
+    @Override
+    public List<AccountBookVo> selectAccountBookByRecentDate(Map<String, Object> params) {
+        return sqlSession.selectList(NAMESPACE + "selectAccountBookByRecentDate", params);
+    }
+
+    @Override
+    public int selectMonthlyEntryCount(Map<String, Object> params) {
+        return sqlSession.selectOne(NAMESPACE + "selectMonthlyEntryCount", params);
+    }
+
+    @Override
+    public List<AccountBookVo> getMonthlyEntries(int memberNo, String startDate, String endDate) {
+        // 매개변수를 Map으로 묶어서 전달
+        Map<String, Object> params = Map.of(
+                "memberNo", memberNo,
+                "startDate", startDate,
+                "endDate", endDate
+        );
+        return sqlSession.selectList(NAMESPACE + "getMonthlyEntries", params);
+    }
+
+    @Override
+    public int insertAccountBook(Map<String, Object> params) {
+        return sqlSession.insert(NAMESPACE + "insertAccountBook", params);
+    }
+    @Override
+    public List<AccountBookVo> selectAccountBookByMonth(Date startDate, Date endDate, int memberNo, int limit) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("memberNo", memberNo);
+        params.put("limit", limit);
+        return sqlSession.selectList(NAMESPACE+"selectAccountBookByMonth",params);
+    }
+    @Override
+    public AccountBookVo selectAccountBookDetail(int accountBookNo, int memberNo) {
+        return sqlSession.selectOne(NAMESPACE + "selectAccountBookDetail",
+                Map.of("accountBookNo", accountBookNo, "memberNo", memberNo));
+    }
 }
