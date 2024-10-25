@@ -101,7 +101,7 @@ $("#categoryAdd").click(function(e) {
 
 // 취소 버튼 클릭 시 동작
 $("#cancelAdd").click(function() {
-    history.back(); // 이전 페이지로 돌아갑니다.
+    window.location.href = '/admin/category/list'; // 이전 페이지로 돌아갑니다.
 });
 
 function moveModFunc(no) {
@@ -149,20 +149,22 @@ function createPlusUpdateView(res) {
     </div>
     
     <main class="main-container payment-method__change">
-      <div class="list-container one-line-start">
-        <div class="label-container info-item bg__gray text__black box__l text__center label-size">
-          <label for="categoryName" class="info-item bg__gray text__black box__l text__center label-size">카테고리 명</label>
+      <form class="categoryForm">
+        <div class="list-container one-line">
+          <div class="label-container info-item bg__gray text__black box__l text__center">
+            <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
+          </div>
+          <div class="input-container info-item bg__white text__black box__l">
+            <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l"/>
+          </div>
         </div>
-        <div class="input-container info-item bg__white text__black box__l label-size">
-          <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l label-size"/>
-        </div>
-      </div>
        
-      <div class="btn-container">
+        <div class="btn-container">
 <!--       버튼 알아서~ 두개~ -->
-        <button id="plusCatergoryUpdate" type="submit" class="btn btn__generate btn__blue">수정</button>
-        <button id="cancelAdd" type="button" class="btn btn__generate btn__red">취소</button>
-      </div>
+          <button id="plusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin">수정</button>
+          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+        </div>
+      </form>
     </main>
   `;
 
@@ -175,7 +177,7 @@ function createPlusUpdateView(res) {
 
     $("#cancelAdd").on("click", function() {
         // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
-        history.back();
+        window.location.href = '/admin/category/list';
     });
 }
 
@@ -207,20 +209,21 @@ function createMinusUpdateView(res) {
     </div>
     
     <main class="main-container payment-method__change">
-      <div class="list-container one-line-start">
-        <div class="label-container info-item bg__gray text__black box__l text__center label-size">
-          <label for="categoryName" class="info-item bg__gray text__black box__l text__center label-size">카테고리 명</label>
+      <form class="categoryForm">
+        <div class="list-container one-line">
+          <div class="label-container info-item bg__gray text__black box__l text__center">
+            <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
+          </div>
+          <div class="input-container info-item bg__white text__black box__l">
+            <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l"/>
+          </div>
         </div>
-        <div class="input-container info-item bg__white text__black box__l label-size">
-          <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l label-size"/>
-        </div>
-      </div>
        
-      <div class="btn-container">
-<!--       버튼 알아서~ 두개~ -->
-        <button id="minusCatergoryUpdate" type="submit" class="btn btn__generate btn__blue">수정</button>
-        <button id="cancelAdd" type="button" class="btn btn__generate btn__red">취소</button>
-      </div>
+        <div class="btn-container">
+          <button id="minusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin">수정</button>
+          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+        </div>
+      </form>
     </main>
   `;
 
@@ -233,7 +236,7 @@ function createMinusUpdateView(res) {
 
     $("#cancelAdd").on("click", function() {
         // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
-        history.back();
+        window.location.href = '/admin/category/list';
     });
 }
 

@@ -28,30 +28,31 @@
     </div>
 
     <main class="main-container payment-method__list bg__white">
-      <div class="list-container list-container--title container-title">
-        <div class="list--title list--div text__semibold box__s text__center">결제수단명</div>
-        <div class="list--title list--div text__semibold box__l text__center">비고</div>
-      </div>
+      <div class="paymentMethod-container">
+        <div class="list-container list-container--title container-title one-line">
+          <div class="list--title list--div text__semibold box__s text__center">결제수단명</div>
+          <div class="list--title text__semibold box__l text__center">비고</div>
+        </div>
 
-      <c:choose>
-        <c:when test="${not empty paymentMethodVoList}">
-          <c:forEach items="${paymentMethodVoList}" var="paymentMethod" >
-            <div class="list-container list-content bg__gray">
-              <div class="list--div box__i text__center">${paymentMethod.paymentMethodName}</div>
-              <div class="list--div box__o text__center">
-<%--                <button class="btn btn__generate btn__blue btn_margin" onclick="moveModFunc(${paymentMethod.paymentMethodNo})">수정</button>--%>
-                <button class="btn btn__generate btn__blue btn_margin" onclick="paymentMethodUpdate(${paymentMethod.paymentMethodNo});">수정</button>
-                <button class="btn btn__generate btn__red" onclick="moveDelFunc(${paymentMethod.paymentMethodNo});">삭제</button>
+        <c:choose>
+          <c:when test="${not empty paymentMethodVoList}">
+            <c:forEach items="${paymentMethodVoList}" var="paymentMethod" >
+              <div class="list-container list-content bg__gray one-line">
+                <div class="list--div text__center">${paymentMethod.paymentMethodName}</div>
+                <div class="list--note box__l text__center bg__white">
+                  <button class="btn btn__generate btn__blue" onclick="paymentMethodUpdate(${paymentMethod.paymentMethodNo});">수정</button>
+                  <button class="btn btn__generate btn__red" onclick="moveDelFunc(${paymentMethod.paymentMethodNo});">삭제</button>
+                </div>
               </div>
+            </c:forEach>
+          </c:when>
+          <c:otherwise>
+            <div class="list-container">
+              <div class="list--div list__empty bg text__semibold text__correct">등록된 결제 수단이 없습니다.</div>
             </div>
-          </c:forEach>
-        </c:when>
-        <c:otherwise>
-          <div class="list-container">
-            <div class="list--div list__empty bg text__semibold text__correct">등록된 결제 수단이 없습니다.</div>
-          </div>
-        </c:otherwise>
-      </c:choose>
+          </c:otherwise>
+        </c:choose>
+      </div>
     </main>
   </div>
 </section>

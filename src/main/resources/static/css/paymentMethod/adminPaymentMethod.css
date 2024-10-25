@@ -32,21 +32,39 @@
     padding: 13px 19px;
 }
 
-#content .one-line-end {
+#content .main-container .paymentMethod-container {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: start;
+    margin-top: 50px;
 }
 
-#content .one-line-start {
+#content .main-container .addPaymentMethodForm .paymentMethod-form {
+    margin: 100px auto 200px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .one-line {
     display: flex;
     justify-content: flex-start;
     gap: 100px;
 }
 
-.label-size {
-    display: flex;
+#content .main-container .addPaymentMethodForm .paymentMethod-form .label-container {
+    margin: 10px;
+    padding: 10px 20px;
     width: 300px;
-    height: 25px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .input-container {
+    margin: 10px;
+    padding: 10px 20px;
+    width: 300px;
+}
+
+#content .main-container .addPaymentMethodForm .paymentMethod-form .input-container .info-item {
+    border: none;
+    outline: none;
 }
 
 .one-line .btn-container {
@@ -60,10 +78,25 @@
     padding: 17px 13px;
 }
 
-.list-container .list--div {
-    display: inline-block;
-    width: 200px;
-    margin: 5px 5px 5px 20px;
+#content .main-container .list-container .list--div {
+    width: 450px;
+    padding: 20px;
+}
+
+#content .main-container .list-container .list--note {
+    padding: 20px;
+}
+
+#content .main-container .addPaymentMethodForm .btn-container .btn--margin {
+    margin: auto 100px auto 400px;
+    padding: 13px 19px;
+    width: 150px;
+}
+
+#content .main-container .list-container .btn-container .btn--margin {
+    margin: auto 100px auto 400px;
+    padding: 13px 19px;
+    width: 150px;
 }
 
 .container-title{
@@ -71,28 +104,17 @@
 }
 
 .list-content {
-    margin: 5px 5px 5px 20px;
-}
-
-.box__i {
-    width: 100px;
-    height: 20px;
-}
-
-.box__o {
-    width: 100px;
+    margin: 5px 5px 10px 20px;
 }
 
 .content_margin {
     margin-left: 50px;
 }
 
-.btn_margin {
-    margin-right: 20px;
+.box__l {
+    width: 200px;
 }
 
-.btn--margin {
-    margin: 150px 20px 50px 200px;
-    width: 150px;
-    height: 40px;
+#content .btn-container {
+    margin-right: 20px;
 }

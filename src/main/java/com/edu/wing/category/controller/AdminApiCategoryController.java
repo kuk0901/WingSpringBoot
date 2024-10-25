@@ -243,7 +243,7 @@ public class AdminApiCategoryController {
     }
 
     resultMap.put("status", "success");
-    resultMap.put("getCategoryName", minusCategoryVo.getCategoryName());
+    resultMap.put("categoryName", minusCategoryVo.getCategoryName());
     resultMap.put("message", "카테고리를 삭제할 수 있습니다.");
     return ResponseEntity.ok(resultMap);
   }

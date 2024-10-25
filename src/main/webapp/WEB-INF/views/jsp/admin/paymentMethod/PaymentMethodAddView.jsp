@@ -25,15 +25,19 @@
     </div>
 
     <main class="main-container payment-method__change">
-      <form id="addPaymentMethodForm">
-        <div class="form-group one-line-start">
-          <label for="paymentMethodName" class="info-item bg__gray text__black box__l text__center label-size">결제 수단명</label>
-          <input type="text" id="paymentMethodName" name="paymentMethodName" class="info-item bg__white text__black box__l label-size" required>
+      <form id="addPaymentMethodForm" class="addPaymentMethodForm">
+        <div class="paymentMethod-form one-line">
+          <div class="label-container bg__gray text__center text__semibold">
+            <label for="paymentMethodName" class="info-item text__black">결제수단 명</label>
+          </div>
+          <div class="input-container bg__white text__black">
+            <input type="text" id="paymentMethodName" name="paymentMethodName" class="info-item" placeholder="ex) 계좌이체" required>
+          </div>
         </div>
 
         <div class="btn-container">
-          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn__blue btn--margin">등록</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn__red btn--margin">취소</button>
+          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn--margin">등록</button>
+          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
     </main>

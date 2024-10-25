@@ -100,20 +100,22 @@ function createUpdateView(res) {
     </div>
     
     <main class="main-container payment-method__change">
-      <div class="list-container one-line-start">
-        <div class="label-container info-item bg__gray text__black box__l text__center label-size">
-          <label for="paymentMethodName" class="info-item bg__gray text__black box__l text__center label-size">결제수단 명</label>
+      <form class="addPaymentMethodForm">
+        <div class="paymentMethod-form one-line">
+          <div class="label-container bg__gray text__black text__center label-size">
+            <label for="paymentMethodName" class="text__black text__center label-size">결제수단 명</label>
+          </div>
+          <div class="input-container bg__white text__black label-size">
+            <input id="paymentMethodName" name="paymentMethodName" value="${res.paymentMethodName}" class="info-item bg__white text__black box__l label-size"/>
+          </div>
         </div>
-        <div class="input-container info-item bg__white text__black box__l label-size">
-          <input id="paymentMethodName" name="paymentMethodName" value="${res.paymentMethodName}" class="info-item bg__white text__black box__l label-size"/>
+         
+        <div class="btn-container">
+  <!--       버튼 알아서~ 두개~ -->
+          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn--margin">수정</button>
+          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
         </div>
-      </div>
-       
-      <div class="btn-container">
-<!--       버튼 알아서~ 두개~ -->
-        <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn__blue">수정</button>
-        <button id="cancelAdd" type="button" class="btn btn__generate btn__red">취소</button>
-      </div>
+      </form>
     </main>
   `;
 
@@ -126,7 +128,7 @@ function createUpdateView(res) {
 
   $("#cancelAdd").on("click", function() {
     // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
-    history.back();
+    window.location.href = '/admin/paymentMethod/list';
   });
 }
 

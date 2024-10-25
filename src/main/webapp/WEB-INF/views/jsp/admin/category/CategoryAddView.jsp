@@ -26,20 +26,22 @@
     <main class="main-container">
       <form id="categoryForm" class="categoryForm">
 
-        <div class="category-container one-line">
-          <div class="label-container">
-            <label for="categoryName">카테고리 명</label>
-          </div>
-          <div class="input-container">
-            <input id="categoryName" type='text' name='categoryName'><br>
+        <div class="style-category">
+          <div class="category-container one-line">
+            <div class="label-container bg__gray text__center">
+              <label for="categoryName" class="text__semibold">카테고리 명</label>
+            </div>
+            <div class="input-container bg__white">
+              <input id="categoryName" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
+            </div>
           </div>
 
           <div class="category-container one-line">
-            <div class="label-container">
-              <label for="division">수입 / 지출</label>
+            <div class="label-container bg__gray text__center">
+              <label for="division" class="text__semibold">수입 / 지출</label>
             </div>
-            <div class="input-container">
-              <select id="division" name="division">
+            <div class="input-container select-container bg__gray">
+              <select id="division" name="division" class="select bg__gray">
                 <option value="minus" selected>-</option>
                 <option value="plus">+</option>
               </select>
@@ -48,8 +50,8 @@
         </div>
 
         <div class="btn-container">
-          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn__blue btn--margin">등록</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn__red btn--margin">취소</button>
+          <button id="categoryAdd" type="submit" class="btn btn__generate btn--margin">등록</button>
+          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
         </div>
 
 
