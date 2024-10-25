@@ -21,8 +21,16 @@ public class MemberVo implements Serializable {
   private String grade;                // 등급
   private int yearlySalary;            // 연봉
   private int monthlySalary;           // 월급
-  private Date dreDate;          // 가입일자
+  private Date creDate;          // 가입일자
   private Date modDate;         // 수정일자
   private String quitApply;            // 탈퇴신청 여부
   private String productPurchase;      // 상품구매 여부
+  // 추가된 필드
+  private Date sellingDate;       // 카드 신청 날짜
+  private Date terminationDate;   // 카드 해지 날짜
+  private String cardName;        // 구매 카드 이름
+  private String terminationReason; // 해지 사유
+  private int accountBookCount;   // 가계부 작성 수
+  private int postCount;          // 게시글 작성 수
+  private String memberCardNo;      //보유 카드번호
 }

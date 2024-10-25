@@ -46,7 +46,7 @@ $form.on("submit", function(e) {
           location.href = "/admin/api/salesDashboard/list";
           break;
         case "MEMBER":
-          location.href = "/member";
+          location.href = "/member/accountBook/list";
           break;
         default: location.reload();
       }
