@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.category">
+
+    <resultMap type="plusCategoryVo" id="plusCategoryResultMap">
+        <id column="CATEGORY_NO" property="categoryNo" />
+        <result column="CATEGORY_NAME" property="categoryName" />
+    </resultMap>
+
+    <select id="plusCategorySelectList" resultMap="plusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM PLUS_CATEGORY
+        WHERE CATEGORY_NO != 1
+        ORDER BY CATEGORY_NO
+    </select>
+
+    <select id="plusCategoryExists" parameterType="String" resultMap="plusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM PLUS_CATEGORY
+        WHERE CATEGORY_NAME = #{categoryName}
+    </select>
+
+    <select id="selectPlusCategoryNoByName" parameterType="String" resultType="int">
+        SELECT CATEGORY_NO
+        FROM PLUS_CATEGORY
+        WHERE CATEGORY_NAME = #{categoryName}
+    </select>
+
+    <insert id="plusCategoryInsertOne" parameterType="map">
+        INSERT INTO PLUS_CATEGORY (CATEGORY_NO, CATEGORY_NAME)
+        VALUES(PLUS_CATEGORY_NO_SEQ.NEXTVAL, #{categoryName})
+    </insert>
+
+    <update id="plusCategoryUpdateOne" parameterType="plusCategoryVo">
+        UPDATE PLUS_CATEGORY
+        SET
+            CATEGORY_NAME = #{categoryName}
+        WHERE CATEGORY_NO = #{categoryNo}
+    </update>
+
+    <select id="plusCategorySelectOne" parameterType="int"
+            resultMap="plusCategoryResultMap">
+        SELECT CATEGORY_NO, CATEGORY_NAME
+        FROM PLUS_CATEGORY
+        WHERE CATEGORY_NO = #{no}
+    </select>
+
+    <select id="plusCategoryTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(ACCOUNT_BOOK_NO)
+        FROM ACCOUNT_BOOK AB
+        WHERE AB.PLUS_CATEGORY_NO = #{categoryNo}
+    </select>
+
+    <delete id="plusCategoryDeleteOne" parameterType="int">
+        DELETE FROM PLUS_CATEGORY
+        WHERE CATEGORY_NO = #{categoryNo}
+    </delete>
+</mapper>
