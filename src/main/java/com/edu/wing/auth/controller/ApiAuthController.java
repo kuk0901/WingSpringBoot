@@ -2,6 +2,7 @@ package com.edu.wing.auth.controller;
 
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.member.service.MemberService;
+import com.edu.wing.util.RandomAlertMessage;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,20 @@ import java.util.Map;
 public class ApiAuthController {
 
   private final Logger log = LoggerFactory.getLogger(ApiAuthController.class);
-  private final String logTitleMsg = "==ApiAuthController==";
+
+  private final String STATUS = "status";
+  private final String STATUS_SUCCESS = "success";
+  private final String STATUS_FAIL = "failed";
+  private final String STATUS_ERROR = "error";
+  private final String ALERT_MSG = "alertMsg";
+
+  private final RandomAlertMessage randomAlertMessage = new RandomAlertMessage();
 
   @Autowired
   MemberService memberService;
 
   @PostMapping("/signup")
   public ResponseEntity<?> signup(@RequestBody MemberVo memberVo) {
-    log.info(logTitleMsg);
     log.info("signup memberVo: {}", memberVo);
 
     Map<String, String> resultMap = new HashMap<>();
@@ -36,7 +43,7 @@ public class ApiAuthController {
     try {
 
       if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
-        resultMap.put("status", "failed");
+        resultMap.put(STATUS, STATUS_FAIL);
         resultMap.put("email", memberVo.getEmail());
         resultMap.put("emailMsg", "이미 존재하는 이메일입니다.");
 
@@ -46,19 +53,19 @@ public class ApiAuthController {
       memberVo.setGrade("MEMBER");
 
       if (memberService.memberInsertOne(memberVo)) {
-        resultMap.put("status", "success");
-        resultMap.put("alertMsg", "회원가입이 완료되었습니다.");
+        resultMap.put(STATUS, STATUS_SUCCESS);
+        resultMap.put(ALERT_MSG, "회원가입이 완료되었습니다.");
         return ResponseEntity.ok().body(resultMap);
       }
 
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "회원가입에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put(ALERT_MSG, "회원가입에 실패했습니다. 잠시 후 다시 시도해 주세요.");
 
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     } catch (Exception e) {
       log.error("회원가입 중 오류 발생: ", e);
-      resultMap.put("status", "error");
-      resultMap.put("alertMsg", "서버 오류로 인해 회원가입이 처리되지 못했습니다. 다시 시도해 주세요.");
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, "서버 오류로 인해 회원가입이 처리되지 못했습니다. 다시 시도해 주세요.");
 
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     }
@@ -66,7 +73,6 @@ public class ApiAuthController {
 
   @PostMapping("/signin")
   public ResponseEntity<?> signin(@RequestBody MemberVo memberVo, HttpSession session) {
-    log.info(logTitleMsg);
     log.info("signin memberVo: {}", memberVo);
 
     Map<String, String> resultMap = new HashMap<>();
@@ -78,24 +84,21 @@ public class ApiAuthController {
         // 세션에 사용자 정보 저장
         session.setAttribute("member", user);
 
-        /* FIXME: 관리자, 사용자에 따라 다른 문구 추가
-         * 관리자 -> 문구 1개
-         * 사용자 -> 문구 5개 중에서 랜덤
-        */
-        resultMap.put("status", "success");
-        resultMap.put("alertMsg", user.getGrade().equals("ADMIN") ? user.getUserName() + "관리자님 환영합니다!" : "나의 슬기로운 소비 생활 기록하기!");
+        resultMap.put(STATUS, STATUS_SUCCESS);
+        resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
+            ? randomAlertMessage.getRandomAdminAlert()
+            : randomAlertMessage.getRandomMemberAlert());
         resultMap.put("grade", user.getGrade());
 
         return ResponseEntity.ok().body(resultMap);
       } else {
-        resultMap.put("status", "fail");
-        resultMap.put("alertMsg", "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.");
+        resultMap.put(STATUS, STATUS_FAIL);
+        resultMap.put(ALERT_MSG, "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resultMap);
       }
     } catch (Exception e) {
-      log.error(logTitleMsg, e);
-      resultMap.put("status", "error");
-      resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, "서버 오류가 발생했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
   }
