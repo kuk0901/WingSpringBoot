@@ -1,6 +1,5 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PaymentMethodView</title>
   <%--    <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />--%>
-  <link rel="stylesheet" href="/css/paymentMethod/adminPaymentMethod.css" />
-  <script defer src="/js/paymentMethod/paymentMethod.js"></script>
+  <link rel="stylesheet" href="/css/admin/paymentMethod/adminPaymentMethod.css" />
+  <script defer src="/js/admin/paymentMethod/paymentMethod.js"></script>
 </head>
 <body>
 

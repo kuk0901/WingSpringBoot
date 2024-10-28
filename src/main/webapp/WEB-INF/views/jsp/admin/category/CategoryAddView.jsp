@@ -1,6 +1,5 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CategoryListView</title>
 <%--  <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />--%>
-  <link rel="stylesheet" href="/css/category/adminCategory.css" />
-  <script defer type="module" src="/js/category/category.js"></script>
+  <link rel="stylesheet" href="/css/admin/category/adminCategory.css" />
+  <script defer type="module" src="/js/admin/category/category.js"></script>
 </head>
 <body>
 
