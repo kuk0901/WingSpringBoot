@@ -11,9 +11,9 @@
           integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
           crossorigin="anonymous">
   </script>
-  <script defer  type="module" src="/js/admin/member/adminMypage.js"></script>
+  <script defer  type="module" src="/js/admin/user/adminMypage.js"></script>
 
- <link rel="stylesheet" href="/css/admin/member/adminMypage.css">
+ <link rel="stylesheet" href="/css/admin/user/adminMypage.css">
   <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 </head>
 

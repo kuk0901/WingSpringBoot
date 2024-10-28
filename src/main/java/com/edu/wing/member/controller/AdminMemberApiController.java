@@ -92,7 +92,7 @@ public class AdminMemberApiController {
     public ModelAndView getAdminMypage(@PathVariable("memberNo") int memberNo) {
         MemberVo memberInfo = memberService.getAdminMypageInfo(memberNo);
 
-        ModelAndView mav = new ModelAndView("jsp/admin/member/adminMypage"); // JSP 파일 경로
+        ModelAndView mav = new ModelAndView("jsp/admin/user/adminMypage"); // JSP 파일 경로
         mav.addObject("memberInfo", memberInfo);
         return mav;
     }
