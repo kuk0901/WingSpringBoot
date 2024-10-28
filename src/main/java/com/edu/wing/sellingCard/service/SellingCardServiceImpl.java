@@ -28,4 +28,9 @@ public class SellingCardServiceImpl implements SellingCardService {
   public Map<String, Object> sellingCardSelectOne(int sellingCardNo) {
     return sellingCardDao.sellingCardSelectOne(sellingCardNo);
   }
+
+  @Override
+  public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
+    return sellingCardDao.sellingCardSelectOneForUserPage(memberNo);
+  }
 }

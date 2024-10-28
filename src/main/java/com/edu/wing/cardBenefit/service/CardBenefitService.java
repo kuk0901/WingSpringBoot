@@ -7,4 +7,5 @@ import java.util.List;
 public interface CardBenefitService {
   List<CardBenefitVo> cardBenefitSelectList();
   CardBenefitVo cardBenefitSelectOne(int cardNo);
+  List<CardBenefitVo> cardBenefitSelectListOne(int cardNo);
 }

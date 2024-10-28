@@ -9,4 +9,5 @@ public interface SellingCardDao {
   List<SellingCardVo> sellingCardSelectList(int start, int end, int cardNo);
   int sellingCardSelectTotalCount(int cardNo);
   Map<String, Object> sellingCardSelectOne(int sellingCardNo);
+  List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
 }

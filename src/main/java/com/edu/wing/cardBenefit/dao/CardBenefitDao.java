@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface CardBenefitDao {
   List<CardBenefitVo> cardBenefitSelectList();
+  List<CardBenefitVo> cardBenefitSelectListOne(int cardNo);
   CardBenefitVo cardBenefitSelectOne(int cardNo);
   void cardBenefitInsertOne(CardBenefitVo cardBenefitVo);
 }
