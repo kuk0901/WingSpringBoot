@@ -95,4 +95,14 @@ public class AccountBookServiceImpl implements AccountBookService {
     return accountBookDao.selectAccountBookDetail(accountBookNo, memberNo);
   }
 
+  @Override
+  public void deleteAccountBook(int accountBookNo) {
+    accountBookDao.deleteAccountBook(accountBookNo);
+  }
+
+  @Override
+  public int updateAccountBook(Map<String, Object> params) {
+    return accountBookDao.updateAccountBook(params);
+  }
+
 }

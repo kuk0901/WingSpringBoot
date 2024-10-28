@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate; // LocalDate 클래스 import
 import org.springframework.format.annotation.DateTimeFormat; // DateTimeFormat 애너테이션 import
+
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -114,7 +116,31 @@ public class MemberAccountBookApiController {
             e.printStackTrace();  // 서버 로그에 예외 출력
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching account book details.");
         }
+
+
+
+
+    }
+    // 가계부 삭제 API
+    @DeleteMapping("/{accountBookNo}")
+    public ResponseEntity<Void> deleteAccountBook(@PathVariable int accountBookNo) {
+        accountBookService.deleteAccountBook(accountBookNo);
+        return ResponseEntity.noContent().build(); // 204 No Content 반환
+    }
+    @PutMapping("/update")
+    public ResponseEntity<String> updateAccountBook(@RequestBody Map<String, Object> params) {
+
+
+        int updatedRows = accountBookService.updateAccountBook(params);
+
+        if (updatedRows > 0) {
+            return ResponseEntity.ok("가계부가 성공적으로 업데이트되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 실패");
+        }
     }
 
-}
+
+
+}//종료
 
