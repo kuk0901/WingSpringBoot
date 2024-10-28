@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/admin/member")
+@RequestMapping("/admin/api/member")
 public class AdminMemberApiController {
     private Logger log = LoggerFactory.getLogger(AdminMemberApiController.class);
     private final String logTitleMsg = "==AdminMemberApiController==";
@@ -29,7 +29,7 @@ public class AdminMemberApiController {
     @Autowired
     private AccountBookService accountBookService;
 
-    //초기화면
+    /*//초기화면
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST}) // 관리자용 회원 목록 페이지
     public ModelAndView getAllMembersForAdmin(@RequestParam(defaultValue = "1") int curPage) {
         log.info(logTitleMsg);
@@ -49,7 +49,7 @@ public class AdminMemberApiController {
         mav.addObject("pagingMap", pagingMap);
 
         return mav;
-    }
+    }*/
     @GetMapping("/{memberNo}")
     public ResponseEntity<Map<String, Object>> selectMemberDetailForAdmin(@PathVariable int memberNo, @RequestParam int curPage) {
         log.info(logTitleMsg);
@@ -91,6 +91,7 @@ public class AdminMemberApiController {
     @GetMapping("/mypage/{memberNo}")
     public ModelAndView getAdminMypage(@PathVariable("memberNo") int memberNo) {
         MemberVo memberInfo = memberService.getAdminMypageInfo(memberNo);
+
         ModelAndView mav = new ModelAndView("jsp/admin/member/adminMypage"); // JSP 파일 경로
         mav.addObject("memberInfo", memberInfo);
         return mav;

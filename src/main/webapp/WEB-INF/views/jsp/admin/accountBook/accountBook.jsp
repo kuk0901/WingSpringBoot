@@ -12,11 +12,11 @@
             integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
             crossorigin="anonymous">
     </script>
-    <script defer src="/js/accountbook/adminAccountbook.js"></script>
+    <script defer src="/js/admin/accountbook/adminAccountbook.js"></script>
     <script type="text/javascript">
 
     </script>
-    <link rel="stylesheet" href="/css/accountbook/adminAccountbook.css">
+    <link rel="stylesheet" href="/css/admin/accountbook/adminAccountbook.css">
     <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 </head>
 
