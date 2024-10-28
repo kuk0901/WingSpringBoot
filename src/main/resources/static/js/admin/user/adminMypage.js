@@ -1,9 +1,9 @@
-import { formatNumber, formatPhoneNumber } from "../../util/fotmat.js";
+import { formatPhoneNumber } from "../../util/format.js";
 
 const $form = $("#updateForm");//폼필드이름
 const $email = $("#email");
 const $emailError = $("#emailError");
-const $nameInput = $("#name"); // 이름 입력 필드
+const $nameInput = $("#userName"); // 이름 입력 필드
 const $pwdInput = $("#pwd");
 const $pwdCheck = $("#pwdCheck");
 const $phoneInput = $("#phone");
@@ -67,7 +67,7 @@ $form.on("submit", function(e) {
     formData.memberNo = parseInt($("#memberNo").val(), 10); // 여기에 로그인한관리자의 memberNo 값을 추가
     $.ajax({
         type: "PATCH",
-        url: "/api/admin/member/update",
+        url: "/admin/api/member/update",
         data: JSON.stringify(formData),
         contentType: "application/json",
         dataType: "json",

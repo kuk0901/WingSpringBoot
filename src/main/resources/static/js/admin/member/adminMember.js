@@ -15,7 +15,7 @@ function restRequestMemberDetail(tdElement) {
     var curPageInput = $('#curPage').val();
 
     $.ajax({
-        url: '/api/admin/member/' + memberNo + '?curPage=' + curPageInput,
+        url: '/admin/api/member/' + memberNo + '?curPage=' + curPageInput,
         method: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -45,7 +45,7 @@ function restRequestMemberDetail(tdElement) {
              
              
                 <div class="label">회원명</div>
-                <div class="value">${memberDetail.name ? memberDetail.name : '정보 없음'}</div>
+                <div class="value">${memberDetail.userName ? memberDetail.userName : '정보 없음'}</div>
              </div>
               <div class="one-line">
                 <div class="label">전화번호</div>
@@ -138,7 +138,7 @@ $(document).on('click', '.deleteMember', function() {
 
 function deleteMember(memberNo) {
     $.ajax({
-        url: '/admin/member/delete/' + memberNo,
+        url: '/admin/api/member/delete/' + memberNo,
         type: 'DELETE',
         success: function(response) {
             alert(response); // 삭제 성공 메시지 표시
