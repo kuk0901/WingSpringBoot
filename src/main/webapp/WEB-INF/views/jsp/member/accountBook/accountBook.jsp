@@ -16,8 +16,8 @@
     </script>
 
 
-    <script defer src="/js/accountbook/memberAccountbook.js"></script>
-    <link rel="stylesheet" href="/css/accountbook/memberAccountbook.css">
+    <script defer src="/js/member/accountbook/memberAccountbook.js"></script>
+    <link rel="stylesheet" href="/css/member/accountbook/memberAccountbook.css">
     <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 </head>
 

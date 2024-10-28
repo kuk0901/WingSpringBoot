@@ -24,7 +24,6 @@ import java.util.Map;
 @RequestMapping("/admin/productManagement")
 public class AdminCardController {
   private final Logger log = LoggerFactory.getLogger(AdminCardController.class);
-  private final String logTitleMsg = "==AdminCardController==";
 
   @Autowired
   private CardService cardService;
@@ -67,7 +66,6 @@ public class AdminCardController {
   // FIXME: 수정 필요
   @GetMapping("/list/card/insert")
   public ModelAndView cardInsertOne(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    log.info(logTitleMsg);
     log.info("@GetMapping cardInsertOne curPage: {}, categoryName: {}", curPage, categoryName);
 
     int totalCount = cardService.cardSelectTotalCount(categoryName);

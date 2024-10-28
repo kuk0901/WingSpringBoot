@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.edu.wing.accountbook">
@@ -9,7 +8,7 @@
         <result property="minusCategoryNo" column="MINUS_CATEGORY_NO"/>
         <result property="memberNo" column="MEMBER_NO"/>
         <result property="paymentMethodNo" column="PAYMENT_METHOD_NO"/>
-        <result property="creDate" column="CREDATE"/>
+        <result property="creDate" column="CRE_DATE"/>
         <result property="content" column="CONTENT"/>
         <result property="paymentAmount" column="PAYMENT_AMOUNT"/>
         <result property="minusCategoryName" column="MINUS_CATEGORY_NAME"/>
@@ -25,7 +24,7 @@
                mc.CATEGORY_NAME AS MINUS_CATEGORY_NAME, -- MINUS_CATEGORY의 CATEGORY_NAME
                m.EMAIL          AS MEMBER_EMAIL,        -- MEMBER 테이블의 EMAIL
                pm.PAYMENT_METHOD_NAME,                  -- PAYMENT_METHOD의 PAYMENT_METHOD_NAME
-               ab.CREDATE,
+               ab.CRE_DATE,
                ab.PAYMENT_AMOUNT
         FROM ACCOUNT_BOOK ab
                  LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
@@ -56,7 +55,7 @@
                mc.CATEGORY_NAME AS MINUS_CATEGORY_NAME, -- MINUS_CATEGORY의 CATEGORY_NAME
                m.EMAIL          AS MEMBER_EMAIL,        -- MEMBER 테이블의 EMAIL
                pm.PAYMENT_METHOD_NAME,                  -- PAYMENT_METHOD의 PAYMENT_METHOD_NAME
-               ab.CREDATE,
+               ab.CRE_DATE,
                ab.PAYMENT_AMOUNT
         FROM ACCOUNT_BOOK ab
                  LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
@@ -114,7 +113,7 @@
                       ab.MINUS_CATEGORY_NO,
                       ab.MEMBER_NO,
                       ab.PAYMENT_METHOD_NO,
-                      ab.CREDATE,
+                      ab.CRE_DATE,
                       ab.CONTENT,
                       ab.PAYMENT_AMOUNT,
                       mc.CATEGORY_NAME       AS minusCategoryName,
@@ -124,10 +123,10 @@
                         LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
                         LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
                         LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
-               WHERE ab.CREDATE >= #{startDate}
-                 AND ab.CREDATE < #{endDate}
+               WHERE ab.CRE_DATE >= #{startDate}
+                 AND ab.CRE_DATE < #{endDate}
                  AND ab.MEMBER_NO = #{memberNo}
-               ORDER BY ab.CREDATE DESC -- 작성일 기준 내림차순 정렬
+               ORDER BY ab.CRE_DATE DESC -- 작성일 기준 내림차순 정렬
              )
         WHERE ROWNUM <= #{limit} -- 최근 N개 선택
         ]]>
@@ -138,14 +137,14 @@
     <![CDATA[
         SELECT *
         FROM (SELECT ab.ACCOUNT_BOOK_NO, ab.PLUS_CATEGORY_NO, ab.MINUS_CATEGORY_NO, ab.MEMBER_NO, ab.PAYMENT_METHOD_NO
-              , ab.CREDATE, ab.CONTENT, ab.PAYMENT_AMOUNT, mc.CATEGORY_NAME AS minusCategoryName
+              , ab.CRE_DATE, ab.CONTENT, ab.PAYMENT_AMOUNT, mc.CATEGORY_NAME AS minusCategoryName
               , pc.CATEGORY_NAME AS plusCategoryName, pm.PAYMENT_METHOD_NAME AS paymentMethodName
               FROM ACCOUNT_BOOK ab
                  LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
                  LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
                  LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
               WHERE ab.MEMBER_NO = #{memberNo}
-              ORDER BY ab.CREDATE DESC -- 작성일 기준 내림차순 정렬
+              ORDER BY ab.CRE_DATE DESC -- 작성일 기준 내림차순 정렬
              )
         WHERE ROWNUM <= #{limit} -- 최근 N개 선택
         ]]>
@@ -156,8 +155,8 @@
     <![CDATA[
         SELECT COUNT(*)
         FROM ACCOUNT_BOOK ab
-        WHERE ab.CREDATE >= #{startDate}
-          AND ab.CREDATE < #{endDate}
+        WHERE ab.CRE_DATE >= #{startDate}
+          AND ab.CRE_DATE < #{endDate}
           AND ab.MEMBER_NO = #{memberNo}
         ]]>
     </select>
@@ -170,15 +169,15 @@
               ab.MINUS_CATEGORY_NO,
               ab.PAYMENT_AMOUNT
           FROM ACCOUNT_BOOK ab
-          WHERE ab.CREDATE >= #{startDate}
-            AND ab.CREDATE < #{endDate}
+          WHERE ab.CRE_DATE >= #{startDate}
+            AND ab.CRE_DATE < #{endDate}
             AND ab.MEMBER_NO = #{memberNo}
         ]]>
     </select>
     <!-- 가계부 추가 -->
     <insert id="insertAccountBook" parameterType="map">
         INSERT INTO ACCOUNT_BOOK (ACCOUNT_BOOK_NO, PLUS_CATEGORY_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO
-            , CREDATE, CONTENT, PAYMENT_AMOUNT) 
+            , CRE_DATE, CONTENT, PAYMENT_AMOUNT)
         VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, #{plusCategoryNo}, #{minusCategoryNo}, #{memberNo}, #{paymentMethodNo}
             , #{creDate}, #{content}, #{paymentAmount})
     </insert>
@@ -190,7 +189,7 @@
                  ab.MINUS_CATEGORY_NO,
                  ab.MEMBER_NO,
                  ab.PAYMENT_METHOD_NO,
-                 ab.CREDATE,
+                 ab.CRE_DATE,
                  ab.CONTENT,
                  ab.PAYMENT_AMOUNT,
                   mc.CATEGORY_NAME AS minusCategoryName, -- NULL인 경우 기본값

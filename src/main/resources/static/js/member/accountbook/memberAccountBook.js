@@ -422,6 +422,7 @@ function goToDetail(accountBookNo, memberNo) {
         dataType: 'json',
         success: function(data) {
             renderAccountBookDetail(data);
+            console.log("detail:", data); // 추가된 로그
         },
         error: function(error) {
             console.error('Error fetching account book detail:', error);
@@ -430,64 +431,89 @@ function goToDetail(accountBookNo, memberNo) {
     });
 }
 
-function renderAccountBookDetail(accountBook) {
+// 결제 수단 로드 함수 (Promise 반환)
+function loadPaymentMethodsForDetail() {
+    return new Promise((resolve, reject) => {
+        const paymentMethodSelect = document.getElementById('paymentMethodSelect');
+
+        $.ajax({
+            url: '/member/api/accountBook/paymentMethods', // 결제 방법 API
+            type: 'GET',
+            success: function(data) {
+                paymentMethodSelect.innerHTML = `<option value="">결제 수단 선택</option>`; // 초기 옵션
+                const paymentMethods = data.filter(method => method !== null); // null 값 제외
+                paymentMethods.forEach(function(method, index) {
+                    const option = document.createElement("option");
+                    option.value = index + 1; // 결제 수단 ID를 1부터 시작하도록 수정
+                    option.textContent = method; // 결제 수단 이름
+                    paymentMethodSelect.appendChild(option); // 옵션 추가
+                });
+                resolve(paymentMethods); // 결제 수단 배열을 resolve
+            },
+            error: function(xhr, status, error) {
+                console.error("결제 수단 가져오기 실패:", error);
+                reject(error); // 실패 시 reject 호출
+            }
+        });
+    });
+}
+
+// 가계부 상세 정보를 렌더링하는 함수
+async function renderAccountBookDetail(accountBook) {
     // 예를 들어, .detail-container에 내용을 렌더링
     const detailContainer = $('#content');
     detailContainer.empty(); // 기존 내용 지우기
 
-    // 결제 수단 값을 저장할 배열
-    var paymentMethodValues = []; // 결제 수단 값을 저장할 배열
-    $('#paymentMethodSelect option').each(function() {
-        var text = $(this).text(); // 각 옵션의 내부 텍스트 값을 가져오기
-        if (text) { // 빈 값 제외
-            paymentMethodValues.push(text); // 배열에 추가
-        }
-    });
-    console.log("모든 결제 수단 이름:", paymentMethodValues);
-    // 상세 정보 HTML 구성
-    const detailHtml = `
-        <div id="content">
-        <div class="title-container">
-            <div class="title btn_red text__white">
-                가계부 수정
-            </div>
-        </div>
-        <div>
-       <button onclick="window.location.href='/member/accountBook/list'">돌아가기</button>
-        </div>
-        <!--우선 위치대략적으로 정한거임-->
-       <main class="main-container">
-        <div>
-            <div>
-                <span class="detail-label">카테고리: </span>
-                <input type="text" class="category-value" value="${accountBook.minusCategoryName || accountBook.plusCategoryName || '데이터 없음'}" />
-            </div>
-            <div>
-                <span class="detail-label">상세 내용:</span>
-                <input type="text" class="detail-value" value="${accountBook.content || '내용 없음'}" />
-            </div>
-            <div>
-                <span class="detail-label">결제 수단:</span>
-                <select id="paymentMethodSelect" class="payment-value">
-                    <option value="">결제 수단 선택</option>
-                    ${paymentMethodValues.map((method, index) => `
-                        <option value="${index + 1}" ${method === accountBook.paymentMethodName ? 'selected' : ''}>${method}</option>
-                    `).join('')}
-                </select>
-            </div>
-            <div>
-                <span class="detail-label">금액: </span>
-                <input type="number" class="amount-value" value="${accountBook.paymentAmount ? accountBook.paymentAmount : 0}" />
-            </div>
-            <button onclick="deleteAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">삭제</button>
-            <button onclick="editAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">수정</button>
-        </div>
-    </main>
-    `;
+    try {
+        const paymentMethods = await loadPaymentMethodsForDetail(); // 결제 수단 로드
+        const paymentMethodValues = paymentMethods.filter(Boolean); // null 값 제외
 
-    // 상세 정보 렌더링
-    detailContainer.append(detailHtml);
+        // 상세 정보 HTML 구성
+        const detailHtml = `
+            <div id="content">
+            <div class="title-container">
+                <div class="title btn_red text__white">
+                    가계부 수정
+                </div>
+            </div>
+            <div>
+                <button onclick="window.location.href='/member/accountBook/list'">돌아가기</button>
+            </div>
+            <main class="main-container">
+                <div>
+                    <div>
+                        <span class="detail-label">카테고리: </span>
+                        <input type="text" class="category-value" value="${accountBook.minusCategoryName || accountBook.plusCategoryName || '데이터 없음'}" />
+                    </div>
+                    <div>
+                        <span class="detail-label">상세 내용:</span>
+                        <input type="text" class="detail-value" value="${accountBook.content || '내용 없음'}" />
+                    </div>
+                    <div>
+                        <span class="detail-label">결제 수단:</span>
+                        <select id="paymentMethodSelect" class="payment-value">
+                            <option value="">결제 수단 선택</option>
+                            ${paymentMethodValues.map((method, index) => `
+                                <option value="${index + 1}" ${method === accountBook.paymentMethodName ? 'selected' : ''}>${method}</option>
+                            `).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <span class="detail-label">금액: </span>
+                        <input type="number" class="amount-value" value="${accountBook.paymentAmount ? accountBook.paymentAmount : 0}" />
+                    </div>
+                    <button onclick="deleteAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">삭제</button>
+                    <button onclick="editAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">수정</button>
+                </div>
+            </main>
+            `;
+
+        // 상세 정보 렌더링
+        detailContainer.append(detailHtml);
+    } catch (error) {
+        console.error('Error loading payment methods:', error);
+        alert('결제 수단을 불러오는 데 실패했습니다.');
+    }
 }
-
 
 

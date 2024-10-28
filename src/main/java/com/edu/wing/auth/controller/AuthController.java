@@ -17,6 +17,6 @@ public class AuthController {
   public String signout(HttpSession session, RedirectAttributes redirectAttributes) {
     session.invalidate();
     redirectAttributes.addFlashAttribute("alertMsg", "로그아웃되었습니다.");
-    return "redirect:/"; // 로그아웃 후 리다이렉트할 페이지
+    return "redirect:/";
   }
 }

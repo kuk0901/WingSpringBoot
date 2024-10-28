@@ -22,7 +22,12 @@ import java.util.Map;
 @RequestMapping("/admin/api/productManagement")
 public class AdminApiCardController {
   private final Logger log = LoggerFactory.getLogger(AdminApiCardController.class);
-  private final String logTitleMsg = "==AdminCardController==";
+
+  private final String STATUS = "status";
+  private final String STATUS_SUCCESS = "success";
+  private final String STATUS_FAIL = "failed";
+  private final String STATUS_ERROR = "error";
+  private final String ALERT_MSG = "alertMsg";
 
   @Autowired
   private CardService cardService;
@@ -40,6 +45,7 @@ public class AdminApiCardController {
     List<CardBenefitVo> benefitList =  CardBenefitUtil.filterBenefitsForCard(cardVo, allBenefits);
 
     Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put(STATUS, STATUS_SUCCESS);
     resultMap.put("cardVo", cardVo);
     resultMap.put("benefitList", benefitList);
     resultMap.put("curPage", curPage);
@@ -58,40 +64,40 @@ public class AdminApiCardController {
 
     try {
       if (cardService.cardExist(formData.get("cardName"))) {
-        resultMap.put("status", "conflict");
-        resultMap.put("alertMsg", "해당 이름의 카드가 이미 존재합니다. 동일 이름의 카드는 추가할 수 없습니다.");
+        resultMap.put(STATUS, STATUS_FAIL);
+        resultMap.put(ALERT_MSG, "해당 이름의 카드가 이미 존재합니다. 동일 이름의 카드는 추가할 수 없습니다.");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap);
       }
 
       int cardNo = cardService.insertCardAndBenefits(formData, file, benefitsJson);
 
       if (cardNo == 0) {
-        resultMap.put("status", "failed");
-        resultMap.put("alertMsg", "카드 등록 중 서버에서 오류가 발생했습니다. 카드 관리에서 작성한 카드 명의 카드가 이미 등록되었는지 확인 후 등록해 주세요.");
+        resultMap.put(STATUS, STATUS_FAIL);
+        resultMap.put(ALERT_MSG, "카드 등록 중 서버에서 오류가 발생했습니다. 카드 관리에서 작성한 카드 명의 카드가 이미 등록되었는지 확인 후 등록해 주세요.");
         return ResponseEntity.internalServerError().body(resultMap);
       }
 
-      resultMap.put("status", "success");
-      resultMap.put("alertMsg", "추가하신 카드가 등록되었습니다. 상세 정보를 확인해 주세요.");
+      resultMap.put(STATUS, STATUS_SUCCESS);
+      resultMap.put(ALERT_MSG, "추가하신 카드가 등록되었습니다. 상세 정보를 확인해 주세요.");
       resultMap.put("cardNo",cardNo);
 
       return ResponseEntity.status(HttpStatus.CREATED).body(resultMap); // 생성 성공!
 
     } catch (JsonSyntaxException e) {
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "잘못된 입력값입니다. 재입력 후 다시 등록해 주세요.");
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, "잘못된 입력값입니다. 재입력 후 다시 등록해 주세요.");
       return ResponseEntity.badRequest().body(resultMap);
 
     } catch (RuntimeException e) {
       log.error("Error processing request: ", e);
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", e.getMessage());
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, e.getMessage());
       return ResponseEntity.internalServerError().body(resultMap);
 
     } catch (Exception e) {
       log.error("Error processing request: ", e);
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "카드 등록 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, "카드 등록 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
   }

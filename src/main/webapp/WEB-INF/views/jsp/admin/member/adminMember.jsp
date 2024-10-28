@@ -58,7 +58,7 @@
                 <td class='aTagStyle'
                     data-member-no="${member.memberNo}"
                     onclick="restRequestMemberDetail(this);">${member.email}</td>
-                <td>${member.name}</td>
+                <td>${member.userName}</td>
                 <td>
                   <fmt:formatDate value="${member.creDate}" pattern="yyyy년 MM월 dd일" />
                 </td>
