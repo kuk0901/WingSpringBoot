@@ -11,7 +11,7 @@
 
 .table_container th, .table_container td {
     padding: 10px; /* 셀 패딩 추가 */
-    text-align: left; /* 텍스트 정렬 */
+    text-align: center; /* 텍스트 정렬 */
 }
 .top-container {
     margin: 20px 0; /* 위 아래 간격 확보 */
@@ -114,8 +114,9 @@
     width: 100%;
     display: flex;
 }
-.btn-container{
-    text-align: right; margin-right: 10px
+.btn-back-container{
+    text-align: right;
+    margin-right: 10px
 }
 .btn.btn__generate{
     height: 50px;

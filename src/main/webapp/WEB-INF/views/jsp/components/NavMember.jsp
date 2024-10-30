@@ -20,7 +20,7 @@
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>
-        <a href="#" id="userName" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+        <a href="${pageContext.request.contextPath}/member/user/myPage" id="userName" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
             ${sessionScope.member.userName}님
         </a>
       </li>
@@ -28,7 +28,7 @@
 
     <c:if test="${empty sessionScope.member}">
       <li>
-        <a href="#" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+        <a href="" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
           @@@님
         </a>
       </li>
@@ -39,7 +39,7 @@
 
   <ul class="btn-container" aria-label="주요 메뉴">
     <li>
-      <a href="#" class="btn btn__yellow btn__p" aria-current="page"
+      <a href="${pageContext.request.contextPath}/member/accountBook/list" class="btn btn__yellow btn__p" aria-current="page"
       >가계부</a
       >
     </li>

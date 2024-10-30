@@ -31,7 +31,7 @@ function restRequestMemberDetail(tdElement) {
                           회원 관리
                       </div>
                   </div>
-                    <div class="btn-container" >
+                    <div class="btn-back-container" >
                         <button id="backButton" class="btn btn__generate">돌아가기</button>
                    <div>`;
 

@@ -96,4 +96,14 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectOne(NAMESPACE + "selectAccountBookDetail",
                 Map.of("accountBookNo", accountBookNo, "memberNo", memberNo));
     }
+
+    @Override
+    public void deleteAccountBook(int accountBookNo) {
+        sqlSession.delete(NAMESPACE + "deleteAccountBook", accountBookNo);
+    }
+
+    @Override
+    public int updateAccountBook(Map<String, Object> params) {
+        return sqlSession.update(NAMESPACE + "updateAccountBook", params);
+    }
 }

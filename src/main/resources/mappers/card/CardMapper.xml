@@ -92,4 +92,7 @@
     <delete id="cardDeleteOne" parameterType="int">
         DELETE FROM CARD WHERE CARD_NO = #{cardNo};
     </delete>
+
+
+
 </mapper>
