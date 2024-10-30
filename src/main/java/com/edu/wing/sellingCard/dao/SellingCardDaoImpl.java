@@ -36,4 +36,29 @@ public class SellingCardDaoImpl implements SellingCardDao {
   public Map<String, Object> sellingCardSelectOne(int sellingCardNo) {
     return sqlSession.selectOne(namespace + "sellingCardSelectOne", sellingCardNo);
   }
+
+  @Override
+  public int countActiveSellingCardsByCardNo(int cardNo) {
+    return sqlSession.selectOne(namespace + "countActiveSellingCardsByCardNo", cardNo);
+  }
+
+  @Override
+  public List<SellingCardVo> memberSellingCardExist(SellingCardVo sellingCardVo) {
+    return sqlSession.selectList(namespace + "memberSellingCardExist", sellingCardVo);
+  }
+
+  @Override
+  public void memberPurchaseCard(SellingCardVo sellingCardVo) {
+    sqlSession.insert(namespace + "memberPurchaseCard", sellingCardVo);
+  }
+
+  @Override
+  public SellingCardVo memberPurchaseCardCheck(SellingCardVo sellingCardVo) {
+    return sqlSession.selectOne(namespace + "memberPurchaseCardCheck", sellingCardVo);
+  }
+
+  @Override
+  public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
+    return sqlSession.selectList(namespace + "sellingCardSelectOneForUserPage", memberNo);
+  }
 }

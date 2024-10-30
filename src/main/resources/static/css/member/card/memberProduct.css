@@ -1,0 +1,455 @@
+#root .shadow {
+  display: none;
+}
+
+.fixed {
+  position: fixed;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.fixed #root.purchase .shadow {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-shadow);
+  z-index: 100;
+}
+
+.purchase-line {
+  display: none;
+}
+
+
+.fixed .purchase-line {
+  display: block;
+}
+
+/* content */
+#root #memberSection #content.bg__white {
+  background-color: var(--color-white);
+}
+
+#content .one-line {
+  justify-content: space-between;
+}
+
+#content .cardNoForm-container,
+#content .one-line .categoryForm-container {
+  width: 400px;
+  margin-left: 20px;
+}
+
+#content .cardNoForm-container #cardNoForm,
+#content .one-line .categoryForm-container #categoryForm {
+  display: flex;
+  align-items: center;
+}
+
+#content .cardNoForm-container #cardNoForm .selectCard,
+#content .cardNoForm-container #cardNoForm .cardNo,
+#content .one-line .categoryForm-container #categoryForm .selectCard,
+#content .one-line .categoryForm-container #categoryForm .categoryName {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+}
+
+#content .cardNoForm-container #cardNoForm .selectCard,
+#content .one-line .categoryForm-container #categoryForm .selectCard{
+  width: 120px;
+  height: 31px;
+  line-height: 33px;
+  font-weight: 700;
+}
+
+#content .cardNoForm-container #cardNoForm .cardNo,
+#content .one-line .categoryForm-container #categoryForm .categoryName {
+  width: 150px;
+  height: 32px;
+  line-height: 32px;
+  outline: none;
+  font-size: 17px;
+}
+
+#content .cardNoForm-container #cardNoForm .cardNo:hover,
+#content .one-line .categoryForm-container #categoryForm .categoryName:hover {
+  cursor: pointer;
+}
+
+#content .one-line .btn-container {
+  margin-right: 20px;
+}
+
+/* main-container */
+.main-container {
+  margin: 0 20px 10px;
+  height: 70vh;
+}
+
+.main-container .list-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.main-container .list-container.list-content:hover {
+  background-color: var(--color-gray);
+  cursor: pointer;
+}
+
+.main-container .list-container.list-content.card-content {
+  background-color: var(--color-gray);
+  margin: 10px 0;
+}
+
+.main-container .list-container.list-content.card-content:hover {
+  cursor: auto;
+}
+
+.main-container .list-container.list-content.card-content .img-container {
+  width: 250px;
+  height: 120px;
+  overflow: hidden;
+}
+
+.main-container .list-container.list-content.card-content .img-container .card--img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.main-container .list-container .list--simple {
+  text-align: center;
+  padding: 10px;
+}
+
+.main-container .list-container .list--simple .btn-container .btn {
+  display: inline-block;
+  width: 100px;
+  margin: 5px;
+}
+
+.main-container .list-container .list--title {
+  font-size: 17px;
+  padding: 17px 13px;
+}
+
+.main-container .list-container .card--name {
+  margin-bottom: 5px;
+  font-size: 19px;
+}
+
+.main-container .list-container .card--img {
+  width: 94%;
+  height: 120px;
+}
+
+.btn-container {
+  text-align: center;
+}
+
+.btn-container .btn {
+  padding: 10px 19px;
+}
+
+/* list style */
+.ul--ui .li--ui {
+  margin: 10px auto;
+  text-align: left;
+  position: relative;
+  line-height: 20px;
+}
+
+.ul--ui .li--ui::after {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  top: 5px;
+  left: -15px;
+  border-radius: 50%;
+  background-color: var(--color-black);
+  content: "";
+}
+
+.ul--ui .li--ui.list__white::after {
+  background-color: var(--color-white);
+}
+
+.ul--ui .li--ui .list--style {
+  display: block;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -.65px;
+  padding-left: 12px;
+}
+
+/* paymentManagement detail */
+#content .main-container section {
+  margin: 20px auto 30px;
+}
+
+#content .main-container .summary-info.one-line {
+  justify-content: center;
+  gap: 10px;
+}
+
+#content .main-container .summary-info .img-container .card--img {
+  width: 380px;
+  height: 200px;
+  object-fit: cover;
+}
+
+#content .main-container .summary-info .info-container {
+  width: 500px;
+  height: 200px;
+}
+
+#content .main-container .summary-info .info-container .info-m-container.one-line {
+  justify-content: left;
+}
+
+#content .main-container .summary-info .info-container .info-m-container.one-line.flex-space {
+  justify-content: space-between;
+}
+
+#content .main-container .summary-info .info-container .info-s-container.m-r {
+  margin-right: 20px;
+}
+
+#content .main-container .summary-info .info-container .card-info {
+  width: 70px;
+  margin: 5px;
+}
+
+#content .main-container .summary-info .info-container .list--simple .ul--ui .li--ui {
+  margin-left: 20px;
+  line-height: 12px;
+}
+#content .main-container .summary-info .info-container .list--simple.style-position {
+  position: relative;
+}
+
+#content .main-container .summary-info .info-container .list--simple.style-position .benefit-comment {
+  position: absolute;
+  top: 0;
+  left: 80px;
+}
+
+/* btn-container */
+#content .main-container .side-container {
+  width: 900px;
+}
+
+.btn-container .btn.btn__primary {
+  padding: 12px 20px;
+}
+
+/* main-info */
+#content .main-container .main-info .main-content,
+#content .main-container .main-info .sub-content {
+  width: 900px;
+  margin: auto auto 40px;
+}
+
+#content .main-container .main-info .main-content .info-title-container,
+#content .main-container .main-info .sub-content .info-title-container {
+  font-size: 17px;
+  padding: 10px 0;
+}
+
+#content .main-container .main-info .main-content .content-title .title {
+  font-size: 17px;
+  padding: 5px;
+  margin: 10px;
+}
+
+#content .main-container .main-info .main-content .content-detail .detail {
+  padding: 5px;
+  margin: 10px;
+}
+
+#content .main-container .main-info .sub-content .info-title-container {
+  margin-bottom: 10px;
+}
+
+/* 이용약관*/
+#content .main-container .sub-content .list-container {
+  border: 1px solid var(--color-gray);
+}
+
+#content .main-container .sub-content .list-container .ul--ui {
+  padding: 10px 10px 30px;
+}
+
+#content .main-container .sub-content .list-container .ul--ui .li--ui {
+  margin-left: 20px;
+  line-height: 25px;
+}
+
+#content .main-container .sub-content .list-container .ul--ui .li--ui::after {
+  top: 8px;
+}
+
+/* 주의사항 */
+#content .main-container .cautions .ul--ui {
+  width: 900px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 16px;
+}
+
+#content .main-container .cautions .ul--ui .li--ui {
+  margin-left: 23px;
+}
+
+/* 카드 구매 */
+.fixed .purchase-line {
+  width: 1000px;
+  margin: auto;
+}
+
+.fixed .purchase-line .main-container.card-list-container {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 200;
+  width: 700px;
+  margin: auto;
+}
+
+.fixed .purchase-line .card-list-container {
+  background-color: transparent;
+}
+
+.fixed .purchase-line .card-list-container .exist-container {
+  position: relative;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn {
+  display: none;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn.exist {
+  display: block;
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  z-index: 400;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn.exist:hover {
+  cursor: pointer;
+}
+
+.fixed .purchase-line .main-container.card-list-container {
+  height: auto;
+  margin: 90px auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm {
+  width: 600px;
+  margin: 50px auto;
+  padding: 20px 10px;
+  background-color: #FAF7F7;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container {
+  width: 530px;
+  height: 50px;
+  margin: 20px auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container:last-child {
+  margin-bottom: 0;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container,
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container {
+  line-height: 30px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container {
+  padding: 5px;
+  height: 35px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label,
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container input {
+  display: inline-block;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label {
+  width: 110px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container {
+  width: 300px;
+  height: 40px;
+  padding: 5px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container input {
+  width: 280px;
+  height: 30px;
+  border: none;
+  outline: none;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .select-container {
+  margin: 10px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .select-container select {
+  height: 30px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container {
+  margin: auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container .btn {
+  width: 100%;
+  border: none;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container .btn:hover {
+  background-color: var(--color-darkgray);
+  font-weight: bold;
+  color: var(--color-white);
+}
+
+/* flex-item size */
+.box__s {
+  width: 120px;
+}
+
+.box__sm {
+  width: 140px;
+}
+
+.box__m {
+  width: 225px;
+}
+
+.box__ml {
+  width: 250px;
+}
+
+.box__l {
+  width: 300px;
+}
+
+.box__xl {
+  width: 700px;
+}
+
+.h__m {
+  height: 160px;
+}

@@ -73,4 +73,19 @@ public class MemberDaoImpl implements MemberDao {
   public int updateMember(MemberVo memberVo) {
     return sqlSession.update(namespace + "updateMember", memberVo);
   }
+
+  @Override
+  public MemberVo selectMyPageInfo(int memberNo) {
+    return sqlSession.selectOne(namespace + "selectMyPageInfo", memberNo);
+  }
+
+  @Override
+  public int updateMemberInfo(MemberVo memberVo) {
+    return sqlSession.update(namespace + "updateMemberInfo", memberVo);
+  }
+
+  @Override
+  public void updateMemberQuitApply(MemberVo memberVo) {
+    sqlSession.update(namespace + "updateMemberQuitApply", memberVo);
+  }
 }

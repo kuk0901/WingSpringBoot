@@ -6,6 +6,3 @@ function goPage(pageNumber) {
   curPageDoc.val(pageNumber);
   $('#pagingForm').submit();
 }
-
-
-

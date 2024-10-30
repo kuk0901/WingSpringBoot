@@ -22,4 +22,9 @@ public class CardBenefitServiceImpl implements CardBenefitService {
   public CardBenefitVo cardBenefitSelectOne(int cardNo) {
     return cardBenefitDao.cardBenefitSelectOne(cardNo);
   }
+
+  @Override
+  public List<CardBenefitVo> cardBenefitSelectListOne(int cardNo) {
+    return cardBenefitDao.cardBenefitSelectListOne(cardNo);
+  }
 }

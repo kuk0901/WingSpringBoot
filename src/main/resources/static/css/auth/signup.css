@@ -7,6 +7,10 @@
   width: 600px;
 }
 
+.form-container .subject-container {
+  width: 420px;
+}
+
 .form-container .signup-form .signup-container .input-container {
   width: 400px;
   height: 45px;
@@ -17,26 +21,39 @@
   justify-content: center;
 }
 
-.form-container
-.signup-form
-.signup-container
-.input-container.input-container__s {
-  width: 130px;
+.form-container .signup-form .signup-container .label-container,
+.form-container .signup-form .signup-container .input-container {
+  width: 420px;
+  margin: 10px auto;
 }
 
 .form-container .signup-form .signup-container .input-container input {
   display: block;
-  width: 360px;
+  width: 400px;
   padding: 5px;
   border: none;
   outline: none;
   font-size: 17px;
 }
 
+.form-container
+.signup-form
+.signup-container
+.label-container.label-container__s {
+  width: 190px;
+}
+
+.form-container
+.signup-form
+.signup-container
+.input-container.input-container__s {
+  width: 160px;
+}
+
 .form-container .signup-form .signup-container:has(.salary-container) {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .form-container
@@ -51,18 +68,7 @@
 }
 
 .form-container .signup-form .signup-container .input-container input.input__s {
-  width: 100px;
-}
-
-.form-container .signin-container {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form-container .signin-container a:hover {
-  text-decoration: underline;
+  width: 130px;
 }
 
 .btn__sign {

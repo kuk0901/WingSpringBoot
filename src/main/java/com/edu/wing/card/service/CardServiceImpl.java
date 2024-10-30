@@ -7,7 +7,7 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.util.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,8 +89,15 @@ public class CardServiceImpl implements CardService {
       return cardNo;
     } catch (IOException e) {
       throw new RuntimeException("파일 처리 중 오류가 발생했습니다. 파일 형식이나 크기를 확인하고 다시 시도해 주세요.");
-    } catch (Exception e) {
-      throw e;
     }
+  }
+
+  @Override
+  public boolean softDeleteCardAndVerify(int cardNo) {
+    cardDao.markCardAsDeleted(cardNo);
+
+    CardVo cardVo = cardDao.checkCardDeletedStatus(cardNo);
+
+    return cardVo != null;
   }
 }

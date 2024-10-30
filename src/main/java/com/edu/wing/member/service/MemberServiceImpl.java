@@ -75,4 +75,19 @@ public class MemberServiceImpl implements MemberService {
   public int updateMember(MemberVo memberVo) {
     return memberDao.updateMember(memberVo);
   }
+
+  @Override
+  public MemberVo getMyPageInfo(int memberNo) {
+    return memberDao.selectMyPageInfo(memberNo);
+  }
+
+  @Override
+  public void updateMemberInfo(MemberVo memberVo) {
+    memberDao.updateMemberInfo(memberVo);
+  }
+
+  @Override
+  public void updateMemberQuitApply(MemberVo memberVo) {
+    memberDao.updateMemberQuitApply(memberVo);
+  }
 }

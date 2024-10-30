@@ -1,0 +1,210 @@
+#content .title-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#content .title-container .title {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.main-container {
+  margin: 20px;
+  height: 680px;
+}
+
+.btn__inquiry {
+  padding: 13px 19px;
+}
+
+.container-title{
+  margin-left: 20px;
+}
+
+.content_margin {
+  margin-left: 50px;
+}
+
+#content .btn-container {
+  margin-right: 20px;
+}
+
+#content .title-container {
+  justify-content: space-between;
+}
+
+#content .title-container .btn-container .listMove {
+  width: 150px;
+  height: 40px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+}
+
+#content .main-container .inquiry-container .list-container .list--supply {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 300px;
+}
+
+#content .main-container .inquiry-container .list-container .list--date {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 300px;
+}
+
+#content .main-container .inquiry-container .list-container .list--title {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 600px;
+}
+
+#content .search-container .input-container{
+  margin: 0 20px;
+}
+
+#content .search-container .input-container .info-item {
+  border: none;
+  outline: none;
+  width: 300px;
+  height: 50px;
+}
+
+#content .main-container .inquiry-container .inquiry-title .info-title {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 20px 20px 20px 150px;
+}
+
+#content .main-container .inquiry-container .inquiry-title .info-item {
+  width: 600px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-container .inquiry-title .info-dv-item {
+  width: 190px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-container .inquiry-sub .info-title {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 20px 10px 150px;
+}
+
+#content .main-container .inquiry-container .inquiry-sub .info-writer {
+  width: 500px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-container .inquiry-sub .info-date {
+  width: 290px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-container .info-content-div {
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 20px 0 150px;
+  width: 1180px;
+}
+
+#content .main-container .inquiry-container .info-content {
+  width: 1180px;
+  height: 200px;
+  margin: 20px 0 0 150px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-comment-container .reply-container {
+  justify-content: space-between;
+}
+
+#content .main-container .inquiry-comment-container .reply-container .info-comment {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 0 0 150px;
+}
+
+#content .main-container .inquiry-comment-container .reply-container .btn-container .addReply {
+  width: 150px;
+  height: 35px;
+  margin: 20px 280px 0 0;
+}
+
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container {
+  margin-top: 10px;
+}
+
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-item {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 0 20px 0 150px;
+}
+
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-detail {
+  width: 395px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-comment-container .answer-content .reason--content {
+  width: 1180px;
+  height: 160px;
+  margin: 20px 0 0 150px;
+  border: 1px solid black;
+}
+
+#content .main-container .inquiry-comment-container .no-data-container {
+  width: 1180px;
+  height: 160px;
+  margin: 20px 0 0 150px;
+}
+
+#content .main-container .inquiry-comment-container .answer-content .reason--content #answerContent {
+  width: 1178px;
+  height: 159px;
+}
+
+#content .main-container .btn-container {
+  margin-left: 150px;
+  justify-content: space-between;
+}
+
+#content .main-container .btn-container .listUpdate {
+  margin-right: 225px;
+}
+
+.text__right {
+  text-align: right;
+}
+
+.aTagStyle{
+  cursor: pointer;
+  color:blue;
+}
+
+.main-container .list-container.list-content:hover {
+  background-color: var(--color-gray);
+  cursor: pointer;
+}
+
+#content .main-container .btn-container.answer-btn-container {
+  margin-top: 10px;
+}

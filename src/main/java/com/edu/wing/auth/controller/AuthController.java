@@ -1,5 +1,7 @@
 package com.edu.wing.auth.controller;
 
+import com.edu.wing.member.domain.MemberVo;
+import com.edu.wing.util.RandomAlertMessage;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,20 @@ public class AuthController {
 
   @GetMapping("/signout")
   public String signout(HttpSession session, RedirectAttributes redirectAttributes) {
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+    RandomAlertMessage randomAlertMessage = new RandomAlertMessage();
+
     session.invalidate();
-    redirectAttributes.addFlashAttribute("alertMsg", "로그아웃되었습니다.");
+
+    if (member != null) {
+      if ("MEMBER".equals(member.getGrade())) {
+        redirectAttributes.addFlashAttribute("alertMsg", randomAlertMessage.getRandomMemberLogoutAlert());
+      } else if ("ADMIN".equals(member.getGrade())) {
+        redirectAttributes.addFlashAttribute("alertMsg", randomAlertMessage.getRandomAdminLogoutAlert());
+      }
+    }
+
     return "redirect:/";
   }
 }

@@ -159,7 +159,7 @@
   text-align: center;
 }
 
-.btn-container .btn {
+.btn-container .btn.btn__p {
   padding: 10px 19px;
 }
 

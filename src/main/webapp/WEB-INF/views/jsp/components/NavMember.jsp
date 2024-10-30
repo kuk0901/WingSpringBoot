@@ -4,7 +4,7 @@
 
 <!-- Member Nav -->
 <nav
-    class="member-nav"
+    class="nav member-nav"
     role="navigation"
     aria-label="사용자 메뉴"
     id="memberNav"
@@ -20,7 +20,7 @@
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>
-        <a href="#" id="userName" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+        <a href="${pageContext.request.contextPath}/member/user/myPage" id="userName" class="btn btn--member__my text__semibold move-page" aria-label="사용자 프로필">
             ${sessionScope.member.userName}님
         </a>
       </li>
@@ -28,7 +28,7 @@
 
     <c:if test="${empty sessionScope.member}">
       <li>
-        <a href="#" class="btn btn--member__my btn__p text__semibold" aria-label="사용자 프로필">
+        <a href="#" class="btn btn--member__my text__semibold move-page" aria-label="사용자 프로필">
           @@@님
         </a>
       </li>
@@ -37,26 +37,26 @@
 
   <span class="white-line"></span>
 
-  <ul class="btn-container" aria-label="주요 메뉴">
+  <ul class="btn-container main-content" aria-label="주요 메뉴">
     <li>
-      <a href="#" class="btn btn__yellow btn__p" aria-current="page"
-      >가계부</a
-      >
+      <a href="${pageContext.request.contextPath}/member/accountBook/list" class="btn btn__yellow text__semibold move-page" aria-current="page">
+        가계부
+      </a>
     </li>
     <li>
-      <a href="#" class="btn btn__yellow btn__p">카드 종류</a>
+      <a href="${pageContext.request.contextPath}/member/product/list" class="btn btn__yellow text__semibold move-page">카드 종류</a>
     </li>
   </ul>
 
   <span class="white-line"></span>
 
-  <ul class="btn-container" aria-label="콘텐츠 메뉴">
-    <li><a href="#" class="btn btn__yellow btn__p">게시판</a></li>
+  <ul class="btn-container content-menu" aria-label="콘텐츠 메뉴">
+    <li><a href="#" class="btn btn__yellow text__semibold move-page">게시판</a></li>
   </ul>
 
   <ul class="btn-container signout-container member-signout">
     <li>
-      <a href="/auth/signout" class="btn btn__signout text__black bg-white">Sign Out</a>
+      <a href="/auth/signout" class="btn btn__signout text__black bg__white"><img class="signout__img" src="/img/lock_open.svg" alt="open"/>Sign Out</a>
     </li>
   </ul>
 </nav>

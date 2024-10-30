@@ -1,5 +1,6 @@
 // accountBook.jsp의 js파일 유저용
 var memberNo;
+
 $(document).ready(function() {
      memberNo = $('#memberNo').val(); // hidden input에서 memberNo 가져오기
     var limit = 10;
@@ -122,13 +123,13 @@ function fetchAccountFirstBooks(memberNo, limit) {
                 currentYear = lastCredate.getFullYear(); // 연도 추출
                 currentMonth = lastCredate.getMonth() + 1; // 월 추출 (0부터 시작하므로 +1)
 
-                console.log(`추출된 연도: ${currentYear}, 월: ${currentMonth}`);
+
 
                 // 시작 및 종료 날짜 생성
                 const startDate = `${currentYear}-${currentMonth < 10 ? '0' : ''}${currentMonth}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
                 const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0]; // 종료 날짜 (해당 월의 마지막 날)
 
-                console.log(`시작 날짜: ${startDate}, 종료 날짜: ${endDate}`); // 디버깅용 로그
+
 
                 // 총 월가계부 내역출력
                 getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
@@ -151,14 +152,14 @@ function updateCurrentMonthDisplay(year, month) {
 function getMonthlyAccountBooks(year, month, memberNo) {
     // 시작 날짜와 종료 날짜 설정
     const startDate = `${year}-${month < 10 ? '0' + month : month}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
-    const endDate = `${year}-${month < 10 ? '0' + month : month + 1}-01`; // 다음 달의 첫 번째 날짜
+    const endDate = new Date(year, month, 0).toISOString().split('T')[0]; // 해당 월의 마지막 날
 
     $.ajax({
         url: '/member/api/accountBook/monthlyCount', // API 엔드포인트
         type: 'GET',
         data: { memberNo: memberNo, startDate: startDate, endDate: endDate },
         success: function(count) {
-            $('#totalEntries').text(`전체 내역 수: ${count}건`); // 총 내역 수 업데이트
+            $('#totalEntries').text(`월간 내역 수: ${count}건`); // 총 내역 수 업데이트
 
         },
         error: function(err) {
@@ -204,10 +205,12 @@ function changeMonth(offset) {
 
     const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
     const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
-    console.log("startDate,endDate", startDate, endDate);
+
+
+    fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
     // 월 표시 업데이트 및 데이터 재로드
     updateCurrentMonthDisplay(currentYear, currentMonth);
-    fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
+    getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
 
 }
 
@@ -352,24 +355,7 @@ function loadPaymentMethods() {
 
 }
 
-// // 월간내역ajax
-// function fetchMonthlyCount() {
-//     const memberNo = 14; // 예시: 현재 로그인한 사용자의 회원 번호
-//     const startDate = '2024-10-01'; // 월의 첫 번째 날짜
-//     const endDate = '2024-11-01'; // 다음 월의 첫 번째 날짜
-//
-//     $.ajax({
-//         url: '/member/api/accountBook/monthlyCount',
-//         type: 'GET',
-//         data: { memberNo: memberNo, startDate: startDate, endDate: endDate },
-//         success: function(count) {
-//             $('#totalEntries').text(`전체 내역 수: ${count}건`);
-//         },
-//         error: function(err) {
-//             console.error('Error fetching monthly count:', err);
-//         }
-//     });
-// }
+
 
 
 /**
@@ -408,9 +394,12 @@ function calculateMonthlyTotal(memberNo, startDate, endDate) {
 // 더보기 버튼 클릭 이벤트 핸들러
 $('#loadMore').on('click', function() {
     currentLimit += 50; // limit을 100씩 증가
-    fetchAccountFirstBooks(memberNo, currentLimit); // 업데이트된 limit으로 데이터 가져오기
+    const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
+    const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
+    fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 업데이트된 limit으로 데이터 가져오기
 });
 
+//detailopen
 function goToDetail(accountBookNo, memberNo) {
     $.ajax({
         url: '/member/api/accountBook/detail',
@@ -422,7 +411,8 @@ function goToDetail(accountBookNo, memberNo) {
         dataType: 'json',
         success: function(data) {
             renderAccountBookDetail(data);
-            console.log("detail:", data); // 추가된 로그
+            loadCategoriesForDetail(data);
+
         },
         error: function(error) {
             console.error('Error fetching account book detail:', error);
@@ -431,42 +421,14 @@ function goToDetail(accountBookNo, memberNo) {
     });
 }
 
-// 결제 수단 로드 함수 (Promise 반환)
-function loadPaymentMethodsForDetail() {
-    return new Promise((resolve, reject) => {
-        const paymentMethodSelect = document.getElementById('paymentMethodSelect');
-
-        $.ajax({
-            url: '/member/api/accountBook/paymentMethods', // 결제 방법 API
-            type: 'GET',
-            success: function(data) {
-                paymentMethodSelect.innerHTML = `<option value="">결제 수단 선택</option>`; // 초기 옵션
-                const paymentMethods = data.filter(method => method !== null); // null 값 제외
-                paymentMethods.forEach(function(method, index) {
-                    const option = document.createElement("option");
-                    option.value = index + 1; // 결제 수단 ID를 1부터 시작하도록 수정
-                    option.textContent = method; // 결제 수단 이름
-                    paymentMethodSelect.appendChild(option); // 옵션 추가
-                });
-                resolve(paymentMethods); // 결제 수단 배열을 resolve
-            },
-            error: function(xhr, status, error) {
-                console.error("결제 수단 가져오기 실패:", error);
-                reject(error); // 실패 시 reject 호출
-            }
-        });
-    });
-}
-
 // 가계부 상세 정보를 렌더링하는 함수
-async function renderAccountBookDetail(accountBook) {
-    // 예를 들어, .detail-container에 내용을 렌더링
+ function renderAccountBookDetail(accountBook) {
     const detailContainer = $('#content');
     detailContainer.empty(); // 기존 내용 지우기
 
     try {
-        const paymentMethods = await loadPaymentMethodsForDetail(); // 결제 수단 로드
-        const paymentMethodValues = paymentMethods.filter(Boolean); // null 값 제외
+        // 결제 수단 로드
+
 
         // 상세 정보 HTML 구성
         const detailHtml = `
@@ -476,44 +438,237 @@ async function renderAccountBookDetail(accountBook) {
                     가계부 수정
                 </div>
             </div>
-            <div>
-                <button onclick="window.location.href='/member/accountBook/list'">돌아가기</button>
+            <div class="button-container">
+                <button onclick="window.location.href='/member/accountBook/list'"
+                class="btn__generate rtBtn">돌아가기</button>
             </div>
             <main class="main-container">
                 <div>
-                    <div>
-                        <span class="detail-label">카테고리: </span>
-                        <input type="text" class="category-value" value="${accountBook.minusCategoryName || accountBook.plusCategoryName || '데이터 없음'}" />
+                    <div class="detail-container">
+                        <span class="detail-label">일자</span>
+                       <input type="text"  id="dateInput" class="detail-value" value="${formatDate(accountBook.creDate)}"/>
                     </div>
-                    <div>
+                    <div class="detail-container">
+                        <span class="detail-label">분류</span>
+                        <select id="categorySelect" class="select-value">
+                        <option value="">지출 카테고리 선택</option>
+                        <option value="1">급여</option>
+                        <option value="2">식비</option>
+                    </select>
+                    </div >
+                    <div class="detail-container">
                         <span class="detail-label">상세 내용:</span>
-                        <input type="text" class="detail-value" value="${accountBook.content || '내용 없음'}" />
+                        <input type="text"  id="contentInput" class="detail-value" value="${accountBook.content || '내용 없음'}" />
                     </div>
-                    <div>
+                    <div class="detail-container"> 
                         <span class="detail-label">결제 수단:</span>
-                        <select id="paymentMethodSelect" class="payment-value">
+                        <select id="paymentMethodSelect" class="select-value">
                             <option value="">결제 수단 선택</option>
-                            ${paymentMethodValues.map((method, index) => `
-                                <option value="${index + 1}" ${method === accountBook.paymentMethodName ? 'selected' : ''}>${method}</option>
-                            `).join('')}
                         </select>
                     </div>
-                    <div>
-                        <span class="detail-label">금액: </span>
-                        <input type="number" class="amount-value" value="${accountBook.paymentAmount ? accountBook.paymentAmount : 0}" />
+                    <div class="detail-container">
+                        <span class="detail-label" id="amountLabel">금액: </span>
+                        <input type="number" class="detail-value" id="amountInput" value="${accountBook.paymentAmount ? accountBook.paymentAmount : 0}" />
                     </div>
-                    <button onclick="deleteAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">삭제</button>
-                    <button onclick="editAccountBook(${accountBook.accountBookNo}, ${accountBook.memberNo})">수정</button>
+                </div>
+                <div class="button-container-bottom ">
+                <button class="btn__generate bottom-btn" onclick="deleteAccountBook(${accountBook.accountBookNo})">삭제</button>
+                <button class="btn__generate bottom-btn" onclick="editAccountBook(${accountBook.accountBookNo},${accountBook.memberNo})">수정</button>
                 </div>
             </main>
-            `;
+            </div>
+        `;
 
         // 상세 정보 렌더링
         detailContainer.append(detailHtml);
+
+        // 금액 레이블 업데이트
+        updateAmountLabel(accountBook);
+        loadPaymentMethodsForDetail(accountBook);
     } catch (error) {
         console.error('Error loading payment methods:', error);
         alert('결제 수단을 불러오는 데 실패했습니다.');
     }
 }
+// 금액 레이블을 업데이트하는 함수
+function updateAmountLabel(accountBook) {
+    const amountLabel = document.getElementById('amountLabel');
+    if (accountBook.plusCategoryNo === 1) {
+        amountLabel.textContent = '금액: -'; // 지출인 경우 "-" 추가
+    } else if (accountBook.minusCategoryNo === 1) {
+        amountLabel.textContent = '금액: +'; // 수입인 경우 "+" 추가
+    } else {
+        amountLabel.textContent = '금액:'; // 기본값
+    }
+}
+
+//디테일용 결제수단가져오기
+function loadPaymentMethodsForDetail(accountBook) {
+    $.ajax({
+        url: '/member/api/accountBook/paymentMethods', // 결제 방법 API
+        type: 'GET',
+        success: function(data) {
+            const paymentMethods = data.filter(method => method !== null); // null 값 제외
+
+            // 결제 수단 선택 요소 업데이트
+            const paymentMethodSelect = document.getElementById('paymentMethodSelect');
+            paymentMethodSelect.innerHTML = ''; // 기존 옵션 제거
 
 
+            // 결제 수단 옵션 추가
+            paymentMethods.forEach((method, index) => {
+                const option = document.createElement("option");
+                option.value = index + 1; // ID는 1부터 시작
+                option.textContent = method; // 결제 수단 이름
+                // accountBook의 paymentMethodName과 비교하여 선택 상태 설정
+                if (method === accountBook.paymentMethodName) {
+                    option.selected = true; // 현재 선택된 결제 수단 설정
+                }
+                paymentMethodSelect.appendChild(option); // 옵션 추가
+
+
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("결제 수단 가져오기 실패:", error);
+        }
+    });
+}
+//디테일용 카테고리가져오기
+function loadCategoriesForDetail(accountBook) {
+    const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 요소 가져오기
+    categorySelect.innerHTML = ''; // 기존 옵션 제거
+
+    // accountBook의 상태에 따라 적절한 요청 처리
+    if (accountBook.minusCategoryNo === 1) {
+        // 수입 카테고리 요청
+        $.ajax({
+            url: '/member/api/accountBook/plusCategories', // 수입 카테고리 API
+            type: 'GET',
+            success: function(data) {
+                window.incomeCategories = data; // 수입 카테고리 저장
+                categorySelect.innerHTML = `<option value="1">수입 카테고리 선택</option>`;
+                incomeCategories.forEach(function(category, index) {
+                    if (category !== null) { // null 값 제외
+                        const option = document.createElement("option");
+                        option.value = index + 1; // 카테고리 ID를 2부터 시작하도록 수정
+                        option.textContent = category; // 카테고리 이름
+                        // 현재 선택된 카테고리 설정
+                        if (category === accountBook.plusCategoryName) {
+                            option.selected = true; // 현재 선택된 카테고리 설정
+                        }
+                        categorySelect.appendChild(option); // 옵션 추가
+                    }
+
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("수입 카테고리 가져오기 실패:", error);
+            }
+        });
+    } else if (accountBook.plusCategoryNo === 1) {
+        // 지출 카테고리 요청
+        $.ajax({
+            url: '/member/api/accountBook/minusCategories', // 지출 카테고리 API
+            type: 'GET',
+            success: function(data) {
+                window.expenseCategories = data; // 지출 카테고리 저장
+                categorySelect.innerHTML = `<option value="1">지출 카테고리 선택</option>`;
+                expenseCategories.forEach(function(category, index) {
+                    if (category !== null) { // null 값 제외
+                        const option = document.createElement("option");
+                        option.value = index + 1; // 카테고리 ID를 1부터 시작하도록 수정
+                        option.textContent = category; // 카테고리 이름
+                        // 현재 선택된 카테고리 설정
+                        if (category === accountBook.minusCategoryName) {
+                            option.selected = true; // 현재 선택된 카테고리 설정
+                        }
+
+                        categorySelect.appendChild(option); // 옵션 추가
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("지출 카테고리 가져오기 실패:", error);
+            }
+        });
+    } else {
+        // 기본적으로 카테고리가 없는 경우
+        categorySelect.innerHTML = `<option value="">카테고리 없음</option>`;
+    }
+}
+//date폼
+function formatDate(dateString) {
+    if (!dateString) return '내용 없음'; // 값이 없으면 기본 메시지 반환
+    const date = new Date(dateString);
+    return date.toISOString().substring(0, 10); // YYYY-MM-DD 형식으로 변환
+}
+//가계부detail에서삭제
+function deleteAccountBook(accountBookNo) {
+    if (confirm("정말로 이 가계부 항목을 삭제하시겠습니까?")) {
+        $.ajax({
+            url: `/member/api/accountBook/${accountBookNo}`, // DELETE 요청을 보낼 URL
+            type: 'DELETE',
+            success: function() {
+                alert("가계부 항목이 삭제되었습니다.");
+                // 목록 페이지로 리다이렉트 또는 삭제 후 UI 업데이트
+                window.location.href = '/member/accountBook/list'; // 목록 페이지로 이동
+            },
+            error: function(error) {
+                console.error("가계부 항목 삭제 실패:", error);
+                alert('가계부 항목 삭제에 실패했습니다.');
+            }
+        });
+    }
+}
+//가계부detail에서수정
+function editAccountBook(accountBookNo,memberNo) {
+    // 필요한 입력 필드 값 가져오기
+
+    const paymentMethodNo = parseInt(document.getElementById('paymentMethodSelect').value, 10); // 결제 수단 형변환
+
+    const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 요소
+    const amountValue = document.getElementById("amountInput").value;
+    const contentValue = document.getElementById("contentInput").value;
+    const dateValue = document.getElementById("dateInput").value;
+    const formattedDate = new Date(dateValue).toISOString().split('T')[0]; // "YYYY-MM-DD" 형식으로 변환
+
+    // 카테고리 선택 값에 따라 plusCategoryNo와 minusCategoryNo 설정
+    let plusCategoryNo = 1;
+    let minusCategoryNo = 1;
+    const selectedCategoryValue = parseInt(categorySelect.value, 10); // 카테고리 값 형변환
+
+    if (categorySelect.options[0].textContent === "수입 카테고리 선택") {
+        plusCategoryNo = selectedCategoryValue;
+    } else if (categorySelect.options[0].textContent === "지출 카테고리 선택") {
+        minusCategoryNo = selectedCategoryValue;
+    }
+
+    const updatedData = {
+        memberNo: memberNo,
+        creDate: formattedDate,
+        accountBookNo: accountBookNo,
+        plusCategoryNo: plusCategoryNo,
+        minusCategoryNo: minusCategoryNo,
+        content: contentValue,
+        paymentMethodNo: paymentMethodNo,
+        paymentAmount: amountValue
+    };
+    console.log(updatedData);
+    console.log("함수 내 memberNo:", memberNo);
+    // AJAX 요청 보내기
+    $.ajax({
+        url: `/member/api/accountBook/update`, // 수정 API 엔드포인트
+        type: 'PUT', // 또는 'PATCH'
+        contentType: 'application/json', // JSON 형식으로 요청
+        data: JSON.stringify(updatedData), // 데이터 객체를 JSON으로 변환
+        success: function(response) {
+            alert("수정되었습니다")
+            goToDetail(accountBookNo, memberNo);
+        },
+        error: function(xhr, status, error) {
+
+            console.error('가계부 수정 실패:', error);
+        }
+    });
+}

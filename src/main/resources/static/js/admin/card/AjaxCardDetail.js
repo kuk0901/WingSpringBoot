@@ -1,3 +1,5 @@
+import { showAlertMsg } from "../../util/toast.js";
+
 let tosData, cautionData;
 
 $.getJSON('/js/data/termsOfService.json', function(data) {
@@ -8,7 +10,7 @@ $.getJSON('/js/data/cautions.json', function(data) {
   cautionData = data;
 });
 
-$('.card-data-get').click(function() {
+$('.detail-card-btn').click(function() {
   const cardNo = $(this).data('card-no');
   const curPage = $('#curPage').val();
   const categoryName = $('#categoryName').val();
@@ -60,16 +62,16 @@ function createDetailView(data) {
             <div class="card-info text__semibold">혜택 요약</div>
             <ul class="ul--ui">
               ${data.benefitList.slice(0, 4).map(item =>
-                `<li class="li--ui">
+      `<li class="li--ui">
                   <span class="list--style"></span>
                   ${item.cardBenefitDetail} ${item.cardPercentage}%
                   ${item.cardBenefitDivision} 할인
                 </li>`
-              ).join("")}
+  ).join("")}
             </ul>
             ${data.benefitList.length > 4 ?
-            `<span class="benefit-comment">(외 ${data.benefitList.length - 4}개)</span>` :
-            ''}
+      `<span class="benefit-comment">(외 ${data.benefitList.length - 4}개)</span>` :
+      ''}
           </div>
         </div>
       </section>
@@ -92,13 +94,13 @@ function createDetailView(data) {
               <div class="title box__l text__semibold text__center">세부 내용</div>
               <div class="title box__s text__semibold text__center">할인율(금액)</div>
             </div>
-              ${data.benefitList.map(item => 
-                `<div class="content-detail one-line"> 
+              ${data.benefitList.map(item =>
+      `<div class="content-detail one-line"> 
                   <div class="detail box__s text__center">${item.cardBenefitDivision}할인</div>
                   <div class="detail box__l text__center">${item.cardBenefitDetail}</div>
                   <div class="detail box__s text__center">${item.cardPercentage}%</div>
                 </div>`
-              ).join("")}
+  ).join("")}
           </div>
         </div>
         
@@ -117,7 +119,7 @@ function createDetailView(data) {
       <section class="cautions">
         <ul class="ul--ui bg__darkgray">
           ${cautionData.map(item => `<li class="li--ui text__white list__white"><span class="list--style"></span>${item.content}</li>`)
-            .join("")}
+      .join("")}
         </ul>
         <div class="hidden-ui"></div>
       </section>

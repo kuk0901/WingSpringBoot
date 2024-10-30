@@ -14,10 +14,7 @@
     <jsp:param value="${alertMsg}" name="alertMsg" />
   </jsp:include>
 
-  <div class="title-container">
-    <div class="title text__navy">WING_</div>
-  </div>
-
+  <jsp:include page="/WEB-INF/views/jsp/components/Header.jsp" />
 
   <!-- form container -->
   <div class="form-container">
@@ -69,7 +66,7 @@
 
     <div class="sub-container">
       <div class="find-container">
-        <a href="#" class="text__white">아이디 찾기</a>
+        <a href="#" class="text__white">계정 찾기</a>
       </div>
       <div class="find-container">
         <a href="#" class="text__white">비밀번호 찾기</a>

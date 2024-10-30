@@ -1,19 +1,16 @@
 package com.edu.wing.accountbook.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import com.edu.wing.accountbook.domain.AccountBookVo;
 import com.edu.wing.accountbook.service.AccountBookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/admin/accountBook")
 @Controller
@@ -41,7 +38,7 @@ public class AccountBookController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("paymentMethodList", paymentMethodList);
 
-        return "jsp/admin/accountBook/accountBook";  // JSP 파일 경로
+        return "jsp/admin/accountBook/AccountBookListView";  // JSP 파일 경로
     }
 }
 

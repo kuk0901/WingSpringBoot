@@ -63,7 +63,6 @@ public class AdminCardController {
     return mav;
   }
 
-  // FIXME: 수정 필요
   @GetMapping("/list/card/insert")
   public ModelAndView cardInsertOne(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
     log.info("@GetMapping cardInsertOne curPage: {}, categoryName: {}", curPage, categoryName);

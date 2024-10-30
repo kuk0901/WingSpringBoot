@@ -20,7 +20,6 @@
 
 .main-container.payment-method__list {
     margin: 20px;
-    height: 600px;
 }
 
 .main-container.payment-method__change{
@@ -34,10 +33,10 @@
 
 #content .main-container .paymentMethod-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: start;
     margin-top: 50px;
+    flex-wrap: wrap;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form {
@@ -104,7 +103,7 @@
 }
 
 .list-content {
-    margin: 5px 5px 10px 20px;
+    margin: 5px 0 10px 20px;
 }
 
 .content_margin {

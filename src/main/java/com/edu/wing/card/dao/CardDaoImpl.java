@@ -41,7 +41,13 @@ public class CardDaoImpl implements CardDao {
   }
 
   @Override
-  public void cardDeleteOne(int cardNo) {
-    sqlSession.delete(namespace + "cardDeleteOne", cardNo);
+  public void markCardAsDeleted(int cardNo) {
+    sqlSession.delete(namespace + "markCardAsDeleted", cardNo);
   }
+
+  @Override
+  public CardVo checkCardDeletedStatus(int cardNo) {
+    return sqlSession.selectOne(namespace + "checkCardDeletedStatus", cardNo);
+  }
+
 }

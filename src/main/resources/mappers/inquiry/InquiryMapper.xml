@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.inquiry">
+
+    <resultMap type="inquiryVo" id="inquiryResultMap">
+        <id column="INQUIRY_NO" property="inquiryNo" />
+        <result column="NOTICE_BOARD_NO" property="noticeBoardNo" />
+        <result column="MEMBER_NO" property="memberNo" />
+        <result column="TITLE" property="title" />
+        <result column="CONTENT" property="content" />
+        <result column="DIVISION" property="division" />
+        <result column="CRE_DATE" property="creDate" />
+        <result column="ANSWER_TERMINATION" property="answerTermination" />
+        <result column="EMAIL" property="email" />
+        <result column="INQUIRY_COMMENT_NO" property="inquiryCommentNo" />
+    </resultMap>
+
+    <select id="inquirySelectList" resultMap="inquiryResultMap">
+        SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
+        FROM INQUIRY
+        ORDER BY INQUIRY_NO
+    </select>
+
+    <select id="inquirySelectTotalCount" parameterType="int" resultType="int">
+        SELECT COUNT(INQUIRY_NO)
+        FROM INQUIRY
+    </select>
+
+    <select id="inquirySelectOne" parameterType="int" resultType="map">
+        SELECT I.INQUIRY_NO AS inquiryNo, I.TITLE, I.DIVISION, M.EMAIL AS inquiryWriterEmail, I.CRE_DATE AS inquiryDate,
+               I.CONTENT AS inquiryContent, MEM.EMAIL AS answerWriterEmail,
+               IC.INQUIRY_COMMENT_NO AS inquiryCommentNo,
+               IC.CONTENT AS answerContent, IC.CRE_DATE AS answerDate,
+               CASE WHEN IC.CONTENT IS NOT NULL THEN 'Y' ELSE 'N' END AS answerTermination
+        FROM INQUIRY I
+                JOIN MEMBER M ON I.MEMBER_NO = M.MEMBER_NO
+                LEFT JOIN INQUIRY_COMMENT IC ON I.INQUIRY_NO = IC.INQUIRY_NO
+                LEFT JOIN MEMBER MEM ON IC.MEMBER_NO = MEM.MEMBER_NO
+        WHERE I.INQUIRY_NO = #{inquiryNo}
+    </select>
+    
+    <update id="updateInquiryComment" parameterType="map">
+        UPDATE INQUIRY_COMMENT
+        SET CONTENT = #{content},
+            MOD_DATE = SYSDATE
+        WHERE INQUIRY_COMMENT_NO = #{commentNo}
+    </update>
+
+</mapper>

@@ -1,3 +1,5 @@
+import {showAlertMsg} from "../../util/toast.js";
+
 $('.list-content').click(function() {
   const sellingCardNo = $(this).data('selling-card-no');
   const curPage = $('#curPage').val();
@@ -12,7 +14,9 @@ $('.list-content').click(function() {
       createDetailView(res);
     },
     error: function(xhr, status, error) {
-      console.error("Error fetching details:", error);
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+      showAlertMsg(msg);
     }
   });
 });
@@ -56,7 +60,7 @@ function createDetailView(data) {
     </main>
     
     <div class="btn-container">
-      <button id="listMove" class="btn btn__generate" data-cur-page="${data.curPage}" data-card-no="${data.cardNo}">
+      <button id="listMove" class="btn btn__generate btn__p" data-cur-page="${data.curPage}" data-card-no="${data.cardNo}">
         돌아가기
       </button>
     </div>

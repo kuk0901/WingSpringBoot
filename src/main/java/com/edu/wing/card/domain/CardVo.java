@@ -18,6 +18,7 @@ public class CardVo {
   private String summationBenefit;
   private String mainBenefit;
   private Date registerDate;
+  private String isDeleted;
 
   private String categoryName;
 }
