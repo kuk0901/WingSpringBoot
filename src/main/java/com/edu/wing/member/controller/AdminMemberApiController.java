@@ -29,8 +29,6 @@ public class AdminMemberApiController {
     private MemberService memberService;
     @Autowired
     private AccountBookService accountBookService;
-    @Autowired
-    private InquiryService inquiryService;
 
 
     @GetMapping("/{memberNo}")
