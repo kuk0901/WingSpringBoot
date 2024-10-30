@@ -60,26 +60,30 @@
     min-width: 200px; /* 최소 너비 설정 */
 }
 /*버튼*/
-.button-container {
+.two-btn-container {
      height: 50px;
-     width: 100%;
+     width: 1500px;
      display: flex; /* Flexbox 활성화 */
-     justify-content: center; /* 자식 요소를 수평 중앙 정렬 */
-     align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+    align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+    justify-content: center;
  }
 
+
 #updateButton {
-    margin: 0; /* 기본 마진 제거 */
-    /* 추가 스타일링 가능 */
+
 }
 
+#quitMemberButton {
+    position: absolute;
+    right: 70px;
+}
 /*
 여기서부턴 카드컨테이너*/
 .card-container{
     background-color: white;
     height: 200px;
     width: 1500px;
-    margin: 30px auto;
+    margin: auto;
 
 }
 .card-title {
@@ -91,7 +95,6 @@
 .card-header {
     display: flex; /* Flexbox 사용 */
     justify-content: space-between; /* 좌우 분할 */
-    height: 50px;
 }
 
 .card-info {
@@ -106,7 +109,8 @@
 /* 카드 헤더 스타일 */
 .card-header {
     display: flex; /* 플렉스 박스 사용 */
-    padding: 10px 0 0; /* 패딩 */
+    justify-content: space-around; /* 요소들 사이에 여백 */
+    padding: 10px; /* 패딩 */
     text-align: center;
 }
 
@@ -122,6 +126,9 @@
     justify-content: center; /* 중앙 정렬 */
 }
 
+
+
+
 /* 카드 내용 스타일 */
 .list-container {
     display: flex;
@@ -136,23 +143,35 @@
 .card-benefit{
     margin-top: 10px;
 }
-
+.list-item.box__s{
+    text-align: center;
+    display: block;
+    margin-right: 50px;
+    margin-left: 50px;
+}
 .img-container{
     display: block;
     margin-right: 50px;
     margin-left: 50px;
 }
-
 .card--img {
     width: 120px;
     height: 100px;
 }
-
-.list-container.list-content {
-    display: flex;
-    justify-content: space-between;
+.list-item.box__date{
+    margin-right: 50px;
+    margin-left: 50px;
+    font-weight: bold;
 }
+.list-item.box__no{
+    margin-right: 50px;
+    margin-left: 100px;
+    font-weight: bold;
+}
+.list-item.box__btn{
+    margin-left: 110px;
 
+}
 #button-container{
     display: flex;
     flex-direction: column;
@@ -161,40 +180,3 @@
     height: 100px;
 }
 
-.box__s {
-    width: 250px;
-    height: 120px;
-}
-
-.box__l {
-    width: 400px;
-    height: 120px;
-}
-
-.box__date {
-    width: 150px;
-    height: 120px;
-}
-
-.box__no {
-    width: 200px;
-    height: 120px;
-}
-
-.box__btn {
-    width: 200px;
-    height: 120px;
-}
-
-.header-item .box__s,
-.header-item .box__l,
-.header-item .box__date,
-.header-item .box__no,
-.header-item .box__btn {
-    height: 20px;
-}
-
-.list-item.box__date,
-.list-item.box__no {
-    line-height: 100px;
-}
