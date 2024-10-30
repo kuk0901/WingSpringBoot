@@ -98,11 +98,7 @@
         ]]>
     </select>
   
-    <delete id="accountBookDelete" parameterType="int">
-        DELETE
-        FROM ACCOUNT_BOOK
-        WHERE MEMBER_NO = #{memberNo}
-    </delete>
+
   
     <!--여기서부터 member영역-->
     <!--이건 날짜호출용-->
@@ -217,11 +213,29 @@
         SELECT ACCOUNT_BOOK_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO, CONTENT, CRE_DATE
         FROM ACCOUNT_BOOK
         WHERE MINUS_CATEGORY_NO = #{minusCategoryNo}
-          AND MEMBER_NO = #{memberNo}
-          AND PAYMENT_METHOD_NO = #{paymentMethodNo}
-          AND CONTENT = #{content}
-          AND PAYMENT_AMOUNT = #{paymentAmount}
-          AND TRUNC(CRE_DATE) = TRUNC(SYSDATE)
+        AND MEMBER_NO = #{memberNo}
+        AND PAYMENT_METHOD_NO = #{paymentMethodNo}
+        AND CONTENT = #{content}
+        AND PAYMENT_AMOUNT = #{paymentAmount}
+        AND TRUNC(CRE_DATE) = TRUNC(SYSDATE)
     </select>
+  
+    <!-- 가계부 삭제 쿼리 -->
+    <delete id="deleteAccountBook" parameterType="int">
+        DELETE FROM ACCOUNT_BOOK WHERE ACCOUNT_BOOK_NO = #{accountBookNo}
+    </delete>
 
+    <!-- 업데이트 쿼리 -->
+    <update id="updateAccountBook" parameterType="map">
+        UPDATE ACCOUNT_BOOK
+        SET
+            PLUS_CATEGORY_NO = #{plusCategoryNo},
+            MINUS_CATEGORY_NO = #{minusCategoryNo},
+            PAYMENT_METHOD_NO = #{paymentMethodNo},
+            CRE_DATE = #{creDate},
+            CONTENT = #{content},
+            PAYMENT_AMOUNT = #{paymentAmount}
+        WHERE ACCOUNT_BOOK_NO = #{accountBookNo}
+        AND MEMBER_NO = #{memberNo}
+    </update>
 </mapper>

@@ -38,6 +38,9 @@ public interface AccountBookDao {
     //가계부상세조회
 
     void cardPurchaseOfAccountBook(AccountBookVo accountBookVo);
-
     AccountBookVo verifyTodayCardPurchaseAccountBookEntry(AccountBookVo accountBookVo);
+
+    void deleteAccountBook(int accountBookNo);
+    int updateAccountBook(Map<String, Object> params);
+
 }

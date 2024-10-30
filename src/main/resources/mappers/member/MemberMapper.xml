@@ -133,4 +133,25 @@
         WHERE MEMBER_NO = #{memberNo} AND GRADE='ADMIN'
     </select>
 
+    <!--여기서부턴 userMyPage-->
+    <select id="selectMyPageInfo" parameterType="int" resultType="MemberVo">
+        SELECT
+            MEMBER_NO, EMAIL,USER_NAME, PWD,PHONE,CRE_DATE, MONTH_SALARY AS monthlySalary,YEARLY_SALARY,GRADE, MOD_DATE,
+            PRODUCT_PURCHASE
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 회원 정보 업데이트 쿼리 -->
+    <update id="updateMemberInfo" parameterType="MemberVo">
+        UPDATE MEMBER
+        SET
+        EMAIL = #{email},
+        USER_NAME = #{userName},
+        PWD = #{pwd},
+        PHONE = #{phone},
+        MONTH_SALARY = #{monthlySalary},
+        YEARLY_SALARY = #{yearlySalary}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
 </mapper>

@@ -20,7 +20,7 @@
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>
-        <a href="#" id="userName" class="btn btn--member__my text__semibold move-page" aria-label="사용자 프로필">
+        <a href="${pageContext.request.contextPath}/member/user/myPage" id="userName" class="btn btn--member__my text__semibold" aria-label="사용자 프로필">
             ${sessionScope.member.userName}님
         </a>
       </li>
@@ -39,9 +39,9 @@
 
   <ul class="btn-container main-content" aria-label="주요 메뉴">
     <li>
-      <a href="${pageContext.request.contextPath}/member/accountBook/list" class="btn btn__yellow text__semibold move-page" aria-current="page"
-      >가계부</a
-      >
+      <a href="${pageContext.request.contextPath}/member/accountBook/list" class="btn btn__yellow text__semibold move-page" aria-current="page">
+        가계부
+      </a>
     </li>
     <li>
       <a href="${pageContext.request.contextPath}/member/product/list" class="btn btn__yellow text__semibold move-page">카드 종류</a>

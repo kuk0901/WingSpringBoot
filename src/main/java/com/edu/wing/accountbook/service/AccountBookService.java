@@ -27,4 +27,6 @@ public interface AccountBookService {
     List<AccountBookVo> getAccountBooksByMonth(int memberNo, LocalDate startDate, LocalDate endDate, int limit);
 
     AccountBookVo getAccountBookDetail(int accountBookNo, int memberNo); //디테일
+    void deleteAccountBook(int accountBookNo); //가계부삭제
+    int updateAccountBook(Map<String, Object> params);//업데이트
 }

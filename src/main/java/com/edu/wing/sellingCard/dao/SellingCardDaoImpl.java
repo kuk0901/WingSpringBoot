@@ -56,4 +56,9 @@ public class SellingCardDaoImpl implements SellingCardDao {
   public SellingCardVo memberPurchaseCardCheck(SellingCardVo sellingCardVo) {
     return sqlSession.selectOne(namespace + "memberPurchaseCardCheck", sellingCardVo);
   }
+
+  @Override
+  public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
+    return sqlSession.selectList(namespace + "sellingCardSelectOneForUserPage", memberNo);
+  }
 }

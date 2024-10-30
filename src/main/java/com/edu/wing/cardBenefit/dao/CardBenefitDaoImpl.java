@@ -21,6 +21,11 @@ public class CardBenefitDaoImpl implements CardBenefitDao {
   }
 
   @Override
+  public List<CardBenefitVo> cardBenefitSelectListOne(int cardNo) {
+    return sqlSession.selectList(namespace + "cardBenefitSelectOne",cardNo);
+  }
+
+  @Override
   public CardBenefitVo cardBenefitSelectOne(int cardNo) {
     return sqlSession.selectOne(namespace + "cardBenefitSelectOne", cardNo);
   }

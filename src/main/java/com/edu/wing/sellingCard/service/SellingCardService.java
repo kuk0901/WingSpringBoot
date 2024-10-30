@@ -10,7 +10,10 @@ public interface SellingCardService {
   List<SellingCardVo> sellingCardSelectList(int start, int end, int cardNo);
   int sellingCardSelectTotalCount(int cardNo);
   Map<String, Object> sellingCardSelectOne(int sellingCardNo);
+
   int countActiveSellingCardsByCardNo(int cardNo);
   boolean memberSellingCardExist(SellingCardVo sellingCardVo);
   Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo);
+
+  List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
 }

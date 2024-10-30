@@ -89,6 +89,10 @@ public class SellingCardServiceImpl implements SellingCardService {
 
     return resultMap;
   }
+  
+  public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
+    return sellingCardDao.sellingCardSelectOneForUserPage(memberNo);
+  }
 }
 
 
