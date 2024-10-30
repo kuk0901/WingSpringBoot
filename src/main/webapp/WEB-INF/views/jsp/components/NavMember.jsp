@@ -20,7 +20,7 @@
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>
-        <a href="${pageContext.request.contextPath}/member/user/myPage" id="userName" class="btn btn--member__my text__semibold" aria-label="사용자 프로필">
+        <a href="${pageContext.request.contextPath}/member/user/myPage" id="userName" class="btn btn--member__my text__semibold move-page" aria-label="사용자 프로필">
             ${sessionScope.member.userName}님
         </a>
       </li>

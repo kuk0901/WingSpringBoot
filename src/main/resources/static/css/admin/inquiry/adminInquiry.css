@@ -25,10 +25,6 @@
   margin-left: 20px;
 }
 
-.list-content {
-  margin: 5px 5px 10px 20px;
-}
-
 .content_margin {
   margin-left: 50px;
 }
@@ -204,7 +200,11 @@
   color:blue;
 }
 
-.main-container .input-container .list-container.list-content:hover {
+.main-container .list-container.list-content:hover {
   background-color: var(--color-gray);
   cursor: pointer;
+}
+
+#content .main-container .btn-container.answer-btn-container {
+  margin-top: 10px;
 }

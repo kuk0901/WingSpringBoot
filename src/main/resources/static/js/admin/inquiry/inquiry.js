@@ -195,7 +195,7 @@ function createUpdateView(res) {
       </div>
     </div>
     
-    <div class="btn-container btn-container one-line">
+    <div class="btn-container answer-btn-container one-line">
         <button id="cancleUpdate" class="btn btn__generate listMove">취소</button>
         <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}">답변 수정</button>
     </div>

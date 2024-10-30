@@ -27,84 +27,89 @@
 <section id="root">
   <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp"/>
 
-  <div id="content">
-    <div class="title-container">
-      <div class="title btn__blue text__white">
-        마이 페이지
+  <section id="memberSection">
+    <div id="content">
+      <div class="title-container">
+        <div class="title btn__blue text__white">
+          마이 페이지
+        </div>
       </div>
-    </div>
 
-    <main class="main-container">
-      <form id="myPageForm">
-        <div id="memberDetailContainer" class="update_container">
-          <div class="detail_title_container">정보 수정</div>
-          <div class="detail_first_second_wrapper">
-            <div class="detail_first_container detail_container">
-              <div>
-                <label>이메일</label>
-                <input type="email" id="email" name="email"
-                       pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-                       autocomplete="off"/>
-                <span id="emailError"></span>
+      <main class="main-container">
+        <form id="myPageForm">
+          <div id="memberDetailContainer" class="update_container">
+            <div class="detail_title_container">정보 수정</div>
+            <div class="detail_first_second_wrapper">
+              <div class="detail_first_container detail_container">
+                <div>
+                  <label>이메일</label>
+                  <input type="email" id="email" name="email"
+                         pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                         autocomplete="off"/>
+                  <span id="emailError"></span>
+                </div>
+                <div>
+                  <label>이름</label>
+                  <input type="text" id="Name" name="Name" />
+                </div>
+                <div>
+                  <label>패스워드</label>
+                  <input type="password" id="password" name="password"
+                         pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+                         autocomplete="off"/>
+                </div>
+                <div>
+                  <label>패스워드 확인</label>
+                  <input type="password" id="confirmPassword" name="confirmPassword"
+                         pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+                         autocomplete="off"/>
+                  <span id="pwdError"></span>
+                </div>
+                <div>
+                  <label>핸드폰 번호</label>
+                  <input type="text" id="phone" name="phone" />
+                </div>
+                <div>
+                  <label>가입일</label>
+                  <input type="text" id="creDate" name="creDate" readonly />
+                </div>
               </div>
-              <div>
-                <label>이름</label>
-                <input type="text" id="Name" name="Name" />
-              </div>
-              <div>
-                <label>패스워드</label>
-                <input type="password" id="password" name="password"
-                       pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-                       autocomplete="off"/>
-              </div>
-              <div>
-                <label>패스워드 확인</label>
-                <input type="password" id="confirmPassword" name="confirmPassword"
-                       pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-                       autocomplete="off"/>
-                <span id="pwdError"></span>
-              </div>
-              <div>
-                <label>핸드폰 번호</label>
-                <input type="text" id="phone" name="phone" />
-              </div>
-              <div>
-                <label>가입일</label>
-                <input type="text" id="creDate" name="creDate" readonly />
-              </div>
-            </div>
-            <div class="detail_second_container detail_container">
-              <div>
-                <label>연봉</label>
-                <input type="text" id="yearlySalary" name="yearlySalary" />
-              </div>
-              <div>
-                <label>월급</label>
-                <input type="text" id="monthlySalary" name="monthlySalary" />
+              <div class="detail_second_container detail_container">
+                <div>
+                  <label>연봉</label>
+                  <input type="text" id="yearlySalary" name="yearlySalary" />
+                </div>
+                <div>
+                  <label>월급</label>
+                  <input type="text" id="monthlySalary" name="monthlySalary" />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="button-container color bg">
-          <button id="updateButton" class="btn__generate">정보 수정</button>
-        </div>
-      </form>
-<%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
-      <div id="card-container" class="card-container">
-        <div class="card-title">보유 카드</div>
-        <div class="card-header">
-          <div class="header-item">카드 명</div>
-          <div class="header-item">혜택 요약</div>
-          <div class="header-item">등록 날짜</div>
-          <div class="header-item">카드 번호</div>
-          <div class="header-item">비고
+          <div class="button-container color bg">
+            <button id="updateButton" class="btn btn__generate">정보 수정</button>
+          </div>
+        </form>
+  <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
+        <div id="card-container" class="card-container">
+          <div class="card-title">보유 카드</div>
+          <div class="card-header">
+            <div class="header-item">카드 명</div>
+            <div class="header-item">혜택 요약</div>
+            <div class="header-item">등록 날짜</div>
+            <div class="header-item">카드 번호</div>
+            <div class="header-item">비고
+            </div>
           </div>
         </div>
-      </div>
-    </main> <!-- main 태그 닫기 -->
-  </div> <!-- content 닫기 -->
+      </main> <!-- main 태그 닫기 -->
+    </div> <!-- content 닫기 -->
 
+    <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
+  </section>
   <input type="hidden" id="memberNo" value="${sessionScope.member.memberNo}" />
 </section>
+<jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp" />
+
 </body>
 </html>
