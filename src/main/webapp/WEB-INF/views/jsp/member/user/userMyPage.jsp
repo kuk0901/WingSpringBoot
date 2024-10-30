@@ -86,8 +86,9 @@
               </div>
             </div>
           </div>
-          <div class="button-container color bg">
+          <div class="two-btn-container color bg">
             <button id="updateButton" class="btn btn__generate">정보 수정</button>
+            <button id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
           </div>
         </form>
   <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>

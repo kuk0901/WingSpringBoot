@@ -51,4 +51,6 @@ public class InquiryServiceImpl implements InquiryService {
       return inquiryDao.updateInquiryComment(commentNo, content) > 0;
     }
   }
+
+
 }

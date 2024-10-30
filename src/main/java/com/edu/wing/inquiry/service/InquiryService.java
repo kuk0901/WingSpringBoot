@@ -14,4 +14,5 @@ public interface InquiryService {
   Map<String, Object> inquirySelectOne(int inquiryNo);
 
   boolean updateInquiryComment(int inquiryNo, String content);
+
 }

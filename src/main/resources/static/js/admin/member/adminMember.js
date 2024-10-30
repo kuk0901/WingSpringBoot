@@ -118,13 +118,8 @@ function restRequestMemberDetail(tdElement) {
 $(document).on('click', '.deleteMember', function() {
     var memberNo = $(this).data('member-no');
     var quitApply = $(this).data('quit-apply');
-    var productPurchase=$(this).data('product-purchase');
 
-    if (productPurchase === 'Y') {
-        // 구매한 상품이 있는 유저는 탈퇴 불가
-        alert("구독한 상품이 있는 유저는 탈퇴할 수 없습니다.");
-        return;  // 함수 종료, 더 이상 진행하지 않음
-    }
+
     if (quitApply === 'Y') {
         // QUIT_APPLY가 Y일 경우, 바로 삭제
         deleteMember(memberNo);
@@ -139,7 +134,7 @@ $(document).on('click', '.deleteMember', function() {
 function deleteMember(memberNo) {
     $.ajax({
         url: '/admin/api/member/delete/' + memberNo,
-        type: 'DELETE',
+        type: 'PATCH',
         success: function(response) {
             alert(response); // 삭제 성공 메시지 표시
             location.reload(); // 페이지 새로 고침

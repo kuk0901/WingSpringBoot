@@ -57,7 +57,7 @@ $(document).ready(function() {
         }
     });
 
-    $form.on("submit", function(e) {
+    $('#updateButton').on('click', function (e) {
         e.preventDefault(); // 기본 제출 방지
 
         // 폼 유효성 검사
@@ -81,7 +81,7 @@ $(document).ready(function() {
         updateMemberInfo(formData);
     });
     /*  fetchSellingCards()*/
-
+    $('#quitMemberButton').on('click', handleQuitButtonClick);
 });
 
 
@@ -293,3 +293,34 @@ function fetchCardBenefit(cardNo) {
     });
 }
 
+
+// 탈퇴 버튼 클릭 시 호출될 함수
+function handleQuitButtonClick() {
+    // 탈퇴 확인
+    if (!confirm("정말 탈퇴하시겠습니까?")) {
+        return;
+    }
+
+    const memberNo = $('#memberNo').val(); // 회원 번호 가져오기
+
+    // 탈퇴 신청 AJAX 요청 호출
+    submitQuitRequest(memberNo);
+}
+
+// 탈퇴 신청 요청 함수
+function submitQuitRequest(memberNo) {
+    $.ajax({
+        type: "PATCH",
+        url: "/member/api/user/quit",
+        contentType: "application/json",
+        data: JSON.stringify({ memberNo: memberNo }),
+        success: function (response) {
+            alert("탈퇴 신청이 완료되었습니다.");
+            window.location.reload(); // 페이지 새로고침
+        },
+        error: function (xhr, status, error) {
+            const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : "탈퇴 처리 중 오류가 발생했습니다.";
+            alert(errorMsg);
+        }
+    });
+}

@@ -27,8 +27,7 @@ public class AdminMemberController {
 
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private AccountBookService accountBookService;
+
     //초기화면
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST}) // 관리자용 회원 목록 페이지
     public ModelAndView getAllMembersForAdmin(@RequestParam(defaultValue = "1") int curPage) {

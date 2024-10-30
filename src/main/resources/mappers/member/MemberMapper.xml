@@ -17,6 +17,7 @@
         <result column="MONTH_SALARY" property="monthlySalary" />
         <result column="QUIT_APPLY" property="quitApply" />
         <result column="PRODUCT_PURCHASE" property="productPurchase" />
+        <result column="IS_DELETED" property="isDeleted" />
         <!-- 추가하려는 컬럼들 -->
         <result column="SELLING_DATE" property="sellingDate" javaType="java.util.Date" />
         <result column="TERMINATION_DATE" property="terminationDate" javaType="java.util.Date" />
@@ -56,12 +57,12 @@
     <!-- 관리자용 회원 전체 조회 쿼리 (페이징 적용) -->
     <select id="selectAllMembersForAdmin" parameterType="map" resultMap="memberResultMap">
     <![CDATA[
-        SELECT MEMBER_NO, EMAIL, USER_NAME,CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY
+        SELECT MEMBER_NO, EMAIL, USER_NAME,CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,IS_DELETED as isDeleted
         FROM (
-                 SELECT MEMBER_NO, EMAIL,USER_NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,
+                 SELECT MEMBER_NO, EMAIL,USER_NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,IS_DELETED,
                         ROW_NUMBER() OVER (ORDER BY MEMBER_NO) AS RNUM
                  FROM MEMBER
-                 WHERE GRADE = 'MEMBER'
+                 WHERE GRADE = 'MEMBER' AND IS_DELETED = 'false'
              ) MEMBER_WITH_RNUM
         WHERE RNUM >= #{start} AND RNUM <= #{end}
         ]]>
@@ -99,6 +100,7 @@
     <select id="selectTotalMembersCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM MEMBER
+        WHERE IS_DELETED='false'
     </select>
 
 
@@ -107,10 +109,11 @@
 
 
     <!-- 관리자의 삭제 쿼리 -->
-    <delete id="adminDeleteMember" parameterType="int">
-        DELETE FROM MEMBER
+    <update id="adminDeleteMember" parameterType="int">
+        UPDATE MEMBER
+        SET IS_DELETED='true'
         WHERE MEMBER_NO = #{memberNo}
-    </delete>
+    </update>
 
 
     <update id="updateMember" parameterType="MemberVo">
@@ -154,4 +157,13 @@
         YEARLY_SALARY = #{yearlySalary}
         WHERE MEMBER_NO = #{memberNo}
     </update>
+
+    <!-- 회원 정보 탈퇴 업데이트 쿼리 -->
+    <update id="updateMemberQuitApply" parameterType="MemberVo">
+        UPDATE MEMBER
+        SET QUIT_APPLY='Y' ,IS_DELETED='true'
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+
 </mapper>

@@ -60,19 +60,23 @@
     min-width: 200px; /* 최소 너비 설정 */
 }
 /*버튼*/
-.button-container {
+.two-btn-container {
      height: 50px;
-     width: 100%;
+     width: 1500px;
      display: flex; /* Flexbox 활성화 */
-     justify-content: center; /* 자식 요소를 수평 중앙 정렬 */
-     align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+    align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+    justify-content: center;
  }
 
+
 #updateButton {
-    margin: 0; /* 기본 마진 제거 */
-    /* 추가 스타일링 가능 */
+
 }
 
+#quitMemberButton {
+    position: absolute;
+    right: 70px;
+}
 /*
 여기서부턴 카드컨테이너*/
 .card-container{
@@ -175,3 +179,4 @@
     justify-content: space-around;
     height: 100px;
 }
+

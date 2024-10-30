@@ -53,4 +53,6 @@ public class InquiryDaoImpl implements InquiryDao {
     params.put("content", content);
     return sqlSession.update(NAMESPACE + "updateInquiryComment", params);
   }
+
+
 }

@@ -16,4 +16,5 @@ public interface InquiryDao {
   int insertInquiryComment(int inquiryNo, String content);
 
   int updateInquiryComment(int commentNo, String content);
+
 }

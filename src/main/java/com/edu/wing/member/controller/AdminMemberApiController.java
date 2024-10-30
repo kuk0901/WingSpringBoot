@@ -1,6 +1,7 @@
 package com.edu.wing.member.controller;
 
 import com.edu.wing.accountbook.service.AccountBookService;
+import com.edu.wing.inquiry.service.InquiryService;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.member.service.MemberService;
 import com.edu.wing.util.Paging;
@@ -28,28 +29,10 @@ public class AdminMemberApiController {
     private MemberService memberService;
     @Autowired
     private AccountBookService accountBookService;
+    @Autowired
+    private InquiryService inquiryService;
 
-    /*//초기화면
-    @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST}) // 관리자용 회원 목록 페이지
-    public ModelAndView getAllMembersForAdmin(@RequestParam(defaultValue = "1") int curPage) {
-        log.info(logTitleMsg);
-        log.info("@RequestMapping getAllMembersForAdmin curPage: {}", curPage);
-        int totalCount = memberService.selectTotalMembersCount();
-        Paging pagingVo = new Paging(totalCount, curPage);
-        int start = pagingVo.getPageBegin();
-        int end = pagingVo.getPageEnd();
-        List<MemberVo> memberList = memberService.selectAllMembersForAdmin(start,end);
 
-        Map<String, Object> pagingMap = new HashMap<>();
-        pagingMap.put("totalCount", totalCount);
-        pagingMap.put("pagingVo", pagingVo);
-
-        ModelAndView mav = new ModelAndView("jsp/admin/member/adminMember");
-        mav.addObject("memberList", memberList);
-        mav.addObject("pagingMap", pagingMap);
-
-        return mav;
-    }*/
     @GetMapping("/{memberNo}")
     public ResponseEntity<Map<String, Object>> selectMemberDetailForAdmin(@PathVariable int memberNo, @RequestParam int curPage) {
         log.info(logTitleMsg);
@@ -67,17 +50,19 @@ public class AdminMemberApiController {
 
 
     // 관리자 강제 회원 삭제
-    @DeleteMapping("/delete/{memberNo}")
+    @PatchMapping("/delete/{memberNo}")
     @ResponseBody
     public String adminDeleteMember(@PathVariable int memberNo) {
         log.info(logTitleMsg);
         log.info("@DeleteMapping memberNo: {}", memberNo);
 
         try {
-            // 가계부 내역 강제 삭제
+            //1.가계부 내역 강제 삭제
             accountBookService.accountBookDelete(memberNo); // 가계부 삭제 호출
+            //2.게시판 댓글,게시글 삭제 예정
+            
 
-            // 회원 삭제
+            // 회원 삭제->isDeleted->'true'변경
             boolean result = memberService.adminDeleteMember(memberNo);
             return result ? "삭제 성공" : "삭제 실패";
         } catch (Exception e) {

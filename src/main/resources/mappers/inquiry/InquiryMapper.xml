@@ -46,4 +46,5 @@
         WHERE INQUIRY_COMMENT_NO = #{commentNo}
     </update>
 
+
 </mapper>

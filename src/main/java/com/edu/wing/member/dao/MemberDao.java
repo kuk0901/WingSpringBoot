@@ -19,4 +19,7 @@ public interface MemberDao {
 
   MemberVo selectMyPageInfo(int memberNo); // 회원 정보마이페이지 조회 메서드
   int updateMemberInfo(MemberVo memberVo);
+  void updateMemberQuitApply(MemberVo memberVo);
+
 }
+

@@ -25,6 +25,7 @@ public class MemberVo implements Serializable {
   private Date modDate;         // 수정일자
   private String quitApply;            // 탈퇴신청 여부
   private String productPurchase;      // 상품구매 여부
+  private boolean isDeleted;            //탈퇴시 true로
   // 추가된 필드
   private Date sellingDate;       // 카드 신청 날짜
   private Date terminationDate;   // 카드 해지 날짜

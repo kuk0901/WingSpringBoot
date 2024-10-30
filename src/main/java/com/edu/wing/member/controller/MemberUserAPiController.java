@@ -38,4 +38,10 @@ public class MemberUserAPiController {
                     .body("회원 정보 수정 중 오류가 발생했습니다." + e.getMessage()); // 오류 응답
         }
     }
+
+    @PostMapping("/quit")
+    public ResponseEntity<String> quitMember(@RequestBody MemberVo memberVo) {
+        memberService.updateMemberQuitApply(memberVo);
+        return ResponseEntity.ok("탈퇴 신청이 완료되었습니다.");
+    }
 }
