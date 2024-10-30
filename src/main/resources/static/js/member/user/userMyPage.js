@@ -216,7 +216,7 @@ function updateMemberInfo(data) {
 // 구매 상태가 'Y'인 경우 카드 정보를 가져오는 함수
 function fetchSellingCards(memberNo) {
     $.ajax({
-        url: `/member/api/salesDashboard/sellingCards/${memberNo}`, // 판매 카드 정보를 가져오는 API 호출
+        url: `/member/api/sellingCard/sellingCards/${memberNo}`, // 판매 카드 정보를 가져오는 API 호출
         type: "GET",
         success: function(cards) {
             // sellingCard를 기반으로 HTML 생성 (하나의 카드만 처리)
@@ -265,7 +265,7 @@ function fetchSellingCards(memberNo) {
 
 function fetchCardBenefit(cardNo) {
     return $.ajax({
-        url: '/member/api/salesDashboard/cardBenefit/' + cardNo, // 카드 혜택 정보 API URL
+        url: '/member/api/sellingCard/cardBenefit/' + cardNo, // 카드 혜택 정보 API URL
         type: 'GET', // HTTP 요청 방법
         dataType: 'json', // 응답 데이터 타입
     }).then(function(data) {

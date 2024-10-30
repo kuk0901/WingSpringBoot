@@ -36,7 +36,6 @@ public class SellingCardServiceImpl implements SellingCardService {
   public int sellingCardSelectTotalCount(int cardNo) {
     return sellingCardDao.sellingCardSelectTotalCount(cardNo);
   }
-
   @Override
   public Map<String, Object> sellingCardSelectOne(int sellingCardNo) {
     return sellingCardDao.sellingCardSelectOne(sellingCardNo);
