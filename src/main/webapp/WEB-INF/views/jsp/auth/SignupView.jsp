@@ -9,9 +9,9 @@
   <script defer type="module" src="/js/auth/signup.js"></script>
 </head>
 <body>
-<div class="title-container">
-  <div class="title text__navy">WING_</div>
-</div>
+
+<jsp:include page="/WEB-INF/views/jsp/components/Header.jsp" />
+
 <!-- form container -->
 <div class="form-container">
   <div class="subject-container bg__red">
@@ -40,6 +40,7 @@
     <div class="signup-container">
       <div class="label-container">
         <label for="pwd" class="text__white">패스워드</label>
+        <span id="pwdError"></span>
       </div>
       <div class="input-container">
         <input
@@ -57,7 +58,7 @@
     <div class="signup-container">
       <div class="label-container">
         <label for="pwdCheck" class="text__white">패스워드 확인</label>
-        <span id="pwdError"></span>
+        <span id="pwdCheckError"></span>
       </div>
       <div class="input-container">
         <input
@@ -75,6 +76,7 @@
     <div class="signup-container">
       <div class="label-container">
         <label for="userName" class="text__white">성명</label>
+        <span id="userNameError"></span>
       </div>
       <div class="input-container">
         <input
@@ -90,11 +92,8 @@
 
     <div class="signup-container">
       <div class="label-container">
-        <label for="phone" class="text__white"
-        >휴대폰 번호<span class="help-text text__gray"
-        >(하이픈(-) 없이 숫자만 입력해주세요.)</span
-        ></label
-        >
+        <label for="phone" class="text__white">휴대폰 번호</label>
+        <span id="phoneError"></span>
       </div>
       <div class="input-container">
         <input
@@ -111,8 +110,9 @@
 
     <div class="signup-container">
       <div class="salary-container">
-        <div class="label-container">
+        <div class="label-container label-container__s">
           <label for="salary" class="text__white">연봉</label>
+          <span id="salaryError"></span>
         </div>
 
         <div class="style-container">
@@ -132,8 +132,9 @@
       </div>
 
       <div class="salary-container">
-        <div class="label-container">
+        <div class="label-container label-container__s">
           <label for="pay" class="text__white">월급</label>
+          <span id="payError"></span>
         </div>
 
         <div class="style-container">
@@ -163,11 +164,11 @@
     </div>
   </form>
 
-<%--  <div class="sub-container">--%>
-<%--    <div class="signin-container">--%>
-<%--      <a href="/" class="text__white">로그인</a>--%>
-<%--    </div>--%>
-<%--  </div>--%>
+  <div class="sub-container">
+    <div class="signin-container">
+      <a href="/" class="text__white">돌아가기</a>
+    </div>
+  </div>
 </div>
 </body>
 </html>

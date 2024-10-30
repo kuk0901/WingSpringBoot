@@ -1,5 +1,38 @@
-/* SellingCardList & CardList */
+#root .shadow {
+  display: none;
+}
+
+.fixed {
+  position: fixed;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.fixed #root.purchase .shadow {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-shadow);
+  z-index: 100;
+}
+
+.purchase-line {
+  display: none;
+}
+
+
+.fixed .purchase-line {
+  display: block;
+}
+
 /* content */
+#root #memberSection #content.bg__white {
+  background-color: var(--color-white);
+}
+
 #content .one-line {
   justify-content: space-between;
 }
@@ -15,7 +48,6 @@
   display: flex;
   align-items: center;
 }
-
 
 #content .cardNoForm-container #cardNoForm .selectCard,
 #content .cardNoForm-container #cardNoForm .cardNo,
@@ -54,12 +86,8 @@
 
 /* main-container */
 .main-container {
-  margin: 20px;
+  margin: 0 20px 10px;
   height: 70vh;
-}
-
-.main-container.card-list-container {
-  background-color: transparent;
 }
 
 .main-container .list-container {
@@ -120,46 +148,11 @@
   height: 120px;
 }
 
-/* sellingCardDetail */
-.flex-container {
-  margin-bottom: 30px;
-}
-
-.flex-container.flex-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-container .info-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 80px;
-}
-.flex-container .info-item {
-  padding: 10px;
-  margin: 10px;
-}
-
-.flex-container .info-item:last-child {
-  margin-bottom: 0;
-}
-
-.flex-container .reason--title {
-  margin-bottom: 0;
-}
-
-.flex-container .reason--content {
-  height: 200px;
-}
-
 .btn-container {
   text-align: center;
 }
 
-.btn-container .btn.btn__p {
+.btn-container .btn {
   padding: 10px 19px;
 }
 
@@ -251,8 +244,8 @@
   width: 900px;
 }
 
-#content .main-container .side-container .btn-container {
-  text-align: left;
+.btn-container .btn.btn__primary {
+  padding: 12px 20px;
 }
 
 /* main-info */
@@ -313,6 +306,124 @@
   margin-left: 23px;
 }
 
+/* 카드 구매 */
+.fixed .purchase-line {
+  width: 1000px;
+  margin: auto;
+}
+
+.fixed .purchase-line .main-container.card-list-container {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  z-index: 200;
+  width: 700px;
+  margin: auto;
+}
+
+.fixed .purchase-line .card-list-container {
+  background-color: transparent;
+}
+
+.fixed .purchase-line .card-list-container .exist-container {
+  position: relative;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn {
+  display: none;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn.exist {
+  display: block;
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  z-index: 400;
+}
+
+.fixed .purchase-line .card-list-container .exist-container #existBtn.exist:hover {
+  cursor: pointer;
+}
+
+.fixed .purchase-line .main-container.card-list-container {
+  height: auto;
+  margin: 90px auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm {
+  width: 600px;
+  margin: 50px auto;
+  padding: 20px 10px;
+  background-color: #FAF7F7;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container {
+  width: 530px;
+  height: 50px;
+  margin: 20px auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container:last-child {
+  margin-bottom: 0;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container,
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container {
+  line-height: 30px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container {
+  padding: 5px;
+  height: 35px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label,
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container input {
+  display: inline-block;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label {
+  width: 110px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container {
+  width: 300px;
+  height: 40px;
+  padding: 5px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container input {
+  width: 280px;
+  height: 30px;
+  border: none;
+  outline: none;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .select-container {
+  margin: 10px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .select-container select {
+  height: 30px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container {
+  margin: auto;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container .btn {
+  width: 100%;
+  border: none;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .btn-container .btn:hover {
+  background-color: var(--color-darkgray);
+  font-weight: bold;
+  color: var(--color-white);
+}
 
 /* flex-item size */
 .box__s {

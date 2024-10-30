@@ -8,7 +8,7 @@
     <c:if test="${pagingMap.pagingVo.prevBlock ne 1}">
       <li class="paging--item">
         <a href="#" onclick="goPage(${pagingMap.pagingVo.prevBlock});" class="btn__paging">
-          <span>≪</span>
+          <img src="/img/arrow_left.svg" alt="≪" width="16" height="16" />
         </a>
       </li>
     </c:if>
@@ -24,7 +24,7 @@
     <c:if test="${pagingMap.pagingVo.curBlock lt pagingMap.pagingVo.totBlock}">
       <li class="paging--item">
         <a href="#" onclick="goPage(${pagingMap.pagingVo.nextBlock});" class="btn__paging">
-          <span>≫</span>
+          <img src="/img/arrow_right.svg" alt="≫" width="16" height="16" />
         </a>
       </li>
     </c:if>

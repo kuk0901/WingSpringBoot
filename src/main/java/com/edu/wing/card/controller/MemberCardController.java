@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/productManagement")
-public class AdminCardController {
-  private final Logger log = LoggerFactory.getLogger(AdminCardController.class);
+@RequestMapping("/member/product")
+public class MemberCardController {
+  private final Logger log = LoggerFactory.getLogger(MemberCardController.class);
 
   @Autowired
   private CardService cardService;
@@ -54,7 +53,7 @@ public class AdminCardController {
     pagingMap.put("totalCount", totalCount);
     pagingMap.put("pagingVo", pagingVo);
 
-    ModelAndView mav = new ModelAndView("jsp/admin/card/PaymentManagementListView");
+    ModelAndView mav = new ModelAndView("jsp/member/card/ProductListView");
     mav.addObject("cardList", cardList);
     mav.addObject("benefitMap", benefitMap);
     mav.addObject("pagingMap", pagingMap);
@@ -63,23 +62,4 @@ public class AdminCardController {
     return mav;
   }
 
-  @GetMapping("/list/card/insert")
-  public ModelAndView cardInsertOne(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    log.info("@GetMapping cardInsertOne curPage: {}, categoryName: {}", curPage, categoryName);
-
-    int totalCount = cardService.cardSelectTotalCount(categoryName);
-
-    Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));
-    pagingVo.setPageScale(3);
-
-    Map<String, Object> pagingMap = new HashMap<>();
-    pagingMap.put("totalCount", totalCount);
-    pagingMap.put("pagingVo", pagingVo);
-
-    ModelAndView mav = new ModelAndView("jsp/admin/card/AddProductView");
-    mav.addObject("pagingMap", pagingMap);
-    mav.addObject("categoryName", categoryName);
-
-    return mav;
-  }
 }

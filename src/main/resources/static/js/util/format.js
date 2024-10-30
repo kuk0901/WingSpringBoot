@@ -70,7 +70,10 @@ export function unformatNumber(value) {
   return value.replace(/,/g, '');
 }
 
-
+// 4자리씩 그룹으로 묶은 후 "-"" 추가용 함수(카드)
+export function formatString(input) {
+  return input.replace(/(\w{4})(?=\w)/g, "$1-");
+}
 
 
 

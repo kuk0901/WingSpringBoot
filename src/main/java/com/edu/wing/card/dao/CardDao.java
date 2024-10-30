@@ -11,5 +11,6 @@ public interface CardDao {
   CardVo cardSelectOne(int cardNo);
   CardVo cardExist(String cardName);
   void cardInsert(Map<String, String> map);
-  void cardDeleteOne(int cardNo);
+  void markCardAsDeleted(int cardNo);
+  CardVo checkCardDeletedStatus(int cardNo);
 }

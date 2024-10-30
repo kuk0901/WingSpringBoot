@@ -68,7 +68,7 @@ const addProductClickEvent = (e) => {
   $serviceEl.append($newElement);
 
   // 입력 필드 초기화
-  $cardBenefitDivision.val("");
+  $cardBenefitDivision.val("").focus();
   $cardBenefitDetail.val("");
   $cardPercentage.val("");
 };

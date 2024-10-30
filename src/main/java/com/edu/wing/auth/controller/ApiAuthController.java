@@ -86,8 +86,8 @@ public class ApiAuthController {
 
         resultMap.put(STATUS, STATUS_SUCCESS);
         resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
-            ? randomAlertMessage.getRandomAdminAlert()
-            : randomAlertMessage.getRandomMemberAlert());
+            ? randomAlertMessage.getRandomAdminLoginAlert()
+            : randomAlertMessage.getRandomMemberLoginAlert());
         resultMap.put("grade", user.getGrade());
 
         return ResponseEntity.ok().body(resultMap);

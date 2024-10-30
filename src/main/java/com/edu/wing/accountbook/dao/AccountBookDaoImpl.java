@@ -97,6 +97,17 @@ public class AccountBookDaoImpl implements AccountBookDao {
                 Map.of("accountBookNo", accountBookNo, "memberNo", memberNo));
     }
 
+
+    @Override
+    public void cardPurchaseOfAccountBook(AccountBookVo accountBookVo) {
+      sqlSession.insert(NAMESPACE + "cardPurchaseOfAccountBook", accountBookVo);
+    }
+
+    @Override
+    public AccountBookVo verifyTodayCardPurchaseAccountBookEntry(AccountBookVo accountBookVo) {
+      return sqlSession.selectOne(NAMESPACE + "verifyTodayCardPurchaseAccountBookEntry", accountBookVo);
+    }
+
     @Override
     public void deleteAccountBook(int accountBookNo) {
         sqlSession.delete(NAMESPACE + "deleteAccountBook", accountBookNo);
@@ -106,4 +117,5 @@ public class AccountBookDaoImpl implements AccountBookDao {
     public int updateAccountBook(Map<String, Object> params) {
         return sqlSession.update(NAMESPACE + "updateAccountBook", params);
     }
+
 }
