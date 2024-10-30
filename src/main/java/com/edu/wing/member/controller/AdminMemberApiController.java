@@ -36,18 +36,20 @@ public class AdminMemberApiController {
         return ResponseEntity.ok(resultMap);
     }
 
-    // 관리자 강제 회원 삭제
-    @DeleteMapping("/delete/{memberNo}")
+ // 관리자 강제 회원 삭제
+    @PatchMapping("/delete/{memberNo}")
     @ResponseBody
     public String adminDeleteMember(@PathVariable int memberNo) {
         log.info(logTitleMsg);
         log.info("@DeleteMapping memberNo: {}", memberNo);
 
         try {
-            // 가계부 내역 강제 삭제
+            //1.가계부 내역 강제 삭제
             accountBookService.accountBookDelete(memberNo); // 가계부 삭제 호출
+            //2.게시판 댓글,게시글 삭제 예정
+            
 
-            // 회원 삭제
+            // 회원 삭제->isDeleted->'true'변경
             boolean result = memberService.adminDeleteMember(memberNo);
             return result ? "삭제 성공" : "삭제 실패";
         } catch (Exception e) {
