@@ -172,11 +172,21 @@
     margin-left: 110px;
 
 }
-#button-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 100px;
+/*버튼*/
+.two-btn-container {
+    height: 50px;
+    width: 1500px;
+    display: flex; /* Flexbox 활성화 */
+    align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+    justify-content: center;
 }
+#updateButton {
+
+}
+
+#quitMemberButton {
+    position: absolute;
+    right: 70px;
+}
+
 
