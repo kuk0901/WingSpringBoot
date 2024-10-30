@@ -1,6 +1,8 @@
 :root {
   /* default */
   --color-bg: #49667a;
+  --color-bg-rgb: 73, 102, 122; /* #49667a의 RGB 값 */
+  --color-bg-alpha: 0.9;
   --color-white: #fff;
   --color-darkwhite: #faf7f7;
   --color-black: #000;
@@ -9,6 +11,7 @@
   --color-error: #fd4242;
   --color-correct: #1fff50;
   --color-navy: #001f3f;
+  --color-shadow: rgba(0, 0, 0, 0.4);
 
   /* btn */
   --btn-coral: #fc7f7f;
@@ -168,6 +171,11 @@ a {
   text-align: center;
 }
 
+.btn__primary {
+  background-color: var(--btn-primary);
+  color: var(--color-white);
+}
+
 /* help text */
 .help-text {
   font-size: 14px;
@@ -193,11 +201,25 @@ a {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 14%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
+  z-index: 30;
+}
+
+.member-nav {
+  gap: 20px;
+}
+
+.admin-nav .info-container {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
   align-items: center;
 }
 
@@ -220,7 +242,8 @@ a {
   background-color: var(--color-white);
 }
 
-.btn-container {
+.btn-container.logo-container,
+.btn-container.user-container {
   padding: 8px 0;
 }
 
@@ -228,10 +251,42 @@ a {
   margin: 10px 0;
 }
 
-.btn-container li a {
+.member-nav .btn-container.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/*.member-nav .btn-container.main-content li {*/
+/*  margin: 10px auto 10px;*/
+/*}*/
+
+.btn-container li .move-page {
   display: block;
-  width: 150px;
+  width: 185px;
   padding: 13px 20px;
+}
+
+.btn-container li a:hover,
+.btn-container li button:hover{
+  box-shadow: -4px -4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-container li button.move-page {
+  border: none;
+  font-size: 16px;
+}
+
+.btn-container li.cs-line {
+  transform: translate(190px, -55px);
+  z-index: 40;
+  position: relative;
+}
+
+.btn-container li.cs-line.active {
+  visibility: hidden;
 }
 
 .logo-container {
@@ -243,7 +298,7 @@ a {
 .logo-container li {
   height: 100px;
   width: 100%;
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .logo-container li a {
@@ -255,19 +310,24 @@ a {
 }
 
 .logo-container .logo {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 90px;
   object-fit: contain;
 }
 
-.admin-signout .btn__signout {
+.admin-signout .btn__signout,
+.member-signout .btn__signout{
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.member-signout {
-  transform: translateY(400px);
+.btn-container .style-move-remove {
+  transform: translateY(0px);
+}
+
+.btn-container .style-move-add {
+  transform: translateY(30px);
 }
 
 .signout__img {
@@ -289,7 +349,7 @@ a {
 }
 
 #root #content,
-#root #sectionMember #content {
+#root #memberSection #content {
   background-color: var(--color-bg);
   width: 85%;
   height: 100vh;
@@ -301,6 +361,9 @@ a {
 
 /* footer */
 footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
   width: 85%;
   height: 7vh;
   background-color: var(--color-bg);
@@ -320,7 +383,7 @@ footer .cs:hover {
 
 /* main-container */
 .form-container {
-  background-color: var(--color-bg);
+  background-color: rgba(var(--color-bg-rgb), var(--color-bg-alpha));
 }
 
 .form-container .title-container {
@@ -335,7 +398,7 @@ footer .cs:hover {
 
 .title-container .title {
   text-align: center;
-  font-size: 24px;
+  font-size: 38px;
   font-weight: 900;
 }
 
@@ -355,10 +418,17 @@ footer .cs:hover {
   text-align: center;
 }
 
-.form-container .signup-form .signup-container,
+.form-container .signin-form .signin-container,
+.form-container .signup-form .signup-container {
+  margin: 20px auto;
+}
+
 .form-container .signin-form .signin-container {
   width: 400px;
-  margin: 20px auto;
+}
+
+.form-container .signup-form .signup-container {
+  width: 480px;
 }
 
 .form-container .signup-form .signup-container .label-container,

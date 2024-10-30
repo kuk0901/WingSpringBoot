@@ -8,6 +8,7 @@
   <title>paymentManagementList</title>
   <link rel="stylesheet" href="/css/admin/card/adminProductManagement.css" />
   <script defer type="module" src="/js/admin/card/AjaxCardDetail.js"></script>
+  <script defer type="module" src="/js/admin/card/AjaxCardDelete.js"></script>
 </head>
 <body>
 
@@ -40,17 +41,17 @@
       </div>
 
       <div class="btn-container">
-        <a href="/admin/productManagement/list/card/insert?curPage=${pagingMap.pagingVo.curPage}&categoryName=${categoryName}" class="btn btn__generate">카드 추가</a>
+        <a href="/admin/productManagement/list/card/insert?curPage=${pagingMap.pagingVo.curPage}&categoryName=${categoryName}" class="btn btn__generate btn__p">카드 추가</a>
       </div>
     </div>
 
     <main class="main-container bg__white card-list-container">
       <div class="list-container list-container--title bg__white">
-        <div class="list--title list--div text__semibold box__l">카드명</div>
-        <div class="list--title list--div text__semibold box__m">혜택 요약</div>
-        <div class="list--title list--div text__semibold box__m">등록 날짜</div>
-        <div class="list--title list--div text__semibold box__s">분류</div>
-        <div class="list--title list--div text__semibold box__sm">비고</div>
+        <div class="list--title list--div text__semibold box__l text__center">카드명</div>
+        <div class="list--title list--div text__semibold box__m text__center">혜택 요약</div>
+        <div class="list--title list--div text__semibold box__m text__center">등록 날짜</div>
+        <div class="list--title list--div text__semibold box__s text__center">분류</div>
+        <div class="list--title list--div text__semibold box__sm text__center">비고</div>
       </div>
 
       <c:choose>
@@ -102,8 +103,8 @@
 
               <div class="list--simple box__sm">
                 <div class="btn-container">
-                  <button class="btn btn__generate">삭제</button>
-                  <button class="btn btn__generate card-data-get" data-card-no="${card.cardNo}">상세보기</button>
+                  <button class="btn btn__generate remove-card-btn btn__p" data-card-no="${card.cardNo}">삭제</button>
+                  <button class="btn btn__generate detail-card-btn btn__p" data-card-no="${card.cardNo}">상세보기</button>
                 </div>
               </div>
             </div>
@@ -124,6 +125,7 @@
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
       <input type="hidden" id="cardNo" name="cardNo" value="${cardNo}"/>
+      <input type="hidden" name="categoryName" value="${categoryName}"/>
     </form>
   </div>
 

@@ -28,6 +28,12 @@
     </resultMap>
 
 
+    <select id="selectMemberByEmail" parameterType="String" resultMap="memberResultMap">
+        SELECT MEMBER_NO, USER_NAME, EMAIL
+        FROM MEMBER
+        WHERE EMAIL = #{email}
+    </select>
+
     <select id="memberExist" parameterType="map"
             resultMap="memberResultMap">
         SELECT MEMBER_NO, USER_NAME, EMAIL, GRADE

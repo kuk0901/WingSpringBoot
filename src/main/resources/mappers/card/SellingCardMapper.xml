@@ -63,4 +63,36 @@
         WHERE SELLING_CARD_NO = #{sellingCardNo}
         AND M.GRADE = 'MEMBER'
     </select>
+
+    <select id="countActiveSellingCardsByCardNo" parameterType="int" resultType="int">
+        SELECT COUNT(SC.SELLING_CARD_NO)
+        FROM CARD C
+        JOIN SELLING_CARD SC ON C.CARD_NO = SC.CARD_NO
+        WHERE C.CARD_NO = #{cardNo}
+          AND SC.TERMINATION_REASON IS NULL
+          AND SC.TERMINATION_DATE IS NULL
+    </select>
+
+    <select id="memberSellingCardExist" parameterType="sellingCardVo" resultMap="sellingCardResultMap">
+        SELECT SC.SELLING_CARD_NO, SC.MEMBER_CARD_NO
+        FROM SELLING_CARD SC JOIN CARD C
+          ON SC.CARD_NO = C.CARD_NO
+        WHERE SC.MEMBER_NO = #{memberNo}
+        AND SC.CARD_NO = #{cardNo}
+        AND SC.TERMINATION_DATE IS NULL
+        AND SC.TERMINATION_REASON IS NULL
+    </select>
+
+    <insert id="memberPurchaseCard" parameterType="sellingCardVo">
+        INSERT INTO SELLING_CARD (SELLING_CARD_NO, CARD_NO, MEMBER_NO, MEMBER_CARD_NO)
+        VALUES (SELLING_CARD_NO_SEQ.NEXTVAL, #{cardNo}, #{memberNo}, #{memberCardNo})
+    </insert>
+
+    <select id="memberPurchaseCardCheck" parameterType="sellingCardVo" resultMap="sellingCardResultMap">
+        SELECT SELLING_CARD_NO, CARD_NO, MEMBER_NO, MEMBER_CARD_NO
+        FROM SELLING_CARD
+        WHERE CARD_NO = #{cardNo}
+        AND MEMBER_NO = #{memberNo}
+        AND MEMBER_CARD_NO = #{memberCardNo}
+    </select>
 </mapper>

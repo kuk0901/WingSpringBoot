@@ -3,65 +3,68 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Admin Nav -->
 <nav
-    class="admin-nav"
+    class="nav admin-nav"
     role="navigation"
     aria-label="관리자 메뉴"
     id="adminNav"
 >
-  <ul class="btn-container logo-container">
-    <li>
-      <a href="${pageContext.request.contextPath}/admin/api/salesDashboard/list" id="logoLink">
-        <img src="${pageContext.request.contextPath}/img/logo.png" alt="WING_ logo" class="logo" />
-      </a>
-    </li>
-  </ul>
-
-  <ul class="btn-container user-container">
-    <c:if test="${not empty sessionScope.member}">
+  <div class="info-container">
+    <ul class="btn-container logo-container">
       <li>
-        <a href="/admin/api/member/mypage/${sessionScope.member.memberNo}" id="userName" class="btn btn--admin__my btn__p text__semibold" aria-label="사용자 프로필">
-          ${sessionScope.member.userName}님
+        <a href="${pageContext.request.contextPath}/admin/salesDashboard/list" id="logoLink">
+          <img src="${pageContext.request.contextPath}/img/logo.png" alt="WING_ logo" class="logo" />
         </a>
       </li>
-    </c:if>
+    </ul>
 
-    <c:if test="${empty sessionScope.member}">
-      <li>
-        <a href="#" class="btn btn--admin__my btn__p text__semibold" aria-label="사용자 프로필">
-          @@@님
-        </a>
-      </li>
-    </c:if>
-  </ul>
+    <ul class="btn-container user-container">
+      <c:if test="${not empty sessionScope.member}">
+        <li>
+          <a href="/admin/api/member/mypage/${sessionScope.member.memberNo}" id="userName" class="btn btn--admin__my text__semibold move-page" aria-label="사용자 프로필">
+            ${sessionScope.member.userName}님
+          </a>
+        </li>
+      </c:if>
+
+      <c:if test="${empty sessionScope.member}">
+        <li>
+          <a href="#" class="btn btn--admin__my text__semibold move-page" aria-label="사용자 프로필">
+            @@@님
+          </a>
+        </li>
+      </c:if>
+    </ul>
+  </div>
 
   <ul class="btn-container" aria-label="주요 관리 메뉴">
     <li>
-      <a href="#" class="btn btn__blue btn__p" aria-current="page"
+      <a href="#" class="btn btn__blue move-page" aria-current="page"
       >대시보드</a
       >
     </li>
     <li>
-      <a href="${pageContext.request.contextPath}/admin/salesDashboard/list" class="btn btn__blue btn__p">판매 카드 현황</a>
+      <a href="${pageContext.request.contextPath}/admin/salesDashboard/list" class="btn btn__blue move-page">판매 카드 현황</a>
     </li>
     <li>
-      <a href="${pageContext.request.contextPath}/admin/productManagement/list" class="btn btn__blue btn__p">카드 관리</a>
+      <a href="${pageContext.request.contextPath}/admin/productManagement/list" class="btn btn__blue move-page">카드 관리</a>
     </li>
   </ul>
 
   <span class="white-line"></span>
 
   <ul class="btn-container" aria-label="재무 관리 메뉴">
-    <li><a href="${pageContext.request.contextPath}/admin/accountBook/list" class="btn btn__blue btn__p">가계부 관리</a></li>
-    <li><a href="${pageContext.request.contextPath}/admin/category/list" class="btn btn__blue btn__p">카테고리 관리</a></li>
-    <li><a href="${pageContext.request.contextPath}/admin/paymentMethod/list" class="btn btn__blue btn__p">결제수단 관리</a></li>
+    <li><a href="${pageContext.request.contextPath}/admin/accountBook/list" class="btn btn__blue move-page">가계부 관리</a></li>
+    <li><a href="${pageContext.request.contextPath}/admin/category/list" class="btn btn__blue move-page">카테고리 관리</a></li>
+    <li><a href="${pageContext.request.contextPath}/admin/paymentMethod/list" class="btn btn__blue move-page">결제수단 관리</a></li>
   </ul>
 
   <span class="white-line"></span>
 
   <ul class="btn-container" aria-label="사용자 및 콘텐츠 관리 메뉴">
-    <li><a href="${pageContext.request.contextPath}/admin/member/list" class="btn btn__blue btn__p">회원 관리</a></li>
-    <li><a href="#" class="btn btn__blue btn__p">게시판 관리</a></li>
-    <li><a href="#" class="btn btn__blue btn__p">고객센터 관리</a></li>
+    <li><a href="${pageContext.request.contextPath}/admin/member/list" class="btn btn__blue move-page">회원 관리</a></li>
+    <li><a href="#" class="btn btn__blue move-page">게시판 관리</a></li>
+    <li><button id="csControlBtn" class="btn btn__blue move-page">고객센터 관리</button></li>
+    <li id="inquiry" class="cs-line active"><a href="${pageContext.request.contextPath}/admin/cs/inquiry" class="btn btn__blue cs--inquiry move-page">1대1 문의</a></li>
   </ul>
 
   <ul class="btn-container signout-container admin-signout">

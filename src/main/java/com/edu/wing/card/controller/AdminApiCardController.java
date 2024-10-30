@@ -4,6 +4,7 @@ import com.edu.wing.card.domain.CardVo;
 import com.edu.wing.card.service.CardService;
 import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
+import com.edu.wing.sellingCard.service.SellingCardService;
 import com.edu.wing.util.CardBenefitUtil;
 import com.google.gson.JsonSyntaxException;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class AdminApiCardController {
 
   @Autowired
   private CardBenefitService cardBenefitService;
+
+  @Autowired
+  private SellingCardService sellingCardService;
 
   @GetMapping("/card-detail/{cardNo}")
   public ResponseEntity<?> productDetail(@PathVariable("cardNo") String cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
@@ -100,5 +104,37 @@ public class AdminApiCardController {
       resultMap.put(ALERT_MSG, "카드 등록 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
+  }
+
+  @DeleteMapping("/card/delete/{cardNo}")
+  public ResponseEntity<?> deleteCardAndBenefits(@PathVariable int cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
+    log.info("@Delete card deleteCardAndBenefits cardNo: {}, curPage: {}, categoryName: {}", cardNo, curPage, categoryName);
+
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("curPage", curPage);
+    resultMap.put("categoryName", categoryName);
+
+    // 현재 카드가 판매된 경우 삭제 불가하게 함
+    int countActiveSellingCardsByCardNo = sellingCardService.countActiveSellingCardsByCardNo(cardNo);
+
+    log.info("check countActiveSellingCardsByCardNo: {}", countActiveSellingCardsByCardNo);
+
+    if (countActiveSellingCardsByCardNo > 0) {
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put(ALERT_MSG, "현재 해당 카드가 " + countActiveSellingCardsByCardNo + "개 사용되고 있으므로 삭제할 수 없습니다.");
+      return ResponseEntity.internalServerError().body(resultMap);
+    }
+
+    // 없는 경우 card 테이블의 IS_DELETED 칼럼의 값을 변경
+    if (cardService.softDeleteCardAndVerify(cardNo)) {
+      resultMap.put(STATUS, STATUS_SUCCESS);
+      resultMap.put(ALERT_MSG, "요청하신 카드가 성공적으로 삭제되었습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    resultMap.put(STATUS, STATUS_FAIL);
+    resultMap.put(ALERT_MSG, "카드 삭제 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    return ResponseEntity.internalServerError().body(resultMap);
   }
 }

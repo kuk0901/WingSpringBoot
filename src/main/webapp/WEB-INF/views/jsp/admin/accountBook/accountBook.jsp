@@ -78,8 +78,9 @@
                     <tbody id="resultContainer">
                     <c:forEach var="accountBook" items="${accountBookList}">
                         <tr>
+
                             <td>${accountBook.accountBookNo}</td>
-                            <td>${accountBook.creDate}</td>
+                            <td><fmt:formatDate value="${accountBook.creDate}" pattern="yyyy-MM-dd"/></td>
                             <td>${accountBook.memberEmail}</td>
                             <td>${accountBook.minusCategoryName}</td>
                             <td>${accountBook.paymentMethodName}</td>

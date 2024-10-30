@@ -96,4 +96,14 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectOne(NAMESPACE + "selectAccountBookDetail",
                 Map.of("accountBookNo", accountBookNo, "memberNo", memberNo));
     }
+
+  @Override
+  public void cardPurchaseOfAccountBook(AccountBookVo accountBookVo) {
+    sqlSession.insert(NAMESPACE + "cardPurchaseOfAccountBook", accountBookVo);
+  }
+
+  @Override
+  public AccountBookVo verifyTodayCardPurchaseAccountBookEntry(AccountBookVo accountBookVo) {
+    return sqlSession.selectOne(NAMESPACE + "verifyTodayCardPurchaseAccountBookEntry", accountBookVo);
+  }
 }

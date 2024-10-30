@@ -13,9 +13,11 @@
         <result column="MAIN_BENEFIT" property="mainBenefit" />
         <result column="REGISTER_DATE" property="registerDate" javaType="java.util.Date" />
         <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="IS_DELETED" property="isDeleted" />
     </resultMap>
 
     <sql id="search">
+        AND C.IS_DELETED = 'false'
         <if test="categoryName != null and categoryName != 'all'">
             AND CASE MC.CATEGORY_NAME
             WHEN '교통' THEN 'Traffic'
@@ -82,14 +84,23 @@
         SELECT CARD_NO, CARD_NAME, CARD_COMPANY
         FROM CARD
         WHERE CARD_NAME = #{cardName}
+          AND IS_DELETED = 'false'
     </select>
 
     <insert id="cardInsertOne" parameterType="map">
-        INSERT INTO CARD (CARD_NO, CARD_NAME, CARD_COMPANY, CATEGORY_NO, STORED_FILE_NAME, ORIGINAL_FILE_NAME, REGISTER_DATE)
-        VALUES (CARD_NO_SEQ.NEXTVAL, #{cardName}, #{cardCompany}, #{categoryNo}, #{storedFileName}, #{originalFileName}, #{registerDate})
+        INSERT INTO CARD (CARD_NO, CARD_NAME, CARD_COMPANY, CATEGORY_NO, STORED_FILE_NAME, ORIGINAL_FILE_NAME, REGISTER_DATE, IS_DELETED)
+        VALUES (CARD_NO_SEQ.NEXTVAL, #{cardName}, #{cardCompany}, #{categoryNo}, #{storedFileName}, #{originalFileName}, #{registerDate}, 'false')
     </insert>
 
-    <delete id="cardDeleteOne" parameterType="int">
-        DELETE FROM CARD WHERE CARD_NO = #{cardNo};
-    </delete>
+    <update id="markCardAsDeleted" parameterType="int">
+        UPDATE CARD
+        SET IS_DELETED = 'true'
+        WHERE CARD_NO = #{cardNo}
+    </update>
+
+    <select id="checkCardDeletedStatus" parameterType="int" resultMap="cardResultMap">
+        SELECT CARD_NO, CARD_NAME, CARD_COMPANY, IS_DELETED
+        FROM CARD
+        WHERE CARD_NO = #{cardNo} AND IS_DELETED = 'true'
+    </select>
 </mapper>

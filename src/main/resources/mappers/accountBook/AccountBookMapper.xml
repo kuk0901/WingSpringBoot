@@ -30,19 +30,21 @@
                  LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
                  LEFT JOIN MEMBER m ON ab.MEMBER_NO = m.MEMBER_NO
                  LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
-        where ab.PLUS_CATEGORY_NO = 1 -- PLUS_CATEGORY_NO가 1인 경우
-        ORDER BY ACCOUNT_BOOK_NO
+        WHERE ab.PLUS_CATEGORY_NO = 1 -- PLUS_CATEGORY_NO가 1인 경우
+        ORDER BY ACCOUNT_BOOK_NO DESC
     </select>
 
 
     <select id="selectMinusCategories" resultType="String">
         SELECT CATEGORY_NAME
         FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO != 1
     </select>
   
     <select id="selectPlusCategories" resultType="String">
         SELECT CATEGORY_NAME
         FROM PLUS_CATEGORY
+        WHERE CATEGORY_NO != 1
     </select>
 
     <select id="selectPaymentMethods" resultType="String">
@@ -64,7 +66,7 @@
         WHERE (#{category} = 'all' OR mc.CATEGORY_NAME = #{category})
           AND (#{paymentMethod} = 'all' OR pm.PAYMENT_METHOD_NAME = #{paymentMethod})
           AND ab.PLUS_CATEGORY_NO = 1 --가계부 소비만출력
-        ORDER BY ACCOUNT_BOOK_NO
+        ORDER BY ACCOUNT_BOOK_NO DESC
     </select>
 
     <!-- 상위 3개 결제 방법 조회 쿼리 -->
@@ -204,5 +206,22 @@
           ]]>
     </select>
 
+    <!-- 회원 카드 구매 후 자동으로 가계부에 기입되는 데이터   -->
+    <insert id="cardPurchaseOfAccountBook" parameterType="accountBookVo">
+        INSERT INTO ACCOUNT_BOOK (ACCOUNT_BOOK_NO, PLUS_CATEGORY_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO, CONTENT, PAYMENT_AMOUNT)
+        VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, #{plusCategoryNo}, #{minusCategoryNo}, #{memberNo}, #{paymentMethodNo}, #{content}, #{paymentAmount})
+    </insert>
+
+    <!-- 회원 카드 구매 후 데이터 조회 -->
+    <select id="verifyTodayCardPurchaseAccountBookEntry" parameterType="accountBookVo" resultMap="accountBookResultMap">
+        SELECT ACCOUNT_BOOK_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO, CONTENT, CRE_DATE
+        FROM ACCOUNT_BOOK
+        WHERE MINUS_CATEGORY_NO = #{minusCategoryNo}
+          AND MEMBER_NO = #{memberNo}
+          AND PAYMENT_METHOD_NO = #{paymentMethodNo}
+          AND CONTENT = #{content}
+          AND PAYMENT_AMOUNT = #{paymentAmount}
+          AND TRUNC(CRE_DATE) = TRUNC(SYSDATE)
+    </select>
 
 </mapper>
