@@ -23,4 +23,5 @@ public interface MemberService {
 
   MemberVo getMyPageInfo(int memberNo);  // 회원 정보 조회 메서드
   void updateMemberInfo(MemberVo memberVo);
+  void updateMemberQuitApply(MemberVo memberVo);
 }
