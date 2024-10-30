@@ -50,10 +50,10 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
   }
 
   @Override
-  public PaymentMethodVo paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
+  public void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
     // 3. 데이터베이스 업데이트 수행
 
-    return paymentMethodDao.paymentMethodUpdateOne(paymentMethodVo);
+   paymentMethodDao.paymentMethodUpdateOne(paymentMethodVo);
 
   }
 }

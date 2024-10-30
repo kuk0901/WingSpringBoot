@@ -18,5 +18,5 @@ public interface PaymentMethodService {
 
   boolean paymentMethodDeleteOne(int paymentMethodNo);
 
-  PaymentMethodVo paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo);
+  void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo);
 }

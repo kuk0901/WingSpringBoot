@@ -53,10 +53,7 @@ public class PaymentMethodDaoImpl implements PaymentMethodDao {
   }
 
   @Override
-  public PaymentMethodVo paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
-
+  public void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
     sqlSession.update(NAMESPACE + "paymentMethodUpdateOne", paymentMethodVo);
-
-    return paymentMethodVo;
   }
 }

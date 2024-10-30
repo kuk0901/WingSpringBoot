@@ -34,7 +34,7 @@ public class AdminApiPaymentMethodController {
       // 결제 방법 이름이 이미 존재하는지 확인
       if (paymentMethodService.paymentMethodExist(paymentMethodName)) {
         resultMap.put("status", "fail");
-        resultMap.put("msg", "이미 존재하는 결제 수단 이름입니다.");
+        resultMap.put("alertMsg", "이미 존재하는 결제 수단 이름입니다.");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap);
       }
 
@@ -42,18 +42,18 @@ public class AdminApiPaymentMethodController {
       boolean isAdded = paymentMethodService.addPaymentMethod(paymentMethodName);
       if (isAdded) {
         resultMap.put("status", "success");
-        resultMap.put("msg", "결제 수단이 성공적으로 추가되었습니다.");
+        resultMap.put("alertMsg", "결제 수단이 성공적으로 추가되었습니다.");
         return ResponseEntity.ok().body(resultMap);
       }
 
       resultMap.put("status", "fail");
-      resultMap.put("msg", "결제 수단 추가에 실패했습니다.");
+      resultMap.put("alertMsg", "결제 수단 추가에 실패했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
 
     } catch (Exception e) {
       log.error("결제 수단 추가 중 오류 발생", e);
       resultMap.put("status", "error");
-      resultMap.put("msg", "서버 오류가 발생했습니다.");
+      resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
   }
@@ -68,13 +68,13 @@ public class AdminApiPaymentMethodController {
 
     if (paymentMethod == null) {
       resultMap.put("status", "error");
-      resultMap.put("message", "결제 방법을 찾을 수 없습니다.");
+      resultMap.put("alertMsg", "결제 방법을 찾을 수 없습니다.");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
     }
 
     resultMap.put("status", "success");
     resultMap.put("paymentMethodName", paymentMethod.getPaymentMethodName());
-    resultMap.put("message", "결제 방법을 삭제할 수 있습니다.");
+    resultMap.put("alertMsg", "결제 방법을 삭제할 수 있습니다.");
     return ResponseEntity.ok(resultMap);
   }
 
@@ -87,7 +87,7 @@ public class AdminApiPaymentMethodController {
 
     if (paymentMethod == null) {
       resultMap.put("status", "error");
-      resultMap.put("message", "결제 방법을 찾을 수 없습니다.");
+      resultMap.put("alertMsg", "결제 방법을 찾을 수 없습니다.");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
     }
 
@@ -95,11 +95,11 @@ public class AdminApiPaymentMethodController {
 
     if (isDeleted) {
       resultMap.put("status", "success");
-      resultMap.put("message", "'" + paymentMethod.getPaymentMethodName() + "' 결제 방법이 성공적으로 삭제되었습니다.");
+      resultMap.put("alertMsg", "'" + paymentMethod.getPaymentMethodName() + "' 결제 방법이 성공적으로 삭제되었습니다.");
       return ResponseEntity.ok(resultMap);
     } else {
       resultMap.put("status", "error");
-      resultMap.put("message", "결제 방법 삭제에 실패했습니다.");
+      resultMap.put("alertMsg", "결제 방법 삭제에 실패했습니다.");
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     }
   }
@@ -111,6 +111,8 @@ public class AdminApiPaymentMethodController {
     log.info("updatePaymentMethod Patch paymentMethodNo: {}, paymentMethodMap: {}",
         paymentMethodNo, paymentMethodMap);
 
+    Map<String, Object> resultMap = new HashMap<>();
+
     PaymentMethodVo paymentMethodVo = new PaymentMethodVo();
     paymentMethodVo.setPaymentMethodNo(paymentMethodNo);
     paymentMethodVo.setPaymentMethodName(paymentMethodMap.get("paymentMethodName"));
@@ -118,21 +120,25 @@ public class AdminApiPaymentMethodController {
 
     log.info("paymentMethodVo: {}", paymentMethodVo);
 
-    try {
-      paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
-    } catch (Exception e) {
-      log.error("결제 수단 업데이트 중 오류 발생", e);
-      Map<String, String> errorResponseMap = new HashMap<>();
-      errorResponseMap.put("errorMsg", "결제 수단 업데이트 중 오류가 발생했습니다.");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .contentType(MediaType.APPLICATION_JSON).body(errorResponseMap);
+    paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
+
+//    try {
+//      paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
+//    } catch (Exception e) {
+//      log.error("결제 수단 업데이트 중 오류 발생", e);
+//      resultMap.put("alertMsg", "결제 수단 업데이트 중 오류가 발생했습니다.");
+//      return ResponseEntity.internalServerError().body(resultMap);
+//    }
+
+    if (paymentMethodService.paymentMethodSelectOne(paymentMethodNo) != null) {
+      resultMap.put("status", "success");
+      resultMap.put("alertMsg", "결제 수단 명이 변경되었습니다.");
+      return ResponseEntity.ok().body(resultMap);
     }
 
-    Map<String, Object> resultMap = new HashMap<>();
-
-//    resultMap = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
-
-    return ResponseEntity.ok().body(resultMap);
+    resultMap.put("status", "failed");
+    resultMap.put("alertMsg", "서버 오류로 인해 결제 수단 명이 변경되지 않았습니다. 잠시 후 다시 시도해 주세요.");
+    return ResponseEntity.internalServerError().body(resultMap);
   }
 
   @PostMapping("/update/{paymentMethodNo}")
