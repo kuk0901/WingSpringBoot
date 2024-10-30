@@ -1,6 +1,5 @@
 package com.edu.wing.member.controller;
 
-import com.edu.wing.accountbook.service.AccountBookService;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.member.service.MemberService;
 import com.edu.wing.util.Paging;
@@ -21,14 +20,12 @@ import java.util.Map;
 @Controller
 public class AdminMemberController {
 
-
     private Logger log = LoggerFactory.getLogger(AdminMemberApiController.class);
     private final String logTitleMsg = "==AdminMemberApiController==";
 
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private AccountBookService accountBookService;
+
     //초기화면
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST}) // 관리자용 회원 목록 페이지
     public ModelAndView getAllMembersForAdmin(@RequestParam(defaultValue = "1") int curPage) {
@@ -44,7 +41,7 @@ public class AdminMemberController {
         pagingMap.put("totalCount", totalCount);
         pagingMap.put("pagingVo", pagingVo);
 
-        ModelAndView mav = new ModelAndView("jsp/admin/member/adminMember");
+        ModelAndView mav = new ModelAndView("jsp/admin/member/AdminMemberListView");
         mav.addObject("memberList", memberList);
         mav.addObject("pagingMap", pagingMap);
 

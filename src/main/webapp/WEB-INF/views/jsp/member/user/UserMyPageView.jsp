@@ -92,13 +92,13 @@
         </form>
   <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
         <div id="card-container" class="card-container">
-          <div class="card-title">보유 카드</div>
-          <div class="card-header">
-            <div class="header-item">카드 명</div>
-            <div class="header-item">혜택 요약</div>
-            <div class="header-item">등록 날짜</div>
-            <div class="header-item">카드 번호</div>
-            <div class="header-item">비고
+          <div class="card-title text__semibold">보유 카드</div>
+          <div class="card-header text__semibold">
+            <div class="header-item box__s">카드 명</div>
+            <div class="header-item box__l">혜택 요약</div>
+            <div class="header-item box__date">등록 날짜</div>
+            <div class="header-item box__no">카드 번호</div>
+            <div class="header-item box__btn">비고
             </div>
           </div>
         </div>

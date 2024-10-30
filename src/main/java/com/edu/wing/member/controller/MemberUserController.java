@@ -20,6 +20,6 @@ public class MemberUserController {
     @RequestMapping("/myPage")
     public String myPage() {
         log.info(logTitleMsg + " 마이페이지로 이동");
-        return "jsp/member/user/userMyPage";
+        return "jsp/member/user/UserMyPageView";
     }
 }

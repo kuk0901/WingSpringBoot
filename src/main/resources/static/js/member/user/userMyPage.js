@@ -76,7 +76,7 @@ $(document).ready(function() {
             monthlySalary: unFormatNumberString($monthlySalaryInput.val()), // 숫자 형식 변환
             yearlySalary: unFormatNumberString($salaryInput.val()), // 숫자 형식 변환
         };
-        console.log(formData)
+
         // AJAX 요청 함수 호출
         updateMemberInfo(formData);
     });
@@ -206,7 +206,6 @@ function updateMemberInfo(data) {
             // location.reload();
         },
         error: function (xhr, status, error) {
-            console.error("Error updating member info:", error); // 오류 로그
             alert("회원 정보 수정 중 오류가 발생했습니다."); // 오류 메시지
         }
     });
@@ -216,34 +215,31 @@ function updateMemberInfo(data) {
 // 구매 상태가 'Y'인 경우 카드 정보를 가져오는 함수
 function fetchSellingCards(memberNo) {
     $.ajax({
-        url: `/member/api/sellingCard/sellingCards/${memberNo}`, // 판매 카드 정보를 가져오는 API 호출
+        url: `/member/api/sellingCard/purchase/${memberNo}`, // 판매 카드 정보를 가져오는 API 호출
         type: "GET",
         success: function(cards) {
             // sellingCard를 기반으로 HTML 생성 (하나의 카드만 처리)
-            console.log(cards); // 전체 카드 배열 출력
 
             // 카드가 하나만 있다는 가정 하에 첫 번째 카드 가져오기
             const card = cards[0]; // 첫 번째 카드 객체를 가져옴
 
-            console.log('Card Number:', card.CARDNO); // 이제 제대로 접근 가능해야 함
-
             const cardHTML = `
                 <div class="bg__white">
                     <div class="list-container list-content">
-                        <div class="list-item box__s">${card.CARDNAME}
+                        <div class="list-item box__s text__center">${card.CARDNAME}
                              <div class="img-container">
                                 <img class="card--img" src="/img/card/${card.STOREDFILENAME}" alt="${card.CARDNAME}" />
                               </div>
                         </div>
                         <div class="list-item box__l" id="benefit-container"></div>
-                        <div class="list-item box__date">
+                        <div class="list-item box__date text__center">
                             ${formatDate(card.SELLINGDATE)} <!-- date formatting function must be implemented -->
                         </div>
-                        <div class="list-item box__no">${card.MEMBERCARDNO}</div>
+                        <div class="list-item box__no text__center">${card.MEMBERCARDNO}</div>
                         <div class="list-item box__btn">
                             <div id="button-container">
-                                <button class="btn__generate btn--vertical">해지 신청</button>
-                                <button class="btn__generate btn--vertical">상세 내역</button>
+                                <button class="btn btn__generate btn--vertical">해지 신청</button>
+                                <button class="btn btn__generate btn--vertical">상세 내역</button>
                             </div>
                         </div>
                     </div>
@@ -269,8 +265,6 @@ function fetchCardBenefit(cardNo) {
         type: 'GET', // HTTP 요청 방법
         dataType: 'json', // 응답 데이터 타입
     }).then(function(data) {
-        console.log('카드 혜택 정보:', data);
-
         // data가 배열 형태로 반환된다고 가정
         let cardBenefitHTML = '';
         data.forEach(benefit => {
@@ -287,7 +281,7 @@ function fetchCardBenefit(cardNo) {
         $('#cardBenefit').html(cardBenefitHTML);
         return cardBenefitHTML; // 생성된 HTML을 반환
     }).fail(function(xhr, status, error) {
-        console.error('AJAX 요청 실패:', error);
+
         $('#cardBenefit').html('<p>카드 혜택 정보를 불러오는 데 실패했습니다.</p>');
         return '<p>카드 혜택 정보를 불러오는 데 실패했습니다.</p>';
     });

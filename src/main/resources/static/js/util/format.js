@@ -63,11 +63,11 @@ export function formatCardBenefitSummaryToTags(summBenefit) {
 /**
  * card 요약 혜택을 태그로 포맷팅
  * @param {string} value
- * @returns {string}
+ * @returns {int}
  */
 export function unformatNumber(value) {
   // 콤마 제거 후 숫자로 변환
-  return value.replace(/,/g, '');
+  return Number(value.replace(/,/g, ''));
 }
 
 // 4자리씩 그룹으로 묶은 후 "-"" 추가용 함수(카드)

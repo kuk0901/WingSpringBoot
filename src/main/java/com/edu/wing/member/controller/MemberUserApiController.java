@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/member/api/user")
-public class MemberUserAPiController {
-    private Logger log = LoggerFactory.getLogger(MemberUserAPiController.class);
-    private final String logTitleMsg = "==MemberUserAPiController==";
+public class MemberUserApiController {
+    private Logger log = LoggerFactory.getLogger(MemberUserApiController.class);
+    private final String logTitleMsg = "==MemberUserApiController==";
 
     @Autowired
     private MemberService memberService;
@@ -22,8 +22,10 @@ public class MemberUserAPiController {
     @GetMapping("/myPage/info")
     public MemberVo getMyPageInfo(@RequestParam int memberNo) {
         log.info(logTitleMsg + " 회원 정보 조회: memberNo = " + memberNo);
+
         return memberService.getMyPageInfo(memberNo);  // 조회 결과를 JSON 형태로 반환
     }
+
     // 회원 정보 수정 API
     @PutMapping("/myPage/update")
     public ResponseEntity<String> updateMemberInfo(@RequestBody MemberVo memberVo) {

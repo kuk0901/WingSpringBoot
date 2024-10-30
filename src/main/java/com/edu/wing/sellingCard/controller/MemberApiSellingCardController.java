@@ -63,7 +63,7 @@ public class MemberApiSellingCardController {
     }
   }
 
-  @GetMapping("/sellingCards/{memberNo}")
+  @GetMapping("/purchase/{memberNo}")
   public List<Map<String, Object>> getSellingCards(@PathVariable int memberNo) {
     log.info("{} getSellingCards() 호출 - memberNo: {}", logTitleMsg, memberNo);
 
