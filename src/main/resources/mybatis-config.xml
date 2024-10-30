@@ -15,6 +15,7 @@
         <package name="com.edu.wing.category.domain"/>
         <package name="com.edu.wing.paymentMethod.domain"/>
         <package name="com.edu.wing.cardBenefit.domain"/>
+        <package name="com.edu.wing.inquiry.domain"/>
 
     </typeAliases>
     <mappers>
@@ -27,6 +28,7 @@
         <mapper resource="mappers/category/PlusCategoryMapper.xml" />
         <mapper resource="mappers/paymentMethod/PaymentMethodMapper.xml" />
         <mapper resource="mappers/card/CardBenefitMapper.xml"/>
+        <mapper resource="mappers/inquiry/InquiryMapper.xml"/>
     </mappers>
 
 </configuration>
