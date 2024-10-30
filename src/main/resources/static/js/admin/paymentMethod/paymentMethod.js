@@ -1,3 +1,5 @@
+import { showAlertMsg } from "../../util/toast.js";
+
 $("#paymentMethodAdd").click(function(e) {
   e.preventDefault();
 
@@ -8,13 +10,12 @@ $("#paymentMethodAdd").click(function(e) {
     type: 'POST',
     data: { paymentMethodName: paymentMethodName },
     success: function(res) {
-      alert('결제 수단이 성공적으로 추가되었습니다.');
-      window.location.href = '/admin/paymentMethod/list';
+      window.location.href = `/admin/paymentMethod/list?message=${res.alertMsg}`;
     },
     error: function(xhr, status, error) {
-      const msg = xhr.responseJSON ? xhr.responseJSON.msg  : "결제 수단 등록에 실패했습니다.";
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 등록에 실패했습니다.";
 
-      alert(msg);
+      showAlertMsg(msg);
     }
   });
 });
@@ -23,21 +24,33 @@ $("#cancelAdd").click(function() {
   window.location.href = '/admin/paymentMethod/list';
 });
 
-function moveDelFunc(no) {
-  $.ajax( {
+$(".remove-pm-btn").click(function(e) {
+  e.preventDefault();
+
+  const no = $(this).data("pmn");
+
+  if (no === 3) {
+    alert("해당 결제수단은 삭제가 불가능합니다")
+    return;
+  }
+
+  $.ajax({
     url: `/admin/paymentMethod/delete/${no}`,
     type: 'GET',
     success: function (res) {
+
       if (res.totalCount > 0) {
-        alert(res.msg);
+        alert(res.alertMsg);
         return;
       }
-
       // 진짜로 삭제하는 함수 호출
       paymentMethodDelete(no);
+    }, error: function() {
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
+      showAlertMsg(msg);
     }
   })
-}
+});
 
 function paymentMethodDelete(deleteNo) {
   $.ajax({
@@ -53,45 +66,50 @@ function paymentMethodDelete(deleteNo) {
             type: 'DELETE',
             success: function (finalRes) {
               if (finalRes.status === "success") {
-                alert(finalRes.message);
-                location.reload(); // 페이지 새로고침
+                window.location.href = `/admin/paymentMethod/list?message=${finalRes.alertMsg}`;
               } else {
-                alert(finalRes.message || "결제 방법 삭제에 실패했습니다.");
+                showAlertMsg(alertMsg);
               }
             },
             error: function (xhr, status, error) {
-              alert("오류가 발생했습니다: " + error);
+              const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 삭제에 실패했습니다.";
+              showAlertMsg(msg);
             }
           });
         }
       } else {
-        alert(res.message || "결제 방법을 찾을 수 없습니다.");
+        showAlertMsg(alertMsg);
       }
     },
     error: function (xhr, status, error) {
-      alert("오류가 발생했습니다: " + error);
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 삭제에 실패했습니다.";
+      showAlertMsg(msg);
     }
   });
 }
 
 // ajax로 서버에서 데이터를 가져온 후 함수를 이용해 화면을 꾸밈
-function paymentMethodUpdate(no) {
+$(".update-pm-btn").click(function(e) {
+  e.preventDefault();
+
+  const no = $(this).data("pmn");
+
   $.ajax( {
     url: `/admin/api/paymentMethod/update/${no}`,
     type: 'POST',
     success: function(res) {
-      console.log(res);
       createUpdateView(res);
     },
     error: function(xhr, status, error) {
-      console.log(error);
+      const msg = xhr.responseJSON.alertMsg;
+      showAlertMsg(msg);
     }
   })
-}
+});
+
 
 // update view 화면을 구현함
 function createUpdateView(res) {
-  console.log(res)
   const paymentMethodUpdate = `
     <div class="title-container">
       <div class="title btn__yellow text__white">
@@ -111,9 +129,8 @@ function createUpdateView(res) {
         </div>
          
         <div class="btn-container">
-  <!--       버튼 알아서~ 두개~ -->
-          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn--margin">수정</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+          <button id="paymentMethodAdd" class="btn btn__generate btn--margin">수정</button>
+          <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
     </main>
@@ -122,30 +139,29 @@ function createUpdateView(res) {
   $("#content").html(paymentMethodUpdate);
 
   // 버튼에 이벤트 리스너 추가
-  $("#paymentMethodAdd").on("click", function() {
-    updatePaymentMethod(res.paymentMethodNo);
+  $("#paymentMethodAdd").on("click", function(e) {
+    e.preventDefault();
+
+    const updatedName = $("#paymentMethodName").val();
+
+    $.ajax({
+      url: `/admin/api/paymentMethod/update/${res.paymentMethodNo}`,
+      type: 'PATCH',
+      data: { paymentMethodName: updatedName },
+      success: function(res) {
+        showAlertMsg(res.alertMsg);
+      },
+      error: function(xhr, status, error) {
+        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 수정에 실패했습니다.";
+        showAlertMsg(msg);
+      }
+    });
   });
 
-  $("#cancelAdd").on("click", function() {
+  $("#cancelAdd").on("click", function(e) {
+    e.preventDefault();
+
     // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
     window.location.href = '/admin/paymentMethod/list';
-  });
-}
-
-function updatePaymentMethod(paymentMethodNo) {
-  const updatedName = $("#paymentMethodName").val();
-
-  $.ajax({
-    url: `/admin/api/paymentMethod/update/${paymentMethodNo}`,
-    type: 'PATCH',
-    data: { paymentMethodName: updatedName },
-    success: function(res) {
-      console.log("수정 성공:", res);
-      alert("결제 수단이 성공적으로 수정되었습니다.");
-    },
-    error: function(xhr, status, error) {
-      console.log("수정 실패:", error);
-      alert("결제 수단 수정에 실패했습니다.");
-    }
   });
 }
