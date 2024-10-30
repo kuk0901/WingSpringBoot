@@ -124,11 +124,11 @@
 
 
 
+
 /* 카드 내용 스타일 */
 .list-container {
-    display: flex; /* 플렉스 박스 사용 */
+    display: flex;
     align-items: center; /* 중앙 정렬 */
-    justify-content: space-evenly; /* 균등 분배 */
 }
 
 /* 리스트 아이템 스타일 */
@@ -138,4 +138,40 @@
 }
 .card-benefit{
     margin-top: 10px;
+}
+.list-item.box__s{
+    text-align: center;
+    display: block;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+.img-container{
+    display: block;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+.card--img {
+    width: 120px;
+    height: 100px;
+}
+.list-item.box__date{
+    margin-right: 50px;
+    margin-left: 50px;
+    font-weight: bold;
+}
+.list-item.box__no{
+    margin-right: 50px;
+    margin-left: 100px;
+    font-weight: bold;
+}
+.list-item.box__btn{
+    margin-left: 110px;
+
+}
+#button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100px;
 }

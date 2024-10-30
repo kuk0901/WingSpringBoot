@@ -24,7 +24,7 @@ $(document).ready(function() {
     });
 
     const memberNo = $("#memberNo").val();  // 숨겨진 필드에서 memberNo 값을 가져옴
-        $.ajax({
+    $.ajax({
         url: "/member/api/user/myPage/info",
         type: "GET",
         data: { memberNo: memberNo },
@@ -80,7 +80,7 @@ $(document).ready(function() {
         // AJAX 요청 함수 호출
         updateMemberInfo(formData);
     });
-  /*  fetchSellingCards()*/
+    /*  fetchSellingCards()*/
 
 });
 
@@ -230,16 +230,20 @@ function fetchSellingCards(memberNo) {
             const cardHTML = `
                 <div class="bg__white">
                     <div class="list-container list-content">
-                        <div class="list-item box__s">${card.CARDNAME}</div>
+                        <div class="list-item box__s">${card.CARDNAME}
+                             <div class="img-container">
+                                <img class="card--img" src="/img/card/${card.STOREDFILENAME}" alt="${card.CARDNAME}" />
+                              </div>
+                        </div>
                         <div class="list-item box__l" id="benefit-container"></div>
-                        <div class="list-item box__l">
+                        <div class="list-item box__date">
                             ${formatDate(card.SELLINGDATE)} <!-- date formatting function must be implemented -->
                         </div>
-                        <div class="list-item box__s">${card.MEMBERCARDNO}</div>
-                        <div class="list-item box__sm">
+                        <div class="list-item box__no">${card.MEMBERCARDNO}</div>
+                        <div class="list-item box__btn">
                             <div id="button-container">
-                                <button class="btn__generate">해지 신청</button>
-                                <button class="btn__generate">상세 내역</button>
+                                <button class="btn__generate btn--vertical">해지 신청</button>
+                                <button class="btn__generate btn--vertical">상세 내역</button>
                             </div>
                         </div>
                     </div>
