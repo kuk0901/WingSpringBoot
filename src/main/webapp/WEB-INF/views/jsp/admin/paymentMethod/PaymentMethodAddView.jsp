@@ -8,7 +8,7 @@
   <title>PaymentMethodView</title>
   <%--    <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />--%>
   <link rel="stylesheet" href="/css/admin/paymentMethod/adminPaymentMethod.css" />
-  <script defer src="/js/admin/paymentMethod/paymentMethod.js"></script>
+  <script defer type="module" src="/js/admin/paymentMethod/paymentMethod.js"></script>
 </head>
 <body>
 
@@ -35,8 +35,8 @@
         </div>
 
         <div class="btn-container">
-          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn--margin">등록</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+          <button id="paymentMethodAdd" class="btn btn__generate btn--margin">등록</button>
+          <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
     </main>

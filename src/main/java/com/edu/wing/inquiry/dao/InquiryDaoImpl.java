@@ -18,17 +18,13 @@ public class InquiryDaoImpl implements InquiryDao {
   private static final String NAMESPACE = "com.edu.wing.inquiry.";
 
   @Override
-  public List<InquiryVo> inquirySelectList(int start, int end) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("start", start);
-    map.put("end", end);
-
+  public List<InquiryVo> inquirySelectList(Map<String, Object> map) {
     return sqlSession.selectList(NAMESPACE + "inquirySelectList", map);
   }
 
   @Override
-  public int inquirySelectTotalCount() {
-    return sqlSession.selectOne(NAMESPACE + "inquirySelectTotalCount");
+  public int inquirySelectTotalCount(String inquirySearch) {
+    return sqlSession.selectOne(NAMESPACE + "inquirySelectTotalCount", inquirySearch);
   }
 
   @Override
@@ -52,5 +48,10 @@ public class InquiryDaoImpl implements InquiryDao {
     params.put("commentNo", commentNo);
     params.put("content", content);
     return sqlSession.update(NAMESPACE + "updateInquiryComment", params);
+  }
+
+  @Override
+  public void addInquiry(InquiryVo inquiryVo) {
+    sqlSession.insert(NAMESPACE + "addInquiry", inquiryVo);
   }
 }

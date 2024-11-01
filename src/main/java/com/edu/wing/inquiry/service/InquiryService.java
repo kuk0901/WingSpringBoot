@@ -7,11 +7,14 @@ import java.util.Map;
 
 public interface InquiryService {
 
-  List<InquiryVo> inquirySelectList(int start, int end);
+  List<InquiryVo> inquirySelectList(int start, int end, String inquirySearch);
 
-  int inquirySelectTotalCount();
+  int inquirySelectTotalCount(String inquirySearch);
 
   Map<String, Object> inquirySelectOne(int inquiryNo);
 
   boolean updateInquiryComment(int inquiryNo, String content);
+
+  void addInquiry(InquiryVo inquiryVo);
+
 }

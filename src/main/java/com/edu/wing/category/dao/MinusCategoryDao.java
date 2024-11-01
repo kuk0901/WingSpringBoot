@@ -9,7 +9,7 @@ public interface MinusCategoryDao {
 
   List<MinusCategoryVo> minusCategorySelectList();
 
-  Map<String, Object> allCategorySelectList();
+  List<String> getMinusCategoryNames();
 
   MinusCategoryVo minusCategoryExists(String categoryName);
 

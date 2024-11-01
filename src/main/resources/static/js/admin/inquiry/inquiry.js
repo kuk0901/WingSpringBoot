@@ -20,12 +20,18 @@ $('.list-content').click(function() {
   });
 });
 
+
+
 function formatDate(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 function createDetailView(data, answerTermination) {
@@ -62,7 +68,6 @@ function createDetailView(data, answerTermination) {
         
           <div class="info-title bg__gray text__black box__l text__center">작성자</div>
           <div class="info-writer bg__white text__black box__l">${data.INQUIRYWRITEREMAIL}</div>
-        
           <div class="info-title bg__gray text__black box__l text__center">작성일</div>
           <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
           
@@ -81,7 +86,6 @@ function createDetailView(data, answerTermination) {
             <input type="hidden" id="inquiryCommentNo" value="${data.INQUIRYCOMMENTNO}">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
             <div class="btn-container">
-                <input value="${data.INQUIRYNO}">
               <button id="modReply" class="btn addReply btn__generate" data-cur-page=${data.curPage}" data-no="${data.INQUIRYNO}">
               답변 수정
               </button>
@@ -89,7 +93,7 @@ function createDetailView(data, answerTermination) {
           </div>
           <div class="answer-info">
             <div class="info-comment-container one-line">
-              <div class="info-item bg__gray text__black box__l text__center">답변 작성자</div>
+              <div class="info-item bg__gray text__black box__l text__center">관리자</div>
               <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
               <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
               <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
@@ -178,7 +182,7 @@ function createUpdateView(res) {
       
       <div class="answer-info">
         <div class="info-comment-container one-line">
-          <div class="info-item bg__gray text__black box__l text__center">답변 작성자</div>
+          <div class="info-item bg__gray text__black box__l text__center">관리자</div>
           <div class="info-detail bg__white text__black box__l">${res.ANSWERWRITEREMAIL}</div>
         </div>
       </div>
@@ -196,7 +200,7 @@ function createUpdateView(res) {
     </div>
     
     <div class="btn-container answer-btn-container one-line">
-        <button id="cancleUpdate" class="btn btn__generate listMove">취소</button>
+        <button id="cancleUpdate" class="btn btn__generate listMove">돌아가기</button>
         <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}">답변 수정</button>
     </div>
   </main>

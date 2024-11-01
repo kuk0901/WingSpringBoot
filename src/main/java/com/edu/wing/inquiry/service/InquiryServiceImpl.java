@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,13 +17,18 @@ public class InquiryServiceImpl implements InquiryService {
   private InquiryDao inquiryDao;
 
   @Override
-  public List<InquiryVo> inquirySelectList(int start, int end) {
-    return inquiryDao.inquirySelectList(start, end);
+  public List<InquiryVo> inquirySelectList(int start, int end, String inquirySearch) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("start", start);
+    map.put("end", end);
+    map.put("inquirySearch", inquirySearch);
+
+    return inquiryDao.inquirySelectList(map);
   }
 
   @Override
-  public int inquirySelectTotalCount() {
-    return inquiryDao.inquirySelectTotalCount();
+  public int inquirySelectTotalCount(String inquirySearch) {
+    return inquiryDao.inquirySelectTotalCount(inquirySearch);
   }
 
   @Override
@@ -51,4 +57,10 @@ public class InquiryServiceImpl implements InquiryService {
       return inquiryDao.updateInquiryComment(commentNo, content) > 0;
     }
   }
+
+  @Override
+  public void addInquiry(InquiryVo inquiryVo) {
+    inquiryDao.addInquiry(inquiryVo);
+  }
+
 }

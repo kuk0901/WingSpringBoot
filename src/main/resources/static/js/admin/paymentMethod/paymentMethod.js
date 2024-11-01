@@ -20,7 +20,9 @@ $("#paymentMethodAdd").click(function(e) {
   });
 });
 
-$("#cancelAdd").click(function() {
+$("#cancelAdd").click(function(e) {
+  e.preventDefault();
+
   window.location.href = '/admin/paymentMethod/list';
 });
 
@@ -40,7 +42,7 @@ $(".remove-pm-btn").click(function(e) {
     success: function (res) {
 
       if (res.totalCount > 0) {
-        alert(res.alertMsg);
+        alert(res.msg);
         return;
       }
       // 진짜로 삭제하는 함수 호출
@@ -53,6 +55,7 @@ $(".remove-pm-btn").click(function(e) {
 });
 
 function paymentMethodDelete(deleteNo) {
+
   $.ajax({
     url: `/admin/api/paymentMethod/delete/${deleteNo}`,
     type: 'DELETE',

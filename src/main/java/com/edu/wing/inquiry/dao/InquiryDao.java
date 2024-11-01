@@ -7,13 +7,16 @@ import java.util.Map;
 
 public interface InquiryDao {
 
-  List<InquiryVo> inquirySelectList(int start, int end);
+  List<InquiryVo> inquirySelectList(Map<String, Object> map);
 
-  int inquirySelectTotalCount();
+  int inquirySelectTotalCount(String inquirySearch);
 
   Map<String, Object> inquirySelectOne(int inquiryNo);
 
   int insertInquiryComment(int inquiryNo, String content);
 
   int updateInquiryComment(int commentNo, String content);
+
+  void addInquiry(InquiryVo inquiryVo);
+
 }

@@ -25,16 +25,8 @@ public class MinusCategoryDaoImpl implements MinusCategoryDao {
   }
 
   @Override
-  public Map<String, Object> allCategorySelectList() {
-    List<Map<String, Object>> categories = sqlSession.selectList(NAMESPACE + "allCategorySelectList");
-    List<Map<String, Object>> minusCategories = categories.stream()
-            .filter(cat -> "MINUS".equals(cat.get("category")))
-            .collect(Collectors.toList());
-
-    Map<String, Object> resultMap = new HashMap<>();
-    resultMap.put("minusCategoryList", minusCategories);
-    
-    return resultMap;
+  public List<String> getMinusCategoryNames(){
+    return sqlSession.selectList(NAMESPACE + "getMinusCategoryNames");
   }
 
   @Override

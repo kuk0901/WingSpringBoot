@@ -15,10 +15,31 @@
         <result column="INQUIRY_COMMENT_NO" property="inquiryCommentNo" />
     </resultMap>
 
-    <select id="inquirySelectList" resultMap="inquiryResultMap">
-        SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
-        FROM INQUIRY
-        ORDER BY INQUIRY_NO
+    <sql id="search">
+        <if test="inquirySearch != null and inquirySearch != ''">
+            TITLE LIKE '%' || #{inquirySearch} || '%'
+        </if>
+    </sql>
+
+    <select id="inquirySelectList" parameterType="map" resultMap="inquiryResultMap">
+    <![CDATA[
+    SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
+    FROM (
+        SELECT ROWNUM AS RNUM, I.*
+        FROM (
+            SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
+            FROM INQUIRY
+    ]]>
+        <where>
+            <include refid="search" />
+        </where>
+        <![CDATA[
+            ORDER BY INQUIRY_NO DESC
+        ) I
+        WHERE ROWNUM <= #{end}
+    )
+    WHERE RNUM >= #{start}
+    ]]>
     </select>
 
     <select id="inquirySelectTotalCount" parameterType="int" resultType="int">
@@ -45,5 +66,16 @@
             MOD_DATE = SYSDATE
         WHERE INQUIRY_COMMENT_NO = #{commentNo}
     </update>
+
+    <select id="searchInquiries" resultType="map">
+        SELECT * FROM INQUIRY
+        WHERE TITLE LIKE CONCAT('%', #{term}, '%')
+        ORDER BY CRE_DATE DESC
+    </select>
+
+    <insert id="addInquiry" parameterType="inquiryVo">
+        INSERT INTO INQUIRY (TITLE, DIVISION, EMAIL, CRE_DATE, CONTENT)
+        VALUES (#{title}, #{division}, #{email}, #{creDate}, #{content})
+    </insert>
 
 </mapper>

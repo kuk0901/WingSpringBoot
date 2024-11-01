@@ -33,6 +33,20 @@
             <div class="input-container bg__white">
               <input id="categoryName" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
             </div>
+
+            <div class="existing-categories bg">
+              <div class="bg__gray text__center text__semibold">기존 카테고리</div>
+              <div id="categoryList" class="category-container bg__white">
+                <div id="categoryItems" class="text__center categoryItems">
+                  <c:forEach items="${minusCategories}" var="category" varStatus="status">
+                    <span class="category-item minus">${category}<c:if test="${!status.last}">, </c:if></span>
+                  </c:forEach>
+                  <c:forEach items="${plusCategories}" var="category" varStatus="status">
+                    <span class="category-item plus" style="display: none;">${category}<c:if test="${!status.last}">, </c:if></span>
+                  </c:forEach>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="category-container one-line">
@@ -49,8 +63,8 @@
         </div>
 
         <div class="btn-container">
-          <button id="categoryAdd" type="submit" class="btn btn__generate btn--margin">등록</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+          <button id="categoryAdd" class="btn btn__generate btn--margin">등록</button>
+          <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
 
 

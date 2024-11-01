@@ -24,18 +24,22 @@
 
     <div class="search-container one-line">
       <div class="input-container">
-        <input type="text" id="inquirySearch" name="inquirySearch" class="info-item">
+        <form id="searchForm" action="./list" method="post" class="one-line">
+          <label for="inquirySearch" class="searchInquiryName bg__gray text__black text__center text__semibold">제목</label>
+          <input type="text" id="inquirySearch" name="inquirySearch" class="info-item" value="${inquirySearch}">
+          <input type="submit" id="searchInquiry" value="검색" class="searchInquiry btn btn__generate btn__inquiry" />
+        </form>
       </div>
-      <div class="btn-container">
-        <a class="btn btn__generate btn__inquiry" href="./search">
-          검색
-        </a>
+      <div class="sortBtn">
+        <button id="sortAnswerBtn" class="btn btn__generate sortAnswerBtn">
+          답변 미완료 우선 정렬
+        </button>
       </div>
     </div>
 
-    <main class="main-container inquiry__list bg__white">
+    <main class="main-container inquiry__list">
       <div class="inquiry-container">
-        <div class="list-container list-container--title container-title one-line">
+        <div class="list-container list-container--title container-title one-line bg__white">
           <div class="list--supply text__semibold text__center">번호</div>
           <div class="list--title text__semibold text__center">제목</div>
           <div class="list--date text__semibold text__center">작성날짜</div>
@@ -45,21 +49,23 @@
 
         <c:choose>
           <c:when test="${not empty inquiryList}">
-            <c:forEach items="${inquiryList}" var="inquiryVo" >
-              <div class="list-container list-content one-line" data-inquiry-no="${inquiryVo.inquiryNo}">
-                <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
-                <div class="list--title text__center">${inquiryVo.title}</div>
-                <div class="list--date text__center">
-                  <fmt:formatDate value="${inquiryVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+            <div class="bg__white">
+              <c:forEach items="${inquiryList}" var="inquiryVo" >
+                <div class="list-container list-content one-line " data-inquiry-no="${inquiryVo.inquiryNo}">
+                  <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
+                  <div class="list--title text__center">${inquiryVo.title}</div>
+                  <div class="list--date text__center">
+                    <fmt:formatDate value="${inquiryVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                  </div>
+                  <div class="list--supply text__center">${inquiryVo.division}</div>
+                  <div class="list--supply text__center">${inquiryVo.answerTermination}</div>
                 </div>
-                <div class="list--supply text__center">${inquiryVo.division}</div>
-                <div class="list--supply text__center">${inquiryVo.answerTermination}</div>
-              </div>
-            </c:forEach>
+              </c:forEach>
+            </div>
           </c:when>
           <c:otherwise>
             <div class="list-container">
-              <div class="list--div list__empty bg text__semibold text__correct">등록된 1대1 문의사항이 없습니다.</div>
+              <div class="list--div list__empty text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
             </div>
           </c:otherwise>
         </c:choose>
