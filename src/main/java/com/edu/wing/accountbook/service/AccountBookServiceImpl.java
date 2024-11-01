@@ -5,8 +5,10 @@ import com.edu.wing.accountbook.domain.AccountBookVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class AccountBookServiceImpl implements AccountBookService {
   }
 
   @Override
-  public int getMonthlyEntryCount(int memberNo, String startDate, String endDate) {
+  public int getMonthlyEntryCount(int memberNo, LocalDate startDate, LocalDate endDate) {
     Map<String, Object> params = new HashMap<>();
     params.put("memberNo", memberNo);
     params.put("startDate", startDate);
@@ -69,7 +71,7 @@ public class AccountBookServiceImpl implements AccountBookService {
   }
 
   @Override
-  public List<AccountBookVo> getMonthlyEntries(int memberNo, String startDate, String endDate) {
+  public List<AccountBookVo> getMonthlyEntries(int memberNo, LocalDate startDate, LocalDate endDate) {
     return accountBookDao.getMonthlyEntries(memberNo, startDate, endDate);
   }
 
@@ -80,11 +82,22 @@ public class AccountBookServiceImpl implements AccountBookService {
 
   @Override
   public List<AccountBookVo> getAccountBooksByMonth(int memberNo, LocalDate startDate, LocalDate endDate, int limit) {
-    return accountBookDao.selectAccountBookByMonth(
-        java.sql.Date.valueOf(startDate),
-        java.sql.Date.valueOf(endDate),
-        memberNo,
-        limit);
+    // DAO에서 데이터를 가져옴
+    List<AccountBookVo> accountBooks = accountBookDao.selectAccountBookByMonth(
+            java.sql.Date.valueOf(startDate),
+            java.sql.Date.valueOf(endDate),
+            memberNo,
+            limit
+    );
+    // 날짜 형식을 yyyy-MM-dd로 변환하여 formattedCreDate에 설정
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    accountBooks.forEach(book -> {
+      if (book.getCreDate() != null) {
+        book.setFormattedCreDate(dateFormat.format(book.getCreDate()));
+      }
+    });
+
+    return accountBooks;
   }
 
   @Override
@@ -105,6 +118,38 @@ public class AccountBookServiceImpl implements AccountBookService {
   @Override
   public void deleteAllAccountBook(int memberNo) {
     accountBookDao.deleteAllAccountBook(memberNo);
+  }
+
+  @Override
+  public List<AccountBookVo> selectMonthlyExpenseBook(int memberNo, Date startDate, Date endDate) {
+    List<AccountBookVo> accountBooks = accountBookDao.selectMonthlyExpenseBook(
+            memberNo,startDate,endDate
+    );
+    // 날짜 형식을 yyyy-MM-dd로 변환하여 formattedCreDate에 설정
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    accountBooks.forEach(book -> {
+      if (book.getCreDate() != null) {
+        book.setFormattedCreDate(dateFormat.format(book.getCreDate()));
+      }
+    });
+
+    return accountBooks;
+  }
+
+  @Override
+  public List<AccountBookVo> selectMonthlyIncomeBook(int memberNo, Date startDate, Date endDate) {
+    List<AccountBookVo> accountBooks = accountBookDao.selectMonthlyIncomeBook(
+            memberNo,startDate,endDate
+    );
+    // 날짜 형식을 yyyy-MM-dd로 변환하여 formattedCreDate에 설정
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    accountBooks.forEach(book -> {
+      if (book.getCreDate() != null) {
+        book.setFormattedCreDate(dateFormat.format(book.getCreDate()));
+      }
+    });
+
+    return accountBooks;
   }
 
 }

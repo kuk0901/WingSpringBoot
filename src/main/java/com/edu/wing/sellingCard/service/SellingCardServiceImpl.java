@@ -93,6 +93,11 @@ public class SellingCardServiceImpl implements SellingCardService {
   public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
     return sellingCardDao.sellingCardSelectOneForUserPage(memberNo);
   }
+
+  @Override
+  public int deleteCardSoft(int memberNo) {
+    return sellingCardDao.deleteCardSoft(memberNo);
+  }
 }
 
 

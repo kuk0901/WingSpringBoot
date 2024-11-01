@@ -1,16 +1,26 @@
 // accountBook.jsp의 js파일 유저용
 var memberNo;
-
+const today = new Date();
+let currentYear = today.getFullYear(); // 현재 연도
+let currentMonth = today.getMonth() + 1; // 현재 월
 $(document).ready(function() {
      memberNo = $('#memberNo').val(); // hidden input에서 memberNo 가져오기
     var limit = 10;
     // 초기 설정
-    let currentYear;
-    let currentMonth;
+    // 현재 날짜를 기준으로 연도와 월 설정
+
+
     // 가계부 목록을 가져오는 함수 호출+월간내역+
-    fetchAccountFirstBooks(memberNo, currentLimit);
+    const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
+    // 시작 날짜와 종료 날짜 설정
+/*    let startDate = `${currentYear}-${currentMonth < 10 ? '0' : ''}${currentMonth}-01`; // YYYY-MM-DD 형식
+    let endDate = new Date(currentYear, currentMonth, 1).toISOString().split('T')[0];*/ // 해당 월의 마지막 날
+
+    fetchAccountBooks(memberNo, startDate, endDate,limit);
+    updateCurrentMonthDisplay(currentYear,currentMonth);
     loadCategories(); // 초기 카테고리 목록 로드
     loadPaymentMethods()//결제수단 목록 로드
+
 
     //가계부추가함수
     $('#accountBookForm').on('submit', function(event) {
@@ -61,6 +71,10 @@ $(document).ready(function() {
             alert('결제 금액을 입력해 주세요.'); // 결제 금액 입력 요청
             return; // AJAX 요청 중단
         }
+        if (!date) {
+            alert('날짜를 입력해주세요'); //
+            return; // AJAX 요청 중단
+        }
 
 
         // AJAX 요청
@@ -100,10 +114,9 @@ function getCategoryNo(incomeExpense) {
 }
 let currentLimit = 5; // 초반디폴트  항목 수
 // 초기화면용 가계부 목록을 가져오는 함수
-let currentYear; // 현재 연도
-let currentMonth; // 현재 월
-//초기화면용->진입시 가장 최근 가계부호출
-function fetchAccountFirstBooks(memberNo, limit) {
+
+//초기화면용->진입시 가장 최근 가계부호출 미사용해야징
+/*function fetchAccountFirstBooks(memberNo, limit) {
     $.ajax({
         url: "/member/api/accountBook/list",
         type: "GET",
@@ -112,7 +125,9 @@ function fetchAccountFirstBooks(memberNo, limit) {
             limit: limit
         },
         success: function(data) {
+
             renderAccountBooks(data); // 가져온 데이터로 테이블 렌더링
+
             // 가장 최근의 credate 가져오기
             if (data.length > 0) {
                 const lastEntry = data[data.length - 1]; // 마지막 내역
@@ -130,6 +145,8 @@ function fetchAccountFirstBooks(memberNo, limit) {
                 const startDate = `${currentYear}-${currentMonth < 10 ? '0' : ''}${currentMonth}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
                 const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0]; // 종료 날짜 (해당 월의 마지막 날)
 
+                console.log("Start Date:", startDate); // 예: 2023-09-01
+                console.log("End Date:", endDate); // 예: 2023-09-30 (해당 월의 마지막 날)
 
 
                 // 총 월가계부 내역출력
@@ -143,7 +160,7 @@ function fetchAccountFirstBooks(memberNo, limit) {
             console.error('Error fetching account books:', err);
         }
     });
-}
+}*/
 // 현재 연도와 월 표시를 업데이트하는 함수
 function updateCurrentMonthDisplay(year, month) {
     const monthDisplay = document.getElementById("currentMonth");
@@ -151,9 +168,11 @@ function updateCurrentMonthDisplay(year, month) {
 }
 // 월 기준으로 가계부 총내역수 가져오는 함수
 function getMonthlyAccountBooks(year, month, memberNo) {
+    // 가계부 목록을 가져오는 함수 호출+월간내역+
+    const { startDate, endDate } = getStartAndEndDates(year, month);
     // 시작 날짜와 종료 날짜 설정
-    const startDate = `${year}-${month < 10 ? '0' + month : month}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
-    const endDate = new Date(year, month-1, 0).toISOString().split('T')[0]; // 해당 월의 마지막 날
+   /* const startDate = `${year}-${month < 10 ? '0' + month : month}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
+    const endDate = new Date(year, month, 1).toISOString().split('T')[0]; // 해당 월의 마지막 날*/
 
 
     $.ajax({
@@ -161,6 +180,7 @@ function getMonthlyAccountBooks(year, month, memberNo) {
         type: 'GET',
         data: { memberNo: memberNo, startDate: startDate, endDate: endDate },
         success: function(count) {
+
             $('#totalEntries').text(`월간 내역 수: ${count}건`); // 총 내역 수 업데이트
 
         },
@@ -170,8 +190,9 @@ function getMonthlyAccountBooks(year, month, memberNo) {
         }
     });
 }
-//월이동용 가계부함수
+// 가계부함수
 function fetchAccountBooks(memberNo, startDate, endDate,limit) {
+
     $.ajax({
         url: '/member/api/accountBook/list/date',
         type: 'GET',
@@ -183,13 +204,15 @@ function fetchAccountBooks(memberNo, startDate, endDate,limit) {
         },
         dataType: 'json',
         success: function(data) {
-            console.log(data)
+
             // 가계부 데이터가 없을 경우 메시지 출력
             if (data.length === 0) {
                 $('.entry-list').html('<div class="no-data-message">등록된 내역이 없습니다.</div>'); // 내역이 없음을 알리는 메시지
                 return; // 함수 종료
             }
             renderAccountBooks(data);
+            // 총 월가계부 내역출력
+            getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
             // 총합 계산 함수 호출
             calculateMonthlyTotal(memberNo, startDate, endDate); // 월 총합 계산
         },
@@ -211,8 +234,9 @@ function changeMonth(offset) {
         currentYear++;
     }
 
-    const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
-    const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
+  /*  const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
+    const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];*/
+    const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
 
 
     fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
@@ -237,7 +261,7 @@ function renderAccountBooks(accountBooks) {
             console.warn('creDate is null or undefined for accountBook:', accountBook); // 경고 메시지
             return; // 이 경우 이 반복을 건너뜁니다
         }
-        const date = accountBook.creDate.substring(0, 10); // 날짜 포맷 조정
+        const date = accountBook.formattedCreDate.substring(0, 10); // 날짜 포맷 조정
 
         // 날짜가 바뀌었을 경우만 날짜 박스 추가
         if (lastDate !== date) {
@@ -247,9 +271,15 @@ function renderAccountBooks(accountBooks) {
         }
 
         // 카테고리 및 결제 정보 생성
-        const minusCategory = accountBook.minusCategoryName ? ` ${accountBook.minusCategoryName}` : '';
-        const plusCategory = accountBook.plusCategoryName ? ` ${accountBook.plusCategoryName}` : '';
-
+        let minusCategory = accountBook.minusCategoryName ? ` ${accountBook.minusCategoryName}` : '';
+        let plusCategory = accountBook.plusCategoryName ? ` ${accountBook.plusCategoryName}` : '';
+        // 조건에 따라 minusCategory 또는 plusCategory 출력 제어
+        if (accountBook.minusCategoryNo === 1) {
+            minusCategory = ''; // minusCategoryNo가 1이면 minusCategory 출력 안 함
+        }
+        if (accountBook.plusCategoryNo === 1) {
+            plusCategory = ''; // plusCategoryNo가 1이면 plusCategory 출력 안 함
+        }
         const entryInfo = `
     <div class="entry-info" onclick="goToDetail(${accountBook.accountBookNo}, ${accountBook.memberNo})"> <!-- entry-info 클래스로 변경 -->
         <span>${minusCategory || plusCategory ? minusCategory || plusCategory : '데이터없음'}</span>
@@ -406,8 +436,9 @@ function calculateMonthlyTotal(memberNo, startDate, endDate) {
 // 더보기 버튼 클릭 이벤트 핸들러
 $('#loadMore').on('click', function() {
     currentLimit += 50; // limit을 100씩 증가
-    const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
-    const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
+    const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
+   /* const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
+    const endDate = new Date(currentYear, currentMonth+1, 0).toISOString().split('T')[0];*/
     fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 업데이트된 limit으로 데이터 가져오기
 });
 
@@ -682,5 +713,99 @@ function editAccountBook(accountBookNo,memberNo) {
 
             console.error('가계부 수정 실패:', error);
         }
+    });
+}
+
+function getStartAndEndDates(year, month) {
+    // 시작 날짜 (YYYY-MM-DD 형식)
+    const startDate = `${year}-${month < 10 ? '0' + month : month}-01`;
+
+    // 각 월의 마지막 날을 하드코딩
+    const lastDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]; // 인덱스 0은 사용하지 않음 (1월부터 12월까지)
+
+    let endDate;
+    if (month === 2) {
+        // 윤년 판단: 4로 나눠지면서 100으로 나눠지지 않거나 400으로 나눠질 때 윤년
+        const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        endDate = `${year}-${month < 10 ? '0' + month : month}-${isLeapYear ? '29' : '28'}`; // 2월의 마지막 날
+    } else {
+        endDate = `${year}-${month < 10 ? '0' + month : month}-${lastDays[month]}`; // 해당 월의 마지막 날
+    }
+
+    return { startDate, endDate };
+}
+
+//월수입 정렬함수
+$('#totalExpense').on('click', function() {
+    // 필요한 변수 정의 (예시로 memberNo, startDate, endDate를 지정)
+    memberNo = $('#memberNo').val();
+    const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
+    //함수 호출
+    fetchMonthlyExpenseBooks(memberNo, startDate, endDate);
+});
+
+// 월별 지출 조회 함수
+function fetchMonthlyExpenseBooks(memberNo, startDate, endDate) {
+    $.ajax({
+        url: '/member/api/accountBook/list/monthlyExpense',
+        type: 'GET',
+        data: {
+            memberNo: memberNo,
+            startDate: startDate,
+            endDate: endDate,
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log("Received monthly expense data:", data);
+
+            // 월별 지출 데이터가 없을 경우 메시지 출력
+            if (data.length === 0) {
+                $('.entry-list').html('<div class="no-data-message">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
+                return; // 함수 종료
+            }
+
+            renderAccountBooks(data); // 월별 지출 데이터를 렌더링하는 함수 호출
+           
+        },
+        error: function(error) {
+            console.error('Error fetching monthly expense books:', error);
+        },
+    });
+}
+
+//월수입 정렬함수
+$('#totalIncome').on('click', function() {
+    // 필요한 변수 정의 (예시로 memberNo, startDate, endDate를 지정)
+    memberNo = $('#memberNo').val();
+    const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
+
+    // 월별 지출 조회 함수 호출
+    fetchMonthlyIncomeBooks(memberNo, startDate, endDate);
+});
+function fetchMonthlyIncomeBooks(memberNo, startDate, endDate) {
+    $.ajax({
+        url: '/member/api/accountBook/list/monthlyIncome',
+        type: 'GET',
+        data: {
+            memberNo: memberNo,
+            startDate: startDate,
+            endDate: endDate,
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log("Received monthly expense data:", data);
+
+            // 월별 지출 데이터가 없을 경우 메시지 출력
+            if (data.length === 0) {
+                $('.entry-list').html('<div class="no-data-message">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
+                return; // 함수 종료
+            }
+
+            renderAccountBooks(data); // 월별 지출 데이터를 렌더링하는 함수 호출
+
+        },
+        error: function(error) {
+            console.error('Error fetching monthly expense books:', error);
+        },
     });
 }

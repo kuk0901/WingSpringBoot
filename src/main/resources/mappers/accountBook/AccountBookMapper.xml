@@ -244,5 +244,63 @@
         DELETE FROM ACCOUNT_BOOK WHERE MEMBER_NO = #{memberNo}
     </delete>
 
+    <!--월수입만필터링-->
+    <select id="selectMonthlyExpenseBook" resultType="AccountBookVo">
+    <![CDATA[
+        SELECT *
+        FROM (
+                 SELECT ab.ACCOUNT_BOOK_NO,
+                        ab.PLUS_CATEGORY_NO,
+                        ab.MINUS_CATEGORY_NO,
+                        ab.MEMBER_NO,
+                        ab.PAYMENT_METHOD_NO,
+                        ab.CRE_DATE,
+                        ab.CONTENT,
+                        ab.PAYMENT_AMOUNT,
+                        mc.CATEGORY_NAME       AS minusCategoryName,
+                        pc.CATEGORY_NAME       AS plusCategoryName,
+                        pm.PAYMENT_METHOD_NAME AS paymentMethodName
+                 FROM ACCOUNT_BOOK ab
+                          LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                          LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
+                          LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                 WHERE ab.CRE_DATE >= #{startDate}
+                   AND ab.CRE_DATE < #{endDate}
+                   AND ab.MEMBER_NO = #{memberNo}
+                   AND ab.PlUS_CATEGORY_NO = 1  -- 수입 항목만 필터링
+                 ORDER BY ab.CRE_DATE DESC -- 작성일 기준 내림차순 정렬
+             )
+        ]]>
+    </select>
+    <!--월수입만필터링-->
+    <select id="selectMonthlyIncomeBook" resultType="AccountBookVo">
+    <![CDATA[
+        SELECT *
+        FROM (
+                 SELECT ab.ACCOUNT_BOOK_NO,
+                        ab.PLUS_CATEGORY_NO,
+                        ab.MINUS_CATEGORY_NO,
+                        ab.MEMBER_NO,
+                        ab.PAYMENT_METHOD_NO,
+                        ab.CRE_DATE,
+                        ab.CONTENT,
+                        ab.PAYMENT_AMOUNT,
+                        mc.CATEGORY_NAME       AS minusCategoryName,
+                        pc.CATEGORY_NAME       AS plusCategoryName,
+                        pm.PAYMENT_METHOD_NAME AS paymentMethodName
+                 FROM ACCOUNT_BOOK ab
+                          LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
+                          LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
+                          LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                 WHERE ab.CRE_DATE >= #{startDate}
+                   AND ab.CRE_DATE < #{endDate}
+                   AND ab.MEMBER_NO = #{memberNo}
+                   AND ab.MINUS_CATEGORY_NO = 1  -- 소비 항목만 필터링
+                 ORDER BY ab.CRE_DATE DESC -- 작성일 기준 내림차순 정렬
+             )
+        ]]>
+    </select>
+
+
 
 </mapper>

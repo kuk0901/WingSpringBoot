@@ -104,7 +104,7 @@
           </div>
         </form>
   <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
-        <div id="card-container" class="card-container">
+        <div id="card-container" class="card-container" >
 
         </div>
       </main> <!-- main 태그 닫기 -->

@@ -81,6 +81,8 @@ $(document).ready(function() {
 
 
 
+
+
 });
 
 
@@ -333,7 +335,9 @@ function fetchSellingCards(memberNo) {
             fetchCardBenefit(card.CARDNO).then(benefitHtml => {
                 // 카드 혜택 정보를 가져온 후 해당 카드의 혜택 컨테이너에 추가
                 $(`#benefit-container`).html(benefitHtml);
+                $("#card-container").show(); // card-container를 보이게 함
             });
+
         },
         error: function() {
             alert("판매 카드 정보를 불러오는 데 실패했습니다.");
@@ -483,6 +487,27 @@ function fetchCardsForTerminationRequest(memberNo) {
             });
             $('#backButton').on('click', function () {
                 window.location.href = './myPage';  // myPage로 이동
+            });
+            $('#deleteCardButton').on('click', function() {
+                console.log(memberNo)
+                $.ajax({
+                    url: '/member/api/sellingCard/cardSoftDelete/' + memberNo, // URL 설정
+                    type: 'POST', // 요청 타입
+                    dataType: 'json', // 응답 데이터 타입
+                    success: function(response) {
+                        // 성공 시
+                        console.log(response)
+                        showAlertMsg(response.alertMsg); // alertMsg를 알림으로 표시
+                    },
+                    error: function(xhr, status, error) {
+                        // 오류 발생 시
+                        if (xhr.status === 404) {
+                            alert('카드 삭제에 실패했습니다. 카드가 존재하지 않습니다.');
+                        } else {
+                            alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
+                        }
+                    }
+                });
             });
         },
         error: function() {

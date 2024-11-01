@@ -88,6 +88,25 @@ public class MemberApiSellingCardController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 오류 반환
     }
   }
+  // 카드 소프트 삭제를 위한 메소드
+  @PostMapping("/cardSoftDelete/{memberNo}")
+  public ResponseEntity<Map<String, Object>> softDeleteCard(@PathVariable int memberNo) {
+    try {
+      Map<String, Object> resultMap = new HashMap<>();
+
+      int result = sellingCardService.deleteCardSoft(memberNo);
+      if (result > 0) {
+        resultMap.put("alertMsg", "카드해지를 성공하셨습니다");
+        return ResponseEntity.ok(resultMap); // 200 OK
+      } else {
+        resultMap.put("alertMsg", "카드해지를 실패하셨습니다 고객센터에 문의해주세요");
+        return ResponseEntity.badRequest().body(resultMap); // 404 Not Found
+      }
+    } catch (Exception e) {
+      log.error("Error soft deleting card for memberNo: {}", memberNo, e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+    }
+  }
 
 }
 

@@ -61,4 +61,9 @@ public class SellingCardDaoImpl implements SellingCardDao {
   public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
     return sqlSession.selectList(namespace + "sellingCardSelectOneForUserPage", memberNo);
   }
+
+  @Override
+  public int deleteCardSoft(int memberNo) {
+    return sqlSession.update(namespace + "deleteCardSoft", memberNo);
+  }
 }

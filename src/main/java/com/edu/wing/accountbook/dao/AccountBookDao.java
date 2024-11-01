@@ -3,6 +3,7 @@ package com.edu.wing.accountbook.dao;
 import com.edu.wing.accountbook.domain.AccountBookVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,8 @@ public interface AccountBookDao {
     int selectMonthlyEntryCount(Map<String, Object> params);//월간내역수
     // 월별 가계부 내역 가져오기
     List<AccountBookVo> getMonthlyEntries(@Param("memberNo") int memberNo,
-                                          @Param("startDate") String startDate,
-                                          @Param("endDate") String endDate);
+                                          @Param("startDate") LocalDate startDate,
+                                          @Param("endDate") LocalDate endDate);
     int insertAccountBook(Map<String, Object> params); // 가계부 추가 메서드
         
     AccountBookVo selectAccountBookDetail(@Param("accountBookNo") int accountBookNo, @Param("memberNo") int memberNo);
@@ -43,5 +44,8 @@ public interface AccountBookDao {
 
     void deleteAccountBook(int accountBookNo);
     int updateAccountBook(Map<String, Object> params);
+
+    List<AccountBookVo> selectMonthlyExpenseBook(int memberNo, Date startDate, Date endDate);
+    List<AccountBookVo> selectMonthlyIncomeBook(int memberNo, Date startDate, Date endDate);
 
 }

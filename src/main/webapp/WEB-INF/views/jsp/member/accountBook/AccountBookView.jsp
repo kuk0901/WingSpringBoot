@@ -35,7 +35,7 @@
             </div>
             <div class="month-switch one-line">
                 <button id="prevMonth" class="month_btn">◀</button>
-                <span id="currentMonth" class="month_box btn__generate">2024년 10월</span>
+                <span id="currentMonth" class="month_box btn__generate">초기 화면</span>
                 <button id="nextMonth" class="month_btn">▶</button>
             </div>
             <!--우선 위치대략적으로 정한거임-->
@@ -58,7 +58,7 @@
                         <option value="2">식비</option>
                     </select>
 
-                    <input type="text" id="contents" placeholder="내용 입력" />
+                    <input type="text" id="contents" placeholder="요약:글자수제한 30자" maxlength="30" />
 
                     <select id="paymentMethodSelect">
                         <option value="">결제 수단 선택</option>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="entry-category info_head one-line">
                     <span class="category">카테고리</span>
-                    <span class="detail">상세내용</span>
+                    <span class="detail">내용</span>
                     <span class="payment-method">결제수단</span>
                     <span class="amount">결제금액</span>
                 </div>

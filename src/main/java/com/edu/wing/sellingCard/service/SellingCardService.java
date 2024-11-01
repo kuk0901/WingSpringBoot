@@ -16,4 +16,5 @@ public interface SellingCardService {
   Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo);
 
   List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
+  int deleteCardSoft(int memberNo);
 }

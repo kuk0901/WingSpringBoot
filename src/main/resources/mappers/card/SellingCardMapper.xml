@@ -109,4 +109,12 @@
                  JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO
         WHERE SC.MEMBER_NO = #{memberNo}
     </select>
+
+    <update id="deleteCardSoft" parameterType="int">
+        UPDATE MEMBER
+        SET MEMBER_NO=1 ,PRODUCT_PURCHASE='N'
+        WHERE MEMBER_NO= #{memberNo}
+    </update>
+
+
 </mapper>

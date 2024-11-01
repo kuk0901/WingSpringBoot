@@ -84,6 +84,7 @@
     height: 200px;
     width: 1500px;
     margin: auto;
+    display: none;
 
 }
 .card-title {

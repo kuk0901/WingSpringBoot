@@ -16,4 +16,6 @@ public interface SellingCardDao {
   SellingCardVo memberPurchaseCardCheck(SellingCardVo sellingCardVo);
 
   List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
+
+  int deleteCardSoft(int memberNo);
 }
