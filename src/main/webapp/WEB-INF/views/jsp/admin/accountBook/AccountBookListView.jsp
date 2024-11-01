@@ -68,7 +68,7 @@
             <div class="table_container">
                 <table>
                     <tr>
-                        <th>번호</th>
+                        <th class="no">번호</th>
                         <th>작성일자</th>
                         <th>이메일</th>
                         <th>카테고리</th>
@@ -79,12 +79,12 @@
                     <c:forEach var="accountBook" items="${accountBookList}">
                         <tr>
 
-                            <td>${accountBook.accountBookNo}</td>
+                            <td class="no">${accountBook.accountBookNo}</td>
                             <td><fmt:formatDate value="${accountBook.creDate}" pattern="yyyy-MM-dd"/></td>
                             <td>${accountBook.memberEmail}</td>
                             <td>${accountBook.minusCategoryName}</td>
                             <td>${accountBook.paymentMethodName}</td>
-                            <td>${accountBook.paymentAmount}</td>
+                            <td><fmt:formatNumber value="${accountBook.paymentAmount}" type="number" pattern="#,##0" /></td>
                         </tr>
                     </c:forEach>
                     </tbody>

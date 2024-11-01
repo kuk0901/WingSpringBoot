@@ -102,7 +102,8 @@
                C.STORED_FILE_NAME AS storedFileName,
                C.ORIGINAL_FILE_NAME AS originalFileName,
               SC.MEMBER_CARD_NO AS memberCardNo,
-                C.CARD_NO AS cardNo
+                C.CARD_NO AS cardNo,
+            SC.CARD_TERMINATION AS cardTermination
         FROM SELLING_CARD SC
                  JOIN CARD C ON SC.CARD_NO = C.CARD_NO
                  JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO

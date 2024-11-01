@@ -70,7 +70,7 @@
                           data-member-no="${member.memberNo}"
                           data-quit-apply="${member.quitApply}"
                           data-product-purchase="${member.productPurchase}">
-                    삭제
+                    탈퇴
                   </button>
                 </td>
               </tr>

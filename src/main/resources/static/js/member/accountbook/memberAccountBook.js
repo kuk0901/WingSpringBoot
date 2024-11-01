@@ -28,13 +28,13 @@ $(document).ready(function() {
         // 카테고리 번호에 따른 plusCategoryNo와 minusCategoryNo 설정
         let plusCategoryNo;
         let minusCategoryNo;
-
+                //expaens-지출 income-소비
         if (incomeExpense === "expense") {
             plusCategoryNo = 1; // 고정
             minusCategoryNo = categoryNo; // 선택된 지출 카테고리
             // 지출 카테고리의 값이 2 이상인지 확인
             if (minusCategoryNo < 2) {
-                alert('지출 카테고리는 2 이상의 값을 선택해야 합니다.');
+                alert(' 카테고리는 2 이상의 값을 선택해야 합니다.');
                 return; // AJAX 요청 중단
             }
         } else if (incomeExpense === "income") {
@@ -80,6 +80,7 @@ $(document).ready(function() {
             }),
             success: function(response) {
                 alert('가계부가 성공적으로 추가되었습니다!');
+                window.location.reload();
                 $('#accountBookForm')[0].reset(); // 폼 초기화
             },
             error: function(xhr) {
@@ -101,7 +102,7 @@ let currentLimit = 5; // 초반디폴트  항목 수
 // 초기화면용 가계부 목록을 가져오는 함수
 let currentYear; // 현재 연도
 let currentMonth; // 현재 월
-//초기화면용
+//초기화면용->진입시 가장 최근 가계부호출
 function fetchAccountFirstBooks(memberNo, limit) {
     $.ajax({
         url: "/member/api/accountBook/list",
@@ -152,7 +153,8 @@ function updateCurrentMonthDisplay(year, month) {
 function getMonthlyAccountBooks(year, month, memberNo) {
     // 시작 날짜와 종료 날짜 설정
     const startDate = `${year}-${month < 10 ? '0' + month : month}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
-    const endDate = new Date(year, month, 0).toISOString().split('T')[0]; // 해당 월의 마지막 날
+    const endDate = new Date(year, month-1, 0).toISOString().split('T')[0]; // 해당 월의 마지막 날
+
 
     $.ajax({
         url: '/member/api/accountBook/monthlyCount', // API 엔드포인트
@@ -181,6 +183,12 @@ function fetchAccountBooks(memberNo, startDate, endDate,limit) {
         },
         dataType: 'json',
         success: function(data) {
+            console.log(data)
+            // 가계부 데이터가 없을 경우 메시지 출력
+            if (data.length === 0) {
+                $('.entry-list').html('<div class="no-data-message">등록된 내역이 없습니다.</div>'); // 내역이 없음을 알리는 메시지
+                return; // 함수 종료
+            }
             renderAccountBooks(data);
             // 총합 계산 함수 호출
             calculateMonthlyTotal(memberNo, startDate, endDate); // 월 총합 계산
@@ -225,6 +233,10 @@ function renderAccountBooks(accountBooks) {
     let lastDate = ''; // 마지막으로 출력된 날짜 초기화
 
     accountBooks.forEach(accountBook => {
+        if (!accountBook.creDate) {
+            console.warn('creDate is null or undefined for accountBook:', accountBook); // 경고 메시지
+            return; // 이 경우 이 반복을 건너뜁니다
+        }
         const date = accountBook.creDate.substring(0, 10); // 날짜 포맷 조정
 
         // 날짜가 바뀌었을 경우만 날짜 박스 추가
@@ -290,7 +302,7 @@ function loadCategories() {
         expenseCategories.forEach(function(category, index) {
             if (category !== null) { // null 값 제외
                 const option = document.createElement("option");
-                option.value = index + 1; // 카테고리 ID를 1부터 시작하도록 수정
+                option.value = index + 2; // 카테고리 ID를 1부터 시작하도록 수정
                 option.textContent = category; // 카테고리 이름
                 categorySelect.appendChild(option); // 옵션 추가
             }
@@ -310,7 +322,7 @@ incomeExpenseToggle.addEventListener("change", function() {
         expenseCategories.forEach(function(category, index) {
             if (category !== null) { // null 값 제외
                 const option = document.createElement("option");
-                option.value = index + 1; // 카테고리 ID를 1부터 시작하도록 수정
+                option.value = index +2; // 카테고리 ID를 1부터 시작하도록 수정
                 option.textContent = category; // 카테고리 이름
                 categorySelect.appendChild(option); // 옵션 추가
             }
@@ -321,7 +333,7 @@ incomeExpenseToggle.addEventListener("change", function() {
         incomeCategories.forEach(function(category, index) {
             if (category !== null) { // null 값 제외
                 const option = document.createElement("option");
-                option.value = index + 1; // 카테고리 ID를 1부터 시작하도록 수정
+                option.value = index + 2; // 카테고리 ID를 1부터 시작하도록 수정
                 option.textContent = category; // 카테고리 이름
                 categorySelect.appendChild(option); // 옵션 추가
             }

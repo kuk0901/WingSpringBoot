@@ -124,8 +124,15 @@
 #button-container {
     display: flex; /* 플렉스 박스 사용 */
     justify-content: center; /* 중앙 정렬 */
+    flex-direction: column;
 }
-
+.btn--vertical{
+    margin-bottom: 10px;
+}
+.detail_second_container input {
+    margin-left: 10px;
+    text-align: right;
+}
 
 
 
@@ -189,4 +196,81 @@
     right: 70px;
 }
 
+/*
+여기부턴 삭제페이지 영억
+*/
+.card--delete--img{
+    width: 200px;
+    height: 200px;
+}
+.img-delete-container{
+    display: block;
+    margin-right: 50px;
+}
+.list-item.box__tem{
+    margin-left: 100px;
 
+}
+.list-item.box_delete_date{
+    margin-left: 250px;
+
+}
+.list-item.box__delete_no{
+    margin-right: 50px;
+    margin-left: 150px;
+    font-weight: bold;
+}
+
+.card-delete-container{
+
+        height: 236px;
+        width: 1500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+}
+
+.termination-input textarea {
+    resize: none; /* 텍스트 영역 크기 조절 비활성화 (필요에 따라 조정) */
+    padding: 10px; /* 텍스트 영역 안쪽 여백 */
+    color: #000000; /* 텍스트 색상 (필요에 따라 조정) */
+    background-color: white;
+    width: 1500px;
+    height: 200px;
+}
+
+.benefit-container{
+    margin-top: 15px;
+    text-align: center;
+    color:white;
+    background-color: var(--color-bg);
+}
+.benefit-container.card--benefit p{
+    text-align: center;
+    color:white;
+}
+.box_title{
+    font-size: 20px;
+    font-weight: bold;
+}
+.underline {
+    text-decoration: underline; /* 밑줄 추가 */
+}
+.title-containerSecond{
+    width: 100%;
+    display: flex;
+}
+#backButton {
+    position: absolute;
+    right: 70px;
+}
+
+#quitApplyNotice {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: yellow;
+    padding: 10px;
+    border: 1px solid #ccc;
+    /* 초기에는 숨김 처리 */
+}

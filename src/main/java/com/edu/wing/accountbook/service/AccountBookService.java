@@ -16,7 +16,7 @@ public interface AccountBookService {
     List<String> getPaymentMethodList(); // 결제 방법 조회 메소드
     List<AccountBookVo> getTopPaymentMethods(); // 상위 3개 결제 방법 조회
     List<AccountBookVo> getTopCategories();
-    void accountBookDelete(int memberNo); // 회원 번호로 가계부 삭제 메서드
+
 
     List<AccountBookVo> getAccountBooksByRecentDate(int memberNo, int limit);//유저용 초기화면용 list
     int getMonthlyEntryCount(int memberNo, String startDate, String endDate);
@@ -29,4 +29,5 @@ public interface AccountBookService {
     AccountBookVo getAccountBookDetail(int accountBookNo, int memberNo); //디테일
     void deleteAccountBook(int accountBookNo); //가계부삭제
     int updateAccountBook(Map<String, Object> params);//업데이트
+    void deleteAllAccountBook(int memberNo);
 }

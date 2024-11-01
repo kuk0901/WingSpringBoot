@@ -49,10 +49,7 @@ public class AccountBookServiceImpl implements AccountBookService {
     return accountBookDao.getTopCategories();
   }
 
-  @Override
-  public void accountBookDelete(int memberNo) {
-    accountBookDao.accountBookDelete(memberNo);
-  }
+  
 
   @Override
   public List<AccountBookVo> getAccountBooksByRecentDate(int memberNo, int limit) {
@@ -103,6 +100,11 @@ public class AccountBookServiceImpl implements AccountBookService {
   @Override
   public int updateAccountBook(Map<String, Object> params) {
     return accountBookDao.updateAccountBook(params);
+  }
+
+  @Override
+  public void deleteAllAccountBook(int memberNo) {
+    accountBookDao.deleteAllAccountBook(memberNo);
   }
 
 }

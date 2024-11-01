@@ -52,9 +52,10 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectList(NAMESPACE + "getTopCategories");
     }
 
+
     @Override
-    public void accountBookDelete(int memberNo) {
-        sqlSession.delete(NAMESPACE + "accountBookDelete", memberNo);
+    public void deleteAllAccountBook(int memberNo) {
+        sqlSession.delete(NAMESPACE + "deleteAllAccountBook", memberNo);
     }
 
     @Override

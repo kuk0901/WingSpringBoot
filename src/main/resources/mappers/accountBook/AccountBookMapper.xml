@@ -238,4 +238,11 @@
         WHERE ACCOUNT_BOOK_NO = #{accountBookNo}
         AND MEMBER_NO = #{memberNo}
     </update>
+
+    <!-- 가계부 삭제 쿼리 -->
+    <delete id="deleteAllAccountBook" parameterType="int">
+        DELETE FROM ACCOUNT_BOOK WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+
 </mapper>

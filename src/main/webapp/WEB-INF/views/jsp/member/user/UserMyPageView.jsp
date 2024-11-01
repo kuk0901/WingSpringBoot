@@ -26,7 +26,9 @@
 <body>
 <section id="root">
   <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp"/>
-
+  <jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
+    <jsp:param value="${alertMsg}" name="alertMsg" />
+  </jsp:include>
   <section id="memberSection">
     <div id="content">
       <div class="title-container">
@@ -39,6 +41,9 @@
         <form id="myPageForm">
           <div id="memberDetailContainer" class="update_container">
             <div class="detail_title_container">정보 수정</div>
+            <div id="quitApplyNotice" style="display: none">
+              <!-- 메시지가 여기에 표시됩니다 -->
+            </div>
             <div class="detail_first_second_wrapper">
               <div class="detail_first_container detail_container">
                 <div>
@@ -51,23 +56,26 @@
                 <div>
                   <label>이름</label>
                   <input type="text" id="Name" name="Name" />
+                  <span id="userNameError"></span>
                 </div>
                 <div>
                   <label>패스워드</label>
                   <input type="password" id="password" name="password"
                          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                          autocomplete="off"/>
+                  <span id="pwdError"></span>
                 </div>
                 <div>
                   <label>패스워드 확인</label>
                   <input type="password" id="confirmPassword" name="confirmPassword"
                          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                          autocomplete="off"/>
-                  <span id="pwdError"></span>
+                  <span id="pwdCheckError"></span>
                 </div>
                 <div>
                   <label>핸드폰 번호</label>
                   <input type="text" id="phone" name="phone" />
+                  <span id="phoneError"></span>
                 </div>
                 <div>
                   <label>가입일</label>
@@ -78,10 +86,14 @@
                 <div>
                   <label>연봉</label>
                   <input type="text" id="yearlySalary" name="yearlySalary" />
+                  <span>만원</span>
+                  <span id="salaryError"></span>
                 </div>
                 <div>
                   <label>월급</label>
                   <input type="text" id="monthlySalary" name="monthlySalary" />
+                  <span>만원</span>
+                  <span id="payError"></span>
                 </div>
               </div>
             </div>
@@ -93,15 +105,7 @@
         </form>
   <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
         <div id="card-container" class="card-container">
-          <div class="card-title">보유 카드</div>
-          <div class="card-header">
-            <div class="header-item">카드 명</div>
-            <div class="header-item">혜택 요약</div>
-            <div class="header-item">등록 날짜</div>
-            <div class="header-item">카드 번호</div>
-            <div class="header-item">비고
-            </div>
-          </div>
+
         </div>
       </main> <!-- main 태그 닫기 -->
     </div> <!-- content 닫기 -->

@@ -16,6 +16,9 @@
 .top-container {
     margin: 20px 0; /* 위 아래 간격 확보 */
 }
+.paging{
+    margin-top: 20px;
+}
 
 
 .main-container {
@@ -84,6 +87,9 @@
     padding: 10px;
     width: 70%; /* 내용 크기 */
 }
+
+
+
 
 .termination-reason-container {
     background-color: #e0e0e0; /* 해지 사유 큰 상자 - 회색 */
