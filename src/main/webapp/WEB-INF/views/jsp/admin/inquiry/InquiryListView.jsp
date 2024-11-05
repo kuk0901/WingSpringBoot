@@ -81,6 +81,8 @@
     </form>
 
   </div>
+
+  <input id="abc" type="hidden" value="${sessionScope.member.memberNo}">
 </section>
 
 </body>

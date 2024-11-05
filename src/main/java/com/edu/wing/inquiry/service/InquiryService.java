@@ -17,4 +17,10 @@ public interface InquiryService {
 
   void addInquiry(InquiryVo inquiryVo);
 
+  boolean addInquiryReply(int inquiryNo, String content, int memberNo);
+
+  boolean updateAnswerTermination(int inquiryNo);
+
+  List<InquiryVo> memberInquirySelectList(int start, int end, int memberNo);
+
 }

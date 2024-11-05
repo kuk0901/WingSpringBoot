@@ -33,12 +33,11 @@ public class InquiryDaoImpl implements InquiryDao {
   }
 
   @Override
-  public int insertInquiryComment(int inquiryNo, String content) {
+  public int insertInquiryComment(int inquiryNo, String content, int memberNo) {
     Map<String, Object> params = new HashMap<>();
     params.put("inquiryNo", inquiryNo);
     params.put("content", content);
-    // 현재 로그인한 관리자의 MEMBER_NO를 여기에 추가해야 합니다.
-    // params.put("memberNo", getCurrentAdminMemberNo());
+    params.put("memberNo", memberNo);
     return sqlSession.insert(NAMESPACE + "insertInquiryComment", params);
   }
 
@@ -53,5 +52,15 @@ public class InquiryDaoImpl implements InquiryDao {
   @Override
   public void addInquiry(InquiryVo inquiryVo) {
     sqlSession.insert(NAMESPACE + "addInquiry", inquiryVo);
+  }
+
+  @Override
+  public int updateAnswerTermination(int inquiryNo) {
+    return sqlSession.update(NAMESPACE + "updateAnswerTermination", inquiryNo);
+  }
+
+  @Override
+  public List<InquiryVo> memberInquirySelectList(Map<String, Object> map) {
+    return sqlSession.selectList(NAMESPACE + "memberInquirySelectList", map);
   }
 }

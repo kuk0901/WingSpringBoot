@@ -1,9 +1,12 @@
 package com.edu.wing.inquiry.controller;
 
 import com.edu.wing.inquiry.service.InquiryService;
+import com.edu.wing.member.domain.MemberVo;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +75,48 @@ public class AdminApiInquiryController {
     }
   }
 
+  @PostMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session) {
+    log.info(LOG_TITLE);
+    log.info("getInquiryForReply POST inquiryNo: {}", inquiryNo);
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+
+    try {
+      Map<String, Object> resultMap = inquiryService.inquirySelectOne(inquiryNo);
+      if (resultMap != null && !resultMap.isEmpty()) {
+        resultMap.put("adminEmail", member.getEmail());
+        return ResponseEntity.ok().body(resultMap);
+      } else {
+        return ResponseEntity.notFound().build();
+      }
+    } catch (Exception e) {
+      log.error("Error fetching inquiry data for reply", e);
+      return ResponseEntity.internalServerError().body("Error fetching inquiry data");
+    }
+  }
+
+  @PatchMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData, HttpSession session) {
+    log.info(LOG_TITLE);
+    log.info("addInquiryReply PATCH inquiryNo: {}, content: {}", inquiryNo, replyData.get("CONTENT"));
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+    if (member == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+    }
+
+    try {
+      boolean added = inquiryService.addInquiryReply(inquiryNo, replyData.get("CONTENT"), member.getMemberNo());
+      if (added) {
+        return ResponseEntity.ok().body("Reply added successfully");
+      } else {
+        return ResponseEntity.notFound().build();
+      }
+    } catch (Exception e) {
+      log.error("Error adding inquiry reply", e);
+      return ResponseEntity.internalServerError().body("Error adding reply");
+    }
+  }
 
 }

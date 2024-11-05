@@ -18,7 +18,7 @@
 
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
-        1대1 문의사항 상세
+        1대1 문의사항 추가
       </div>
     </div>
 
@@ -36,21 +36,21 @@
 
         <div class="inquiry-sub one-line">
           <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <input type="text" class="info-writer bg__white text__black box__l" placeholder="작성자를 입력하세요">
+          <input type="text" class="info-writer bg__white text__black box__l" value="${member.email}" readonly>
 
           <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <input type="date" class="info-date bg__white text__black box__l">
+          <input type="text" id="writeDate" class="info-date bg__white text__black box__l" value="${currentDate}" readonly>
         </div>
 
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea placeholder="문의 내용을 입력하세요"></textarea>
+          <textarea class="contentArea" placeholder="문의 내용을 입력하세요"></textarea>
         </div>
       </div>
     </main>
 
-    <div>
+    <div class="btn-container-all one-line">
       <div class="btn-container">
         <button id="listMove" class="btn btn__generate listMove text__center" data-cur-page="${data.curPage}" data-answer-termination="${data.ANSWERTERMINATION}">
           돌아가기

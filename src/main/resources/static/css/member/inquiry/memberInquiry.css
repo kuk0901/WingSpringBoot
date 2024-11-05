@@ -67,6 +67,10 @@
   width: 600px;
 }
 
+#content .main-container .list-container .list--div {
+  margin-top: 20px;
+}
+
 #content .search-container .input-container{
   margin: 0 20px;
 }
@@ -118,6 +122,11 @@
   height: 25px;
   line-height: 25px;
   border: 1px solid black;
+}
+
+#content .main-container .inquiry-container .info-content .contentArea {
+  width: 1178px;
+  height: 200px;
 }
 
 #content .main-container .inquiry-container .info-content-div {
@@ -203,4 +212,16 @@
 
 #content .main-container .btn-container.answer-btn-container {
   margin-top: 10px;
+}
+
+#content .btn-container-all .btn-container #listMove {
+  margin-left: 400px;
+  width: 150px;
+  height: 50px;
+}
+
+#content .btn-container-all .btn-container #addInquiry {
+  margin-left: 400px;
+  width: 150px;
+  height: 50px;
 }

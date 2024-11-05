@@ -22,17 +22,32 @@
     </sql>
 
     <select id="inquirySelectList" parameterType="map" resultMap="inquiryResultMap">
-    <![CDATA[
     SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
     FROM (
         SELECT ROWNUM AS RNUM, I.*
         FROM (
             SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
             FROM INQUIRY
-    ]]>
         <where>
             <include refid="search" />
         </where>
+        <![CDATA[
+            ORDER BY INQUIRY_NO DESC
+        ) I
+        WHERE ROWNUM <= #{end}
+    )
+    WHERE RNUM >= #{start}
+    ]]>
+    </select>
+
+    <select id="memberInquirySelectList" parameterType="map" resultMap="inquiryResultMap">
+        SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
+        FROM (
+            SELECT ROWNUM AS RNUM, I.*
+            FROM (
+                SELECT INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, DIVISION, CRE_DATE, ANSWER_TERMINATION
+                FROM INQUIRY
+                WHERE MEMBER_NO = #{memberNo}
         <![CDATA[
             ORDER BY INQUIRY_NO DESC
         ) I
@@ -76,6 +91,11 @@
     <insert id="addInquiry" parameterType="inquiryVo">
         INSERT INTO INQUIRY (TITLE, DIVISION, EMAIL, CRE_DATE, CONTENT)
         VALUES (#{title}, #{division}, #{email}, #{creDate}, #{content})
+    </insert>
+
+    <insert id="insertInquiryComment" parameterType="map">
+        INSERT INTO INQUIRY_COMMENT (INQUIRY_COMMENT_NO, INQUIRY_NO, CONTENT, MEMBER_NO)
+        VALUES (INQUIRY_COMMENT_NO_SEQ.NEXTVAL, #{inquiryNo}, #{content}, #{memberNo})
     </insert>
 
 </mapper>

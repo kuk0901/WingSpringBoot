@@ -18,6 +18,7 @@ public class InquiryServiceImpl implements InquiryService {
 
   @Override
   public List<InquiryVo> inquirySelectList(int start, int end, String inquirySearch) {
+
     Map<String, Object> map = new HashMap<>();
     map.put("start", start);
     map.put("end", end);
@@ -41,7 +42,7 @@ public class InquiryServiceImpl implements InquiryService {
     Map<String, Object> inquiry = inquiryDao.inquirySelectOne(inquiryNo);
 
     if (inquiry == null) {
-      return false;
+      return false; // 문의가 존재하지 않으면 false 반환
     }
 
     // BigDecimal을 Integer로 안전하게 변환
@@ -49,18 +50,44 @@ public class InquiryServiceImpl implements InquiryService {
         ? ((BigDecimal) inquiry.get("INQUIRYCOMMENTNO")).intValue()
         : null;
 
-    if (commentNo == null) {
-      // 답변이 없는 경우, 새로운 답변을 추가
-      return inquiryDao.insertInquiryComment(inquiryNo, content) > 0;
-    } else {
+    if (commentNo != null) {
       // 기존 답변이 있는 경우, 답변을 수정
       return inquiryDao.updateInquiryComment(commentNo, content) > 0;
+    } else {
+      // 답변이 없는 경우 false 반환
+      return false;
     }
   }
 
   @Override
   public void addInquiry(InquiryVo inquiryVo) {
     inquiryDao.addInquiry(inquiryVo);
+  }
+
+  @Override
+  public boolean addInquiryReply(int inquiryNo, String content, int memberNo) {
+    boolean added = inquiryDao.insertInquiryComment(inquiryNo, content, memberNo) > 0;
+    if (added) {
+      // 답글이 추가되면 ANSWER_TERMINATION을 업데이트합니다.
+      updateAnswerTermination(inquiryNo);
+    }
+    return added;
+  }
+
+  @Override
+  public boolean updateAnswerTermination(int inquiryNo) {
+    return inquiryDao.updateAnswerTermination(inquiryNo) > 0;
+  }
+
+  @Override
+  public List<InquiryVo> memberInquirySelectList(int start, int end, int memberNo) {
+    Map<String, Object> map = new HashMap<>();
+
+    map.put("start", start);
+    map.put("end", end);
+    map.put("memberNo", memberNo);
+
+    return inquiryDao.memberInquirySelectList(map);
   }
 
 }
