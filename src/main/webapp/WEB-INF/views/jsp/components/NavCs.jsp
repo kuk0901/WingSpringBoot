@@ -11,7 +11,7 @@
 >
   <ul class="btn-container logo-container">
     <li>
-      <a href="${pageContext.request.contextPath}/member/main" id="logoLink">
+      <a href="${pageContext.request.contextPath}/member/accountBook/list" id="logoLink">
         <img src="/img/logo.png" alt="WING_ logo" class="logo" />
       </a>
     </li>
@@ -48,7 +48,7 @@
       </a>
     </li>
     <li>
-      <a href="#" class="btn btn__yellow text__semibold move-page">1대1 문의</a>
+      <a href="${pageContext.request.contextPath}/member/cs/inquiry/list" class="btn btn__yellow text__semibold move-page">1대1 문의</a>
     </li>
   </ul>
 

@@ -1,11 +1,13 @@
+import { formatPaymentAmountNumber } from "../../util/format.js";
+
 // accountBook.jsp의 js파일 유저용
-var memberNo;
+let memberNo;
 const today = new Date();
 let currentYear = today.getFullYear(); // 현재 연도
 let currentMonth = today.getMonth() + 1; // 현재 월
 $(document).ready(function() {
      memberNo = $('#memberNo').val(); // hidden input에서 memberNo 가져오기
-    var limit = 10;
+    let limit = 10;
     // 초기 설정
     // 현재 날짜를 기준으로 연도와 월 설정
 
@@ -27,12 +29,12 @@ $(document).ready(function() {
         event.preventDefault(); // 기본 폼 제출 방지
 
         // 입력 값 가져오기
-        var date = $('#datepicker').val();
-        var incomeExpense = $('#incomeExpenseToggle').val();
-        var categoryNo = getCategoryNo(incomeExpense); // 카테고리 번호 가져오기
-        var contents = $('#contents').val();
-        var paymentMethod = $('#paymentMethodSelect').val();
-        var amount = $('#amount').val();
+        const date = $('#datepicker').val();
+        const incomeExpense = $('#incomeExpenseToggle').val();
+        const categoryNo = getCategoryNo(incomeExpense); // 카테고리 번호 가져오기
+        const contents = $('#contents').val();
+        const paymentMethod = $('#paymentMethodSelect').val();
+        const amount = $('#amount').val();
 
 
         // 카테고리 번호에 따른 plusCategoryNo와 minusCategoryNo 설정
@@ -115,52 +117,7 @@ function getCategoryNo(incomeExpense) {
 let currentLimit = 5; // 초반디폴트  항목 수
 // 초기화면용 가계부 목록을 가져오는 함수
 
-//초기화면용->진입시 가장 최근 가계부호출 미사용해야징
-/*function fetchAccountFirstBooks(memberNo, limit) {
-    $.ajax({
-        url: "/member/api/accountBook/list",
-        type: "GET",
-        data: {
-            memberNo: memberNo,
-            limit: limit
-        },
-        success: function(data) {
 
-            renderAccountBooks(data); // 가져온 데이터로 테이블 렌더링
-
-            // 가장 최근의 credate 가져오기
-            if (data.length > 0) {
-                const lastEntry = data[data.length - 1]; // 마지막 내역
-                const credateString = lastEntry.creDate;
-                const lastCredate = new Date(credateString);
-                // credate를 Date 객체로 변환
-
-                // 연도와 월 추출
-                currentYear = lastCredate.getFullYear(); // 연도 추출
-                currentMonth = lastCredate.getMonth() + 1; // 월 추출 (0부터 시작하므로 +1)
-
-
-
-                // 시작 및 종료 날짜 생성
-                const startDate = `${currentYear}-${currentMonth < 10 ? '0' : ''}${currentMonth}-01`; // 시작 날짜 (YYYY-MM-DD 형식)
-                const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0]; // 종료 날짜 (해당 월의 마지막 날)
-
-                console.log("Start Date:", startDate); // 예: 2023-09-01
-                console.log("End Date:", endDate); // 예: 2023-09-30 (해당 월의 마지막 날)
-
-
-                // 총 월가계부 내역출력
-                getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
-                calculateMonthlyTotal(memberNo, startDate, endDate);
-                // 현재 월 표시 업데이트
-                updateCurrentMonthDisplay(currentYear, currentMonth);
-            }
-        },
-        error: function(err) {
-            console.error('Error fetching account books:', err);
-        }
-    });
-}*/
 // 현재 연도와 월 표시를 업데이트하는 함수
 function updateCurrentMonthDisplay(year, month) {
     const monthDisplay = document.getElementById("currentMonth");
@@ -287,7 +244,7 @@ function renderAccountBooks(accountBooks) {
         <span>${accountBook.paymentMethodName || '결제 수단 없음'}</span>
         <span>
             ${accountBook.paymentAmount
-            ? (minusCategory ? '-' : (plusCategory ? '+' : '')) + accountBook.paymentAmount.toLocaleString() + '원'
+            ? (minusCategory ? '-' : (plusCategory ? '+' : '')) + formatPaymentAmountNumber(accountBook.paymentAmount) + '원'
             : '금액 없음'}
         </span>
     </div>
@@ -391,14 +348,7 @@ function loadPaymentMethods() {
             console.error("결제 수단 가져오기 실패:", error);
         }
     });
-
-
-
-
 }
-
-
-
 
 /**
  * 월간 수입과 지출 총합 계산 및 업데이트
@@ -424,8 +374,8 @@ function calculateMonthlyTotal(memberNo, startDate, endDate) {
             });
 
             // HTML 업데이트
-            $('#totalIncome').text(`월수입: ${totalIncome}원`);
-            $('#totalExpense').text(`월지출: ${totalExpense}원`);
+            $('#totalIncome').text(`월수입: ${formatPaymentAmountNumber(totalIncome)}원`);
+            $('#totalExpense').text(`월지출: ${formatPaymentAmountNumber(totalExpense)}원`);
         },
         error: function(err) {
             console.error('Error fetching monthly entries:', err);

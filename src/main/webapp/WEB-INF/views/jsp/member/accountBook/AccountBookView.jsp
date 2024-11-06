@@ -16,7 +16,7 @@
     </script>
 
 
-    <script defer src="/js/member/accountbook/memberAccountbook.js"></script>
+    <script defer type="module" src="/js/member/accountbook/memberAccountbook.js"></script>
     <link rel="stylesheet" href="/css/member/accountbook/memberAccountbook.css">
     <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 </head>
@@ -95,7 +95,8 @@
         </div>
 
     </section>
-    <%--<jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>--%>
+    <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
+
     <input type="hidden" id="memberNo" value="${sessionScope.member.memberNo}" />
 </section>
 <jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp"/>
