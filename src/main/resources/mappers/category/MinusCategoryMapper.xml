@@ -13,6 +13,12 @@
         WHERE CATEGORY_NO != 1
         ORDER BY CATEGORY_NO
     </select>
+    
+    <select id="getMinusCategoryNames" resultType="String">
+        SELECT CATEGORY_NAME
+        FROM MINUS_CATEGORY
+        WHERE CATEGORY_NO != 1
+    </select>
 
     <select id="minusCategoryExists" parameterType="String" resultMap="minusCategoryResultMap">
         SELECT CATEGORY_NO, CATEGORY_NAME

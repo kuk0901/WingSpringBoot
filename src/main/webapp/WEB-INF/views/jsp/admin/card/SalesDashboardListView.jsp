@@ -26,18 +26,32 @@
       </div>
     </div>
 
-    <div id="cardNoFormCon" class="cardNoForm-container">
-      <form id="cardNoForm" action="./list" method="post">
-        <label for="cardNumber" class="selectCard bg__gray text__black text__center">카드 종류</label>
-        <select id="cardNumber" name="cardNo" class="cardNo">
-          <option value="0" ${cardNo == '0' ? "selected" : ""} >전체</option>
-          <option value="1" ${cardNo == '1' ? "selected" : ""}>Traffic</option>
-          <option value="2" ${cardNo == '2' ? "selected" : ""}>Shopping</option>
-          <option value="3" ${cardNo == '3' ? "selected" : ""}>Daily</option>
-        </select>
-        <input type="submit" value="검색" class="btn btn__generate"/>
+    <div class="search-container">
+      <form id="searchForm" class="one-line" action="./list" method="post">
+        <div class="cardNoForm-container">
+          <label for="cardNumber" class="selectCard bg__gray text__black text__center">카드 종류</label>
+          <select id="cardNumber" name="cardNo" class="cardNo">
+            <option value="0" ${cardNo == '0' ? "selected" : ""}>전체</option>
+            <option value="1" ${cardNo == '1' ? "selected" : ""}>Traffic</option>
+            <option value="2" ${cardNo == '2' ? "selected" : ""}>Shopping</option>
+            <option value="3" ${cardNo == '3' ? "selected" : ""}>Daily</option>
+          </select>
+        </div>
+
+        <div class="terSeasonForm-container">
+          <label for="termination" class="selectReason bg__gray text__black text__center">해지 여부</label>
+          <select id="termination" name="termination" class="reasonSelect">
+            <option value="all" ${termination == "all" ? "selected" : ""}>전체</option>
+            <option value="Y" ${termination == "Y" ? "selected" : ""}>카드 해지 O</option>
+            <option value="N" ${termination == "N" ? "selected" : ""}>카드 해지 X</option>
+          </select>
+        </div>
+
+        <input type="hidden" name="curPage" value="1">
+        <input id="searchFormBtn" type="submit" value="검색" class="btn btn__generate"/>
       </form>
     </div>
+
 
     <main class="main-container">
       <div class="list-container list-container--title bg__white">
@@ -79,6 +93,7 @@
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
       <input type="hidden" id="cardNo" name="cardNo" value="${cardNo}"/>
+      <input type="hidden" id="cardTermination" name="termination" value="${termination}"/>
     </form>
   </div>
 

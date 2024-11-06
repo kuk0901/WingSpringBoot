@@ -15,11 +15,16 @@
 
  <link rel="stylesheet" href="/css/admin/user/adminMypage.css">
   <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
+
 </head>
 
 
 <body>
+<jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
+  <jsp:param value="${alertMsg}" name="alertMsg" />
+</jsp:include>
 <section id="root">
+
   <jsp:include page="/WEB-INF/views/jsp/components/NavAdmin.jsp"/>
   <div id="content">
     <div class="title-container">

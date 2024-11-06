@@ -17,6 +17,10 @@
     </li>
   </ul>
 
+  <ul class="site-title-container">
+    <li class="site-title text__center text__semibold">스마트한 가계부 서비스</li>
+  </ul>
+
   <ul class="btn-container user-container">
     <c:if test="${not empty sessionScope.member}">
       <li>

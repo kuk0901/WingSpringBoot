@@ -25,8 +25,8 @@ public class PlusCategoryServiceImpl implements PlusCategoryService {
   }
 
   @Override
-  public Map<String, Object> allCategorySelectList() {
-    return plusCategoryDao.allCategorySelectList();
+  public List<String> getPlusCategoryNames(){
+    return plusCategoryDao.getPlusCategoryNames();
   }
 
   @Override

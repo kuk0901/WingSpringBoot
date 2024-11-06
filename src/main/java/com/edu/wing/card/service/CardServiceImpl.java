@@ -20,7 +20,6 @@ import java.util.Map;
 
 @Service
 public class CardServiceImpl implements CardService {
-
   @Autowired
   private CardDao cardDao;
 
@@ -65,13 +64,11 @@ public class CardServiceImpl implements CardService {
       Type listType = new TypeToken<List<CardBenefitVo>>() {}.getType();
       List<CardBenefitVo> cardBenefitVoList = new Gson().fromJson(benefitsJson, listType);
 
-      // 기존 혜택 정보 제거
-      formData.remove("benefits");
 
-      // 카드 등록
-      cardDao.cardInsert(formData);
+      formData.remove("benefits"); // 기존 혜택 정보 제거
 
-      // 카드 등록됐는지 확인
+      cardDao.cardInsert(formData); // card insert
+
       CardVo cardVo = cardDao.cardExist(formData.get("cardName"));
 
       if (cardVo == null) {
@@ -99,5 +96,25 @@ public class CardServiceImpl implements CardService {
     CardVo cardVo = cardDao.checkCardDeletedStatus(cardNo);
 
     return cardVo != null;
+  }
+
+  @Override
+  public List<CardVo> userShowCardSelectList(int start, int end, String categoryName) {
+    Map<String, String> map = new HashMap<>();
+    map.put("start", String.valueOf(start));
+    map.put("end", String.valueOf(end));
+    map.put("categoryName", categoryName);
+
+    return cardDao.userShowCardSelectList(map);
+  }
+
+  @Override
+  public int userShowCardSelectTotalCount(String categoryName) {
+    return cardDao.userShowCardSelectTotalCount(categoryName);
+  }
+
+  @Override
+  public CardVo getCardByName(String cardName) {
+    return cardDao.getCardByName(cardName);
   }
 }

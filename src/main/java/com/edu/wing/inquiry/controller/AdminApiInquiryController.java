@@ -1,9 +1,13 @@
 package com.edu.wing.inquiry.controller;
 
 import com.edu.wing.inquiry.service.InquiryService;
+import com.edu.wing.inquiryComment.service.InquiryCommentService;
+import com.edu.wing.member.domain.MemberVo;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,9 @@ public class AdminApiInquiryController {
 
   @Autowired
   private InquiryService inquiryService;
+
+  @Autowired
+  private InquiryCommentService inquiryCommentService;
 
   @GetMapping("/{inquiryNo}")
   public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
@@ -54,13 +61,13 @@ public class AdminApiInquiryController {
     }
   }
 
-  @PatchMapping("/update/{inquiryNo}")
-  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryNo, @RequestBody Map<String, String> updateData) {
+  @PatchMapping("/update/{inquiryCommentNo}")
+  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestBody Map<String, String> updateData) {
     log.info(LOG_TITLE);
-    log.info("updateInquiryComment PATCH inquiryNo: {}, content: {}", inquiryNo, updateData.get("CONTENT"));
+    log.info("updateInquiryComment PATCH inquiryCommentNo: {}, content: {}", inquiryCommentNo, updateData.get("content"));
 
     try {
-      boolean updated = inquiryService.updateInquiryComment(inquiryNo, updateData.get("CONTENT"));
+      boolean updated = inquiryCommentService.updateInquiryComment(inquiryCommentNo, updateData.get("content"));
       if (updated) {
         return ResponseEntity.ok().body("Comment updated successfully");
       } else {
@@ -72,5 +79,55 @@ public class AdminApiInquiryController {
     }
   }
 
+  @PostMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session) {
+    log.info(LOG_TITLE);
+    log.info("getInquiryForReply POST inquiryNo: {}", inquiryNo);
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+
+    try {
+      Map<String, Object> resultMap = inquiryService.inquirySelectOne(inquiryNo);
+      if (resultMap != null && !resultMap.isEmpty()) {
+        resultMap.put("adminEmail", member.getEmail());
+        return ResponseEntity.ok().body(resultMap);
+      } else {
+        return ResponseEntity.notFound().build();
+      }
+    } catch (Exception e) {
+      log.error("Error fetching inquiry data for reply", e);
+      return ResponseEntity.internalServerError().body("Error fetching inquiry data");
+    }
+  }
+
+  @PatchMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData, HttpSession session) {
+    log.info(LOG_TITLE);
+    log.info("addInquiryReply PATCH inquiryNo: {}, content: {}", inquiryNo, replyData.get("CONTENT"));
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+    if (member == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+    }
+
+    try {
+      // 1. 답변 추가
+      boolean added = inquiryService.addInquiryReply(inquiryNo, replyData.get("CONTENT"), member.getMemberNo());
+      if (!added) {
+        return ResponseEntity.notFound().build();
+      }
+
+      // 2. 답변 상태 업데이트
+      boolean updated = inquiryService.updateAnswerTermination(inquiryNo);
+      if (!updated) {
+        log.warn("Failed to update answer termination status for inquiryNo: {}", inquiryNo);
+      }
+
+      return ResponseEntity.ok().body("Reply added successfully and status updated");
+    } catch (Exception e) {
+      log.error("Error adding inquiry reply or updating status", e);
+      return ResponseEntity.internalServerError().body("Error processing reply");
+    }
+  }
 
 }

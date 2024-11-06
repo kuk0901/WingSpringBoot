@@ -21,10 +21,6 @@
   padding: 13px 19px;
 }
 
-.container-title{
-  margin-left: 20px;
-}
-
 .content_margin {
   margin-left: 50px;
 }
@@ -42,6 +38,23 @@
   height: 40px;
   margin-left: 20px;
   margin-bottom: 30px;
+}
+
+#content .search-container .input-container #searchForm {
+  gap: 10px;
+}
+
+#content .search-container .input-container .searchInquiryName,
+#content .search-container .input-container .inquirySearch,
+#content .search-container .input-container .searchInquiry {
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+}
+
+#content .search-container .input-container .searchInquiry {
+  line-height: normal;
 }
 
 #content .main-container .inquiry-container .list-container .list--supply {
@@ -66,11 +79,17 @@
   margin: 0 20px;
 }
 
+#content .search-container .sortBtn .sortAnswerBtn {
+  height: 45px;
+}
+
 #content .search-container .input-container .info-item {
   border: none;
   outline: none;
   width: 300px;
   height: 50px;
+  padding: 0 10px;
+  font-size: 17px;
 }
 
 #content .main-container .inquiry-container .inquiry-title .info-title {
@@ -189,6 +208,10 @@
 
 #content .main-container .btn-container .listUpdate {
   margin-right: 225px;
+}
+
+#content .main-container .list-container .list--div {
+  margin-top: 20px;
 }
 
 .text__right {

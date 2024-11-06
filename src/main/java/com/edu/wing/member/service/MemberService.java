@@ -16,12 +16,16 @@ public interface MemberService {
   int selectTotalMembersCount();
   Map<String, Object> selectMemberDetailForAdmin(int memberNo);
 
-
-  boolean adminDeleteMember(int memberNo); // 관리자 회원삭제
+  void adminSoftDeleteMember(MemberVo memberVo);// 관리자 회원삭제
   MemberVo getAdminMypageInfo(int memberNo);//관리자마이페이지
   int updateMember(MemberVo memberVo);//마이페이지업데이트
 
   MemberVo getMyPageInfo(int memberNo);  // 회원 정보 조회 메서드
   void updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
+
+  MemberVo findMemberAccount(Map<String, String> map);
+  MemberVo findMemberPassword(Map<String, String> map);
+
+  boolean changeMemberPasswordAndValidate(Map<String, String> map);
 }

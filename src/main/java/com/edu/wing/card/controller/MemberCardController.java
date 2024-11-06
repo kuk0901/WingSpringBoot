@@ -30,20 +30,15 @@ public class MemberCardController {
   @Autowired
   private CardBenefitService cardBenefitService;
 
-  // controller로 수정 필요
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView productList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    log.info("@RequestMapping productList curPage: {}", curPage);
-
-    int totalCount = cardService.cardSelectTotalCount(categoryName);
+    int totalCount = cardService.userShowCardSelectTotalCount(categoryName);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage), 3);
     int start = pagingVo.getPageBegin();
     int end = pagingVo.getPageEnd();
 
-    List<CardVo> cardList = cardService.cardSelectList(start, end, categoryName);
-
-    log.info("cardList: {}", cardList);
+    List<CardVo> cardList = cardService.userShowCardSelectList(start, end, categoryName);
 
     List<CardBenefitVo> allBenefits = cardBenefitService.cardBenefitSelectList();
 

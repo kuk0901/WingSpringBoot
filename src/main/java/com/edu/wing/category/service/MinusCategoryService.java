@@ -9,7 +9,7 @@ public interface MinusCategoryService {
 
   List<MinusCategoryVo> minusCategorySelectList();
 
-  Map<String, Object> allCategorySelectList();
+  List<String> getMinusCategoryNames();
 
   boolean minusCategoryExists(String categoryName);
 

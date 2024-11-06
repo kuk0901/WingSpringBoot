@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +53,10 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectList(NAMESPACE + "getTopCategories");
     }
 
+
     @Override
-    public void accountBookDelete(int memberNo) {
-        sqlSession.delete(NAMESPACE + "accountBookDelete", memberNo);
+    public void deleteAllAccountBook(int memberNo) {
+        sqlSession.delete(NAMESPACE + "deleteAllAccountBook", memberNo);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class AccountBookDaoImpl implements AccountBookDao {
     }
 
     @Override
-    public List<AccountBookVo> getMonthlyEntries(int memberNo, String startDate, String endDate) {
+    public List<AccountBookVo> getMonthlyEntries(int memberNo, LocalDate startDate, LocalDate endDate) {
         // 매개변수를 Map으로 묶어서 전달
         Map<String, Object> params = Map.of(
                 "memberNo", memberNo,
@@ -116,6 +118,18 @@ public class AccountBookDaoImpl implements AccountBookDao {
     @Override
     public int updateAccountBook(Map<String, Object> params) {
         return sqlSession.update(NAMESPACE + "updateAccountBook", params);
+    }
+
+    @Override
+    public List<AccountBookVo> selectMonthlyExpenseBook(int memberNo, Date startDate, Date endDate) {
+        return sqlSession.selectList(NAMESPACE+"selectMonthlyExpenseBook",
+                Map.of("memberNo", memberNo, "startDate", startDate, "endDate", endDate));
+    }
+
+    @Override
+    public List<AccountBookVo> selectMonthlyIncomeBook(int memberNo, Date startDate, Date endDate) {
+        return sqlSession.selectList(NAMESPACE+"selectMonthlyIncomeBook",
+                Map.of("memberNo", memberNo, "startDate", startDate, "endDate", endDate));
     }
 
 }

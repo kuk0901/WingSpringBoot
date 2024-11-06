@@ -9,7 +9,7 @@ public interface PlusCategoryDao {
 
   List<PlusCategoryVo> plusCategorySelectList();
 
-  Map<String, Object> allCategorySelectList();
+  List<String> getPlusCategoryNames();
 
   PlusCategoryVo plusCategoryExists(String categoryName);
 

@@ -169,7 +169,7 @@ const submitForm = (formData) => {
     contentType: false,
     success: function(res) {
       if (res.status === "success") {
-        window.location.href = `/admin/productManagement/list?message=${encodeURIComponent(res.alertMsg)}`;
+        window.location.href = `/admin/api/productManagement/card-detail?cardNo=${res.cardNo}&message=${encodeURIComponent(res.alertMsg)}`;
       }
     },
     error: function(xhr, status, error) {
