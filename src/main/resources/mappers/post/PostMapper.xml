@@ -47,4 +47,9 @@
     ]]>
     </select>
 
+    <insert id="addPost" parameterType="postVo">
+        INSERT INTO POST (POST_NO, NOTICE_BOARD_NO, MEMBER_NO, CONTENT, TITLE)
+        VALUES (POST_NO_SEQ.NEXTVAL, #{noticeBoardNo}, #{memberNo}, #{content}, #{title})
+    </insert>
+
 </mapper>

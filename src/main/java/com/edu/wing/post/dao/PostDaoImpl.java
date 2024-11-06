@@ -25,4 +25,9 @@ public class PostDaoImpl implements PostDao {
   public List<PostVo> postSelectList(Map<String, Object> map) {
     return sqlSession.selectList(NAMESPACE + "postSelectList", map);
   }
+
+  @Override
+  public void addPost(PostVo postVo) {
+    sqlSession.insert(NAMESPACE + "addPost", postVo);
+  }
 }
