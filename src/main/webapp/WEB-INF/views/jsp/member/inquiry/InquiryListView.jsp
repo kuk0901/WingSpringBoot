@@ -6,29 +6,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CategoryListView</title>
-  <link rel="stylesheet" href="/css/admin/inquiry/adminInquiry.css" />
-  <script defer type="module" src="/js/admin/inquiry/inquiry.js"></script>
+  <link rel="stylesheet" href="/css/member/inquiry/memberInquiry.css" />
+  <script defer type="module" src="/js/member/inquiry/inquiry.js"></script>
 </head>
 <body>
 
 <section id="root">
-  <jsp:include page="/WEB-INF/views/jsp/components/NavAdmin.jsp" />
+  <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp" />
 
   <div id="content" class="bg">
 
     <div class="title-container">
       <div class="title btn__yellow text__white">
-        1대1 문의사항 목록
+        1대1 문의사항
       </div>
     </div>
 
     <div class="search-container one-line">
-      <div class="input-container">
-        <form id="searchForm" action="./list" method="post" class="one-line">
-          <label for="inquirySearch" class="searchInquiryName bg__gray text__black text__center text__semibold">제목</label>
-          <input type="text" id="inquirySearch" name="inquirySearch" class="info-item" value="${inquirySearch}">
-          <input type="submit" id="searchInquiry" value="검색" class="searchInquiry btn btn__generate btn__inquiry" />
-        </form>
+      <div class="btn-container">
+        <a id="addInquiryView" class="btn btn__generate btn__inquiry" href="./add">
+          문의하기
+        </a>
       </div>
     </div>
 
@@ -46,7 +44,7 @@
           <c:when test="${not empty inquiryList}">
             <div class="bg__white">
               <c:forEach items="${inquiryList}" var="inquiryVo" >
-                <div class="list-container list-content one-line " data-inquiry-no="${inquiryVo.inquiryNo}">
+                <div class="list-container list-content one-line" data-inquiry-no="${inquiryVo.inquiryNo}">
                   <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
                   <div class="list--title text__center">${inquiryVo.title}</div>
                   <div class="list--date text__center">
@@ -60,7 +58,7 @@
           </c:when>
           <c:otherwise>
             <div class="list-container">
-              <div class="list--div list__empty text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
+              <div class="list--div list__empty bg text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
             </div>
           </c:otherwise>
         </c:choose>
@@ -81,7 +79,5 @@
 </section>
 
 </body>
-<script>
 
-</script>
 </html>

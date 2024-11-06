@@ -1,38 +1,3 @@
-//
-//
-// // 카테고리 추가 함수
-// function addCategory() {
-//     const categoryName = document.getElementById('categoryName').value;
-//
-//     fetch('/admin/api/category/add', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ categoryName: categoryName })
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log('Success:', data);
-//             alert('카테고리가 성공적으로 추가되었습니다.');
-//             goBack(); // 목록 페이지로 돌아가기
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//             alert('카테고리 추가 중 오류가 발생했습니다.');
-//         });
-// }
-//
-// // 이전 페이지로 돌아가는 함수
-// function goBack() {
-//     window.history.back();
-// }
-
 $("#categoryAdd").click(function(e) {
     e.preventDefault();
 
@@ -100,8 +65,31 @@ $("#categoryAdd").click(function(e) {
 });
 
 // 취소 버튼 클릭 시 동작
-$("#cancelAdd").click(function() {
-    window.location.href = '/admin/category/list'; // 이전 페이지로 돌아갑니다.
+$("#cancelAdd").click(function(e) {
+    e.preventDefault();
+
+    window.location.href = '/admin/category/list';// 이전 페이지로 돌아갑니다.
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const divisionSelect = document.getElementById('division');
+    const categoryItems = document.getElementById('categoryItems');
+
+    function updateCategoryDisplay() {
+        const isMinusSelected = divisionSelect.value === 'minus';
+
+        // 카테고리 아이템 표시/숨김
+        const minusItems = categoryItems.querySelectorAll('.category-item.minus');
+        const plusItems = categoryItems.querySelectorAll('.category-item.plus');
+
+        minusItems.forEach(item => item.style.display = isMinusSelected ? 'inline' : 'none');
+        plusItems.forEach(item => item.style.display = isMinusSelected ? 'none' : 'inline');
+    }
+
+    divisionSelect.addEventListener('change', updateCategoryDisplay);
+
+    // 초기 상태 설정
+    updateCategoryDisplay();
 });
 
 function moveModFunc(no) {
@@ -111,28 +99,50 @@ function moveModFunc(no) {
 
     if(categoryType == "plus") {
         $.ajax({
-            url: `/admin/api/category/updatePlus/${no}`,
-            type: 'POST',
+            url: `/admin/category/countPlusCategory/${no}`,
+            type: 'GET',
             success: function (res) {
-                console.log(res);
-                createPlusUpdateView(res);
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
+                if (res.totalCount > 0) {
+                    alert(res.msg);
+                    return;
+                }
+
+                $.ajax({
+                    url: `/admin/api/category/updatePlus/${no}`,
+                    type: 'POST',
+                    success: function (res) {
+                        console.log(res);
+                        createPlusUpdateView(res);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
             }
-        });
-    } else if(categoryType == "minus"){
+        })
+    }else if(categoryType == "minus"){
         $.ajax({
-            url: `/admin/api/category/updateMinus/${no}`,
-            type: 'POST',
+            url: `/admin/category/countMinusCategory/${no}`,
+            type: 'GET',
             success: function (res) {
-                console.log(res);
-                createMinusUpdateView(res);
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
+                if (res.totalCount > 0) {
+                    alert(res.msg);
+                    return;
+                }
+
+                $.ajax({
+                    url: `/admin/api/category/updateMinus/${no}`,
+                    type: 'POST',
+                    success: function (res) {
+                        console.log(res);
+                        createMinusUpdateView(res);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
             }
-        });
+        })
     }
 
 
@@ -176,7 +186,6 @@ function createPlusUpdateView(res) {
     });
 
     $("#cancelAdd").on("click", function() {
-        // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
         window.location.href = '/admin/category/list';
     });
 }
@@ -220,8 +229,8 @@ function createMinusUpdateView(res) {
         </div>
        
         <div class="btn-container">
-          <button id="minusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin">수정</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+          <button id="minusCatergoryUpdate" class="btn btn__generate btn--margin">수정</button>
+          <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
     </main>
@@ -234,7 +243,8 @@ function createMinusUpdateView(res) {
         updateMinusCategory(res.categoryNo);
     });
 
-    $("#cancelAdd").on("click", function() {
+    $("#cancelAdd").click(function(e) {
+        e.preventDefault()
         // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
         window.location.href = '/admin/category/list';
     });

@@ -14,6 +14,12 @@
         ORDER BY CATEGORY_NO
     </select>
 
+    <select id="getPlusCategoryNames" resultType="String">
+        SELECT CATEGORY_NAME
+        FROM PLUS_CATEGORY
+        WHERE CATEGORY_NO != 1
+    </select>
+
     <select id="plusCategoryExists" parameterType="String" resultMap="plusCategoryResultMap">
         SELECT CATEGORY_NO, CATEGORY_NAME
         FROM PLUS_CATEGORY

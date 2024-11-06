@@ -9,7 +9,7 @@ public interface PlusCategoryService {
 
   List<PlusCategoryVo> plusCategorySelectList();
 
-  Map<String, Object> allCategorySelectList();
+  List<String> getPlusCategoryNames();
 
   boolean plusCategoryExists(String categoryName);
 

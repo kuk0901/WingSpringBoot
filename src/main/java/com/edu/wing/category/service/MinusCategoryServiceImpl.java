@@ -23,8 +23,8 @@ public class MinusCategoryServiceImpl implements MinusCategoryService {
   }
 
   @Override
-  public Map<String, Object> allCategorySelectList() {
-    return minusCategoryDao.allCategorySelectList();
+  public List<String> getMinusCategoryNames(){
+    return minusCategoryDao.getMinusCategoryNames();
   }
 
   @Override

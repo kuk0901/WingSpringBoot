@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.inquiryComment">
+
+    <resultMap type="inquiryCommentVo" id="inquiryCommentResultMap">
+        <id column="INQUIRY_COMMENT_NO" property="inquiryCommentNo" />
+        <result column="INQUIRY_NO" property="inquiryNo" />
+        <result column="MEMBER_NO" property="memberNo" />
+        <result column="CONTENT" property="content" />
+        <result column="CRE_DATE" property="creDate" />
+        <result column="MOD_DATE" property="modDate" />
+    </resultMap>
+    
+    <update id="updateInquiryComment" parameterType="map">
+        UPDATE INQUIRY_COMMENT
+        SET CONTENT = #{content},
+            MOD_DATE = SYSDATE
+        WHERE INQUIRY_COMMENT_NO = #{inquiryCommentNo}
+    </update>
+
+</mapper>

@@ -35,8 +35,8 @@
         </div>
 
         <div class="btn-container">
-          <button id="paymentMethodAdd" type="submit" class="btn btn__generate btn--margin">등록</button>
-          <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
+          <button id="paymentMethodAdd" class="btn btn__generate btn--margin">등록</button>
+          <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
     </main>

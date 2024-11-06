@@ -18,17 +18,13 @@ public class InquiryDaoImpl implements InquiryDao {
   private static final String NAMESPACE = "com.edu.wing.inquiry.";
 
   @Override
-  public List<InquiryVo> inquirySelectList(int start, int end) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("start", start);
-    map.put("end", end);
-
+  public List<InquiryVo> inquirySelectList(Map<String, Object> map) {
     return sqlSession.selectList(NAMESPACE + "inquirySelectList", map);
   }
 
   @Override
-  public int inquirySelectTotalCount() {
-    return sqlSession.selectOne(NAMESPACE + "inquirySelectTotalCount");
+  public int inquirySelectTotalCount(String inquirySearch) {
+    return sqlSession.selectOne(NAMESPACE + "inquirySelectTotalCount", inquirySearch);
   }
 
   @Override
@@ -37,20 +33,31 @@ public class InquiryDaoImpl implements InquiryDao {
   }
 
   @Override
-  public int insertInquiryComment(int inquiryNo, String content) {
+  public int insertInquiryComment(int inquiryNo, String content, int memberNo) {
     Map<String, Object> params = new HashMap<>();
     params.put("inquiryNo", inquiryNo);
     params.put("content", content);
-    // 현재 로그인한 관리자의 MEMBER_NO를 여기에 추가해야 합니다.
-    // params.put("memberNo", getCurrentAdminMemberNo());
+    params.put("memberNo", memberNo);
     return sqlSession.insert(NAMESPACE + "insertInquiryComment", params);
   }
 
   @Override
-  public int updateInquiryComment(int commentNo, String content) {
-    Map<String, Object> params = new HashMap<>();
-    params.put("commentNo", commentNo);
-    params.put("content", content);
-    return sqlSession.update(NAMESPACE + "updateInquiryComment", params);
+  public void addInquiry(InquiryVo inquiryVo) {
+    sqlSession.insert(NAMESPACE + "addInquiry", inquiryVo);
+  }
+
+  @Override
+  public int updateAnswerTermination(int inquiryNo) {
+    return sqlSession.update(NAMESPACE + "updateAnswerTermination", inquiryNo);
+  }
+
+  @Override
+  public List<InquiryVo> memberInquirySelectList(Map<String, Object> map) {
+    return sqlSession.selectList(NAMESPACE + "memberInquirySelectList", map);
+  }
+
+  @Override
+  public Map<String, Object> memberInquirySelectOne(int inquiryNo) {
+    return sqlSession.selectOne(NAMESPACE + "memberInquirySelectOne", inquiryNo);
   }
 }

@@ -52,7 +52,54 @@ public class AdminCategoryController {
   public ModelAndView categoryAdd() {
     log.info("{} - Showing category add form", LOG_TITLE);
 
-    return new ModelAndView("jsp/admin/category/CategoryAddView");
+    List<String> minusCategories = minusCategoryService.getMinusCategoryNames();
+    List<String> plusCategories = plusCategoryService.getPlusCategoryNames();
+
+    ModelAndView mav = new ModelAndView("jsp/admin/category/CategoryAddView");
+    mav.addObject("minusCategories", minusCategories);
+    mav.addObject("plusCategories", plusCategories);
+
+    return mav;
+  }
+
+  @GetMapping("/countPlusCategory/{categoryNo}")
+  public ResponseEntity<?> getPlusCategoryCount(@PathVariable int categoryNo) {
+    log.info(LOG_TITLE);
+    log.info("getPlusCategoryTotalCount categoryNo: {}", categoryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    int count = plusCategoryService.plusCategoryTotalCount(categoryNo);
+
+    if (count > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", count);
+      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/countMinusCategory/{categoryNo}")
+  public ResponseEntity<?> getMinusCategoryCount(@PathVariable int categoryNo) {
+    log.info(LOG_TITLE);
+    log.info("getMinusCategoryTotalCount categoryNo: {}", categoryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    int count = minusCategoryService.minusCategoryTotalCount(categoryNo);
+
+    if (count > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", count);
+      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
   }
 
   @GetMapping("/deletePlusCategory/{categoryNo}")
