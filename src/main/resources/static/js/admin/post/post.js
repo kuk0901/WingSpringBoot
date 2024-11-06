@@ -1,0 +1,2 @@
+const $abc = $("#abc").value;
+

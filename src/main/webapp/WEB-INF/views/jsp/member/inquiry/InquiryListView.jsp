@@ -24,7 +24,7 @@
 
     <div class="search-container one-line">
       <div class="btn-container">
-        <a id="addInquiryView" class="btn btn__generate btn__inquiry" href="./add">
+        <a id="addInquiryView" class="btn btn__generate btn__inquiry" href="./list/add">
           문의하기
         </a>
       </div>

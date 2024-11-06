@@ -1,0 +1,253 @@
+#content .title-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#content .title-container .title {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.main-container {
+  margin: 20px;
+  height: 680px;
+}
+
+.btn__post {
+  padding: 13px 19px;
+}
+
+.content_margin {
+  margin-left: 50px;
+}
+
+#content .btn-container {
+  margin-right: 20px;
+}
+
+#content .title-container {
+  justify-content: space-between;
+}
+
+#content .btn-container-all .btn-container #listMove {
+  margin-left: 400px;
+  width: 150px;
+  height: 50px;
+}
+
+#content .btn-container-all .btn-container #addpost {
+  margin-left: 400px;
+  width: 150px;
+  height: 50px;
+}
+
+#content .search-container .input-container #searchForm {
+  gap: 10px;
+}
+
+#content .search-container .input-container .searchPostName,
+#content .search-container .input-container .postSearch,
+#content .search-container .input-container .searchPost{
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+}
+
+#content .search-container .input-container .searchPost {
+  line-height: normal;
+}
+
+#content .main-container .post-container .list-container .list--supply {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 300px;
+}
+
+#content .main-container .post-container .list-container .list--date {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 300px;
+}
+
+#content .main-container .post-container .list-container .list--title {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 600px;
+}
+
+#content .search-container .input-container{
+  margin: 0 20px;
+}
+
+#content .search-container .sortBtn .sortAnswerBtn {
+  height: 45px;
+}
+
+#content .search-container .input-container .info-item {
+  border: none;
+  outline: none;
+  width: 300px;
+  height: 50px;
+  padding: 0 10px;
+  font-size: 17px;
+}
+
+#content .search-container .addBtn-container {
+  margin-left: 893px;
+}
+
+#content .search-container .addBtn-container .addMove {
+  padding: 13px 19px;
+}
+
+#content .main-container .post-container .post-title .info-title {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 20px 20px 20px 150px;
+}
+
+#content .main-container .post-container .post-title .info-item {
+  width: 600px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-container .post-title .info-dv-item {
+  width: 190px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-container .post-sub .info-title {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 20px 10px 150px;
+}
+
+#content .main-container .post-container .post-sub .info-writer {
+  width: 500px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-container .post-sub .info-date {
+  width: 290px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-container .info-content-div {
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 20px 0 150px;
+  width: 1180px;
+}
+
+#content .main-container .post-container .info-content {
+  width: 1180px;
+  height: 400px;
+  margin: 20px 0 0 150px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-container .info-content .contentArea {
+  width: 1178px;
+  height: 398px;
+  border: none;
+  resize: none;
+}
+
+#content .main-container .post-comment-container .reply-container {
+  justify-content: space-between;
+}
+
+#content .main-container .post-comment-container .reply-container .info-comment {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 10px 0 0 150px;
+}
+
+#content .main-container .post-comment-container .reply-container .btn-container .addReply {
+  width: 150px;
+  height: 35px;
+  margin: 20px 280px 0 0;
+}
+
+#content .main-container .post-comment-container .answer-info .info-comment-container {
+  margin-top: 10px;
+}
+
+#content .main-container .post-comment-container .answer-info .info-comment-container .info-item {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  margin: 0 20px 0 150px;
+}
+
+#content .main-container .post-comment-container .answer-info .info-comment-container .info-detail {
+  width: 395px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-comment-container .answer-content .reason--content {
+  width: 1180px;
+  height: 160px;
+  margin: 20px 0 0 150px;
+  border: 1px solid black;
+}
+
+#content .main-container .post-comment-container .no-data-container {
+  width: 1180px;
+  height: 160px;
+  margin: 20px 0 0 150px;
+}
+
+#content .main-container .post-comment-container .answer-content .reason--content #answerContent {
+  width: 1178px;
+  height: 159px;
+}
+
+#content .main-container .btn-container {
+  margin-left: 150px;
+  justify-content: space-between;
+}
+
+#content .main-container .btn-container .listUpdate {
+  margin-right: 225px;
+}
+
+#content .main-container .list-container .list--div {
+  margin-top: 20px;
+}
+
+.text__right {
+  text-align: right;
+}
+
+.aTagStyle{
+  cursor: pointer;
+  color:blue;
+}
+
+.main-container .list-container.list-content:hover {
+  background-color: var(--color-gray);
+  cursor: pointer;
+}
+
+#content .main-container .btn-container.answer-btn-container {
+  margin-top: 10px;
+}

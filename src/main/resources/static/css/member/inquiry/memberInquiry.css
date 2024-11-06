@@ -122,7 +122,9 @@
 
 #content .main-container .inquiry-container .info-content .contentArea {
   width: 1178px;
-  height: 200px;
+  height: 198px;
+  border: none;
+  resize: none;
 }
 
 #content .main-container .inquiry-container .info-content-div {
