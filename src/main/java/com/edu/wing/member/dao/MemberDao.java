@@ -3,6 +3,7 @@ package com.edu.wing.member.dao;
 import com.edu.wing.member.domain.MemberVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberDao {
   MemberVo memberExist(String email, String pwd);
@@ -23,4 +24,9 @@ public interface MemberDao {
   int updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
 
+  MemberVo findMemberAccount(Map<String, String> map);
+  MemberVo findMemberPassword(Map<String, String> map);
+
+  void updateMemberPassword(Map<String, String> map);
+  MemberVo updateMemberPasswordCheck(Map<String, String> map);
 }

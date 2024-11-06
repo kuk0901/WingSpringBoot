@@ -49,9 +49,9 @@
           </div>
           <div class="input-container">
             <select id="categoryNo" name="categoryNo" class="box-s">
-              <option value="2">Shopping</option>
               <option value="3" selected>Traffic</option>
-              <option value="4">Daily</option>
+              <option value="4">Shopping</option>
+              <option value="5">Daily</option>
             </select>
           </div>
           <div class="label-container">

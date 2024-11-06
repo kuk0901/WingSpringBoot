@@ -1,4 +1,19 @@
 import { checkAndShowStoredMessage } from "../util/toast.js";
+import { deleteCookie } from "../util/cookie.js";
+import { showAlertMsg } from "../util/toast.js"
+
+const email = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)userEmail\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+const alertMsg = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)alertMsg\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+
+if (email) {
+  $("#email").val(email);
+  deleteCookie("userEmail");
+}
+
+if (alertMsg) {
+  showAlertMsg(alertMsg);
+  deleteCookie("alertMsg");
+}
 
 checkAndShowStoredMessage();
 
@@ -47,7 +62,7 @@ $form.on("submit", function(e) {
 
       switch (res.grade) {
         case "ADMIN":
-          location.href = `/admin/salesDashboard/list?message=${message}`;
+          location.href = `/admin/dashboard/card?message=${message}`;
           break;
         case "MEMBER":
           location.href = `/member/accountBook/list?message=${message}`;
@@ -58,7 +73,7 @@ $form.on("submit", function(e) {
     error: function(xhr, status, error) {
       const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
 
-      $("#alertMsg").text(msg)
+      showAlertMsg(msg);
     }
   });
 });

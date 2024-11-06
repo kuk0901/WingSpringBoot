@@ -8,4 +8,5 @@ public interface CardBenefitService {
   List<CardBenefitVo> cardBenefitSelectList();
   CardBenefitVo cardBenefitSelectOne(int cardNo);
   List<CardBenefitVo> cardBenefitSelectListOne(int cardNo);
+  List<CardBenefitVo> userAccountBookDiscountRateList(int memberNo);
 }

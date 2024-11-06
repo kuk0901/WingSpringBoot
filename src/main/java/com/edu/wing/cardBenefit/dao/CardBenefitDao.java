@@ -9,4 +9,5 @@ public interface CardBenefitDao {
   List<CardBenefitVo> cardBenefitSelectListOne(int cardNo);
   CardBenefitVo cardBenefitSelectOne(int cardNo);
   void cardBenefitInsertOne(CardBenefitVo cardBenefitVo);
+  List<CardBenefitVo> userAccountBookDiscountRateList(int memberNo);
 }

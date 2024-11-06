@@ -165,6 +165,86 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
+    <!-- 사용자의 소비 내역을 동일 월급 그룹 내에서 백분율로 계산(마이페이지에서 사용)   -->
+    <select id="getExpensePercentileForCurrentMonth" parameterType="int" resultType="int">
+        <![CDATA[
+        WITH salary_range AS (
+            SELECT FLOOR(MONTH_SALARY / 100) * 100 AS LOWER_BOUND,
+            FLOOR(MONTH_SALARY / 100) * 100 + 99 AS UPPER_BOUND
+            FROM MEMBER
+            WHERE MEMBER_NO = #{memberNo}
+        ),
+        same_salary_range_employees AS (
+            SELECT M.MEMBER_NO
+            FROM MEMBER M, salary_range SR
+            WHERE M.MONTH_SALARY BETWEEN SR.LOWER_BOUND AND SR.UPPER_BOUND
+            AND M.GRADE <> 'ADMIN'
+        ),
+        monthly_expenses AS (
+            SELECT AB.MEMBER_NO,
+            NVL(SUM(AB.PAYMENT_AMOUNT), 0) AS TOTAL_EXPENSE
+            FROM ACCOUNT_BOOK AB
+            JOIN same_salary_range_employees SSRE ON AB.MEMBER_NO = SSRE.MEMBER_NO
+            WHERE EXTRACT(YEAR FROM AB.CRE_DATE) = EXTRACT(YEAR FROM SYSDATE)  -- 현재 연도
+            AND EXTRACT(MONTH FROM AB.CRE_DATE) = EXTRACT(MONTH FROM SYSDATE)  -- 현재 월
+            GROUP BY AB.MEMBER_NO
+        ),
+        expense_stats AS (
+            SELECT
+            COUNT(*) AS TOTAL_COUNT,
+            MAX(TOTAL_EXPENSE) AS MAX_EXPENSE,
+            MIN(TOTAL_EXPENSE) AS MIN_EXPENSE
+            FROM monthly_expenses
+        ),
+        my_expense AS (
+            SELECT TOTAL_EXPENSE AS MY_TOTAL_EXPENSE
+            FROM monthly_expenses
+            WHERE MEMBER_NO = #{memberNo}
+        ),
+        my_rank AS (
+            SELECT
+            COUNT(*) AS LOWER_OR_EQUAL_COUNT
+            FROM monthly_expenses
+            WHERE TOTAL_EXPENSE <= (SELECT MY_TOTAL_EXPENSE FROM my_expense)
+        )
+        SELECT
+            CASE
+                WHEN ES.TOTAL_COUNT = 0 THEN NULL
+                WHEN ES.MAX_EXPENSE = ES.MIN_EXPENSE THEN 50
+                ELSE
+                    ROUND(GREATEST(0, LEAST(100, ((MR.LOWER_OR_EQUAL_COUNT - 1) / (ES.TOTAL_COUNT - 1)) * 100)))
+            END AS EXPENSE_PERCENTILE
+        FROM expense_stats ES, my_rank MR
+        ]]>
+    </select>
 
+    <!-- 계정 찾기   -->
+    <select id="findMemberAccount" parameterType="map" resultMap="memberResultMap">
+        SELECT MEMBER_NO, EMAIL
+        FROM MEMBER
+        WHERE PHONE = #{phone}
+        AND PWD = #{pwd}
+    </select>
 
+    <!-- 비밀번호 찾기 -->
+    <select id="findMemberPassword" parameterType="map" resultMap="memberResultMap">
+        SELECT MEMBER_NO, USER_NAME, EMAIL
+        FROM MEMBER
+        WHERE USER_NAME = #{userName}
+          AND EMAIL = #{email}
+    </select>
+
+    <update id="updateMemberPassword" parameterType="map">
+        UPDATE MEMBER
+        SET PWD = #{pwd}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <select id="updateMemberPasswordCheck" parameterType="map" resultMap="memberResultMap">
+        SELECT MEMBER_NO, USER_NAME, EMAIL, PWD
+        FROM MEMBER
+        WHERE USER_NAME = #{userName}
+        AND EMAIL = #{email}
+        AND PWD = #{pwd}
+    </select>
 </mapper>

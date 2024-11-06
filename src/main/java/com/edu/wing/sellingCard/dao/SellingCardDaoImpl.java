@@ -11,25 +11,19 @@ import java.util.Map;
 
 @Repository
 public class SellingCardDaoImpl implements SellingCardDao {
-
   @Autowired
   private SqlSession sqlSession;
 
   private final String namespace = "com.edu.wing.sellingCard.";
 
   @Override
-  public List<SellingCardVo> sellingCardSelectList(int start, int end, int cardNo) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("start", start);
-    map.put("end", end);
-    map.put("cardNo", cardNo);
-
+  public List<SellingCardVo> sellingCardSelectList(Map<String, Object> map) {
     return sqlSession.selectList(namespace + "sellingCardSelectList", map);
   }
 
   @Override
-  public int sellingCardSelectTotalCount(int cardNo) {
-    return sqlSession.selectOne(namespace + "sellingCardSelectTotalCount", cardNo);
+  public int sellingCardSelectTotalCount(Map<String, Object> map) {
+    return sqlSession.selectOne(namespace + "sellingCardSelectTotalCount", map);
   }
 
   @Override
@@ -65,5 +59,25 @@ public class SellingCardDaoImpl implements SellingCardDao {
   @Override
   public int deleteCardSoft(int memberNo) {
     return sqlSession.update(namespace + "deleteCardSoft", memberNo);
+  }
+  
+  @Override
+  public List<HashMap<String, Object>> totalCardsSoldLast5Years() {
+    return sqlSession.selectList(namespace + "totalCardsSoldLast5Years");
+  }
+
+  @Override
+  public List<HashMap<String, Object>> recommendedCardsPurchasedLast5Years() {
+    return sqlSession.selectList(namespace + "recommendedCardsPurchasedLast5Years");
+  }
+
+  @Override
+  public List<HashMap<String, Object>> terminatedCardsLast5Years() {
+    return sqlSession.selectList(namespace + "terminatedCardsLast5Years");
+  }
+
+  @Override
+  public void memberPurchaseRecommendedCard(SellingCardVo sellingCardVo) {
+    sqlSession.insert(namespace + "memberPurchaseRecommendedCard", sellingCardVo);
   }
 }
