@@ -40,6 +40,15 @@
         </form>
       </div>
 
+      <div class="card--count one-line">
+        <div class="label-container bg__gray text__black text__center text__semibold">
+          <label for="totalCount" class="count--label">등록된 카드 수</label>
+        </div>
+        <div class="input-container">
+          <input id="totalCount" class="count--input" value="${pagingMap.totalCount}" readonly/>
+        </div>
+      </div>
+
       <div class="btn-container">
         <a href="/admin/productManagement/list/card/insert?curPage=${pagingMap.pagingVo.curPage}&categoryName=${categoryName}" class="btn btn__generate btn__p">카드 추가</a>
       </div>

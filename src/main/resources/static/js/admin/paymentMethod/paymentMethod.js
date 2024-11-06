@@ -38,11 +38,11 @@ $(".remove-pm-btn").click(function(e) {
     url: `/admin/paymentMethod/delete/${no}`,
     type: 'GET',
     success: function (res) {
-
       if (res.totalCount > 0) {
         alert(res.alertMsg);
         return;
       }
+
       // 진짜로 삭제하는 함수 호출
       paymentMethodDelete(no);
     }, error: function() {

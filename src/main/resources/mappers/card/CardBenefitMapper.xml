@@ -31,5 +31,13 @@
         INSERT INTO CARD_BENEFIT (CARD_BENEFIT_NO, CARD_NO, CARD_BENEFIT_DIVISION, CARD_BENEFIT_DETAIL, CARD_PERCENTAGE)
         VALUES (CARD_BENEFIT_NO_SEQ.NEXTVAL, #{cardNo}, #{cardBenefitDivision}, #{cardBenefitDetail}, #{cardPercentage})
     </insert>
+
+    <select id="userAccountBookDiscountRateList" parameterType="int" resultMap="cardBenefitResultMap">
+        SELECT SUBSTR(CARD_BENEFIT_DIVISION, 1, LENGTH(CARD_BENEFIT_DIVISION) - 2) AS CARD_BENEFIT_DIVISION, CB.CARD_PERCENTAGE
+        FROM CARD_BENEFIT CB
+        JOIN CARD C ON CB.CARD_NO = C.CARD_NO
+        JOIN SELLING_CARD SC ON C.CARD_NO = SC.CARD_NO
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
 </mapper>
 

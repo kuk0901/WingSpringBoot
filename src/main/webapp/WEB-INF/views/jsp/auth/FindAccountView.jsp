@@ -5,43 +5,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SignIn</title>
-  <link rel="stylesheet" href="/css/auth/signin.css" />
-  <script defer type="module" src="/js/auth/signin.js"></script>
+  <title>계정 찾기</title>
+  <link rel="stylesheet" href="/css/auth/findAccount.css" />
+  <script defer type="module" src="/js/auth/findAccount.js"></script>
 </head>
 <body>
-  <jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
-    <jsp:param value="${alertMsg}" name="alertMsg" />
-  </jsp:include>
 
   <jsp:include page="/WEB-INF/views/jsp/components/Header.jsp" />
 
   <!-- form container -->
   <div class="form-container">
     <div class="subject-container bg__red">
-      <h2 class="subject text__white">슬기롭게 소비 생활하기</h2>
+      <h2 class="subject text__white">계정 찾기</h2>
     </div>
 
-    <form id="signinForm" class="signin-form">
-      <div class="signin-container">
+    <div class="error-container text__center">
+      <div id="errorMsg" class="text__error">존재하지 않는 회원입니다.</div>
+    </div>
+
+    <form id="findAccountForm" class="find-account-form">
+      <div class="account-container">
         <div class="label-container">
-          <label for="email" class="text__white">이메일</label>
+          <label for="phone" class="text__white">휴대폰 번호</label>
         </div>
-        <div class="input-container email-check-orison">
+        <div class="input-container">
           <input
-              id="email"
-              name="email"
-              type="email"
+              type="tel"
+              id="phone"
+              name="phone"
               required
-              pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-              placeholder="이메일을 작성해 주세요."
+              pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
+              placeholder="ex) 01012345678"
               class="signin--input__m"
-              autocomplete="username"
+              maxlength="14"
           />
         </div>
       </div>
 
-      <div class="signin-container">
+      <div class="account-container">
         <div class="label-container">
           <label for="pwd" class="text__white">패스워드</label>
         </div>
@@ -60,19 +61,19 @@
       </div>
 
       <div class="submit-container">
-        <input type="submit" class="btn btn__sign text__white" value="SignIn" />
+        <input id="submit" type="submit" class="btn btn__sign text__white" value="Find" />
       </div>
     </form>
 
     <div class="sub-container">
       <div class="find-container">
-        <a href="auth/find/account" class="text__white">계정 찾기</a>
+        <a href="/" class="text__white">로그인</a>
       </div>
       <div class="find-container">
-        <a href="auth/find/password" class="text__white">비밀번호 찾기</a>
+        <a href="${pageContext.request.contextPath}/auth/find/password" class="text__white">비밀번호 찾기</a>
       </div>
       <div class="signup-container">
-        <a href="auth/signup" class="text__white">회원가입</a>
+        <a href="${pageContext.request.contextPath}/auth/signup" class="text__white">회원가입</a>
       </div>
     </div>
   </div>

@@ -1,5 +1,3 @@
-import { showAlertMsg } from "../../util/toast.js";
-
 let tosData, cautionData;
 
 $.getJSON('/js/data/termsOfService.json', function(data) {
@@ -78,7 +76,7 @@ function createDetailView(data) {
       
       <section class="side-container">
         <div class="btn-container">
-          <a href="./list?cardNo=${cardVo.cardNo}&curPage?${data.curPage}&categoryName=${data.categoryName}" class="btn btn__generate">돌아가기</a>
+          <a href="./list?cardNo=${cardVo.cardNo}&curPage=${data.curPage}&categoryName=${data.categoryName}" class="btn btn__generate">돌아가기</a>
         </div>
       </section>
       
@@ -127,11 +125,4 @@ function createDetailView(data) {
   `;
 
   $("#content").html(cardDetail);
-
-  // 돌아가기 버튼에 이벤트 리스너 추가
-  $("#listMove").click(function() {
-    const curPage = $(this).data('cur-page');
-    const cardNo = $(this).data('card-no');
-    window.location.href = `/admin/api/salesDashboard/list?curPage=${data.curPage}&cardNo=${cardVo.cardNo}&categoryName=${data.categoryName}`;
-  });
 }

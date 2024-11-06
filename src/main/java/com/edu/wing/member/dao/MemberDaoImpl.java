@@ -88,4 +88,25 @@ public class MemberDaoImpl implements MemberDao {
   public void updateMemberQuitApply(MemberVo memberVo) {
     sqlSession.update(namespace + "updateMemberQuitApply", memberVo);
   }
+
+  @Override
+  public MemberVo findMemberAccount(Map<String, String> map) {
+    return sqlSession.selectOne(namespace + "findMemberAccount", map);
+  }
+
+  @Override
+  public MemberVo findMemberPassword(Map<String, String> map) {
+    return sqlSession.selectOne(namespace + "findMemberPassword", map);
+  }
+
+  @Override
+  public void updateMemberPassword(Map<String, String> map) {
+    sqlSession.update(namespace + "updateMemberPassword", map);
+  }
+
+  @Override
+  public MemberVo updateMemberPasswordCheck(Map<String, String> map) {
+    return sqlSession.selectOne(namespace + "updateMemberPasswordCheck", map);
+  }
+
 }

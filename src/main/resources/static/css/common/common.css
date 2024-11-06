@@ -419,11 +419,15 @@ footer .cs:hover {
 }
 
 .form-container .signin-form .signin-container,
-.form-container .signup-form .signup-container {
+.form-container .signup-form .signup-container,
+.form-container .find-account-form .account-container,
+.form-container .find-password-form .password-container {
   margin: 20px auto;
 }
 
-.form-container .signin-form .signin-container {
+.form-container .signin-form .signin-container,
+.form-container .find-account-form .account-container,
+.form-container .find-password-form .password-container {
   width: 400px;
 }
 
@@ -432,7 +436,9 @@ footer .cs:hover {
 }
 
 .form-container .signup-form .signup-container .label-container,
-.form-container .signin-form .signin-container .label-container {
+.form-container .signin-form .signin-container .label-container,
+.form-container .find-account-form .account-container .label-container,
+.form-container .find-password-form .password-container .label-container {
   margin: 10px auto;
 }
 
@@ -456,7 +462,7 @@ footer .cs:hover {
   list-style-type: none;
   overflow: hidden;
   background-color: var(--color-white);
-  width: 250px;
+  width: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -470,6 +476,7 @@ footer .cs:hover {
   text-align: center;
   padding: 10px;
   text-decoration: none;
+  font-size: 17px;
 }
 
 .paging .paging--list .paging--item .btn__paging:hover {
@@ -481,6 +488,16 @@ footer .cs:hover {
 .paging .paging--list .paging--item .btn__paging.paging__active {
   color: var(--color-correct);
   font-weight: bold;
+}
+
+.paging .paging--list .paging--item .btn__paging.left-arrow,
+.paging .paging--list .paging--item .btn__paging.right-arrow {
+  transition: filter 0.3s ease;
+}
+
+.paging .paging--list .paging--item .btn__paging.left-arrow:hover img,
+.paging .paging--list .paging--item .btn__paging.right-arrow:hover img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
 /* alert */
@@ -523,6 +540,7 @@ footer .cs:hover {
   font-size: 16px;
   margin-top: 0;
   margin-bottom: 0;
+  line-height: 1.5;
 }
 
 .toast__content{
@@ -578,4 +596,25 @@ footer .cs:hover {
 /* hidden */
 .hidden-ui {
   height: 70px;
+}
+
+/* nav site-title animation */
+nav .site-title-container .site-title {
+  background: linear-gradient(to right, #ffffff 40%, #3c99f6 40%, #ffffff 60%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientMove 6s linear infinite;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0);
+  font-size: 18px;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }

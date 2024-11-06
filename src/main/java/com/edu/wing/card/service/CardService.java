@@ -13,4 +13,7 @@ public interface CardService {
   boolean cardExist(String cardName);
   int insertCardAndBenefits(Map<String, String> formData, MultipartFile file, String benefitsJson);
   boolean softDeleteCardAndVerify(int cardNo);
+  List<CardVo> userShowCardSelectList(int start, int end, String categoryName);
+  int userShowCardSelectTotalCount(String categoryName);
+  CardVo getCardByName(String cardName);
 }

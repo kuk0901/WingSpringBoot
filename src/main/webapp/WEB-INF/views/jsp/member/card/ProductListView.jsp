@@ -44,7 +44,7 @@
                 <option value="Shopping" ${categoryName == 'Shopping' ? "selected" : ""}>Shopping</option>
                 <option value="Daily" ${categoryName == 'Daily' ? "selected" : ""}>Daily</option>
               </select>
-              <input type="submit" value="검색" class="btn btn__generate"/>
+              <input type="submit" value="찾기" class="btn btn__generate"/>
             </form>
           </div>
         </div>

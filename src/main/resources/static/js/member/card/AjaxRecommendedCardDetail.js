@@ -251,7 +251,7 @@ function createDetailView(data) {
     }
 
     $.ajax("", {
-      url: `/member/api/sellingCard/purchase/general`,
+      url: `/member/api/sellingCard/purchase/recommend`,
       contentType: 'application/json',
       type: 'POST',
       data: JSON.stringify({ sellingCardVo: sellingCardData, accountBookVo: accountBookData }),
@@ -273,20 +273,3 @@ function createDetailView(data) {
     })
   })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,5 +90,27 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public void updateMemberQuitApply(MemberVo memberVo) {
     memberDao.updateMemberQuitApply(memberVo);
+  }
+
+  @Override
+  public MemberVo findMemberAccount(Map<String, String> map) {
+    return memberDao.findMemberAccount(map);
+  }
+
+  @Override
+  public MemberVo findMemberPassword(Map<String, String> map) {
+    return memberDao.findMemberPassword(map);
+  }
+
+  @Override
+  @Transactional
+  public boolean changeMemberPasswordAndValidate(Map<String, String> map) {
+    memberDao.updateMemberPassword(map);
+
+    MemberVo memberVo = memberDao.updateMemberPasswordCheck(map);
+
+    return memberVo.getUserName().equals(map.get("userName"))
+        && memberVo.getEmail().equals(map.get("email"))
+        && memberVo.getPwd().equals(map.get("pwd"));
   }
 }

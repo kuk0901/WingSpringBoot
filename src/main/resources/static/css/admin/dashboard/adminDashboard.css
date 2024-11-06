@@ -1,0 +1,14 @@
+.totalCardsSold-container,
+.recommendedCardsPurchased-container,
+.terminatedCards-container {
+  margin-bottom: 100px;
+  height: 700px;
+}
+
+.totalCardsSold-container .main-container canvas,
+.recommendedCardsPurchased-container .main-container canvas,
+.terminatedCards-container .main-container canvas {
+  height: 600px;
+  width: 90%;
+  margin: auto;
+}
