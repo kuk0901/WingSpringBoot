@@ -24,7 +24,7 @@
 
     <div class="search-container one-line">
       <div class="btn-container">
-        <a id="addInquiry" class="btn btn__generate btn__inquiry" href="./add">
+        <a id="addInquiryView" class="btn btn__generate btn__inquiry" href="./add">
           문의하기
         </a>
       </div>
@@ -74,10 +74,10 @@
     </form>
 
   </div>
+
+  <input id="abc" type="hidden" value="${sessionScope.member.memberNo}">
 </section>
 
 </body>
-<script>
 
-</script>
 </html>

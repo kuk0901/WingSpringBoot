@@ -9,11 +9,9 @@ import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Member;
@@ -78,6 +76,22 @@ public class MemberInquiryController {
     mav.addObject("member", member); // 사용자 정보 추가
 
     return mav;
+  }
+
+  @GetMapping("/{inquiryNo}")
+  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
+    log.info(LOG_TITLE);
+    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}", inquiryNo, curPage);
+
+    Map<String, Object> resultMap = inquiryService.memberInquirySelectOne(inquiryNo);
+
+    if (resultMap == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    resultMap.put("curPage", curPage);
+
+    return ResponseEntity.ok().body(resultMap);
   }
 
 }

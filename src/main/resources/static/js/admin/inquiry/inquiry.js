@@ -232,20 +232,18 @@ function createUpdateView(res) {
 
     e.preventDefault();
 
-    const inquiryNo = $(this).data("mod");
+    const inquiryCommentNo = $(this).data("mod");
     const content = $("#answerContent").val();
 
     $.ajax({
-      url: `/admin/api/cs/inquiry/update/${inquiryNo}`,
+      url: `/admin/api/cs/inquiry/update/${inquiryCommentNo}`,
       type: 'PATCH',
       contentType: 'application/json',
-      data: JSON.stringify({ CONTENT: content }),
+      data: JSON.stringify({ content: content }),
       success: function(res) {
         console.log("작업 성공:", res);
         if ($("#commentNo").val()) {
           alert("답변이 성공적으로 수정되었습니다.");
-        } else {
-          alert("새로운 답변이 성공적으로 추가되었습니다.");
         }
       },
       error: function(xhr, status, error) {

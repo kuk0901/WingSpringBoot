@@ -13,8 +13,6 @@ public interface InquiryService {
 
   Map<String, Object> inquirySelectOne(int inquiryNo);
 
-  boolean updateInquiryComment(int inquiryNo, String content);
-
   void addInquiry(InquiryVo inquiryVo);
 
   boolean addInquiryReply(int inquiryNo, String content, int memberNo);
@@ -22,5 +20,7 @@ public interface InquiryService {
   boolean updateAnswerTermination(int inquiryNo);
 
   List<InquiryVo> memberInquirySelectList(int start, int end, int memberNo);
+
+  Map<String, Object> memberInquirySelectOne(int inquiryNo);
 
 }

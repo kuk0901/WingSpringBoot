@@ -30,11 +30,6 @@
           <input type="submit" id="searchInquiry" value="검색" class="searchInquiry btn btn__generate btn__inquiry" />
         </form>
       </div>
-      <div class="sortBtn">
-        <button id="sortAnswerBtn" class="btn btn__generate sortAnswerBtn">
-          답변 미완료 우선 정렬
-        </button>
-      </div>
     </div>
 
     <main class="main-container inquiry__list">

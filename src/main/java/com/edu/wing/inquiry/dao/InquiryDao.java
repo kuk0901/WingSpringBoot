@@ -15,12 +15,12 @@ public interface InquiryDao {
 
   int insertInquiryComment(int inquiryNo, String content, int memberNo);
 
-  int updateInquiryComment(int commentNo, String content);
-
   void addInquiry(InquiryVo inquiryVo);
 
   int updateAnswerTermination(int inquiryNo);
 
   List<InquiryVo> memberInquirySelectList(Map<String, Object> map);
+
+  Map<String, Object> memberInquirySelectOne(int inquiryNo);
 
 }

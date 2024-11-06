@@ -32,7 +32,9 @@
             <include refid="search" />
         </where>
         <![CDATA[
-            ORDER BY INQUIRY_NO DESC
+            ORDER BY
+                CASE WHEN ANSWER_TERMINATION = 'N' THEN 0 ELSE 1 END,
+                CRE_DATE
         ) I
         WHERE ROWNUM <= #{end}
     )
@@ -88,14 +90,33 @@
         ORDER BY CRE_DATE DESC
     </select>
 
-    <insert id="addInquiry" parameterType="inquiryVo">
-        INSERT INTO INQUIRY (TITLE, DIVISION, EMAIL, CRE_DATE, CONTENT)
-        VALUES (#{title}, #{division}, #{email}, #{creDate}, #{content})
-    </insert>
-
     <insert id="insertInquiryComment" parameterType="map">
         INSERT INTO INQUIRY_COMMENT (INQUIRY_COMMENT_NO, INQUIRY_NO, CONTENT, MEMBER_NO)
         VALUES (INQUIRY_COMMENT_NO_SEQ.NEXTVAL, #{inquiryNo}, #{content}, #{memberNo})
     </insert>
+
+    <update id="updateAnswerTermination" parameterType="int">
+        UPDATE INQUIRY
+        SET ANSWER_TERMINATION = 'Y'
+        WHERE INQUIRY_NO = #{inquiryNo}
+    </update>
+
+    <insert id="addInquiry" parameterType="inquiryVo">
+        INSERT INTO INQUIRY (INQUIRY_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, DIVISION, CRE_DATE, CONTENT)
+        VALUES (INQUIRY_NO_SEQ.NEXTVAL,1, #{memberNo}, #{title}, #{division}, #{creDate}, #{content})
+    </insert>
+
+    <select id="memberInquirySelectOne" parameterType="int" resultType="map">
+        SELECT I.INQUIRY_NO AS inquiryNo, I.TITLE, I.DIVISION, M.EMAIL AS inquiryWriterEmail, I.CRE_DATE AS inquiryDate,
+               I.CONTENT AS inquiryContent, MEM.EMAIL AS answerWriterEmail,
+               IC.INQUIRY_COMMENT_NO AS inquiryCommentNo,
+               IC.CONTENT AS answerContent, IC.CRE_DATE AS answerDate,
+               CASE WHEN IC.CONTENT IS NOT NULL THEN 'Y' ELSE 'N' END AS answerTermination
+        FROM INQUIRY I
+                 JOIN MEMBER M ON I.MEMBER_NO = M.MEMBER_NO
+                 LEFT JOIN INQUIRY_COMMENT IC ON I.INQUIRY_NO = IC.INQUIRY_NO
+                 LEFT JOIN MEMBER MEM ON IC.MEMBER_NO = MEM.MEMBER_NO
+        WHERE I.INQUIRY_NO = #{inquiryNo}
+    </select>
 
 </mapper>

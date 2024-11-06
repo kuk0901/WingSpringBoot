@@ -38,28 +38,6 @@ public class InquiryServiceImpl implements InquiryService {
   }
 
   @Override
-  public boolean updateInquiryComment(int inquiryNo, String content) {
-    Map<String, Object> inquiry = inquiryDao.inquirySelectOne(inquiryNo);
-
-    if (inquiry == null) {
-      return false; // 문의가 존재하지 않으면 false 반환
-    }
-
-    // BigDecimal을 Integer로 안전하게 변환
-    Integer commentNo = inquiry.get("INQUIRYCOMMENTNO") != null
-        ? ((BigDecimal) inquiry.get("INQUIRYCOMMENTNO")).intValue()
-        : null;
-
-    if (commentNo != null) {
-      // 기존 답변이 있는 경우, 답변을 수정
-      return inquiryDao.updateInquiryComment(commentNo, content) > 0;
-    } else {
-      // 답변이 없는 경우 false 반환
-      return false;
-    }
-  }
-
-  @Override
   public void addInquiry(InquiryVo inquiryVo) {
     inquiryDao.addInquiry(inquiryVo);
   }
@@ -88,6 +66,11 @@ public class InquiryServiceImpl implements InquiryService {
     map.put("memberNo", memberNo);
 
     return inquiryDao.memberInquirySelectList(map);
+  }
+
+  @Override
+  public Map<String, Object> memberInquirySelectOne(int inquiryNo) {
+    return inquiryDao.memberInquirySelectOne(inquiryNo);
   }
 
 }

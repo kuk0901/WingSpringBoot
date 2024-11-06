@@ -1,6 +1,7 @@
 package com.edu.wing.inquiry.controller;
 
 import com.edu.wing.inquiry.service.InquiryService;
+import com.edu.wing.inquiryComment.service.InquiryCommentService;
 import com.edu.wing.member.domain.MemberVo;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ public class AdminApiInquiryController {
 
   @Autowired
   private InquiryService inquiryService;
+
+  @Autowired
+  private InquiryCommentService inquiryCommentService;
 
   @GetMapping("/{inquiryNo}")
   public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
@@ -57,13 +61,13 @@ public class AdminApiInquiryController {
     }
   }
 
-  @PatchMapping("/update/{inquiryNo}")
-  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryNo, @RequestBody Map<String, String> updateData) {
+  @PatchMapping("/update/{inquiryCommentNo}")
+  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestBody Map<String, String> updateData) {
     log.info(LOG_TITLE);
-    log.info("updateInquiryComment PATCH inquiryNo: {}, content: {}", inquiryNo, updateData.get("CONTENT"));
+    log.info("updateInquiryComment PATCH inquiryCommentNo: {}, content: {}", inquiryCommentNo, updateData.get("content"));
 
     try {
-      boolean updated = inquiryService.updateInquiryComment(inquiryNo, updateData.get("CONTENT"));
+      boolean updated = inquiryCommentService.updateInquiryComment(inquiryCommentNo, updateData.get("content"));
       if (updated) {
         return ResponseEntity.ok().body("Comment updated successfully");
       } else {
@@ -107,15 +111,22 @@ public class AdminApiInquiryController {
     }
 
     try {
+      // 1. 답변 추가
       boolean added = inquiryService.addInquiryReply(inquiryNo, replyData.get("CONTENT"), member.getMemberNo());
-      if (added) {
-        return ResponseEntity.ok().body("Reply added successfully");
-      } else {
+      if (!added) {
         return ResponseEntity.notFound().build();
       }
+
+      // 2. 답변 상태 업데이트
+      boolean updated = inquiryService.updateAnswerTermination(inquiryNo);
+      if (!updated) {
+        log.warn("Failed to update answer termination status for inquiryNo: {}", inquiryNo);
+      }
+
+      return ResponseEntity.ok().body("Reply added successfully and status updated");
     } catch (Exception e) {
-      log.error("Error adding inquiry reply", e);
-      return ResponseEntity.internalServerError().body("Error adding reply");
+      log.error("Error adding inquiry reply or updating status", e);
+      return ResponseEntity.internalServerError().body("Error processing reply");
     }
   }
 

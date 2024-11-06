@@ -42,14 +42,6 @@ public class InquiryDaoImpl implements InquiryDao {
   }
 
   @Override
-  public int updateInquiryComment(int commentNo, String content) {
-    Map<String, Object> params = new HashMap<>();
-    params.put("commentNo", commentNo);
-    params.put("content", content);
-    return sqlSession.update(NAMESPACE + "updateInquiryComment", params);
-  }
-
-  @Override
   public void addInquiry(InquiryVo inquiryVo) {
     sqlSession.insert(NAMESPACE + "addInquiry", inquiryVo);
   }
@@ -62,5 +54,10 @@ public class InquiryDaoImpl implements InquiryDao {
   @Override
   public List<InquiryVo> memberInquirySelectList(Map<String, Object> map) {
     return sqlSession.selectList(NAMESPACE + "memberInquirySelectList", map);
+  }
+
+  @Override
+  public Map<String, Object> memberInquirySelectOne(int inquiryNo) {
+    return sqlSession.selectOne(NAMESPACE + "memberInquirySelectOne", inquiryNo);
   }
 }
