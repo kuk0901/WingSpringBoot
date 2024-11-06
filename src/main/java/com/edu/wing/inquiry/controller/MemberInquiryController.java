@@ -5,7 +5,6 @@ import com.edu.wing.inquiry.service.InquiryService;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.util.Paging;
 import jakarta.servlet.http.HttpSession;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -59,7 +57,7 @@ public class MemberInquiryController {
     return mav;
   }
 
-  @GetMapping("/add")
+  @GetMapping("/list/add")
   public ModelAndView inquiryAdd(HttpSession httpSession) {
     log.info("{} - Retrieving @GetMapping inquiryAdd", LOG_TITLE);
 
@@ -78,7 +76,7 @@ public class MemberInquiryController {
     return mav;
   }
 
-  @GetMapping("/{inquiryNo}")
+  @GetMapping("/list/{inquiryNo}")
   public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
     log.info(LOG_TITLE);
     log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}", inquiryNo, curPage);

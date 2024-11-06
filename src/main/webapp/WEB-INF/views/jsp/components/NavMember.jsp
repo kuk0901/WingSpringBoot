@@ -11,7 +11,7 @@
 >
   <ul class="btn-container logo-container">
     <li>
-      <a href="${pageContext.request.contextPath}/member/main" id="logoLink">
+      <a href="${pageContext.request.contextPath}/member/accountBook/list" id="logoLink">
         <img src="/img/logo.png" alt="WING_ logo" class="logo" />
       </a>
     </li>

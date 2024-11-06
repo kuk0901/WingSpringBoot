@@ -75,7 +75,15 @@ export function formatString(input) {
   return input.replace(/(\w{4})(?=\w)/g, "$1-");
 }
 
-
+/**
+ * 가계부에서 금액을 포맷팅
+ * @param {number} paymentAmount
+ * @returns {string}
+ */
+export function formatPaymentAmountNumber(paymentAmount) {
+  // 절대값으로 변환 + 3자리마다 콤마 추가
+  return Math.abs(Math.floor(paymentAmount)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 
