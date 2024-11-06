@@ -70,7 +70,6 @@ public class SellingCardServiceImpl implements SellingCardService {
 
     try {
       sellingCardDao.memberPurchaseCard(sellingCardVo);
-      resultMap.put(STATUS, STATUS_SUCCESS);
 
       SellingCardVo checkSellingCardVo = sellingCardDao.memberPurchaseCardCheck(sellingCardVo);
 
