@@ -42,7 +42,7 @@ public class MemberApiInquiryController {
     return ResponseEntity.ok().body(resultMap);
   }
 
-  @PostMapping("/add")
+  @PostMapping("/list/add")
   public ResponseEntity<?> addInquiry(@RequestBody InquiryVo inquiryVo, HttpSession httpsSession) {
     log.info(LOG_TITLE);
     log.info("addInquiry inquiryVo: {}", inquiryVo);
