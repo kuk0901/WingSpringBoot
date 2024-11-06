@@ -11,4 +11,5 @@ public interface PostService {
 
   List<PostVo> postSelectList(int start, int end, String postSearch, int noticeBoardNo);
 
+  void addPost(PostVo postVo);
 }

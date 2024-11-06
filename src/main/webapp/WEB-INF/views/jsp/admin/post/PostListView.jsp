@@ -31,7 +31,7 @@
         </form>
       </div>
       <div class="addBtn-container">
-        <a class="btn btn__generate addMove text__center" href="./list/add">
+        <a class="btn btn__generate addMove text__center" href="./list/add?noticeBoardNo=${postVo.noticeBoardNo}">
           공지사항 추가
         </a>
       </div>
@@ -51,6 +51,7 @@
             <div class="bg__white">
               <c:forEach items="${postList}" var="postVo" >
                 <div class="list-container list-content one-line " data-post-no="${postVo.postNo}">
+                  <input type="hidden" id="notice_no" value="${postVo.noticeBoardNo}">
                   <div class="list--supply text__center">${postVo.postNo}</div>
                   <div class="list--title text__center">${postVo.title}</div>
                   <div class="list--date text__center">

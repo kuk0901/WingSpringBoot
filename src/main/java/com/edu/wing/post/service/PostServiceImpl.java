@@ -34,4 +34,9 @@ public class PostServiceImpl implements PostService{
     return postDao.postSelectList(map);
   }
 
+  @Override
+  public void addPost(PostVo postVo) {
+    postDao.addPost(postVo);
+  }
+
 }

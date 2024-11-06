@@ -63,7 +63,7 @@ public class AdminPostController {
   }
 
   @GetMapping("/list/add")
-  public ModelAndView postAdd(HttpSession httpSession) {
+  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo, HttpSession httpSession) {
     log.info("{} - Retrieving @GetMapping postAdd", LOG_TITLE);
 
     LocalDate currentDate = LocalDate.now();
@@ -71,10 +71,16 @@ public class AdminPostController {
     String formattedDate = currentDate.format(formatter);
 
     MemberVo member = (MemberVo) httpSession.getAttribute("member");
+    if (member == null) {
+      log.warn("Member is not found in session.");
+    } else {
+      log.info("Member found: {}", member);
+    }
 
     ModelAndView mav = new ModelAndView("jsp/admin/post/PostAddView");
     mav.addObject("currentDate", formattedDate);
     mav.addObject("member", member);
+    mav.addObject("noticeBoardNo", noticeBoardNo);
 
     return mav;
   }

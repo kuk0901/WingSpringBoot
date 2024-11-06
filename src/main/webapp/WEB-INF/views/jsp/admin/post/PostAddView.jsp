@@ -25,7 +25,8 @@
     <main class="main-container bg__white">
       <div class="post-container">
         <div class="post-title one-line">
-          <input type="hidden" id="postNo"  value="${member.memberNo}">
+          <input type="hidden" id="memberNo"  value="${member.memberNo}">
+          <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
 
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
           <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
@@ -54,7 +55,7 @@
         </button>
       </div>
       <div class="btn-container">
-        <button id="addpost" class="btn btn__generate listMove text__center">
+        <button id="addPost" class="btn btn__generate listMove text__center">
           문의 등록
         </button>
       </div>
