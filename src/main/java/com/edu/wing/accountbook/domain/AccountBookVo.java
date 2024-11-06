@@ -16,7 +16,7 @@ public class AccountBookVo {
   private Long  paymentMethodNo;
   private Date creDate;
   private String content;
-  private String paymentAmount;
+  private int paymentAmount;
   //나중에 삭제예정?
 
   // 카테고리 이름 및 결제 방법 이름
