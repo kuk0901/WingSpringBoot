@@ -50,4 +50,19 @@ public class CardDaoImpl implements CardDao {
     return sqlSession.selectOne(namespace + "checkCardDeletedStatus", cardNo);
   }
 
+  @Override
+  public List<CardVo> userShowCardSelectList(Map<String, String> map) {
+    return sqlSession.selectList(namespace + "userShowCardSelectList", map);
+  }
+
+  @Override
+  public int userShowCardSelectTotalCount(String categoryName) {
+    return sqlSession.selectOne(namespace + "userShowCardSelectTotalCount", categoryName);
+  }
+
+  @Override
+  public CardVo getCardByName(String cardName) {
+    return sqlSession.selectOne(namespace + "cardExist", cardName);
+  }
+
 }

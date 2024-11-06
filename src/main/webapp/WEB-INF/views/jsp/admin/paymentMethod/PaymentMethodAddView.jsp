@@ -8,7 +8,7 @@
   <title>PaymentMethodView</title>
   <%--    <jsp:include page="/WEB-INF/views/jsp/common/common.jsp" />--%>
   <link rel="stylesheet" href="/css/admin/paymentMethod/adminPaymentMethod.css" />
-  <script defer src="/js/admin/paymentMethod/paymentMethod.js"></script>
+  <script defer type="module" src="/js/admin/paymentMethod/paymentMethod.js"></script>
 </head>
 <body>
 

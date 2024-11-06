@@ -13,4 +13,7 @@ public interface CardDao {
   void cardInsert(Map<String, String> map);
   void markCardAsDeleted(int cardNo);
   CardVo checkCardDeletedStatus(int cardNo);
+  List<CardVo> userShowCardSelectList(Map<String, String> map);
+  int userShowCardSelectTotalCount(String categoryName);
+  CardVo getCardByName(String cardName);
 }

@@ -6,7 +6,6 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.sellingCard.service.SellingCardService;
 import com.edu.wing.util.CardBenefitUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/member/api/product")
 public class MemberApiCardController {
-  private final Logger log = LoggerFactory.getLogger(MemberApiCardController.class);
+  private final Logger log = LoggerFactory.getLogger(MemberCardController.class);
 
   private final String STATUS = "status";
   private final String STATUS_SUCCESS = "success";
@@ -37,9 +36,7 @@ public class MemberApiCardController {
 
   @GetMapping("/card-detail/{cardNo}")
   public ResponseEntity<?> productDetail(HttpSession session, @PathVariable("cardNo") String cardNo, @RequestParam(defaultValue = "1") int curPage
-      , @RequestParam(defaultValue = "all") String categoryName, HttpServletRequest request) {
-    log.info("@GetMapping productDetail cardNo: {}, curPage: {}, categoryName: {}", cardNo, curPage, categoryName);
-
+      , @RequestParam(defaultValue = "all") String categoryName) {
     CardVo cardVo = cardService.cardSelectOne(Integer.parseInt(cardNo));
 
     List<CardBenefitVo> allBenefits = cardBenefitService.cardBenefitSelectList();

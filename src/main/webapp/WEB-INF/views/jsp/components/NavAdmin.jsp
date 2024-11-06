@@ -17,6 +17,10 @@
       </li>
     </ul>
 
+    <ul class="site-title-container">
+      <li class="site-title text__center text__semibold">스마트한 가계부 서비스</li>
+    </ul>
+
     <ul class="btn-container user-container">
       <c:if test="${not empty sessionScope.member}">
         <li>
@@ -38,7 +42,7 @@
 
   <ul class="btn-container" aria-label="주요 관리 메뉴">
     <li>
-      <a href="#" class="btn btn__blue move-page" aria-current="page"
+      <a href="${pageContext.request.contextPath}/admin/dashboard/card" class="btn btn__blue move-page" aria-current="page"
       >대시보드</a
       >
     </li>

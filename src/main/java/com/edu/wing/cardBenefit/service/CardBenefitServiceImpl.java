@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class CardBenefitServiceImpl implements CardBenefitService {
-
   @Autowired
   private CardBenefitDao cardBenefitDao;
 
@@ -26,5 +25,10 @@ public class CardBenefitServiceImpl implements CardBenefitService {
   @Override
   public List<CardBenefitVo> cardBenefitSelectListOne(int cardNo) {
     return cardBenefitDao.cardBenefitSelectListOne(cardNo);
+  }
+
+  @Override
+  public List<CardBenefitVo> userAccountBookDiscountRateList(int memberNo) {
+    return cardBenefitDao.userAccountBookDiscountRateList(memberNo);
   }
 }

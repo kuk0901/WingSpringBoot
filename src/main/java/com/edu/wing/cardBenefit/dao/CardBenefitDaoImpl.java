@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public class CardBenefitDaoImpl implements CardBenefitDao {
-
   @Autowired
   private SqlSession sqlSession;
 
@@ -33,5 +32,10 @@ public class CardBenefitDaoImpl implements CardBenefitDao {
   @Override
   public void cardBenefitInsertOne(CardBenefitVo cardBenefitVo) {
     sqlSession.insert(namespace + "cardBenefitInsertOne", cardBenefitVo);
+  }
+
+  @Override
+  public List<CardBenefitVo> userAccountBookDiscountRateList(int memberNo) {
+    return sqlSession.selectList(namespace + "userAccountBookDiscountRateList", memberNo);
   }
 }

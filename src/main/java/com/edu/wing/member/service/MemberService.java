@@ -24,4 +24,9 @@ public interface MemberService {
   MemberVo getMyPageInfo(int memberNo);  // 회원 정보 조회 메서드
   void updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
+
+  MemberVo findMemberAccount(Map<String, String> map);
+  MemberVo findMemberPassword(Map<String, String> map);
+
+  boolean changeMemberPasswordAndValidate(Map<String, String> map);
 }

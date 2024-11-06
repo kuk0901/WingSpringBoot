@@ -16,7 +16,6 @@ setInitialState();
 
 $contentEl.on('scroll', _.throttle(function () {
   const scrollTop = $contentEl.scrollTop();
-  console.log('Current scroll position:', scrollTop);
 
   if (scrollTop > 500) {
     // 버튼 보이기!

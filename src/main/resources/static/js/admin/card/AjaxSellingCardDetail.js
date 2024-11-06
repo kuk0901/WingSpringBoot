@@ -4,13 +4,13 @@ $('.list-content').click(function() {
   const sellingCardNo = $(this).data('selling-card-no');
   const curPage = $('#curPage').val();
   const cardNo = $('#cardNo').val();
+  const termination = $('#termination').val();
 
   $.ajax({
     url: `/admin/api/salesDashboard/${sellingCardNo}`,
     type: 'GET',
-    data: { curPage: curPage, cardNo: cardNo },
+    data: { curPage: curPage, cardNo: cardNo, termination: termination },
     success: function(res) {
-      console.log('Server response:', res)
       createDetailView(res);
     },
     error: function(xhr, status, error) {
@@ -60,7 +60,7 @@ function createDetailView(data) {
     </main>
     
     <div class="btn-container">
-      <button id="listMove" class="btn btn__generate btn__p" data-cur-page="${data.curPage}" data-card-no="${data.cardNo}">
+      <button id="listMove" class="btn btn__generate btn__p" data-cur-page="${data.curPage}" data-card-no="${data.cardNo}" data-termination="${data.termination}">
         돌아가기
       </button>
     </div>
@@ -70,8 +70,9 @@ function createDetailView(data) {
 
   // 돌아가기 버튼에 이벤트 리스너 추가
   $("#listMove").click(function() {
-    const curPage = $(this).data('cur-page');
-    const cardNo = $(this).data('card-no');
-    window.location.href = `/admin/salesDashboard/list?curPage=${curPage}&cardNo=${cardNo}`;
+    const curPage = $(this).data("cur-page");
+    const cardNo = $(this).data("card-no");
+    const termination = $(this).data("termination")
+    window.location.href = `/admin/salesDashboard/list?curPage=${curPage}&cardNo=${cardNo}&termination=${termination}`;
   });
 }

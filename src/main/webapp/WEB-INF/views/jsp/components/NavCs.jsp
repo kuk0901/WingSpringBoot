@@ -43,19 +43,13 @@
 
   <ul class="btn-container main-content" aria-label="주요 메뉴">
     <li>
-      <a href="${pageContext.request.contextPath}/member/accountBook/list" class="btn btn__yellow text__semibold move-page" aria-current="page">
-        가계부
+      <a href="#" class="btn btn__yellow text__semibold move-page" aria-current="page">
+        공지사항
       </a>
     </li>
     <li>
-      <a href="${pageContext.request.contextPath}/member/product/list" class="btn btn__yellow text__semibold move-page">카드 종류</a>
+      <a href="#" class="btn btn__yellow text__semibold move-page">1대1 문의</a>
     </li>
-  </ul>
-
-  <span class="white-line"></span>
-
-  <ul class="btn-container content-menu" aria-label="콘텐츠 메뉴">
-    <li><a href="#" class="btn btn__yellow text__semibold move-page">게시판</a></li>
   </ul>
 
   <ul class="btn-container signout-container member-signout">

@@ -1,3 +1,4 @@
+/* header */
 body {
   background: linear-gradient(to bottom, #e6f2ff, #ffffff);
   font-family: 'Arial', sans-serif;
@@ -13,19 +14,6 @@ body {
 .header .site-subject-container {
   margin-bottom: 20px;
 }
-
-/*.header .site-subject-container .title {*/
-/*  text-align: center;*/
-/*  font-size: 38px;*/
-/*  font-weight: 900;*/
-/*  margin-bottom: 15px;*/
-/*}*/
-
-/*.header .site-subject-container .site-subject {*/
-/*  font-size: 28px;*/
-/*  color: #003366;*/
-/*  margin: 0;*/
-/*}*/
 
 .header .site-subject-container .title,
 .header .site-subject-container .site-subject {
@@ -59,7 +47,7 @@ body {
   }
 }
 
-/* 그래프 */
+/* graph */
 .animation-container {
   width: 100%;
   height: 100%;
