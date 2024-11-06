@@ -7,8 +7,8 @@
     <!--    ㄷ 한자 -->
     <c:if test="${pagingMap.pagingVo.prevBlock ne 1}">
       <li class="paging--item">
-        <a href="#" onclick="goPage(${pagingMap.pagingVo.prevBlock});" class="btn__paging">
-          <img src="/img/arrow_left.svg" alt="≪" width="16" height="16" />
+        <a href="#" onclick="goPage(${pagingMap.pagingVo.prevBlock});" class="btn__paging left-arrow">
+          <img src="/img/arrow_left.svg" alt="≪" width="20" height="20" />
         </a>
       </li>
     </c:if>
@@ -23,8 +23,8 @@
 
     <c:if test="${pagingMap.pagingVo.curBlock lt pagingMap.pagingVo.totBlock}">
       <li class="paging--item">
-        <a href="#" onclick="goPage(${pagingMap.pagingVo.nextBlock});" class="btn__paging">
-          <img src="/img/arrow_right.svg" alt="≫" width="16" height="16" />
+        <a href="#" onclick="goPage(${pagingMap.pagingVo.nextBlock});" class="btn__paging right-arrow">
+          <img src="/img/arrow_right.svg" alt="≫" width="20" height="20" />
         </a>
       </li>
     </c:if>

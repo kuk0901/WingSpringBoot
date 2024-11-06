@@ -22,7 +22,22 @@
             AND CASE MC.CATEGORY_NAME
             WHEN '교통' THEN 'Traffic'
             WHEN '쇼핑' THEN 'Shopping'
-            WHEN '일반' THEN 'Daily'
+            WHEN '생활' THEN 'Daily'
+            ELSE MC.CATEGORY_NAME
+            END = #{categoryName}
+        </if>
+    </sql>
+
+    <sql id="userShowSearch">
+        AND C.IS_DELETED = 'false'
+        <![CDATA[
+            AND C.REGISTER_DATE <= SYSDATE
+        ]]>
+        <if test="categoryName != null and categoryName != 'all'">
+            AND CASE MC.CATEGORY_NAME
+            WHEN '교통' THEN 'Traffic'
+            WHEN '쇼핑' THEN 'Shopping'
+            WHEN '생활' THEN 'Daily'
             ELSE MC.CATEGORY_NAME
             END = #{categoryName}
         </if>
@@ -41,7 +56,7 @@
                 , CASE MC.CATEGORY_NAME
                 WHEN '교통' THEN 'Traffic'
                 WHEN '쇼핑' THEN 'Shopping'
-                WHEN '일반' THEN 'Daily'
+                WHEN '생활' THEN 'Daily'
                 ELSE MC.CATEGORY_NAME
                 END AS CATEGORY_NAME
                 FROM CARD C
@@ -72,7 +87,7 @@
              , CASE MC.CATEGORY_NAME
                    WHEN '교통' THEN 'Traffic'
                    WHEN '쇼핑' THEN 'Shopping'
-                   WHEN '일반' THEN 'Daily'
+                   WHEN '생활' THEN 'Daily'
                    ELSE MC.CATEGORY_NAME
             END AS CATEGORY_NAME
         FROM CARD C
@@ -102,5 +117,80 @@
         SELECT CARD_NO, CARD_NAME, CARD_COMPANY, IS_DELETED
         FROM CARD
         WHERE CARD_NO = #{cardNo} AND IS_DELETED = 'true'
+    </select>
+
+    <select id="userShowCardSelectList" parameterType="map" resultMap="cardResultMap">
+        SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
+        , REGISTER_DATE, CATEGORY_NAME
+        FROM (
+        SELECT ROWNUM AS RNUM
+        , C.CARD_NO
+        , C.CARD_NAME
+        , C.STORED_FILE_NAME
+        , C.ORIGINAL_FILE_NAME
+        , C.REGISTER_DATE
+        , CASE MC.CATEGORY_NAME
+        WHEN '교통' THEN 'Traffic'
+        WHEN '쇼핑' THEN 'Shopping'
+        WHEN '생활' THEN 'Daily'
+        ELSE MC.CATEGORY_NAME
+        END AS CATEGORY_NAME
+        FROM CARD C
+        JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+        <where>
+            <include refid="userShowSearch" />
+        </where>
+        ORDER BY C.REGISTER_DATE DESC
+        )
+        WHERE RNUM BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="userShowCardSelectTotalCount" parameterType="String" resultType="int">
+        SELECT COUNT(CARD_NO)
+        FROM CARD C JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
+        <where>
+            <include refid="userShowSearch" />
+        </where>
+    </select>
+
+    <!-- 카드 추천 로직, 마이페이지에서 사용
+        - CARD_BENEFIT 테이블에 CARD_NO 사용해서 가져온 후 화면 꾸밈
+        - CARD_NO가 0인 경우, 화면 X(조건문 사용)
+    -->
+    <select id="userRecommendCardSelect" parameterType="int" resultType="map">
+        <![CDATA[
+        WITH monthly_counts AS (
+            SELECT TO_CHAR(TRUNC(CRE_DATE, 'MM'), 'YYYY-MM') AS month
+                , MINUS_CATEGORY_NO, COUNT(*) AS category_count
+                , ROW_NUMBER() OVER (PARTITION BY TRUNC(CRE_DATE, 'MM') ORDER BY COUNT(*) DESC) AS rn
+            FROM ACCOUNT_BOOK
+            WHERE MEMBER_NO = #{memberNo}
+            AND CRE_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -3)
+            AND CRE_DATE < TRUNC(SYSDATE, 'MM')
+            GROUP BY TRUNC(CRE_DATE, 'MM'), MINUS_CATEGORY_NO
+        ),
+        top_categories AS (
+            SELECT month, MINUS_CATEGORY_NO, category_count
+            FROM monthly_counts
+            WHERE rn = 1
+        ),
+        recommended_category AS (
+            SELECT CASE
+                WHEN COUNT(DISTINCT MINUS_CATEGORY_NO) = 1 AND COUNT(*) = 3 THEN MAX(MINUS_CATEGORY_NO)
+                ELSE 0
+                END AS recommended_category
+            FROM top_categories
+        ),
+        recommended_card AS (
+            SELECT C.CARD_NO, C.CARD_NAME
+            FROM CARD C JOIN recommended_category RC ON C.CATEGORY_NO = RC.recommended_category
+            WHERE RC.recommended_category != 0
+        )
+        SELECT RC.recommended_category AS CATEGORY_NO
+            , COALESCE(RCARD.CARD_NO, 0) AS CARD_NO
+            , COALESCE(RCARD.CARD_NAME, 'No Recommendation') AS CARD_NAME
+        FROM recommended_category RC
+        LEFT JOIN recommended_card RCARD ON 1=1
+        ]]>
     </select>
 </mapper>

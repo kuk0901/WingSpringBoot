@@ -17,7 +17,6 @@ public class AuthController {
 
   @GetMapping("/signout")
   public String signout(HttpSession session, RedirectAttributes redirectAttributes) {
-
     MemberVo member = (MemberVo) session.getAttribute("member");
     RandomAlertMessage randomAlertMessage = new RandomAlertMessage();
 
@@ -33,4 +32,10 @@ public class AuthController {
 
     return "redirect:/";
   }
+
+  @GetMapping("/find/account")
+  public String findAccount() { return "jsp/auth/FindAccountView"; }
+
+  @GetMapping("/find/password")
+  public String findPassword() { return "jsp/auth/FindPasswordView"; }
 }

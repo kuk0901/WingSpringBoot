@@ -56,11 +56,7 @@
   justify-content: space-evenly;
 }
 
-.form-container
-.signup-form
-.signup-container
-.salary-container
-.style-container {
+.form-container .signup-form .signup-container .salary-container .style-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,4 +69,8 @@
 
 .btn__sign {
   margin-bottom: 30px;
+}
+
+.form-container .sub-container a:hover {
+  text-decoration: underline;
 }

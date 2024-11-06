@@ -1,28 +1,23 @@
 package com.edu.wing.auth.controller;
 
+import com.edu.wing.cardBenefit.domain.CardBenefitVo;
+import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.member.service.MemberService;
 import com.edu.wing.util.RandomAlertMessage;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("api/auth")
 public class ApiAuthController {
-
-  private final Logger log = LoggerFactory.getLogger(ApiAuthController.class);
-
   private final String STATUS = "status";
   private final String STATUS_SUCCESS = "success";
   private final String STATUS_FAIL = "failed";
@@ -34,10 +29,11 @@ public class ApiAuthController {
   @Autowired
   MemberService memberService;
 
+  @Autowired
+  CardBenefitService cardBenefitService;
+
   @PostMapping("/signup")
   public ResponseEntity<?> signup(@RequestBody MemberVo memberVo) {
-    log.info("signup memberVo: {}", memberVo);
-
     Map<String, String> resultMap = new HashMap<>();
 
     try {
@@ -63,7 +59,6 @@ public class ApiAuthController {
 
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
     } catch (Exception e) {
-      log.error("회원가입 중 오류 발생: ", e);
       resultMap.put(STATUS, STATUS_ERROR);
       resultMap.put(ALERT_MSG, "서버 오류로 인해 회원가입이 처리되지 못했습니다. 다시 시도해 주세요.");
 
@@ -73,8 +68,6 @@ public class ApiAuthController {
 
   @PostMapping("/signin")
   public ResponseEntity<?> signin(@RequestBody MemberVo memberVo, HttpSession session) {
-    log.info("signin memberVo: {}", memberVo);
-
     Map<String, String> resultMap = new HashMap<>();
 
     try {
@@ -83,6 +76,15 @@ public class ApiAuthController {
       if (user != null) {
         // 세션에 사용자 정보 저장
         session.setAttribute("member", user);
+
+        List<CardBenefitVo> cardBenefitVoList = cardBenefitService.userAccountBookDiscountRateList(user.getMemberNo());
+
+        if (!cardBenefitVoList.isEmpty()) {
+          for (CardBenefitVo benefit : cardBenefitVoList) {
+            String key = "cardBenefit_" + benefit.getCardBenefitDivision();
+            session.setAttribute(key, benefit.getCardPercentage());
+          }
+        }
 
         resultMap.put(STATUS, STATUS_SUCCESS);
         resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
@@ -101,5 +103,64 @@ public class ApiAuthController {
       resultMap.put(ALERT_MSG, "서버 오류가 발생했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
+  }
+
+  @PostMapping("/find/account")
+  public ResponseEntity<?> findMemberAccount(@RequestBody Map<String, String> map) {
+    HashMap<String, Object> resultMap = new HashMap<>();
+
+    MemberVo member = memberService.findMemberAccount(map);
+
+    if (member == null) {
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put("errorMsg", "존재하지 않는 회원입니다.");
+
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+    }
+
+    resultMap.put(STATUS, STATUS_SUCCESS);
+    resultMap.put("member", member);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @PostMapping("/find/password")
+  public ResponseEntity<?> findMemberPassword(@RequestBody Map<String, String> map) {
+    HashMap<String, Object> resultMap = new HashMap<>();
+
+    MemberVo member = memberService.findMemberPassword(map);
+
+    if (member == null) {
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put("errorMsg", "존재하지 않는 회원입니다.");
+
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+    }
+
+    resultMap.put(STATUS, STATUS_SUCCESS);
+    resultMap.put("member", member);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  // FIXME: 비밀번호 변경 로직 추가, Mapper 작성 완료, dao-service 추가
+  @PatchMapping("/find/password")
+  public ResponseEntity<?> updateMemberPassword(@RequestBody Map<String, String> map) {
+    HashMap<String, Object> resultMap = new HashMap<>();
+
+    map.put("memberNo", String.valueOf(memberService.findMemberPassword(map).getMemberNo()));
+
+    boolean isPasswordChanged = memberService.changeMemberPasswordAndValidate(map);
+
+    if (!isPasswordChanged) {
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put(ALERT_MSG, "비밀번호 변경에 실패했습니다.");
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+    }
+
+    resultMap.put(STATUS, STATUS_SUCCESS);
+    resultMap.put(ALERT_MSG, "비밀번호가 성공적으로 변경되었습니다. 변경된 비밀번호로 로그인해 주세요.");
+
+    return ResponseEntity.ok().body(resultMap);
   }
 }

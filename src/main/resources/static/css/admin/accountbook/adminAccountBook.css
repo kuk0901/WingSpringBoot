@@ -5,10 +5,12 @@
   width: 100%; /* 전체 너비를 사용하도록 설정 */
   border-spacing: 0; /* 셀 간의 간격을 없애기 */
 }
-
+.table_container th {
+  font-weight: bold;
+}
 .table_container th, .table_container td {
   padding: 10px; /* 셀 패딩 추가 */
-  text-align: left; /* 텍스트 정렬 */
+  text-align: center; /* 텍스트 정렬 */
 }
 .top-container {
   margin: 20px 0; /* 위 아래 간격 확보 */
@@ -99,3 +101,4 @@
   height: 35px; /* 선택 박스 높이 조정 */
   width: 200px; /* 선택 박스 너비 설정 */
 }
+

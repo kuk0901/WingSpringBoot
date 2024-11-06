@@ -212,13 +212,6 @@ function createDetailView(data) {
 
   $("#content").html(cardDetail).addClass("bg__white");
 
-  // 돌아가기 버튼에 이벤트 리스너 추가
-  $("#listMove").click(function() {
-    const curPage = $(this).data('cur-page');
-    const cardNo = $(this).data('card-no');
-    window.location.href = `/admin/api/salesDashboard/list?curPage=${data.curPage}&cardNo=${cardVo.cardNo}&categoryName=${data.categoryName}`;
-  });
-
   $("#cardApplicationWindowBtn").click(function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -258,7 +251,7 @@ function createDetailView(data) {
     }
 
     $.ajax("", {
-      url: `/member/api/sellingCard/purchase`,
+      url: `/member/api/sellingCard/purchase/general`,
       contentType: 'application/json',
       type: 'POST',
       data: JSON.stringify({ sellingCardVo: sellingCardData, accountBookVo: accountBookData }),

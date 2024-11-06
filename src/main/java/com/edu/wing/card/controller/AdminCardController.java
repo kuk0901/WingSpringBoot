@@ -6,8 +6,6 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.util.CardBenefitUtil;
 import com.edu.wing.util.Paging;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +21,14 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/productManagement")
 public class AdminCardController {
-  private final Logger log = LoggerFactory.getLogger(AdminCardController.class);
-
   @Autowired
   private CardService cardService;
 
   @Autowired
   private CardBenefitService cardBenefitService;
 
-  // controller로 수정 필요
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView productList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    log.info("@RequestMapping productList curPage: {}", curPage);
-
     int totalCount = cardService.cardSelectTotalCount(categoryName);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage), 3);
@@ -43,8 +36,6 @@ public class AdminCardController {
     int end = pagingVo.getPageEnd();
 
     List<CardVo> cardList = cardService.cardSelectList(start, end, categoryName);
-
-    log.info("cardList: {}", cardList);
 
     List<CardBenefitVo> allBenefits = cardBenefitService.cardBenefitSelectList();
 
@@ -65,8 +56,6 @@ public class AdminCardController {
 
   @GetMapping("/list/card/insert")
   public ModelAndView cardInsertOne(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    log.info("@GetMapping cardInsertOne curPage: {}, categoryName: {}", curPage, categoryName);
-
     int totalCount = cardService.cardSelectTotalCount(categoryName);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));

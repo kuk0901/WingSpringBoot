@@ -165,7 +165,7 @@
   </form>
 
   <div class="sub-container">
-    <div class="signin-container">
+    <div class="signup-container text__center">
       <a href="/" class="text__white">돌아가기</a>
     </div>
   </div>

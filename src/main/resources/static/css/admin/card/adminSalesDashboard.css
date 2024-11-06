@@ -4,38 +4,39 @@
   justify-content: space-between;
 }
 
+#content #searchForm.one-line {
+  justify-content: flex-start;
+  gap: 30px;
+}
+
 #content .cardNoForm-container,
-#content .one-line .categoryForm-container {
-  width: 400px;
+#content .terSeasonForm-container {
+  width: 300px;
+}
+
+#content .cardNoForm-container {
   margin-left: 20px;
 }
 
-#content .cardNoForm-container #cardNoForm,
-#content .one-line .categoryForm-container #categoryForm {
-  display: flex;
-  align-items: center;
-}
-
-
-#content .cardNoForm-container #cardNoForm .selectCard,
-#content .cardNoForm-container #cardNoForm .cardNo,
-#content .one-line .categoryForm-container #categoryForm .selectCard,
-#content .one-line .categoryForm-container #categoryForm .categoryName {
+#content .cardNoForm-container .selectCard,
+#content .cardNoForm-container .cardNo,
+#content .terSeasonForm-container .selectReason,
+#content .terSeasonForm-container .reasonSelect {
   display: inline-block;
   text-align: center;
   margin-right: 10px;
 }
 
-#content .cardNoForm-container #cardNoForm .selectCard,
-#content .one-line .categoryForm-container #categoryForm .selectCard{
+#content .cardNoForm-container .selectCard,
+#content .terSeasonForm-container .selectReason {
   width: 120px;
   height: 31px;
   line-height: 33px;
   font-weight: 700;
 }
 
-#content .cardNoForm-container #cardNoForm .cardNo,
-#content .one-line .categoryForm-container #categoryForm .categoryName {
+#content .cardNoForm-container .cardNo,
+#content .terSeasonForm-container .reasonSelect {
   width: 150px;
   height: 32px;
   line-height: 32px;
@@ -43,8 +44,8 @@
   font-size: 17px;
 }
 
-#content .cardNoForm-container #cardNoForm .cardNo:hover,
-#content .one-line .categoryForm-container #categoryForm .categoryName:hover {
+#content .cardNoForm-container .cardNo:hover,
+#content .terSeasonForm-container .reasonSelect:hover {
   cursor: pointer;
 }
 
@@ -66,6 +67,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  height: 60px;
 }
 
 .main-container .list-container.list-content:hover {
@@ -141,6 +143,7 @@
 
 .flex-container .reason--content {
   height: 200px;
+  padding: 10px;
 }
 
 .btn-container {

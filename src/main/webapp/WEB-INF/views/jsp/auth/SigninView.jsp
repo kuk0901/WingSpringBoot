@@ -27,7 +27,7 @@
         <div class="label-container">
           <label for="email" class="text__white">이메일</label>
         </div>
-        <div class="input-container email-check-porision">
+        <div class="input-container email-check-orison">
           <input
               id="email"
               name="email"
@@ -66,10 +66,10 @@
 
     <div class="sub-container">
       <div class="find-container">
-        <a href="#" class="text__white">계정 찾기</a>
+        <a href="auth/find/account" class="text__white">계정 찾기</a>
       </div>
       <div class="find-container">
-        <a href="#" class="text__white">비밀번호 찾기</a>
+        <a href="auth/find/password" class="text__white">비밀번호 찾기</a>
       </div>
       <div class="signup-container">
         <a href="auth/signup" class="text__white">회원가입</a>
