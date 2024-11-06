@@ -105,6 +105,11 @@ public class SellingCardServiceImpl implements SellingCardService {
   }
 
   @Override
+  public int deleteCardSoft(int memberNo) {
+    return sellingCardDao.deleteCardSoft(memberNo);
+  }
+
+  @Override
   public List<HashMap<String, Object>> totalCardsSoldLast5Years() {
     return sellingCardDao.totalCardsSoldLast5Years();
   }

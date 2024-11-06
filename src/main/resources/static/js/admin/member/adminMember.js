@@ -39,7 +39,7 @@ function restRequestMemberDetail(tdElement) {
             var detailHtml = `
            
   
-              <div class="one-line">
+              <div class="one-line two-info ">
                 <div class="label">이메일</div>
                 <div class="value">${memberDetail.email}</div>
              
@@ -47,7 +47,7 @@ function restRequestMemberDetail(tdElement) {
                 <div class="label">회원명</div>
                 <div class="value">${memberDetail.userName ? memberDetail.userName : '정보 없음'}</div>
              </div>
-              <div class="one-line">
+              <div class="one-line two-info ">
                 <div class="label">전화번호</div>
                 <div class="value">${memberDetail.phone}</div>
             
@@ -56,7 +56,7 @@ function restRequestMemberDetail(tdElement) {
                 <div class="value">${formatDate(memberDetail.creDate)}</div>
            
               </div>
-              <div class="one-line">
+              <div class="one-line three-info">
                 <div class="label">연봉</div>
                 <div class="value">${memberDetail.yearlySalary}만원</div>
               
@@ -66,9 +66,12 @@ function restRequestMemberDetail(tdElement) {
                 <div class="label">상품구매여부</div>
                 <div class="value">${memberDetail.productPurchase}</div>
               </div>
-              <div class="one-line">
+              <div class="one-line two-info">
                 <div class="label">가계부 작성수</div>
                 <div class="value">${memberDetail.accountBookCount}</div>
+                
+                <div class="label">게시글 작성수</div>
+                <div class="value">추후 잊지말고 넣을것</div>
               </div>
               <div class="one-line">
                 <div class="label">보유카드 이름</div>
@@ -81,7 +84,7 @@ function restRequestMemberDetail(tdElement) {
                 <div class="value">${memberDetail.quitApply}</div>
               </div>
           
-              <div class="one-line">
+              <div class="one-line two-info">
                 <div class="label">카드 해지 날짜</div>
                 <div class="value">${memberDetail.terminationDate ? formatDate(memberDetail.terminationDate) : 'N'}</div>
              
@@ -105,7 +108,7 @@ function restRequestMemberDetail(tdElement) {
             $('.title-container').html(backButtonHtml);
             // 돌아가기 버튼 클릭 이벤트 핸들러 추가
             $('#backButton').on('click', function () {
-                window.location.href = './list';  // 뒤로가기
+                window.location.href = './list?curPage=' + curPage;
             });
             // 페이지를 이동하는 대신 새로운 내용을 추가하여 화면 전환
         },
@@ -120,11 +123,11 @@ $(document).on('click', '.deleteMember', function() {
     var quitApply = $(this).data('quit-apply');
     var productPurchase=$(this).data('product-purchase');
 
-    if (productPurchase === 'Y') {
+   /* if (productPurchase === 'Y') {
         // 구매한 상품이 있는 유저는 탈퇴 불가
         alert("구독한 상품이 있는 유저는 탈퇴할 수 없습니다.");
-        return;  // 함수 종료, 더 이상 진행하지 않음
-    }
+        return;  // 함수 종료, 더 이상 진행하지 않음 ->기능삭제
+    }*/
     if (quitApply === 'Y') {
         // QUIT_APPLY가 Y일 경우, 바로 삭제
         deleteMember(memberNo);
@@ -139,13 +142,13 @@ $(document).on('click', '.deleteMember', function() {
 function deleteMember(memberNo) {
     $.ajax({
         url: '/admin/api/member/delete/' + memberNo,
-        type: 'DELETE',
+        type: 'PATCH',
         success: function(response) {
             alert(response); // 삭제 성공 메시지 표시
             location.reload(); // 페이지 새로 고침
         },
         error: function(xhr, status, error) {
-            alert("삭제 중 오류가 발생했습니다: " + error);
+            alert("삭제    중 오류가 발생했습니다: " + error);
         }
     });
 }

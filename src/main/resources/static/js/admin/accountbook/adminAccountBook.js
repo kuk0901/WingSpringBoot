@@ -27,14 +27,16 @@
           var day = ('0' + date.getDate()).slice(-2);
 
           // YYYYMMDD 형식으로 변환된 날짜
-          var formattedDate = year + month + day;
+          var formattedDate = year+"-"+ month+"-"+day;
+          // paymentAmount를 포맷팅
+          var formattedPaymentAmount = formatNumber(accountBook.paymentAmount);
           tableBody += '<tr>';
-          tableBody += '<td>' + accountBook.accountBookNo + '</td>';
+          tableBody += '<td class="no">' + accountBook.accountBookNo + '</td>';
           tableBody += '<td>' + formattedDate + '</td>';
           tableBody += '<td>' + accountBook.memberEmail + '</td>';
           tableBody += '<td>' + accountBook.minusCategoryName + '</td>';
           tableBody += '<td>' + accountBook.paymentMethodName + '</td>';
-          tableBody += '<td>' + accountBook.paymentAmount + '</td>';
+          tableBody += '<td>' +formattedPaymentAmount+ '</td>';
           tableBody += '</tr>';
         });
 
@@ -93,3 +95,20 @@
         }
       });
   });
+
+
+  function formatNumber(amount) {
+    // 숫자를 제외한 모든 문자 제거 (콤마와 하이픈 포함)
+    const numbers = amount.toString().replace(/\D/g, "");
+
+    const regex = /^[1-9]\d*$/;
+
+    // 패턴에 맞는지 확인 (1-9로 시작하는 숫자)
+    if (!regex.test(numbers)) {
+
+      return  "";
+    }
+
+    // 3자리마다 콤마 추가
+    return numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }

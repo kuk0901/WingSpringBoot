@@ -57,6 +57,11 @@ public class SellingCardDaoImpl implements SellingCardDao {
   }
 
   @Override
+  public int deleteCardSoft(int memberNo) {
+    return sqlSession.update(namespace + "deleteCardSoft", memberNo);
+  }
+  
+  @Override
   public List<HashMap<String, Object>> totalCardsSoldLast5Years() {
     return sqlSession.selectList(namespace + "totalCardsSoldLast5Years");
   }

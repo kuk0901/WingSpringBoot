@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate; // LocalDate 클래스 import
 import org.springframework.format.annotation.DateTimeFormat; // DateTimeFormat 애너테이션 import
 
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/member/api/accountBook")
@@ -37,15 +39,16 @@ public class MemberAccountBookApiController {
             @RequestParam int memberNo,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam(defaultValue = "5") int limit) { // 기본값으로 10개 설정
+            @RequestParam(defaultValue = "5") int limit) {
 
         List<AccountBookVo> accountBooks = accountBookService.getAccountBooksByMonth(memberNo, startDate, endDate, limit);
         return ResponseEntity.ok(accountBooks);
     }
+
     @GetMapping("/list")
     public ResponseEntity<List<AccountBookVo>> getRecentAccountBooks(
             @RequestParam int memberNo,
-            @RequestParam(defaultValue = "5") int limit) { // 기본값으로 10개 설정
+            @RequestParam(defaultValue = "1") int limit) { // 기본값으로 10개 설정
         List<AccountBookVo> accountBooks = accountBookService.getAccountBooksByRecentDate(memberNo, limit);
         return ResponseEntity.ok(accountBooks);
     }
@@ -63,20 +66,19 @@ public class MemberAccountBookApiController {
     public List<String> getPaymentMethods() {
         return accountBookService.getPaymentMethodList();
     }
-
     @GetMapping("/monthlyCount")
     public int getMonthlyEntryCount(
             @RequestParam int memberNo,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return accountBookService.getMonthlyEntryCount(memberNo, startDate, endDate);
     }
 
     @GetMapping("/monthlyEntries")
     public List<AccountBookVo> getMonthlyEntries(
             @RequestParam int memberNo,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
         return accountBookService.getMonthlyEntries(memberNo, startDate, endDate);
     }
@@ -140,7 +142,26 @@ public class MemberAccountBookApiController {
         }
     }
 
+    // 월별 지출 조회 API
+    @GetMapping("/list/monthlyExpense")
+    public ResponseEntity<List<AccountBookVo>> getMonthlyExpenseBook(
+            @RequestParam int memberNo,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
 
+        List<AccountBookVo> accountBookVo = accountBookService.selectMonthlyExpenseBook(memberNo, startDate, endDate);
+        return ResponseEntity.ok(accountBookVo);
+    }
+    // 월별 지출 조회 API
+    @GetMapping("/list/monthlyIncome")
+    public ResponseEntity<List<AccountBookVo>> getMonthlyIncomeBook(
+            @RequestParam int memberNo,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+
+        List<AccountBookVo> accountBookVo = accountBookService.selectMonthlyIncomeBook(memberNo, startDate, endDate);
+        return ResponseEntity.ok(accountBookVo);
+    }
 
 }//종료
 

@@ -59,11 +59,12 @@ public class MemberDaoImpl implements MemberDao {
     return sqlSession.selectOne(namespace + "selectMemberDetailForAdmin", memberNo);
   }
 
-
   @Override
-  public int adminDeleteMember(int memberNo) {
-    return sqlSession.delete(namespace + "adminDeleteMember", memberNo);
+  public void adminSoftDeleteMember(MemberVo memberVo) {
+    sqlSession.update(namespace + "adminSoftDeleteMember", memberVo);
   }
+
+
 
   @Override
   public MemberVo selectAdminMypageInfo(int memberNo) {

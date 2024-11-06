@@ -17,6 +17,7 @@
         <result column="MONTH_SALARY" property="monthlySalary" />
         <result column="QUIT_APPLY" property="quitApply" />
         <result column="PRODUCT_PURCHASE" property="productPurchase" />
+        <result column="IS_DELETED" property="isDeleted"/>
         <!-- 추가하려는 컬럼들 -->
         <result column="SELLING_DATE" property="sellingDate" javaType="java.util.Date" />
         <result column="TERMINATION_DATE" property="terminationDate" javaType="java.util.Date" />
@@ -59,11 +60,12 @@
         SELECT MEMBER_NO, EMAIL, USER_NAME,CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY
         FROM (
                  SELECT MEMBER_NO, EMAIL,USER_NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,
-                        ROW_NUMBER() OVER (ORDER BY MEMBER_NO) AS RNUM
+                        ROW_NUMBER() OVER (ORDER BY CRE_DATE DESC) AS RNUM
                  FROM MEMBER
-                 WHERE GRADE = 'MEMBER'
+                 WHERE GRADE = 'MEMBER' AND IS_DELETED='false'
              ) MEMBER_WITH_RNUM
         WHERE RNUM >= #{start} AND RNUM <= #{end}
+
         ]]>
 </select>
 
@@ -99,6 +101,7 @@
     <select id="selectTotalMembersCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM MEMBER
+        WHERE IS_DELETED='false'
     </select>
 
 
@@ -106,11 +109,12 @@
 
 
 
-    <!-- 관리자의 삭제 쿼리 -->
-    <delete id="adminDeleteMember" parameterType="int">
-        DELETE FROM MEMBER
+
+    <update id="adminSoftDeleteMember" parameterType="memberVo">
+        UPDATE MEMBER
+        SET  IS_DELETED='true'
         WHERE MEMBER_NO = #{memberNo}
-    </delete>
+    </update>
 
 
     <update id="updateMember" parameterType="MemberVo">
@@ -136,8 +140,8 @@
     <!--여기서부턴 userMyPage-->
     <select id="selectMyPageInfo" parameterType="int" resultType="MemberVo">
         SELECT
-            MEMBER_NO, EMAIL,USER_NAME, PWD,PHONE,CRE_DATE, MONTH_SALARY AS monthlySalary,YEARLY_SALARY,GRADE, MOD_DATE,
-            PRODUCT_PURCHASE
+            MEMBER_NO, EMAIL,USER_NAME AS userName, PWD,PHONE,CRE_DATE, MONTH_SALARY AS monthlySalary,YEARLY_SALARY,GRADE, MOD_DATE,
+            PRODUCT_PURCHASE,QUIT_APPLY
         FROM MEMBER
         WHERE MEMBER_NO = #{memberNo}
     </select>
@@ -152,6 +156,12 @@
         PHONE = #{phone},
         MONTH_SALARY = #{monthlySalary},
         YEARLY_SALARY = #{yearlySalary}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <update id="updateMemberQuitApply"  parameterType="MemberVo">
+        UPDATE MEMBER
+        SET QUIT_APPLY='Y'
         WHERE MEMBER_NO = #{memberNo}
     </update>
 

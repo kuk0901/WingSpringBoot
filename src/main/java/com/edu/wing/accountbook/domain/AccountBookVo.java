@@ -28,4 +28,5 @@ public class AccountBookVo {
 
   // 추가: 사용 횟수 필드
   private Long  usageCount;
+  private String formattedCreDate;
 }
