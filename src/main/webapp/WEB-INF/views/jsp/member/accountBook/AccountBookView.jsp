@@ -93,6 +93,9 @@
 
         <div class="summary-details one-line">
           <span class="total-entries" id="totalEntries">월간 내역 수: 0건</span>
+          <div class="payback-container">
+          <span class="payback-income" id="payBackIncome">페이백예정 금액: 0 원</span>
+          </div>
           <div class="right-section">
             <span class="total-income" id="totalIncome">월 수입: 0원</span>
             <span class="total-expense" id="totalExpense">월 지출: 0원</span>

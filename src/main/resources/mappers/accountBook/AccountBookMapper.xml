@@ -173,11 +173,15 @@
         ]]>
     </select>
     <!-- 가계부 추가 -->
+
     <insert id="insertAccountBook" parameterType="map">
         INSERT INTO ACCOUNT_BOOK (ACCOUNT_BOOK_NO, PLUS_CATEGORY_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO
             , CRE_DATE, CONTENT, PAYMENT_AMOUNT)
         VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, #{plusCategoryNo}, #{minusCategoryNo}, #{memberNo}, #{paymentMethodNo}
             , #{creDate}, #{content}, #{paymentAmount})
+        <selectKey keyProperty="accountBookNo" resultType="int" order="AFTER">
+            SELECT ACCOUNT_BOOK_NO_SEQ.CURRVAL FROM DUAL
+        </selectKey>
     </insert>
         <!--디테일용-->
     <select id="selectAccountBookDetail" resultType="AccountBookVo">
@@ -301,6 +305,32 @@
         ]]>
     </select>
 
+    <!-- 월별 가계부 총 수입내역 중 페이백 예정 금액가져오기 -->
+    <select id="getMonthlyPayback" parameterType="map" resultType="AccountBookVo">
+        <![CDATA[
+        SELECT pb.PAYBACK_AMOUNT,
+                pb.PAYBACK_DATE
+        FROM ACCOUNT_BOOK ab
+        JOIN PAYBACK pb ON ab.ACCOUNT_BOOK_NO = pb.ACCOUNT_BOOK_NO
+        WHERE ab.CRE_DATE >= #{startDate}
+          AND ab.CRE_DATE < #{endDate}
+          AND ab.MEMBER_NO = #{memberNo}
+        ]]>
+    </select>
 
-
+    <select id="getCardDetailForMypage" parameterType="map"  resultType="AccountBookVo">
+        SELECT AB.ACCOUNT_BOOK_NO, AB.CRE_DATE, AB.CONTENT, MC.CATEGORY_NAME as minusCategoryName, AB.PAYMENT_AMOUNT, PB.PAYBACK_AMOUNT as paybackAmount
+        FROM ACCOUNT_BOOK AB
+                 JOIN MINUS_CATEGORY MC ON AB.MINUS_CATEGORY_NO = MC.CATEGORY_NO
+                 JOIN PAYBACK PB ON AB.ACCOUNT_BOOK_NO = PB.ACCOUNT_BOOK_NO
+        <where> AB.MEMBER_NO = #{memberNo}
+        <if test="categoryNo != null">
+            AND AB.MINUS_CATEGORY_NO = #{categoryNo}
+        </if>
+        <if test="startDate != null">
+            AND AB.CRE_DATE = #{startDate}
+        </if>
+        </where>
+        ORDER BY AB.CRE_DATE DESC
+    </select>
 </mapper>

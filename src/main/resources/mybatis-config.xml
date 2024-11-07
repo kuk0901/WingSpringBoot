@@ -21,6 +21,7 @@
     <mappers>
         <mapper resource="mappers/member/MemberMapper.xml" />
         <mapper resource="mappers/accountBook/AccountBookMapper.xml" />
+        <mapper resource="mappers/accountBook/payBackMapper.xml" />
         <mapper resource="mappers/card/SellingCardMapper.xml"/>
         <mapper resource="mappers/card/CardMapper.xml" />
         <mapper resource="mappers/category/MinusCategoryMapper.xml" />
