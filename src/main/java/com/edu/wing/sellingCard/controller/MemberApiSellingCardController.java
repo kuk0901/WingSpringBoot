@@ -56,18 +56,18 @@ public class MemberApiSellingCardController {
     }
   }
 
-  @GetMapping("/purchase/{memberNo}")
+ /* @GetMapping("/purchase/{memberNo}")
   public List<Map<String, Object>> getSellingCards(@PathVariable int memberNo) {
     List<Map<String, Object>> sellingCards = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
 
     return sellingCards;
-  }
+  }*/
 
-  // 카드 혜택 정보를 가져오는 메소드 추가
+  /*// 카드 혜택 정보를 가져오는 메소드 추가
   @GetMapping("/cardBenefit/{cardNo}")
   public ResponseEntity<List<CardBenefitVo>> getCardBenefits(@PathVariable int cardNo) {
     try {
-      List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
+
       if (benefits == null || benefits.isEmpty()) {
         return ResponseEntity.notFound().build();
       }
@@ -75,7 +75,7 @@ public class MemberApiSellingCardController {
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 오류 반환
     }
-  }
+  }*/
 
   // 카드 소프트 삭제를 위한 메소드
   @DeleteMapping("/cardSoftDelete/{memberNo}")

@@ -105,7 +105,7 @@ public class SellingCardServiceImpl implements SellingCardService {
   }
 
   @Override
-  public List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo) {
+  public Map<String, Object> sellingCardSelectOneForUserPage(int memberNo) {
     return sellingCardDao.sellingCardSelectOneForUserPage(memberNo);
   }
 

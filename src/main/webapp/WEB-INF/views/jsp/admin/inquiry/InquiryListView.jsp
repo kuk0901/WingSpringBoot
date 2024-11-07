@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CategoryListView</title>
+  <title>InquiryList</title>
   <link rel="stylesheet" href="/css/admin/inquiry/adminInquiry.css" />
   <script defer type="module" src="/js/admin/inquiry/inquiry.js"></script>
 </head>
@@ -25,8 +25,8 @@
     <div class="search-container one-line">
       <div class="input-container">
         <form id="searchForm" action="./list" method="post" class="one-line">
-          <label for="inquirySearch" class="searchInquiryName bg__gray text__black text__center text__semibold">제목</label>
-          <input type="text" id="inquirySearch" name="inquirySearch" class="info-item" value="${inquirySearch}">
+          <label for="search" class="searchInquiryName bg__gray text__black text__center text__semibold">제목</label>
+          <input type="text" id="search" name="inquirySearch" class="info-item" value="${inquirySearch}">
           <input type="submit" id="searchInquiry" value="검색" class="searchInquiry btn btn__generate btn__inquiry" />
         </form>
       </div>
@@ -46,7 +46,7 @@
           <c:when test="${not empty inquiryList}">
             <div class="bg__white">
               <c:forEach items="${inquiryList}" var="inquiryVo" >
-                <div class="list-container list-content one-line " data-inquiry-no="${inquiryVo.inquiryNo}">
+                <div class="list-container list-content one-line " data-inquiry-no="${inquiryVo.inquiryNo}" data-answer-termination="${inquiryVo.answerTermination}">
                   <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
                   <div class="list--title text__center">${inquiryVo.title}</div>
                   <div class="list--date text__center">
@@ -73,6 +73,8 @@
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
+      <input type="hidden" id="inquirySearch" name="inquirySearch" value="${inquirySearch}" />
+      <input type="hidden" id="answerTermination" name="answerTermination" value="${inquiryVo.answerTermination}">
     </form>
 
   </div>

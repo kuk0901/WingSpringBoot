@@ -16,7 +16,7 @@ public interface SellingCardService {
   boolean memberSellingCardExist(SellingCardVo sellingCardVo);
   Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo);
 
-  List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
+  Map<String, Object> sellingCardSelectOneForUserPage(int memberNo);
 
   void deleteCardSoft(Map<String, Object> cardInfo, int memberNo);
 

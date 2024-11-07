@@ -45,6 +45,7 @@ public class AdminInquiryController {
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);
     pagingMap.put("pagingVo", pagingVo);
+    pagingMap.put("curPage", curPage);
 
     ModelAndView mav = new ModelAndView("jsp/admin/inquiry/InquiryListView");
 
@@ -55,6 +56,29 @@ public class AdminInquiryController {
     return mav;
   }
 
+  @GetMapping("/{inquiryNo}")
+  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch,
+    @RequestParam(defaultValue = "N") String answerTermination) {
+    log.info(LOG_TITLE);
+    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}, inquirySearch: {}, answerTermination: {}", inquiryNo, curPage, inquirySearch, answerTermination);
 
+    Map<String, Object> resultMap = new HashMap<>();
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
+    if (inquiryVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러 올 수 없습니다. 잠시 후 다시 시도해 주세요.");
+
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+    resultMap.put("answerTermination", answerTermination);
+    resultMap.put("inquiryVo", inquiryVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
 
 }
