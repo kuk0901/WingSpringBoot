@@ -1,13 +1,6 @@
 import {
-  emailRegex,
-  pwdRegex,
-  userNameRegex,
-  phoneRegex,
-  salaryRegex,
-  forbiddenPatterns,
-  validateInput,
-  updateUI,
-  setupCustomValidityMessages
+  emailRegex, pwdRegex, userNameRegex, phoneRegex, salaryRegex, forbiddenPatterns,
+  validateInput, updateUI, setupCustomValidityMessages
 } from '../util/validation.js';
 import { formatNumber, formatPhoneNumber, unformatNumber } from "../util/format.js";
 import { showAlertMsg } from "../util/toast.js";

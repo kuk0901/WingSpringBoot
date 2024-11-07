@@ -1,4 +1,4 @@
-import {showAlertMsg} from "../../util/toast.js";
+import { showAlertMsg } from "../../util/toast.js";
 
 $('.list-content').click(function() {
   const sellingCardNo = $(this).data('selling-card-no');
