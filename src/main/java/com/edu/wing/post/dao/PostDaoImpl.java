@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,12 @@ public class PostDaoImpl implements PostDao {
   private static final String NAMESPACE = "com.edu.wing.post.";
 
   @Override
-  public int postSelectTotalCount(int noticeBoardNo) {
-    return sqlSession.selectOne(NAMESPACE + "postSelectTotalCount", noticeBoardNo);
+  public int postSelectTotalCount(int noticeBoardNo, String postSearch) {
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("noticeBoardNo", noticeBoardNo);
+    resultMap.put("postSearch", postSearch);
+
+    return sqlSession.selectOne(NAMESPACE + "postSelectTotalCount", resultMap);
   }
 
   @Override
@@ -29,5 +34,10 @@ public class PostDaoImpl implements PostDao {
   @Override
   public void addPost(PostVo postVo) {
     sqlSession.insert(NAMESPACE + "addPost", postVo);
+  }
+
+  @Override
+  public PostVo postSelectOne(int postNo){
+    return sqlSession.selectOne(NAMESPACE + "postSelectOne", postNo);
   }
 }

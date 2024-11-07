@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CategoryListView</title>
+  <title>PostAdd</title>
   <link rel="stylesheet" href="/css/admin/post/adminPost.css" />
   <script defer type="module" src="/js/admin/post/post.js"></script>
 </head>
@@ -50,16 +50,20 @@
 
     <div class="btn-container-all one-line">
       <div class="btn-container">
-        <button id="listMove" class="btn btn__generate listMove text__center" data-cur-page="${data.curPage}">
-          돌아가기
-        </button>
+        <a id="listMove" class="btn btn__generate listMove" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
+          취소
+        </a>
       </div>
       <div class="btn-container">
-        <button id="addPost" class="btn btn__generate listMove text__center">
+        <button id="addPost" class="btn btn__generate listMove text__center text__bold">
           문의 등록
         </button>
       </div>
     </div>
+
+    <form id="pagingForm" action="./list" method="post">
+      <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
+    </form>
 
   </div>
 </section>

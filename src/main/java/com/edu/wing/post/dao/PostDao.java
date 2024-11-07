@@ -7,10 +7,12 @@ import java.util.Map;
 
 public interface PostDao {
 
-  int postSelectTotalCount(int noticeBoardNo);
+  int postSelectTotalCount(int noticeBoardNo, String postSearch);
 
   List<PostVo> postSelectList(Map<String, Object> map);
 
   void addPost(PostVo postVo);
+
+  PostVo postSelectOne(int postNo);
 
 }

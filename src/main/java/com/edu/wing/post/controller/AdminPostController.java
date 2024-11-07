@@ -8,11 +8,9 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -35,9 +33,9 @@ public class AdminPostController {
   public ModelAndView postList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String postSearch,
                                @RequestParam(defaultValue = "2") int noticeBoardNo) {
     log.info(LOG_TITLE);
-    log.info("@RequestMapping postList curPage: {}, noticeBoardNo: {}", curPage, noticeBoardNo);
+    log.info("@RequestMapping postList curPage: {}, noticeBoardNo: {}, postSearch: {}", curPage, noticeBoardNo, postSearch);
 
-    int totalCount = postService.postSelectTotalCount(noticeBoardNo);
+    int totalCount = postService.postSelectTotalCount(noticeBoardNo, postSearch);
 
     log.info("totalCount: {}", totalCount);
 
@@ -52,25 +50,29 @@ public class AdminPostController {
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);
     pagingMap.put("pagingVo", pagingVo);
+    pagingMap.put("curPage", curPage);
 
     ModelAndView mav = new ModelAndView("jsp/admin/post/PostListView");
 
     mav.addObject("postList", postList);
     mav.addObject("pagingMap", pagingMap);
     mav.addObject("postSearch", postSearch);
+    mav.addObject("noticeBoardNo", noticeBoardNo);
 
     return mav;
   }
 
   @GetMapping("/list/add")
-  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo, HttpSession httpSession) {
+  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo, @RequestParam String curPage, @RequestParam String postSearch, HttpSession httpSession) {
     log.info("{} - Retrieving @GetMapping postAdd", LOG_TITLE);
+    log.info("@RequestMapping postAdd curPage: {}, postSearch: {}", curPage, postSearch);
 
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String formattedDate = currentDate.format(formatter);
 
     MemberVo member = (MemberVo) httpSession.getAttribute("member");
+
     if (member == null) {
       log.warn("Member is not found in session.");
     } else {
@@ -81,8 +83,32 @@ public class AdminPostController {
     mav.addObject("currentDate", formattedDate);
     mav.addObject("member", member);
     mav.addObject("noticeBoardNo", noticeBoardNo);
+    mav.addObject("curPage", curPage);
+    mav.addObject("postSearch", postSearch);
 
     return mav;
+  }
+
+  @GetMapping("/{postNo}")
+  public ResponseEntity<Map<String, Object>> postDetail(@PathVariable int postNo, @RequestParam int curPage, @RequestParam(defaultValue = "") String postSearch) {
+    log.info(LOG_TITLE);
+    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}, postSearch: {}", postNo, curPage, postSearch);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("postSearch", postSearch);
+
+
+    PostVo postVo = postService.postSelectOne(postNo);
+
+    if (postVo == null) {
+      resultMap.put("alertMsg", "해당 게시글을 찾을 수 없습니다. 잠시 후 다시 시도해 주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+    resultMap.put("postVo", postVo);
+
+    return ResponseEntity.ok().body(resultMap);
   }
 
 }

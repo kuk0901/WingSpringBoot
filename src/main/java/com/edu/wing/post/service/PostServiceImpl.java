@@ -17,9 +17,9 @@ public class PostServiceImpl implements PostService{
   private PostDao postDao;
 
   @Override
-  public int postSelectTotalCount(int noticeBoardNo) {
+  public int postSelectTotalCount(int noticeBoardNo, String postSearch) {
 
-    return postDao.postSelectTotalCount(noticeBoardNo);
+    return postDao.postSelectTotalCount(noticeBoardNo, postSearch);
   }
 
   @Override
@@ -37,6 +37,11 @@ public class PostServiceImpl implements PostService{
   @Override
   public void addPost(PostVo postVo) {
     postDao.addPost(postVo);
+  }
+
+  @Override
+  public PostVo postSelectOne(int postNo) {
+    return postDao.postSelectOne(postNo);
   }
 
 }

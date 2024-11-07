@@ -25,13 +25,14 @@
     <div class="search-container one-line">
       <div class="input-container">
         <form id="searchForm" action="./list" method="post" class="one-line">
-          <label for="postSearch" class="searchPostName bg__gray text__black text__center text__semibold">제목</label>
-          <input type="text" id="postSearch" name="postSearch" class="info-item" value="${postSearch}">
+          <label for="search" class="searchPostName bg__gray text__black text__center text__semibold">제목</label>
+          <input type="text" id="search" name="postSearch" class="info-item" value="${postSearch}">
           <input type="submit" id="searchPost" value="검색" class="searchPost btn btn__generate btn__post" />
         </form>
       </div>
+
       <div class="addBtn-container">
-        <a class="btn btn__generate addMove text__center" href="./list/add?noticeBoardNo=${postVo.noticeBoardNo}">
+        <a class="btn btn__generate addMove text__center" href="./list/add?noticeBoardNo=${postVo.noticeBoardNo}&curPage=${pagingMap.pagingVo.curPage}&postSearch=${postSearch}">
           공지사항 추가
         </a>
       </div>
@@ -77,6 +78,7 @@
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
+      <input type="hidden" id="postSearch" name="postSearch" value="${postSearch}" />
     </form>
 
   </div>

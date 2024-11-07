@@ -33,16 +33,20 @@
   justify-content: space-between;
 }
 
-#content .btn-container-all .btn-container #listMove {
+#content .btn-container-all .btn-container #listMove,
+#content .btn-container-all .btn-container #addPost {
+  display: inline-block;
   margin-left: 400px;
   width: 150px;
-  height: 50px;
 }
 
-#content .btn-container-all .btn-container #addpost {
-  margin-left: 400px;
-  width: 150px;
-  height: 50px;
+#content .btn-container-all .btn-container #listMove {
+  padding: 14px;
+}
+
+#content .btn-container-all .btn-container #addPost {
+  font-size: 16px;
+  padding: 11.5px;
 }
 
 #content .search-container .input-container #searchForm {
@@ -232,6 +236,32 @@
 
 #content .main-container .list-container .list--div {
   margin-top: 20px;
+}
+
+#content .btn-container.one-line {
+  justify-content: space-around;
+  gap: 50px;
+}
+
+#content .title-container .btn-container .listMove {
+  display: inline-block;
+  width: 120px;
+  padding: 14px;
+}
+
+#content .btn-container .deleteTag,
+#content .btn-container .updateMoveBtn {
+  display: inline-block;
+  width: 150px;
+}
+
+#content .btn-container .deleteTag {
+  padding: 14px;
+}
+
+#content .btn-container .updateMoveBtn {
+  font-size: 16px;
+  padding: 11.5px;
 }
 
 .text__right {
