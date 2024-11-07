@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -14,21 +13,18 @@
           crossorigin="anonymous">
   </script>
   <script defer type="module" src="/js/member/user/userMyPage.js"></script>
-  <script type="text/javascript">
-
-
-  </script>
   <link rel="stylesheet" href="/css/member/user/userMyPage.css">
-  <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
 </head>
 
 
 <body>
+<jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
+  <jsp:param value="${alertMsg}" name="alertMsg" />
+</jsp:include>
+
 <section id="root">
   <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp"/>
-  <jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
-    <jsp:param value="${alertMsg}" name="alertMsg" />
-  </jsp:include>
+
   <section id="memberSection">
     <div id="content">
       <div class="title-container">
@@ -46,54 +42,86 @@
             </div>
             <div class="detail_first_second_wrapper">
               <div class="detail_first_container detail_container">
-                <div>
-                  <label>이메일</label>
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="email">이메일</label>
+                  </div>
+                  <div class="input-container">
                   <input type="email" id="email" name="email"
                          pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                          autocomplete="off"/>
                   <span id="emailError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>이름</label>
-                  <input type="text" id="Name" name="Name" />
-                  <span id="userNameError"></span>
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="Name">이름</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="text" id="Name" name="Name" />
+                    <span id="userNameError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>패스워드</label>
-                  <input type="password" id="password" name="password"
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="password">패스워드</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="password" id="password" name="password"
                          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                          autocomplete="off"/>
-                  <span id="pwdError"></span>
+                    <span id="pwdError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>패스워드 확인</label>
-                  <input type="password" id="confirmPassword" name="confirmPassword"
-                         pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-                         autocomplete="off"/>
-                  <span id="pwdCheckError"></span>
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="confirmPassword">패스워드 확인</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                           pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+                           autocomplete="off"/>
+                    <span id="pwdCheckError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>핸드폰 번호</label>
-                  <input type="text" id="phone" name="phone" />
-                  <span id="phoneError"></span>
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="phone">전화번호</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="text" id="phone" name="phone" />
+                    <span id="phoneError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>가입일</label>
-                  <input type="text" id="creDate" name="creDate" readonly />
+                <div class="user-info-container one-line">
+                  <div class="label-container">
+                    <label for="creDate">가입일</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="text" id="creDate" name="creDate" readonly />
+                  </div>
                 </div>
               </div>
               <div class="detail_second_container detail_container">
-                <div>
-                  <label>연봉</label>
-                  <input type="text" id="yearlySalary" name="yearlySalary" />
-                  <span>만원</span>
-                  <span id="salaryError"></span>
+                <div class="user-info-container one-line">
+                  <div class="label-container text-right">
+                    <label for="yearlySalary" class="box__s">연봉</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="text" id="yearlySalary" name="yearlySalary" class="box__m" />
+                    <span>만원</span>
+                    <span id="salaryError"></span>
+                  </div>
                 </div>
-                <div>
-                  <label>월급</label>
-                  <input type="text" id="monthlySalary" name="monthlySalary" />
-                  <span>만원</span>
-                  <span id="payError"></span>
+                <div class="user-info-container one-line">
+                  <div class="label-container text-right">
+                    <label for="monthlySalary" class="box__s">월급</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="text" id="monthlySalary" name="monthlySalary" class="box__m" />
+                    <span>만원</span>
+                    <span id="payError"></span>
+                  </div>
                 </div>
               </div>
             </div>

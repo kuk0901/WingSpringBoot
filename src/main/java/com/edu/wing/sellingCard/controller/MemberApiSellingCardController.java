@@ -5,6 +5,7 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.sellingCard.domain.SellingCardVo;
 import com.edu.wing.sellingCard.service.SellingCardService;
+import com.edu.wing.util.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,22 +76,27 @@ public class MemberApiSellingCardController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 오류 반환
     }
   }
-  // 카드 소프트 삭제를 위한 메소드
-  @PostMapping("/cardSoftDelete/{memberNo}")
-  public ResponseEntity<Map<String, Object>> softDeleteCard(@PathVariable int memberNo) {
-    try {
-      Map<String, Object> resultMap = new HashMap<>();
 
-      int result = sellingCardService.deleteCardSoft(memberNo);
-      if (result > 0) {
-        resultMap.put("alertMsg", "카드해지를 성공하셨습니다");
-        return ResponseEntity.ok(resultMap); // 200 OK
-      } else {
-        resultMap.put("alertMsg", "카드해지를 실패하셨습니다 고객센터에 문의해주세요");
-        return ResponseEntity.badRequest().body(resultMap); // 404 Not Found
-      }
+  // 카드 소프트 삭제를 위한 메소드
+  @DeleteMapping("/cardSoftDelete/{memberNo}")
+  public ResponseEntity<Map<String, String>> softDeleteCard(@PathVariable int memberNo, @RequestBody Map<String, Object> cardInfo) {
+    Map<String, String> resultMap = new HashMap<>();
+
+    try {
+      sellingCardService.deleteCardSoft(cardInfo, memberNo);
+
+      resultMap.put("status", "success");
+      resultMap.put("alertMsg", "회원님의 카드가 해지되었습니다. 더 나은 WING_ 카드가 되기 위해 노력하겠습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    } catch (CustomException e) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", e.getMessage());
+      return ResponseEntity.badRequest().body(resultMap);
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 카드 해지에 실패했습니다. 고객센터로 문의해 주세요.");
+      return ResponseEntity.internalServerError().body(resultMap);
     }
   }
 

@@ -24,6 +24,9 @@ public interface MemberDao {
   int updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
 
+  void updateMemberProductPurchase(int memberNo);
+  MemberVo updateMemberProductPurchaseCheck(int memberNo);
+
   MemberVo findMemberAccount(Map<String, String> map);
   MemberVo findMemberPassword(Map<String, String> map);
 

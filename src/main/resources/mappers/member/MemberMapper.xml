@@ -165,6 +165,18 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
+    <update id="updateMemberProductPurchase" parameterType="int">
+        UPDATE MEMBER
+        SET PRODUCT_PURCHASE = 'N'
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <select id="updateMemberProductPurchaseCheck" parameterType="int" resultMap="memberResultMap">
+        SELECT MEMBER_NO, PRODUCT_PURCHASE
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
     <!-- 사용자의 소비 내역을 동일 월급 그룹 내에서 백분율로 계산(마이페이지에서 사용)   -->
     <select id="getExpensePercentileForCurrentMonth" parameterType="int" resultType="int">
         <![CDATA[

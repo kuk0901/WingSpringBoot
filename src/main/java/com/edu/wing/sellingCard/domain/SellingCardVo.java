@@ -15,6 +15,7 @@ public class SellingCardVo {
   private String memberCardNo;
   private String cardTermination;
   private String terminationReason;
+  private Date terminationDate;
   private Date sellingDate;
 
   private String cardRecommend;
