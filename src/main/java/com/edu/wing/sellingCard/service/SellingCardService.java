@@ -18,7 +18,7 @@ public interface SellingCardService {
 
   List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
 
-  int deleteCardSoft(int memberNo);
+  void deleteCardSoft(Map<String, Object> cardInfo, int memberNo);
 
   List<HashMap<String, Object>> totalCardsSoldLast5Years();
   List<HashMap<String, Object>> recommendedCardsPurchasedLast5Years();

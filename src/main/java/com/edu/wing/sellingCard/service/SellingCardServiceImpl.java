@@ -2,8 +2,11 @@ package com.edu.wing.sellingCard.service;
 
 import com.edu.wing.accountbook.dao.AccountBookDao;
 import com.edu.wing.accountbook.domain.AccountBookVo;
+import com.edu.wing.member.dao.MemberDao;
+import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.sellingCard.dao.SellingCardDao;
 import com.edu.wing.sellingCard.domain.SellingCardVo;
+import com.edu.wing.util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,9 @@ public class SellingCardServiceImpl implements SellingCardService {
 
   @Autowired
   private AccountBookDao accountBookDao;
+
+  @Autowired
+  private MemberDao memberDao;
 
   @Override
   public List<SellingCardVo> sellingCardSelectList(int start, int end, int cardNo, String termination) {
@@ -104,8 +110,27 @@ public class SellingCardServiceImpl implements SellingCardService {
   }
 
   @Override
-  public int deleteCardSoft(int memberNo) {
-    return sellingCardDao.deleteCardSoft(memberNo);
+  @Transactional
+  public void deleteCardSoft(Map<String, Object> cardInfo, int memberNo) throws CustomException {
+    // 1. 카드 업데이트
+    sellingCardDao.deleteCardSoft(cardInfo);
+
+    // 2. 카드 조회
+    SellingCardVo sellingCardVo = sellingCardDao.deleteCardSoftCheck(cardInfo);
+
+    if (sellingCardVo.getMemberNo() != 1 && "N".equals(sellingCardVo.getCardTermination())) {
+      throw new CustomException("카드 해지 처리에 실패했습니다.");
+    }
+
+    // 3. 회원 PRODUCT_PURCHASE 'N'으로 수정
+    memberDao.updateMemberProductPurchase(memberNo);
+
+    // 4. 회원 정보 조회
+    MemberVo memberVo = memberDao.updateMemberProductPurchaseCheck(memberNo);
+
+    if ("Y".equals(memberVo.getProductPurchase())) {
+      throw new CustomException("회원 상태 업데이트에 실패했습니다.");
+    }
   }
 
   @Override
