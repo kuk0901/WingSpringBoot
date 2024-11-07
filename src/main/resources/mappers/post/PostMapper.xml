@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.post">
+
+    <resultMap type="postVo" id="postResultMap">
+        <id column="POST_NO" property="postNo" />
+        <result column="NOTICE_BOARD_NO" property="noticeBoardNo" />
+        <result column="MEMBER_NO" property="memberNo" />
+        <result column="TITLE" property="title" />
+        <result column="CONTENT" property="content" />
+        <result column="CRE_DATE" property="creDate" />
+        <result column="MOD_DATE" property="modDate" />
+        <result column="EMAIL" property="email" />
+    </resultMap>
+
+    <sql id="search">
+        <if test="postSearch != null and postSearch != ''">
+            TITLE LIKE '%' || #{postSearch} || '%'
+        </if>
+    </sql>
+
+    <select id="postSelectTotalCount" parameterType="map" resultType="int">
+        SELECT COUNT(POST_NO)
+        FROM POST
+        <where>
+            <include refid="search" />
+            AND NOTICE_BOARD_NO = #{noticeBoardNo}
+        </where>
+    </select>
+
+    <select id="postSelectList" parameterType="map" resultMap="postResultMap">
+        SELECT POST_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, CRE_DATE, EMAIL
+        FROM (
+            SELECT ROWNUM AS RNUM, I.*
+            FROM (
+                SELECT P.POST_NO, P.NOTICE_BOARD_NO, P.MEMBER_NO, P.TITLE, P.CONTENT, P.CRE_DATE, M.EMAIL
+                FROM POST P
+                JOIN MEMBER M ON P.MEMBER_NO = M.MEMBER_NO
+                <where>
+                    <include refid="search" />
+                    AND P.NOTICE_BOARD_NO = #{noticeBoardNo}
+                </where>
+                <![CDATA[
+                ORDER BY
+                    P.CRE_DATE DESC
+            ) I
+            WHERE ROWNUM <= #{end}
+        )
+        WHERE RNUM >= #{start}
+        ]]>
+    </select>
+
+    <insert id="addPost" parameterType="postVo">
+        INSERT INTO POST (POST_NO, NOTICE_BOARD_NO, MEMBER_NO, CONTENT, TITLE)
+        VALUES (POST_NO_SEQ.NEXTVAL, #{noticeBoardNo}, #{memberNo}, #{content}, #{title})
+    </insert>
+
+    <select id="postSelectOne" parameterType="int" resultMap="postResultMap">
+        SELECT P.POST_NO AS postNo, P.TITLE, M.EMAIL AS postWriterEmail, P.CRE_DATE AS postDate,
+        P.CONTENT AS postContent
+        FROM POST P
+        JOIN MEMBER M ON P.MEMBER_NO = M.MEMBER_NO
+        WHERE P.POST_NO = #{inquiryNo}
+    </select>
+
+</mapper>

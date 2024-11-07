@@ -62,6 +62,9 @@
     <select id="inquirySelectTotalCount" parameterType="int" resultType="int">
         SELECT COUNT(INQUIRY_NO)
         FROM INQUIRY
+        <where>
+            <include refid="search" />
+        </where>
     </select>
 
     <select id="inquirySelectOne" parameterType="int" resultType="map">
