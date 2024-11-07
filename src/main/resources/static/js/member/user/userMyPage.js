@@ -1,4 +1,4 @@
-import { formatNumber,formatPhoneNumber,unformatNumber } from "../../util/format.js"; // 상대 경로로 import
+import { formatNumber,formatPhoneNumber,unformatNumber, formatPaymentAmountNumber } from "../../util/format.js"; // 상대 경로로 import
 import { checkAndShowStoredMessage, showAlertMsg  } from "../../util/toast.js";
 
 $(document).ready(function() {
@@ -11,15 +11,13 @@ $(document).ready(function() {
 
 
 
-
-
     const memberNo = $("#memberNo").val();  // 숨겨진 필드에서 memberNo 값을 가져옴
     $.ajax({
         url: "/member/api/user/myPage/info",
         type: "GET",
         data: { memberNo: memberNo },
         success: function(response) {
-            console.log(response);
+
             $("#email").val(response.email);
             $("#Name").val(response.userName);
             $("#phone").val(response.phone);
@@ -78,6 +76,7 @@ $(document).ready(function() {
     });
     /*  fetchSellingCards()*/
     $('#quitMemberButton').on('click', handleQuitButtonClick);
+
 
 
 
@@ -413,6 +412,7 @@ $(document).on("click", "#terminationRequestButton", function() {
     const memberNo = $("#memberNo").val();
     fetchCardsForTerminationRequest(memberNo);
 });
+//카드보유시 작동되는함수
 function fetchCardsForTerminationRequest(memberNo) {
     $.ajax({
         url: `/member/api/sellingCard/purchase/${memberNo}`, // 판매 카드 정보를 가져오는 API 호출
@@ -488,15 +488,16 @@ function fetchCardsForTerminationRequest(memberNo) {
             $('#backButton').on('click', function () {
                 window.location.href = './myPage';  // myPage로 이동
             });
+
             $('#deleteCardButton').on('click', function() {
-                console.log(memberNo)
+
                 $.ajax({
                     url: '/member/api/sellingCard/cardSoftDelete/' + memberNo, // URL 설정
                     type: 'POST', // 요청 타입
                     dataType: 'json', // 응답 데이터 타입
                     success: function(response) {
                         // 성공 시
-                        console.log(response)
+
                         showAlertMsg(response.alertMsg); // alertMsg를 알림으로 표시
                     },
                     error: function(xhr, status, error) {
@@ -515,3 +516,205 @@ function fetchCardsForTerminationRequest(memberNo) {
         }
     });
 }
+
+
+$(document).on('click', '#cardUseDetail', function() {
+    const memberNo = $('#memberNo').val();
+    $.ajax({
+        url: '/member/api/accountBook/myPage/detail',  // 요청할 API URL
+        type: 'GET',  // GET 방식으로 요청
+        data: { memberNo: memberNo },  // memberNo를 쿼리 파라미터로 보냄
+        success: function(response) {
+            // 응답이 성공적으로 오면, 데이터를 처리
+            console.log(response);  // 응답 받은 데이터 출력
+
+            // 데이터 처리 예시 (받은 데이터로 화면 갱신)
+            let htmlContent = '';
+            let totalPaybackAmount =0;
+            htmlContent += `
+                  <div class="title-container">
+                    <div class="title btn__blue text__white">
+                      마이 페이지
+                    </div>
+                  </div>
+                    <div class="payback-income" id="payback-income"></div>
+                  <div class="entry-form one-line">
+                  <select id="categorySelect" name="category">
+                    <option value="">전체</option>
+                  </select>
+                      <input type="date" id="startDate" />
+                       <button id="searchButton">검색</button> 
+                       <button class="btn__generate" id="returnBtn">돌아가기</button>
+                  </div>    
+                   
+                  <main class="main-container">
+                  <div class="detail-payback-title">카드 상세 내역</div>
+                  <div class="detail-payback-container">
+                  <div class="entry-category info_head text__semibold one-line">
+                   <span>번호 </span>
+                   <span>사용날짜 </span>
+                  <span>상세내용</span>
+                  <span>분류</span>
+                  <span>사용금액</span>
+                  <span>페이백</span>
+                    </div>
+                       <div class="entry-list">    `
+            response.forEach(item => {
+                const date = new Date(item.creDate);
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                // formatNumber로 금액을 포맷팅
+                const formattedPaymentAmount =  formatPaymentAmountNumber(item.paymentAmount);
+                const formattedPaybackAmount =  formatPaymentAmountNumber(item.paybackAmount);
+                totalPaybackAmount += item.paybackAmount;
+                htmlContent += `
+  
+                            <div class="entry-info">
+                               <span class="account-book-no"> ${item.accountBookNo}</span>
+                                <span class="entry-date">${formattedDate}</span>
+                                <span class="entry-content"> ${item.content}</span>
+                                <span class="minus-category">${item.minusCategoryName}</span>
+                                <span class="payment-amount">${formattedPaymentAmount}</span>
+                                <span class="payback-amount">${formattedPaybackAmount}</span>
+                            </div>
+                       
+                    `;
+            });
+            htmlContent += ` </div> </div></main>`
+            // 결과를 화면에 추가
+
+            $('#content').html(htmlContent);
+            $('#returnBtn').on('click', function () {
+                window.location.href = './myPage';  // myPage로 이동
+            });
+            // 페이백 총합을 화면에 추가 (id="payback-income"에 삽입)
+            const formattedTotalPaybackAmount = formatPaymentAmountNumber(totalPaybackAmount); // 포맷팅 처리
+            $('#payback-income').html(`<span>총 페이백 금액: ${formattedTotalPaybackAmount}</span>`);
+            // 지출 카테고리 요청
+            $.ajax({
+                url: '/member/api/accountBook/minusCategories',  // 지출 카테고리 API
+                type: 'GET',
+                success: function(categories) {
+                    const categorySelect = $('#categorySelect'); // 카테고리 셀렉트 박스
+
+                    // 카테고리 추가
+                    categories.forEach(function(category, index) {
+                        if (category !== null) { // null 값 제외
+                            const option = document.createElement("option");
+                            option.value = index + 2; // 카테고리 ID를 1부터 시작하도록 설정
+                            option.textContent = category; // 카테고리 이름
+                            categorySelect.append(option); // 옵션 추가
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("지출 카테고리 가져오기 실패:", error);
+                }
+            });
+
+        },
+        error: function(xhr, status, error) {
+            // 요청 실패 시 처리
+            console.error('AJAX 요청 실패:', error);
+        }
+    });
+});
+
+$(document).on('change', '#categorySelect', function() {
+    const selectedCategory = $(this).val(); // 선택된 카테고리 값을 가져옴
+    const  memberNo = $('#memberNo').val();
+    console.log('Selected Category:', selectedCategory);
+    // 카테고리 값이 있을 때만 요청을 보냄
+    $.ajax({
+        url: '/member/api/accountBook/myPage/detail',  // 요청할 API URL
+        type: 'GET',  // GET 방식으로 요청
+        data: { categoryNo: selectedCategory, memberNo: memberNo },  // 선택한 카테고리를 쿼리 파라미터로 보냄
+        success: function(response) {
+            // 응답이 성공적으로 오면, 해당 부분만 업데이트
+            let htmlContent = ''; // 기존 내용 초기화
+
+            // 카드 상세 내역을 갱신
+            response.forEach(item => {
+                const date = new Date(item.creDate);
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                const formattedPaymentAmount = formatPaymentAmountNumber(item.paymentAmount);
+                const formattedPaybackAmount = formatPaymentAmountNumber(item.paybackAmount);
+
+                htmlContent += `
+                    <div class="entry-info">
+                        <span class="account-book-no"> ${item.accountBookNo}</span>
+                        <span class="entry-date">${formattedDate}</span>
+                        <span class="entry-content"> ${item.content}</span>
+                        <span class="minus-category">${item.minusCategoryName}</span>
+                        <span class="payment-amount">${formattedPaymentAmount}</span>
+                        <span class="payback-amount">${formattedPaybackAmount}</span>
+                    </div>
+                `;
+            });
+
+            // 갱신된 내역을 entry-list에 넣기
+            $('.entry-list').html(htmlContent);
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX 요청 실패:', error);
+        }
+    });
+});
+
+
+$(document).on('click', '#searchButton', function() {
+    // 선택된 카테고리 값과 날짜 값을 가져오기
+    const selectedCategory = $('#categorySelect').val();
+    const startDate = $('#startDate').val();
+    const memberNo= $('#memberNo').val();
+
+    // 날짜 값이 비어있지 않으면, 'yyyy-mm-dd' 형식으로 변환 (필요시)
+    // 선택된 값이 없으면 빈 문자열을 보내서 전체를 조회
+    console.log('Selected Category:', selectedCategory);
+    console.log('Selected Start Date:', startDate);
+
+    // AJAX 요청 보내기
+    $.ajax({
+        url: '/member/api/accountBook/myPage/detail',  // 요청할 API URL
+        type: 'GET',  // GET 방식으로 요청
+        data: {
+            memberNo:memberNo,
+            categoryNo: selectedCategory,  // 선택한 카테고리
+            startDate: startDate         // 선택한 시작 날짜
+        },
+        success: function(response) {
+            if (Array.isArray(response)&& response.length > 0) {
+                let htmlContent = '';  // 기존 내용 초기화
+
+                // 서버에서 받은 데이터로 화면 갱신
+                response.forEach(item => {
+                    const date = new Date(item.creDate);
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                    const formattedPaymentAmount = formatPaymentAmountNumber(item.paymentAmount);
+                    const formattedPaybackAmount = formatPaymentAmountNumber(item.paybackAmount);
+
+                    htmlContent += `
+                        <div class="entry-info">
+                            <span class="account-book-no">${item.accountBookNo}</span>
+                            <span class="entry-date">${formattedDate}</span>
+                            <span class="entry-content">${item.content}</span>
+                            <span class="minus-category">${item.minusCategoryName}</span>
+                            <span class="payment-amount">${formattedPaymentAmount}</span>
+                            <span class="payback-amount">${formattedPaybackAmount}</span>
+                        </div>
+                    `;
+                });
+
+
+                // 갱신된 내역을 entry-list에 넣기
+                $('.entry-list').html(htmlContent);
+            } else {
+                $('.entry-list').html('<p>데이터가 없습니다.</p>');
+                console.error("서버 응답이 예상과 다릅니다.");
+
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX 요청 오류:", status, error);
+        }
+    });
+});

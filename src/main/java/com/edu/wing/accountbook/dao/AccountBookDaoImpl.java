@@ -132,4 +132,26 @@ public class AccountBookDaoImpl implements AccountBookDao {
                 Map.of("memberNo", memberNo, "startDate", startDate, "endDate", endDate));
     }
 
+    @Override
+    public int insertPayback(Map<String, Object> paybackData) {
+        return sqlSession.insert("com.edu.wing.payback.insertPayback", paybackData);
+    }
+
+    @Override
+    public List<AccountBookVo> getMonthlyPayback(Map<String, Object> params) {
+        return sqlSession.selectList(NAMESPACE + "getMonthlyPayback", params);
+    }
+
+    @Override
+    public List<AccountBookVo> getCardDetailForMypage(int memberNo, Integer categoryNo, LocalDate startDate) {
+         Map<String, Object> params = new HashMap<>();
+        params.put("memberNo", memberNo);
+        params.put("categoryNo", categoryNo);
+        params.put("startDate", startDate);
+        return sqlSession.selectList(NAMESPACE+"getCardDetailForMypage",params);
+    }
+
+
+
+
 }

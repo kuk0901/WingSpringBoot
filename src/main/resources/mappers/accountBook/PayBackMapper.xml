@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.payback">
+
+    <resultMap id="payBackResultMap" type="accountBookVo">
+        <id property="payBackNo" column="PAYBACK_NO"/>
+        <result property="accountBookNo" column="ACCOUNT_BOOK_NO"/>
+        <result property="minusCategoryNo" column="MINUS_CATEGORY_NO"/>
+        <result property="memberNo" column="MEMBER_NO"/>
+        <result property="paymentMethodNo" column="PAYMENT_METHOD_NO"/>
+        <result property="creDate" column="CRE_DATE"/>
+        <result property="content" column="CONTENT"/>
+        <result property="paymentAmount" column="PAYMENT_AMOUNT"/>
+        <result property="minusCategoryName" column="MINUS_CATEGORY_NAME"/>
+        <result property="sellingCardNo" column="SELLING_CARD_NO"/>
+        <!-- 카드 혜택 정보를 매핑 -->
+        <result property="cardBenefitDivision" column="CARD_BENEFIT_DIVISION"/>
+        <result property="cardBenefitDetail" column="CARD_BENEFIT_DETAIL"/>
+        <result property="cardPercentage" column="CARD_PERCENTAGE"/>
+        <result property="payBackDate" column="PAYBACK_DATE"/>
+    </resultMap>
+
+    <insert id="insertPayback" parameterType="map">
+        INSERT INTO PAYBACK (
+        PAYBACK_NO, MEMBER_NO, ACCOUNT_BOOK_NO, SELLING_CARD_NO, PAYBACK_AMOUNT,PAYBACK_DATE
+        )
+        SELECT
+        PAYBACK_NO_SEQ.NEXTVAL,
+        AB.MEMBER_NO,
+        AB.ACCOUNT_BOOK_NO,
+        SC.SELLING_CARD_NO,
+        AB.PAYMENT_AMOUNT * (CB.CARD_PERCENTAGE / 100) AS CALCULATED_PAYBACK,
+        TRUNC(ADD_MONTHS(AB.CRE_DATE, 1), 'MM') AS PAYBACK_DATE
+        FROM ACCOUNT_BOOK AB
+        JOIN SELLING_CARD SC ON AB.MEMBER_NO = SC.MEMBER_NO
+        JOIN CARD_BENEFIT CB ON SC.CARD_NO = CB.CARD_NO
+        JOIN MINUS_CATEGORY MC ON AB.MINUS_CATEGORY_NO = MC.CATEGORY_NO
+        LEFT JOIN PAYBACK PB ON AB.ACCOUNT_BOOK_NO = PB.ACCOUNT_BOOK_NO
+        WHERE PB.ACCOUNT_BOOK_NO IS NULL
+        AND AB.PAYMENT_METHOD_NO=2
+        AND REPLACE(CB.CARD_BENEFIT_DIVISION, '할인', '') = MC.CATEGORY_NAME
+        AND AB.ACCOUNT_BOOK_NO = #{accountBookNo}  <!-- 전달받은 accountBookNo로 조건 추가 -->
+        AND AB.MEMBER_NO = #{memberNo}              <!-- 전달받은 memberNo로 조건 추가 -->
+    </insert>
+    <!--위에 2는하드코딩해둠-->
+
+</mapper>

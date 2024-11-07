@@ -1,12 +1,17 @@
 package com.edu.wing.accountbook.controller;
 
+import com.edu.wing.accountbook.domain.AccountBookVo;
 import com.edu.wing.accountbook.service.AccountBookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RequestMapping("/member/accountBook")
 @Controller
@@ -22,5 +27,8 @@ public class MemberAccountBookController {
     public String getAccountBookPage() {
         return "jsp/member/accountBook/AccountBookView"; // JSP 파일 경로
     }
+
+
+
 }
 

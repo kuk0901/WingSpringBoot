@@ -23,7 +23,7 @@ $(document).ready(function() {
   updateCurrentMonthDisplay(currentYear,currentMonth);
   loadCategories(); // 초기 카테고리 목록 로드
   loadPaymentMethods()//결제수단 목록 로드
-
+  fetchMonthlyPayback( startDate, endDate,memberNo)
 
   //가계부추가함수
   $('#accountBookForm').on('submit', function(event) {
@@ -867,3 +867,32 @@ $(document).on("click", "#deleteBtn", function(e) {
     });
   }
 });
+
+function fetchMonthlyPayback(startDate, endDate, memberNo) {
+  $.ajax({
+    url: '/member/api/accountBook/list/monthlyPayback', // API 엔드포인트
+    type: 'GET', // GET 요청
+    data: {
+      startDate: startDate,
+      endDate: endDate,
+      memberNo: memberNo
+    },
+    success: function(response) {
+      // 응답 받은 데이터를 처리
+      // 예: 페이백 금액 합산
+      let totalPaybackAmount = 0;
+      if (response && response.length > 0) {
+        response.forEach(function(item) {
+          totalPaybackAmount += item.paybackAmount; // 예시: paybackAmount 필드가 있는 경우
+        });
+      }
+
+      // 페이백 예정 금액 업데이트
+      $('#payBackIncome').text('다음달 페이백 금액: ' + formatPaymentAmountNumber(totalPaybackAmount) + ' 원');
+    },
+    error: function(xhr, status, error) {
+      console.log("에러 발생: " + error);
+      $('#payBackIncome').text('페이백예정 금액: 오류');
+    }
+  });
+}

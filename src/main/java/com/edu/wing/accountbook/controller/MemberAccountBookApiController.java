@@ -162,6 +162,31 @@ public class MemberAccountBookApiController {
         List<AccountBookVo> accountBookVo = accountBookService.selectMonthlyIncomeBook(memberNo, startDate, endDate);
         return ResponseEntity.ok(accountBookVo);
     }
+    @GetMapping("/list/monthlyPayback")
+    public ResponseEntity<List<AccountBookVo>> getMonthlyPayback(
+            @RequestParam String startDate,
+            @RequestParam String endDate,
+            @RequestParam int memberNo) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+        params.put("memberNo", memberNo);
+
+        List<AccountBookVo> paybackAmounts = accountBookService.getMonthlyPayback(params);
+        return ResponseEntity.ok(paybackAmounts);
+    }
+
+    @GetMapping("/myPage/detail")
+    public ResponseEntity<List<AccountBookVo>> getCardDetail(
+            @RequestParam int memberNo,
+            @RequestParam(required = false) Integer categoryNo,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate
+    ){
+        // 날짜 및 카테고리 조건을 고려해 데이터 조회
+        List<AccountBookVo> cardDetails = accountBookService.getCardDetailForMypage(memberNo, categoryNo, startDate);
+
+        return ResponseEntity.ok(cardDetails);
+    }
 
 }//종료
 

@@ -90,6 +90,7 @@ public class MemberApiSellingCardController {
         return ResponseEntity.badRequest().body(resultMap); // 404 Not Found
       }
     } catch (Exception e) {
+
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
     }
   }

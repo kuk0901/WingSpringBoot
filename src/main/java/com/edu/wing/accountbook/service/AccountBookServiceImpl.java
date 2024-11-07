@@ -77,7 +77,16 @@ public class AccountBookServiceImpl implements AccountBookService {
 
   @Override
   public int addAccountBook(Map<String, Object> params) {
-    return accountBookDao.insertAccountBook(params);
+    int result = accountBookDao.insertAccountBook(params);
+    if (result > 0) {
+      // accountBookNo와 memberNo를 추출하여 PAYBACK 삽입
+      Map<String, Object> paybackData = new HashMap<>();
+      paybackData.put("accountBookNo", params.get("accountBookNo"));
+      paybackData.put("memberNo", params.get("memberNo"));
+
+      return accountBookDao.insertPayback(paybackData);
+    }
+    return 0;
   }
 
   @Override
@@ -152,4 +161,23 @@ public class AccountBookServiceImpl implements AccountBookService {
     return accountBooks;
   }
 
+  @Override
+  public int insertPayback(Map<String, Object> paybackData) {
+    return accountBookDao.insertPayback(paybackData);
+  }
+
+  @Override
+  public List<AccountBookVo> getMonthlyPayback(Map<String, Object> params) {
+    return accountBookDao.getMonthlyPayback(params);
+  }
+
+  @Override
+  public List<AccountBookVo> getCardDetailForMypage(int memberNo, Integer categoryNo, LocalDate startDate) {
+    return accountBookDao.getCardDetailForMypage(memberNo, categoryNo, startDate);
+  }
+
+
 }
+
+
+
