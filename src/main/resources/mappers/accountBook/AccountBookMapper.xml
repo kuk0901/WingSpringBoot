@@ -209,18 +209,18 @@
     <!-- 회원 카드 구매 후 자동으로 가계부에 기입되는 데이터   -->
     <insert id="cardPurchaseOfAccountBook" parameterType="accountBookVo">
         INSERT INTO ACCOUNT_BOOK (ACCOUNT_BOOK_NO, PLUS_CATEGORY_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO, CONTENT, PAYMENT_AMOUNT)
-        VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, #{plusCategoryNo}, #{minusCategoryNo}, #{memberNo}, #{paymentMethodNo}, #{content}, #{paymentAmount})
+        VALUES (ACCOUNT_BOOK_NO_SEQ.NEXTVAL, 1, 4, #{memberNo}, 3, #{content}, 12000)
     </insert>
 
     <!-- 회원 카드 구매 후 데이터 조회 -->
     <select id="verifyTodayCardPurchaseAccountBookEntry" parameterType="accountBookVo" resultMap="accountBookResultMap">
         SELECT ACCOUNT_BOOK_NO, MINUS_CATEGORY_NO, MEMBER_NO, PAYMENT_METHOD_NO, CONTENT, CRE_DATE
         FROM ACCOUNT_BOOK
-        WHERE MINUS_CATEGORY_NO = #{minusCategoryNo}
+        WHERE MINUS_CATEGORY_NO = 4
         AND MEMBER_NO = #{memberNo}
-        AND PAYMENT_METHOD_NO = #{paymentMethodNo}
+        AND PAYMENT_METHOD_NO = 3
         AND CONTENT = #{content}
-        AND PAYMENT_AMOUNT = #{paymentAmount}
+        AND PAYMENT_AMOUNT = 12000
         AND TRUNC(CRE_DATE) = TRUNC(SYSDATE)
     </select>
   

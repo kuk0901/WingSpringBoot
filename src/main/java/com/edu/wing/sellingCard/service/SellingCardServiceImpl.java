@@ -70,36 +70,36 @@ public class SellingCardServiceImpl implements SellingCardService {
   }
 
   @Override
-  @Transactional
-  public Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo) {
+  @Transactional(rollbackFor = Exception.class)
+  public Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo) throws RuntimeException {
     Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put(STATUS, STATUS_FAIL);
 
-    try {
-      sellingCardDao.memberPurchaseCard(sellingCardVo);
+    sellingCardDao.memberPurchaseCard(sellingCardVo);
 
-      SellingCardVo checkSellingCardVo = sellingCardDao.memberPurchaseCardCheck(sellingCardVo);
+    SellingCardVo checkSellingCardVo = sellingCardDao.memberPurchaseCardCheck(sellingCardVo);
 
-      if (checkSellingCardVo == null) {
-        resultMap.put(STATUS, STATUS_FAIL);
-        throw new RuntimeException("카드 구매 내역이 확인되지 않았습니다. 잠시 후 다시 시도해 주세요.");
-      }
-
-      accountBookDao.cardPurchaseOfAccountBook(accountBookVo);
-
-      AccountBookVo checkAccountBookVo = accountBookDao.verifyTodayCardPurchaseAccountBookEntry(accountBookVo);
-
-      if (checkAccountBookVo == null) {
-        resultMap.put(STATUS, STATUS_FAIL);
-        throw new RuntimeException("가계부에 카드 구매 내역이 확인되지 않았습니다. 관리자에게 문의해 주세요.");
-      }
-
-      resultMap.put(STATUS, STATUS_SUCCESS);
-      resultMap.put(ALERT_MSG, "WING_ 카드를 신청해 주셔서 감사합니다!");
+    if (checkSellingCardVo == null) {
+      throw new RuntimeException("카드 구매 내역이 확인되지 않았습니다. 잠시 후 다시 시도해 주세요.");
     }
-    catch (Exception e) {
-      resultMap.put(STATUS, STATUS_ERROR);
-      resultMap.put(ALERT_MSG, e.getMessage());
+
+    accountBookDao.cardPurchaseOfAccountBook(accountBookVo);
+
+    AccountBookVo checkAccountBookVo = accountBookDao.verifyTodayCardPurchaseAccountBookEntry(accountBookVo);
+
+    if (checkAccountBookVo == null) {
+      throw new RuntimeException("가계부에 카드 구매 내역이 확인되지 않았습니다. 관리자에게 문의해 주세요.");
     }
+
+    memberDao.updateMemberCardPurchase(sellingCardVo.getMemberNo());
+    MemberVo memberVo = memberDao.checkMemberProductPurchase(sellingCardVo.getMemberNo());
+
+    if ("N".equals(memberVo.getProductPurchase())) {
+      throw new RuntimeException("회원 정보에 카드 구매 내역이 확인되지 않았습니다. 관리자에게 문의해 주세요.");
+    }
+
+    resultMap.put(STATUS, STATUS_SUCCESS);
+    resultMap.put(ALERT_MSG, "WING_ 카드를 신청해 주셔서 감사합니다!");
 
     return resultMap;
   }
@@ -126,7 +126,7 @@ public class SellingCardServiceImpl implements SellingCardService {
     memberDao.updateMemberProductPurchase(memberNo);
 
     // 4. 회원 정보 조회
-    MemberVo memberVo = memberDao.updateMemberProductPurchaseCheck(memberNo);
+    MemberVo memberVo = memberDao.checkMemberProductPurchase(memberNo);
 
     if ("Y".equals(memberVo.getProductPurchase())) {
       throw new CustomException("회원 상태 업데이트에 실패했습니다.");

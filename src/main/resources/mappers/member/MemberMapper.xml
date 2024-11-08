@@ -165,13 +165,21 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
+    <!-- 카드 신청   -->
+    <update id="updateMemberCardPurchase" parameterType="int">
+        UPDATE MEMBER
+        SET PRODUCT_PURCHASE = 'Y'
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <!-- 카드 해지 -->
     <update id="updateMemberProductPurchase" parameterType="int">
         UPDATE MEMBER
         SET PRODUCT_PURCHASE = 'N'
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
-    <select id="updateMemberProductPurchaseCheck" parameterType="int" resultMap="memberResultMap">
+    <select id="checkMemberProductPurchase" parameterType="int" resultMap="memberResultMap">
         SELECT MEMBER_NO, PRODUCT_PURCHASE
         FROM MEMBER
         WHERE MEMBER_NO = #{memberNo}
