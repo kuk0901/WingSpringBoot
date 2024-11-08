@@ -89,13 +89,18 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
+  public void updateMemberCardPurchase(int memberNo) {
+    sqlSession.update(namespace + "updateMemberCardPurchase", memberNo);
+  }
+
+  @Override
   public void updateMemberProductPurchase(int memberNo) {
     sqlSession.update(namespace + "updateMemberProductPurchase", memberNo);
   }
 
   @Override
-  public MemberVo updateMemberProductPurchaseCheck(int memberNo) {
-    return sqlSession.selectOne(namespace + "updateMemberProductPurchaseCheck", memberNo);
+  public MemberVo checkMemberProductPurchase(int memberNo) {
+    return sqlSession.selectOne(namespace + "checkMemberProductPurchase", memberNo);
   }
 
   @Override

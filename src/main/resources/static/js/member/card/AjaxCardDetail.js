@@ -242,12 +242,8 @@ function createDetailView(data) {
     }
 
     const accountBookData = {
-      plusCategoryNo: 1,
-      minusCategoryNo: 4,
       memberNo: mn,
-      paymentMethodNo: 3,
-      content: "WING_ 카드 구매",
-      paymentAmount: "12,000",
+      content: "WING_ 카드 구매"
     }
 
     $.ajax("", {
@@ -256,7 +252,7 @@ function createDetailView(data) {
       type: 'POST',
       data: JSON.stringify({ sellingCardVo: sellingCardData, accountBookVo: accountBookData }),
       success: function(res) {
-        if (res.status === "success") window.location.href = `/member/user/myPage?message=${res.alertMsg}`;
+        window.location.href = `/member/user/myPage?message=${res.alertMsg}`;
       },
       error: function(xhr, status, error) {
         e.preventDefault();

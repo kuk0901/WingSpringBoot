@@ -44,11 +44,12 @@ public class MemberApiSellingCardController {
 
       resultMap = sellingCardService.processMemberCardPurchase(sellingCardVo, accountBookVo);
 
-      if ("success".equals(resultMap.get("status"))) {
-        return ResponseEntity.ok().body(resultMap);
-      } else {
-        return ResponseEntity.badRequest().body(resultMap);
-      }
+      return ResponseEntity.ok().body(resultMap);
+
+    } catch (RuntimeException e) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", e.getMessage());
+      return ResponseEntity.badRequest().body(resultMap);
     } catch (Exception e) {
       resultMap.put("status", "failed");
       resultMap.put("alertMsg", "카드 구매 처리 중 오류가 발생했습니다. 관리자에게 문의해 주세요.");
