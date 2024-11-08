@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +12,9 @@
           integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
           crossorigin="anonymous">
   </script>
- <script defer type="module" src="/js/member/user/userMyPage.js"></script>
+
+
+  <script defer type="module" src="/js/member/user/userMyPage.js"></script>
   <link rel="stylesheet" href="/css/member/user/userMyPage.css">
 </head>
 
@@ -64,6 +63,7 @@
                   <div class="input-container">
                     <input type="text" id="Name" name="Name"
                            value="${memberVo.userName}" />
+
                     <span id="userNameError"></span>
                   </div>
                 </div>
@@ -76,6 +76,7 @@
                          pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                          autocomplete="off"
                            value="${memberVo.pwd}" />
+                         autocomplete="off"/>
                     <span id="pwdError"></span>
                   </div>
                 </div>
@@ -88,6 +89,7 @@
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
                    value="${memberVo.pwd}" />
+                           autocomplete="off"/>
                     <span id="pwdCheckError"></span>
                   </div>
                 </div>
@@ -96,6 +98,7 @@
                     <label for="phone">전화번호</label>
                   </div>
                   <div class="input-container">
+
                     <input type="text" id="phone" name="phone" value="${memberVo.phone}"/>
                     <span id="phoneError"></span>
                   </div>
@@ -141,7 +144,6 @@
             <button id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
           </div>
         </form>
-  <%--      나중에 c:choose로 설정할것 보유시->그대로//미보유시 N->따로 js처리--%>
 <c:choose>
   <c:when test="${not empty sellingCard}">
         <div id="card-container" class="card-container" >
