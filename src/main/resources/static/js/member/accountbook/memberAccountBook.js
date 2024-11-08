@@ -163,7 +163,7 @@ function fetchAccountBooks(memberNo, startDate, endDate,limit) {
 
       // 가계부 데이터가 없을 경우 메시지 출력
       if (data.length === 0) {
-        $('.entry-list').html('<div class="no-data-message">등록된 내역이 없습니다.</div>'); // 내역이 없음을 알리는 메시지
+        $('.entry-list').html('<div class="no-data-message text__semibold text__center">등록된 내역이 없습니다.</div>'); // 내역이 없음을 알리는 메시지
         return; // 함수 종료
       }
       renderAccountBooks(data);
@@ -737,7 +737,7 @@ function fetchMonthlyExpenseBooks(memberNo, startDate, endDate) {
 
       // 월별 지출 데이터가 없을 경우 메시지 출력
       if (data.length === 0) {
-        $('.entry-list').html('<div class="no-data-message">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
+        $('.entry-list').html('<div class="no-data-message text__semibold text__center">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
         return; // 함수 종료
       }
 

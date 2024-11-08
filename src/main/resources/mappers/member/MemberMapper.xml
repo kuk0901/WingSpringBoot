@@ -95,8 +95,6 @@
         WHERE M.MEMBER_NO = #{memberNo}
     </select>
 
-
-
     <!-- 회원 전체 수 조회 쿼리 -->
     <select id="selectTotalMembersCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
@@ -104,31 +102,20 @@
         WHERE IS_DELETED='false'
     </select>
 
-
-
-
-
-
-
     <update id="adminSoftDeleteMember" parameterType="memberVo">
         UPDATE MEMBER
         SET  IS_DELETED='true'
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
-
     <update id="updateMember" parameterType="MemberVo">
         UPDATE MEMBER
         SET EMAIL = #{email},
             USER_NAME = #{userName},
-            PWD = #{pwd},
+            PWD = #{password},
             PHONE = #{phone}
         WHERE MEMBER_NO = #{memberNo}
     </update>
-
-
-
-
 
     <!-- 관리자의 마이페이지 조회쿼리 -->
     <select id="selectAdminMypageInfo" parameterType="int" resultType="MemberVo">
@@ -152,7 +139,7 @@
         SET
         EMAIL = #{email},
         USER_NAME = #{userName},
-        PWD = #{pwd},
+        PWD = #{password},
         PHONE = #{phone},
         MONTH_SALARY = #{monthlySalary},
         YEARLY_SALARY = #{yearlySalary}
@@ -243,7 +230,7 @@
         SELECT MEMBER_NO, EMAIL
         FROM MEMBER
         WHERE PHONE = #{phone}
-        AND PWD = #{pwd}
+        AND PWD = #{password}
     </select>
 
     <!-- 비밀번호 찾기 -->
@@ -256,7 +243,7 @@
 
     <update id="updateMemberPassword" parameterType="map">
         UPDATE MEMBER
-        SET PWD = #{pwd}
+        SET PWD = #{password}
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
@@ -265,6 +252,6 @@
         FROM MEMBER
         WHERE USER_NAME = #{userName}
         AND EMAIL = #{email}
-        AND PWD = #{pwd}
+        AND PWD = #{password}
     </select>
 </mapper>

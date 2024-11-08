@@ -1,10 +1,8 @@
 package com.edu.wing.post.controller;
 
-import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.post.domain.PostVo;
 import com.edu.wing.post.service.PostService;
 import com.edu.wing.util.Paging;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +58,7 @@ public class MemberPostController {
     return mav;
   }
 
-  @GetMapping("/{postNo}")
+  @GetMapping("/list/{postNo}")
   public ResponseEntity<Map<String, Object>> postDetail(@PathVariable int postNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String postSearch,
                                                         @RequestParam(defaultValue = "2") int noticeBoardNo) {
     log.info(LOG_TITLE);

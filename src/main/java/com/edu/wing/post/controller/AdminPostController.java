@@ -89,7 +89,7 @@ public class AdminPostController {
     return mav;
   }
 
-  @GetMapping("/{postNo}")
+  @GetMapping("/list/{postNo}")
   public ResponseEntity<Map<String, Object>> postDetail(@PathVariable int postNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String postSearch,
                                                         @RequestParam(defaultValue = "2") int noticeBoardNo) {
     log.info(LOG_TITLE);

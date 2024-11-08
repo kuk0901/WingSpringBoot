@@ -50,13 +50,13 @@
       </div>
       <div class="line">
         <label class="form-label">비밀번호:</label>
-        <input type="password" name="pwd" id="pwd" value="${memberInfo.pwd}" class="form-input"
+        <input type="password" name="password" id="password" value="${memberInfo.password}" class="form-input"
                pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                autocomplete="off"/>
       </div>
       <div class="line">
         <label class="form-label">비밀번호 확인:</label>
-        <input type="password" id="pwdCheck" value="${memberInfo.pwd}" class="form-input"
+        <input type="password" id="pwdCheck" value="${memberInfo.password}" class="form-input"
                pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                autocomplete="off"/>
         <span id="pwdError"></span>

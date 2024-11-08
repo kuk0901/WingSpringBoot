@@ -19,7 +19,6 @@
 
 .main-container {
   margin: 20px;
-  height: 680px;
 }
 
 .btn__inquiry {
@@ -30,7 +29,9 @@
   margin-left: 50px;
 }
 
-#content .btn-container {
+#content .btn-container.one-line {
+  width: 90%;
+  justify-content: flex-end;
   margin-right: 20px;
 }
 
@@ -41,16 +42,13 @@
 #content .title-container .btn-container .listMove {
   width: 150px;
   height: 40px;
-  margin-left: 20px;
-  margin-bottom: 30px;
 }
 
-#content .main-container .inquiry-container .list-container .list--supply {
-  font-size: 17px;
-  padding: 17px 13px;
-  width: 300px;
+#content .main-container .inquiry-container {
+  padding-bottom: 10px;
 }
 
+#content .main-container .inquiry-container .list-container .list--supply,
 #content .main-container .inquiry-container .list-container .list--date {
   font-size: 17px;
   padding: 17px 13px;
@@ -78,84 +76,93 @@
   height: 50px;
 }
 
+#content .main-container .inquiry-container .inquiry-title {
+  width: 90%;
+  justify-content: space-between;
+  margin: auto;
+}
+
 #content .main-container .inquiry-container .inquiry-title .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 20px 20px 20px 150px;
+  margin: 20px 10px 20px 0;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .inquiry-title .info-item {
   width: 600px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .inquiry-title .info-dv-item {
   width: 190px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
+}
+
+#content .main-container .inquiry-container .inquiry-sub {
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 auto 10px;
 }
 
 #content .main-container .inquiry-container .inquiry-sub .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 10px 150px;
+  margin: 10px 10px 10px 0;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .inquiry-sub .info-writer {
   width: 500px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .inquiry-sub .info-date {
   width: 290px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .info-content .contentArea {
-  width: 1178px;
-  height: 198px;
+  width: 100%;
+  margin: auto;
+  min-height: 400px;
   border: none;
   resize: none;
+  outline: none;
+  font-size: 16px;
 }
 
 #content .main-container .inquiry-container .info-content-div {
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 0 150px;
-  width: 1180px;
+  margin: auto;
+  width: 90%;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-container .info-content {
-  width: 1180px;
-  height: 200px;
-  margin: 20px 0 0 150px;
+  width: 90%;
+  min-height: 400px;
+  margin: 20px auto;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .reply-container {
+  width: 90%;
+  margin: auto;
   justify-content: space-between;
 }
 
 #content .main-container .inquiry-comment-container .reply-container .info-comment {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 0 0 150px;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .reply-container .btn-container .addReply {
   width: 150px;
-  height: 35px;
-  margin: 20px 280px 0 0;
+  margin-top: 20px;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container {
@@ -164,29 +171,27 @@
 
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-item {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 0 20px 0 150px;
+  margin-right: 20px;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-detail {
   width: 395px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .answer-content .reason--content {
-  width: 1180px;
+  width: 90%;
   height: 160px;
-  margin: 20px 0 0 150px;
+  margin: 20px auto;
   border: 1px solid black;
 }
 
 #content .main-container .inquiry-comment-container .no-data-container {
-  width: 1180px;
+  width: 90%;
   height: 160px;
-  margin: 20px 0 0 150px;
+  margin: 20px auto;
 }
 
 #content .main-container .btn-container {
@@ -212,14 +217,15 @@
   margin-top: 10px;
 }
 
-#content .btn-container-all .btn-container #listMove {
-  margin-left: 400px;
-  width: 150px;
-  height: 50px;
+#content .btn-container.inquiry-add-container {
+  width: 90%;
+  margin: auto;
+  justify-content: space-around;
 }
 
-#content .btn-container-all .btn-container #addInquiry {
-  margin-left: 400px;
+#content .btn-container #listMove,
+#content .btn-container #addInquiry {
   width: 150px;
   height: 50px;
+  margin-right: 20px;
 }

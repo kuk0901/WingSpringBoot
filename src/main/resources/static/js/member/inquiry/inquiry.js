@@ -96,21 +96,25 @@ function createDetailView(data, answerTermination) {
         <div class="inquiry-title one-line">
           <input type="hidden" id="inquiryNo" value="${data.INQUIRYNO}">
         
-          <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div class="info-item bg__white text__black box__l">${data.TITLE}</div>
-
-          <div class="info-title bg__gray text__black box__l text__center">분류</div>
-          <div class="info-dv-item bg__white text__black box__l">${data.DIVISION}</div>
-
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">제목</div>
+            <div class="info-item bg__white text__black box__l">${data.TITLE}</div>
+          </div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">분류</div>
+            <div class="info-dv-item bg__white text__black box__l">${data.DIVISION}</div>
+          </div>
         </div>
         
         <div class="inquiry-sub one-line">
-        
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.INQUIRYWRITEREMAIL}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
-          
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+            <div class="info-writer bg__white text__black box__l">${data.INQUIRYWRITEREMAIL}</div>
+          </div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+            <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+          </div>
         </div>
         
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>

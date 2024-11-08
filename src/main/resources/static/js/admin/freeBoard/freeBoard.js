@@ -27,7 +27,7 @@ $('.list-content').click(function () {
   console.log(noticeBoardNo);
 
   $.ajax({
-    url: `/admin/freeBoard/${freeBoardNo}`,
+    url: `/admin/freeBoard/list/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -58,7 +58,7 @@ function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
     </div>
 
     <main class="main-container bg__white">
-      <div class="freeBoard-container">
+      <div class="freeBoard-container one-line">
         <div class="freeBoard-title one-line">
           <input type="hidden" id="freeBoardNo" value="${data.freeBoardNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
@@ -68,10 +68,14 @@ function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
         </div>
         
         <div class="freeBoard-sub one-line">
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.email}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formatDate(data.creDate)}</div> 
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+            <div class="info-writer bg__white text__black box__l">${data.email}</div>
+          </div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+            <div class="info-date bg__white text__black box__l">${formatDate(data.creDate)}</div> 
+          </div>
         </div>
         
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>

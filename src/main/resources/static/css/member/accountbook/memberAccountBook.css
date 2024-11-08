@@ -16,7 +16,7 @@
 .main-container {
   background-color: white;
   height: 700px;
-  width: 1500px;
+  width: 98%;
   margin: auto;
   overflow-y: auto; /* 세로 스크롤 활성화 */
 }
@@ -64,7 +64,6 @@
   border-bottom: 1px solid black;
   justify-content: space-evenly;
   gap: 10px;
-  padding: 0 10px;
 }
 
 #accountBookForm .entry-form .entry-container {
@@ -150,7 +149,7 @@
   margin-left: 15px;
   line-height: 30px;
   padding: 0 5px;
-  border-radius: 10px;
+
 }
 .payback-container{
   flex-grow: 1;
@@ -196,7 +195,8 @@
   height: 50px;
   margin: 10px auto auto;
   justify-content: center;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .entry-category span {
@@ -340,4 +340,13 @@ detail영역
 .bottom-btn{
   width: 100px;
   height: 50px;
+}
+
+#addEntry {
+  margin-right: 10px;
+}
+
+.no-data-message {
+  margin: 20px auto;
+  font-size: 18px;
 }

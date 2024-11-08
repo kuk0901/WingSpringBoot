@@ -14,7 +14,6 @@
 
 .main-container {
   margin: 20px;
-  height: 680px;
 }
 
 .btn__post {
@@ -66,6 +65,10 @@
   line-height: normal;
 }
 
+#content .main-container .post-container {
+  padding-bottom: 20px;
+}
+
 #content .main-container .post-container .list-container .list--supply {
   font-size: 17px;
   padding: 17px 13px;
@@ -109,84 +112,93 @@
   padding: 13px 19px;
 }
 
+#content .main-container .post-container .post-title {
+  width: 90%;
+  margin: auto;
+}
+
 #content .main-container .post-container .post-title .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 20px 20px 20px 150px;
+  margin: 20px 20px 10px 0;
+  padding: 10px;
 }
 
 #content .main-container .post-container .post-title .info-item {
   width: 600px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
+  margin: 20px 20px 10px 0;
 }
 
 #content .main-container .post-container .post-title .info-dv-item {
   width: 190px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
+}
+
+#content .main-container .post-container .post-sub {
+  width: 90%;
+  margin: auto;
 }
 
 #content .main-container .post-container .post-sub .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 10px 150px;
+  margin: 20px 20px 10px 0;
+  padding: 10px;
 }
 
 #content .main-container .post-container .post-sub .info-writer {
   width: 500px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
+  margin: 20px 20px 10px 0;
 }
 
 #content .main-container .post-container .post-sub .info-date {
   width: 290px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
+  margin: 20px 20px 10px 0;
 }
 
 #content .main-container .post-container .info-content-div {
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 0 150px;
-  width: 1180px;
+  margin: 10px auto 10px;
+  width: 90%;
+  padding: 10px;
 }
 
 #content .main-container .post-container .info-content {
-  width: 1180px;
+  width: 90%;
   height: 400px;
-  margin: 20px 0 0 150px;
+  margin: auto;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .post-container .info-content .contentArea {
-  width: 1178px;
-  height: 398px;
+  width: 100%;
+  min-height: 450px;
   border: none;
   resize: none;
+  outline: none;
 }
 
 #content .main-container .post-comment-container .reply-container {
   justify-content: space-between;
+  width: 90%;
+  margin: auto;
 }
 
 #content .main-container .post-comment-container .reply-container .info-comment {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 0 0 150px;
+  margin: 10px;
+  padding: 10px;
 }
 
 #content .main-container .post-comment-container .reply-container .btn-container .addReply {
   width: 150px;
   height: 35px;
-  margin: 20px 280px 0 0;
+  margin: auto;
 }
 
 #content .main-container .post-comment-container .answer-info .info-comment-container {
@@ -195,43 +207,42 @@
 
 #content .main-container .post-comment-container .answer-info .info-comment-container .info-item {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 0 20px 0 150px;
+  margin: auto;
+  padding: 10px;
 }
 
 #content .main-container .post-comment-container .answer-info .info-comment-container .info-detail {
   width: 395px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .post-comment-container .answer-content .reason--content {
-  width: 1180px;
+  width: 90%;
   height: 160px;
-  margin: 20px 0 0 150px;
+  margin: auto;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .post-comment-container .no-data-container {
-  width: 1180px;
+  width: 90%;
   height: 160px;
-  margin: 20px 0 0 150px;
+  margin: auto;
 }
 
 #content .main-container .post-comment-container .answer-content .reason--content #answerContent {
-  width: 1178px;
-  height: 159px;
+  width: 90%;
+  min-height: 350px;
+  outline: none;
+  border: none;
+  resize: none;
 }
 
 #content .main-container .btn-container {
-  margin-left: 150px;
-  justify-content: space-between;
-}
-
-#content .main-container .btn-container .listUpdate {
-  margin-right: 225px;
+  width: 90%;
+  margin: auto;
+  justify-content: space-around;
 }
 
 #content .main-container .list-container .list--div {
