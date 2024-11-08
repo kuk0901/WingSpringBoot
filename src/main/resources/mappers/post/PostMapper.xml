@@ -24,7 +24,6 @@
         FROM POST
         <where>
             <include refid="search" />
-            AND NOTICE_BOARD_NO = #{noticeBoardNo}
         </where>
     </select>
 
@@ -38,7 +37,6 @@
                 JOIN MEMBER M ON P.MEMBER_NO = M.MEMBER_NO
                 <where>
                     <include refid="search" />
-                    AND P.NOTICE_BOARD_NO = #{noticeBoardNo}
                 </where>
                 <![CDATA[
                 ORDER BY
@@ -52,15 +50,29 @@
 
     <insert id="addPost" parameterType="postVo">
         INSERT INTO POST (POST_NO, NOTICE_BOARD_NO, MEMBER_NO, CONTENT, TITLE)
-        VALUES (POST_NO_SEQ.NEXTVAL, #{noticeBoardNo}, #{memberNo}, #{content}, #{title})
+        VALUES (POST_NO_SEQ.NEXTVAL, 2, #{memberNo}, #{content}, #{title})
     </insert>
 
-    <select id="postSelectOne" parameterType="int" resultMap="postResultMap">
-        SELECT P.POST_NO AS postNo, P.TITLE, M.EMAIL AS postWriterEmail, P.CRE_DATE AS postDate,
-        P.CONTENT AS postContent
+    <select id="postSelectOne" parameterType="int" resultType="map">
+        SELECT P.POST_NO AS postNo, P.TITLE, M.EMAIL AS email, P.CRE_DATE AS creDate,
+        P.CONTENT AS content
         FROM POST P
         JOIN MEMBER M ON P.MEMBER_NO = M.MEMBER_NO
-        WHERE P.POST_NO = #{inquiryNo}
+        WHERE P.POST_NO = #{postNo}
     </select>
+
+    <update id="updatePost" parameterType="map">
+        UPDATE POST
+        SET TITLE = #{title},
+            CONTENT = #{content},
+            MOD_DATE = SYSDATE,
+            MEMBER_NO = #{memberNo}
+        WHERE POST_NO = #{postNo}
+    </update>
+
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM POST
+        WHERE POST_NO = #{postNo}
+    </delete>
 
 </mapper>

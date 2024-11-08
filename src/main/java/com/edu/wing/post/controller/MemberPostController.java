@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/cs/post")
-public class AdminPostController {
+@RequestMapping("/member/cs/post")
+public class MemberPostController {
 
-  private static final Logger log = LoggerFactory.getLogger(AdminPostController.class);
-  private static final String LOG_TITLE = "==AdminPostController==";
+  private static final Logger log = LoggerFactory.getLogger(MemberPostController.class);
+  private static final String LOG_TITLE = "==MemberPostController==";
 
   @Autowired
   private PostService postService;
@@ -52,39 +52,12 @@ public class AdminPostController {
     pagingMap.put("pagingVo", pagingVo);
     pagingMap.put("curPage", curPage);
 
-    ModelAndView mav = new ModelAndView("jsp/admin/post/PostListView");
+    ModelAndView mav = new ModelAndView("jsp/member/post/PostListView");
 
     mav.addObject("postList", postList);
     mav.addObject("pagingMap", pagingMap);
     mav.addObject("postSearch", postSearch);
     mav.addObject("noticeBoardNo", noticeBoardNo);
-
-    return mav;
-  }
-
-  @GetMapping("/list/add")
-  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo, @RequestParam String curPage, @RequestParam String postSearch, HttpSession httpSession) {
-    log.info("{} - Retrieving @GetMapping postAdd", LOG_TITLE);
-    log.info("@RequestMapping postAdd curPage: {}, postSearch: {}", curPage, postSearch);
-
-    LocalDate currentDate = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    String formattedDate = currentDate.format(formatter);
-
-    MemberVo member = (MemberVo) httpSession.getAttribute("member");
-
-    if (member == null) {
-      log.warn("Member is not found in session.");
-    } else {
-      log.info("Member found: {}", member);
-    }
-
-    ModelAndView mav = new ModelAndView("jsp/admin/post/PostAddView");
-    mav.addObject("currentDate", formattedDate);
-    mav.addObject("member", member);
-    mav.addObject("noticeBoardNo", noticeBoardNo);
-    mav.addObject("curPage", curPage);
-    mav.addObject("postSearch", postSearch);
 
     return mav;
   }

@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CategoryListView</title>
+  <title>InquiryListView</title>
   <link rel="stylesheet" href="/css/member/inquiry/memberInquiry.css" />
   <script defer type="module" src="/js/member/inquiry/inquiry.js"></script>
 </head>

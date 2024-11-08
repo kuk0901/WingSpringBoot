@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.freeBoard">
+
+    <resultMap type="freeBoardVo" id="freeBoardResultMap">
+        <id column="FREE_BOARD_NO" property="freeBoardNo" />
+        <result column="NOTICE_BOARD_NO" property="noticeBoardNo" />
+        <result column="MEMBER_NO" property="memberNo" />
+        <result column="TITLE" property="title" />
+        <result column="CONTENT" property="content" />
+        <result column="CRE_DATE" property="creDate" />
+        <result column="MOD_DATE" property="modDate" />
+        <result column="EMAIL" property="email" />
+    </resultMap>
+
+    <sql id="search">
+        <if test="freeBoardSearch != null and freeBoardSearch != ''">
+            TITLE LIKE '%' || #{freeBoardSearch} || '%'
+        </if>
+    </sql>
+
+    <select id="freeBoardSelectTotalCount" parameterType="map" resultType="int">
+        SELECT COUNT(FREE_BOARD_NO)
+        FROM FREE_BOARD
+        <where>
+            <include refid="search" />
+        </where>
+    </select>
+
+    <select id="freeBoardSelectList" parameterType="map" resultMap="freeBoardResultMap">
+        SELECT FREE_BOARD_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, CRE_DATE, EMAIL
+        FROM (
+            SELECT ROWNUM AS RNUM, I.*
+            FROM (
+                SELECT FB.FREE_BOARD_NO, FB.NOTICE_BOARD_NO, FB.MEMBER_NO, FB.TITLE, FB.CONTENT, FB.CRE_DATE, M.EMAIL
+                FROM FREE_BOARD FB
+                JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO
+                <where>
+                    <include refid="search" />
+                </where>
+                <![CDATA[
+                ORDER BY
+                    FB.CRE_DATE DESC
+            ) I
+            WHERE ROWNUM <= #{end}
+        )
+        WHERE RNUM >= #{start}
+        ]]>
+    </select>
+
+    <select id="freeBoardSelectOne" parameterType="int" resultMap="freeBoardResultMap">
+        SELECT FB.FREE_BOARD_NO, FB.TITLE, M.EMAIL, FB.CRE_DATE,
+        FB.CONTENT, FB.MEMBER_NO
+        FROM FREE_BOARD FB
+        JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO
+        WHERE FB.FREE_BOARD_NO = #{freeBoardNo}
+    </select>
+</mapper>

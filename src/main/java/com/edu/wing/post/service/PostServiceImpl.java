@@ -40,8 +40,18 @@ public class PostServiceImpl implements PostService{
   }
 
   @Override
-  public PostVo postSelectOne(int postNo) {
+  public Map<String, Object> postSelectOne(int postNo) {
     return postDao.postSelectOne(postNo);
+  }
+
+  @Override
+  public boolean updatePost(int postNo, String title, String content, int memberNo) {
+    return postDao.updatePost(postNo, title, content, memberNo) > 0;
+  }
+
+  @Override
+  public boolean deletePost(int postNo) {
+    return postDao.deletePost(postNo);
   }
 
 }
