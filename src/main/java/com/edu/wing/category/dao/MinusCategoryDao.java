@@ -3,7 +3,6 @@ package com.edu.wing.category.dao;
 import com.edu.wing.category.domain.MinusCategoryVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface MinusCategoryDao {
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.wing.freeBoardComment">
+
+    <resultMap id="freeBoardCommentResultMap" type="freeBoardCommentVo">
+        <id column="FREE_BOARD_COMMENT_NO" property="freeBoardCommentNo" />
+        <result column="FREE_BOARD_NO" property="freeBoardNo" />
+        <result column="MEMBER_NO" property="memberNo" />
+        <result column="CONTENT" property="content" />
+        <result column="CRE_DATE" property="creDate" />
+        <result column="MOD_DATE" property="modDate" />
+        <result column="EMAIL" property="email" />
+    </resultMap>
+
+    <select id="freeBoardCommentSelectList" parameterType="map" resultMap="freeBoardCommentResultMap">
+        SELECT FBC.FREE_BOARD_COMMENT_NO,
+        FBC.FREE_BOARD_NO, FBC.CONTENT, FBC.CRE_DATE, FBC.MEMBER_NO, M.EMAIL
+        FROM FREE_BOARD_COMMENT FBC
+        JOIN MEMBER M ON FBC.MEMBER_NO = M.MEMBER_NO
+        WHERE FBC.FREE_BOARD_NO = #{freeBoardNo}
+    </select>
+
+</mapper>
