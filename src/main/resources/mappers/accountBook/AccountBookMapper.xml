@@ -323,7 +323,8 @@
         FROM ACCOUNT_BOOK AB
                  JOIN MINUS_CATEGORY MC ON AB.MINUS_CATEGORY_NO = MC.CATEGORY_NO
                  JOIN PAYBACK PB ON AB.ACCOUNT_BOOK_NO = PB.ACCOUNT_BOOK_NO
-        <where> AB.MEMBER_NO = #{memberNo}
+                JOIN SELLING_CARD SC ON  PB.SELLING_CARD_NO = SC.SELLING_CARD_NO
+        <where> SC.MEMBER_NO = #{memberNo}
         <if test="categoryNo != null">
             AND AB.MINUS_CATEGORY_NO = #{categoryNo}
         </if>

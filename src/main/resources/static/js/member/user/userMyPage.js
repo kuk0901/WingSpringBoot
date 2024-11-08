@@ -2,6 +2,8 @@ import {formatNumber, formatPhoneNumber, unformatNumber, formatPaymentAmountNumb
 import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
 import { emailRegex, pwdRegex, userNameRegex, phoneRegex, forbiddenPatterns, salaryRegex, validateInput } from "../../util/validation.js"
 
+checkAndShowStoredMessage();
+
 const phoneInput = document.getElementById('phone');
 const yearlySalaryInput = document.getElementById('yearlySalary');
 const monthlySalaryInput = document.getElementById('monthlySalary');
@@ -161,7 +163,8 @@ function updateMemberInfo(data) {
     contentType: 'application/json', // JSON 형식으로 데이터 전송
     data: JSON.stringify(data), // JSON 문자열로 변환
     success: function (response) {
-      showAlertMsg(response.alertMsg)
+      window.location.href = `./myPage?message=${response.alertMsg}`;
+
     },
     error: function (xhr, status, error) {
       alert("회원 정보 수정 중 오류가 발생했습니다."); // 오류 메시지
@@ -169,6 +172,39 @@ function updateMemberInfo(data) {
   });
 }
 
+$('#updateButton').on('click', function (e) {
+  e.preventDefault(); // 기본 제출 방지
+
+  // 폼 유효성 검사
+  if (!this.checkValidity()) {
+    this.reportValidity(); // 유효성 검사 결과 보고
+    return // 유효하지 않으면 종료
+  }
+  const memberNo = $('#memberNo').val();
+  // formData 객체 명시적으로 정의
+  const formData = {
+    memberNo:memberNo,
+    email: $email.val(),
+    userName: $userName.val(),
+    pwd: $pwdInput.val(),
+    phone: $phoneInput.val(),
+    monthlySalary: unFormatNumberString($monthlySalaryInput.val()), // 숫자 형식 변환
+    yearlySalary: unFormatNumberString($salaryInput.val()), // 숫자 형식 변환
+  };
+
+  // AJAX 요청 함수 호출
+  updateMemberInfo(formData);
+});
+
+
+
+
+
+
+
+
+
+$('#quitMemberButton').on('click', handleQuitButtonClick);
 function handleQuitButtonClick() {
   // 탈퇴 확인
   if (!confirm("정말 탈퇴하시겠습니까?")) return;
@@ -187,7 +223,7 @@ function submitQuitRequest(memberNo) {
     contentType: "application/json",
     data: JSON.stringify({memberNo: memberNo}),
     success: function (response) {
-      showAlertMsg(response.alertMsg)
+      showAlertMsg(response.alertMsg);
     },
     error: function (xhr, status, error) {
       const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : "탈퇴 처리 중 오류가 발생했습니다.";
@@ -195,6 +231,9 @@ function submitQuitRequest(memberNo) {
     }
   });
 }
+
+
+
 
 /*여기서부터해지신청란*/
 $("#terminationRequestButton").on("click", function (e) {
@@ -403,42 +442,12 @@ $("#cardUseDetail").on('click', function () {
               categorySelect.append(option); // 옵션 추가
             }
           });
-          $("#content").html(terminationPageHTML);  // #card-container에 카드 영역 추가
 
-          // 카드 혜택 정보를 비동기적으로 가져오기
-          fetchCardBenefit(card.CARDNO).then(benefitHtml => {
-            // 카드 혜택 정보를 가져온 후 해당 카드의 혜택 컨테이너에 추가
-            $(`#benefit-container`).html(benefitHtml);
-          });
 
-          $('#backButton').on('click', function () {
-            window.location.href = './myPage';  // myPage로 이동
-          });
 
-          $('#deleteCardButton').on('click', function () {
-            $.ajax({
-              url: '/member/api/sellingCard/cardSoftDelete/' + memberNo, // URL 설정
-              type: 'DELETE', // 요청 타입
-              dataType: 'json', // 응답 데이터 타입,
-              contentType: 'application/json',
-              data: JSON.stringify({
-                memberNo: memberNo,
-                sellingCardNo: $("#sellingCardNo").val(),
-                memberCardNo: card.MEMBERCARDNO,
-                terminationReason: $("#terminationReason").val()
-              }),
-              success: function (res) {
-                // 성공 시
-                console.log(res)
-                window.location.href = "./myPage?message=" + encodeURIComponent(res.alertMsg);
-              },
-              error: function (xhr, status, error) {
-                const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
 
-                showAlertMsg(msg);
-              }
-            });
-          });
+
+
         },
         error: function () {
           showAlertMsg("판매 카드 정보를 불러오는 데 실패했습니다.");
@@ -547,30 +556,4 @@ $("#cardUseDetail").on('click', function () {
     },});
 });
 
-// 한 번에 가져와 처리
-function fetchCardBenefit(cardNo) {
-  return $.ajax({
-    url: '/member/api/sellingCard/cardBenefit/' + cardNo, // 카드 혜택 정보 API URL
-    type: 'GET', // HTTP 요청 방법
-    dataType: 'json', // 응답 데이터 타입,
-  }).then(function (data) {
-    // data가 배열 형태로 반환된다고 가정
-    let cardBenefitHTML = '';
-    data.forEach(benefit => {
-      const {cardPercentage, cardBenefitDetail, cardBenefitDivision} = benefit;
-      // 카드 혜택 정보를 HTML로 조립
-      cardBenefitHTML += `
-                <div class="card-benefit">
-                    <p> ${cardBenefitDetail} ${cardPercentage}% ${cardBenefitDivision} </p>
-                </div>
-            `;
-    });
 
-    // 조립한 HTML을 페이지에 삽입
-    $('#cardBenefit').html(cardBenefitHTML);
-    return cardBenefitHTML; // 생성된 HTML을 반환
-  }).fail(function (xhr, status, error) {
-    $('#cardBenefit').html('<p>카드 혜택 정보를 불러오는 데 실패했습니다.</p>');
-    return '<p>카드 혜택 정보를 불러오는 데 실패했습니다.</p>';
-  });
-}

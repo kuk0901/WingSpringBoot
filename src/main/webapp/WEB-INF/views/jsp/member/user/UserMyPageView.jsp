@@ -149,8 +149,8 @@
           </div>
 
           <div class="two-btn-container color bg">
-            <button id="updateButton" class="btn btn__generate">정보 수정</button>
-            <button id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
+            <button  id="updateButton" class="btn btn__generate">정보 수정</button>
+            <button type="button" id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
           </div>
         </form>
 
