@@ -1,0 +1,10 @@
+package com.edu.wing.freeBoardComment.service;
+
+import com.edu.wing.freeBoardComment.domain.FreeBoardCommentVo;
+
+import java.util.List;
+
+public interface FreeBoardCommentService {
+
+  List<FreeBoardCommentVo> freeBoardCommentSelectList(int freeBoardNo);
+}

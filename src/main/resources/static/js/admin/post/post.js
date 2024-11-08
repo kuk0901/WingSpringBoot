@@ -1,3 +1,6 @@
+import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
+checkAndShowStoredMessage();
+
 const $abc = $("#abc").value;
 
 function formatDate(dateString) {
@@ -43,7 +46,6 @@ $("#addPost").click(function (e) {
     contentType: 'application/json',
     data: JSON.stringify(postData),
     success: function (res) {
-      console.log("게시글이 성공적으로 추가되었습니다.", res);
       alert("게시글이 성공적으로 추가되었습니다.");
       // 게시글 목록 페이지로 리다이렉트
       window.location.href = '/admin/cs/post/list';
@@ -59,33 +61,27 @@ $('.list-content').click(function () {
   const postNo = $(this).data('post-no');
   const curPage = $('#curPage').val() || '1';
   const postSearch = $('#search').val() || '';
-
-  console.log(curPage);
+  const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
     url: `/admin/cs/post/${postNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
-      postSearch: postSearch
+      postSearch: postSearch,
+      noticeBoardNo: noticeBoardNo
     },
     success: function (res) {
-      console.log('Server response:', res);
-      createDetailView(res);
+      createDetailView(res.postVo, curPage, postSearch, noticeBoardNo);
     },
-    error: function (xhr, status, error) {
-      console.error("Error fetching details:", error);
-      console.log("Status:", status);
-      console.log("Response:", xhr.responseText);
-      alert("데이터를 불러오는 데 실패했습니다. 관리자에게 문의하세요.");
+    error: function (res) {
+      showAlertMsg(res.alertMsg);
     }
   })
 })
 
-function createDetailView(data) {
-  const formattedPostDate = formatDate(data.POSTDATE);
-
-  console.log("Data received in createDetailView:", data);
+function createDetailView(data, curPage, postSearch, noticeBoardNo) {
+  const formattedPostDate = formatDate(data.CREDATE);
 
   const postDetail = `
     <div class="title-container one-line">
@@ -93,7 +89,7 @@ function createDetailView(data) {
         공지사항 상세
       </div>
       <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/post/list?curPage=${data.curPage}&postSearch=${data.postSearch}">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/post/list?curPage=${curPage}&postSearch=${postSearch}">
           돌아가기
         </a>
     </div>
@@ -103,13 +99,15 @@ function createDetailView(data) {
       <div class="post-container">
         <div class="post-title one-line">
           <input type="hidden" id="postNo" value="${data.POSTNO}">
+          <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
+          <input type="hidden" id="postSearch" value="${postSearch}">
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div class="info-item bg__white text__black box__l">${data.TITLE}</div>
+          <div id="postTitle" class="info-item bg__white text__black box__l">${data.TITLE}</div>
         </div>
         
         <div class="post-sub one-line">
           <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.POSTWRITEREMAIL}</div>
+          <div class="info-writer bg__white text__black box__l">${data.EMAIL}</div>
           <div class="info-title bg__gray text__black box__l text__center">작성일</div>
           <div class="info-date bg__white text__black box__l">${formattedPostDate}</div> 
         </div>
@@ -117,7 +115,7 @@ function createDetailView(data) {
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
       
         <div class="info-content bg__white text__black box__l">
-          <div id="postContent" class="bg__white text__black box__l">${data.POSTCONTENT}</div>
+          <div id="postContent" class="bg__white text__black box__l">${data.CONTENT}</div>
         </div>      
       </div>
             
@@ -125,10 +123,16 @@ function createDetailView(data) {
     
     <div class="btn-container btn one-line">
       <div>
-        <a id="deleteTag" class="btn btn__generate deleteTag text__center" href="./list/update?postNo=${data.POSTNO}">삭제</a>
+        <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+          data-post-no="${data.POSTNO}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+          삭제
+        </button>
       </div>
       <div>
-        <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" data-cur-page="${data.curPage}">수정</button>
+        <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
+          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+          수정
+        </button>
       </div>
     </div>
   `;
@@ -140,31 +144,58 @@ function createDetailView(data) {
 
     const postNo = $(this).data("post-no");
     const curPage = $(this).data("cur-page");
-
-    console.log(curPage);
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const postSearch = $(this).data("post-search");
 
     $.ajax( {
       url: `/admin/api/cs/post/update/${postNo}`,
       type: 'POST',
-      data: { curPage: curPage },
-      success: function(res) {
-        console.log("보내지는 값은:", res);
-        createUpdateView(res);
+      data: {
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        postSearch: postSearch,
       },
-      error: function(xhr, status, error) {
-        console.log(error);
+      success: function(res) {
+        createUpdateView(res.postVo, curPage, noticeBoardNo, postSearch);
+      },
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
+
+  $("#deleteBtn").click(function (e) {
+    e.preventDefault();
+
+    const postNo = $(this).data("post-no");
+    const curPage = $(this).data("cur-page");
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const postSearch = $(this).data("post-search");
+
+    $.ajax({
+      url: `/admin/api/cs/post/delete/${postNo}`,
+      type: 'DELETE',
+      data: {
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        postSearch: postSearch
+      },
+      success: function(res) {
+        const message = encodeURIComponent(res.alertMsg || "공지사항 삭제에 성공했습니다");
+        window.location.href = `/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}&message=${message}`;
+      },
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
       }
     })
   })
 
 }
 
-function createUpdateView(res) {
-  const formattedPostDate = formatDate(res.POSTDATE);
+function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
+  const formattedPostDate = formatDate(res.CREDATE);
 
-  console.log(res);
-
-  const inquiryCommentUpdate = `
+  const postUpdate = `
   <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
         공지사항 수정
@@ -175,15 +206,17 @@ function createUpdateView(res) {
       <div class="post-container">
         <div class="post-title one-line">
           <input type="hidden" id="memberNo"  value="${res.MEMBERNO}">
-          <input type="hidden" id="noticeBoardNo" value="${res.NOTICEBOARDNO}">
+          <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
+          <input type="hidden" id="curPage" value="${curPage}">
+          <input type="hidden" id="postSearch" value="${postSearch}">
 
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div class="info-item bg__white text__black box__l">${res.POSTTITLE}</div>
+          <input id="postTitle" class="info-item bg__white text__black box__l" value="${res.TITLE}">
         </div>
 
         <div class="post-sub one-line">
           <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${res.POSTWRITER}</div>
+          <div id="email" class="info-writer bg__white text__black box__l">${res.EMAIL}</div>
 
           <div class="info-title bg__gray text__black box__l text__center">작성일</div>
           <div id="writeDate" class="info-date bg__white text__black box__l">${formattedPostDate}</div>
@@ -192,22 +225,60 @@ function createUpdateView(res) {
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea id="contentVal" class="contentArea">${res.POSTCONTENT}</textarea>
+          <textarea id="postContent" class="contentArea">${res.CONTENT}</textarea>
         </div>
       </div>
     </main>
 
-    <div class="btn-container-all one-line">
+    <div class="btn-container-patch-move one-line">
       <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
+        <a id="moveList" class="btn btn__generate moveList" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
           취소
         </a>
       </div>
       <div class="btn-container">
-        <button id="postUpdateBtn" class="btn btn__generate listMove text__center text__bold" data-mod="${res.POSTNO}">
+        <button id="postUpdateBtn" class="btn btn__generate postUpdateBtn text__center text__bold" 
+          data-post-no="${res.POSTNO}" data-notice-board-no="${noticeBoardNo}" data-cur-page="${curPage}" data-post-search="${postSearch}" data-email="${res.EMAIL}">
           문의 수정
         </button>
       </div>
     </div>
   `
+
+  $("#content").html(postUpdate);
+
+  $("#postUpdateBtn").click(function (e) {
+    e.preventDefault();
+
+    const postNo = $(this).data("post-no");
+    const curPage = $(this).data("cur-page");
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const postSearch = $(this).data("post-search");
+    const email = $(this).data("post-email");
+
+    const title = $("#postTitle").val();
+    const content = $("#postContent").val();
+
+    $.ajax({
+      url: `/admin/api/cs/post/update/${postNo}`,
+      type: 'PATCH',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        postSearch: postSearch,
+        title: title,
+        content: content,
+        email: email
+      }),
+      success: function(res) {
+        const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
+        window.location.href = `/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}&message=${message}`;
+      },
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
+
 }

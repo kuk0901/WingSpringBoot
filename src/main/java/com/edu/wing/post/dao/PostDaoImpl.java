@@ -37,7 +37,25 @@ public class PostDaoImpl implements PostDao {
   }
 
   @Override
-  public PostVo postSelectOne(int postNo){
+  public Map<String, Object> postSelectOne(int postNo){
     return sqlSession.selectOne(NAMESPACE + "postSelectOne", postNo);
+  }
+
+  @Override
+  public int updatePost(int postNo, String title, String content, int memberNo) {
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("postNo", postNo);
+    resultMap.put("title", title);
+    resultMap.put("content", content);
+    resultMap.put("memberNo", memberNo);
+
+    return sqlSession.update(NAMESPACE + "updatePost", resultMap);
+  }
+
+  @Override
+  public boolean deletePost(int postNo) {
+    int result = sqlSession.delete(NAMESPACE + "deletePost", postNo);
+
+    return result > 0;
   }
 }

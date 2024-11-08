@@ -5,9 +5,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INQUIRY</title>
-  <link rel="stylesheet" href="/css/member/inquiry/memberInquiry.css" />
-  <script defer type="module" src="/js/member/inquiry/inquiry.js"></script>
+  <title>Post</title>
+  <link rel="stylesheet" href="/css/member/post/memberPost.css" />
+  <script defer type="module" src="/js/member/post/post.js"></script>
 </head>
 <body>
 
@@ -18,47 +18,48 @@
 
     <div class="title-container">
       <div class="title btn__yellow text__white">
-        1대1 문의사항
+        공지사항 목록
       </div>
     </div>
 
     <div class="search-container one-line">
-      <div class="btn-container">
-        <a id="addInquiryView" class="btn btn__generate btn__inquiry" href="./list/add">
-          문의하기
-        </a>
+      <div class="input-container">
+        <form id="searchForm" action="./list" method="post" class="one-line">
+          <label for="search" class="searchPostName bg__gray text__black text__center text__semibold">제목</label>
+          <input type="text" id="search" name="postSearch" class="info-item" value="${postSearch}">
+          <input type="submit" id="searchPost" value="검색" class="searchPost btn btn__generate btn__post" />
+        </form>
       </div>
     </div>
 
-    <main class="main-container inquiry__list">
-      <div class="inquiry-container">
+    <main class="main-container post__list">
+      <div class="post-container">
         <div class="list-container list-container--title container-title one-line bg__white">
           <div class="list--supply text__semibold text__center">번호</div>
           <div class="list--title text__semibold text__center">제목</div>
           <div class="list--date text__semibold text__center">작성날짜</div>
-          <div class="list--supply text__semibold text__center">분류</div>
-          <div class="list--supply text__semibold text__center">관리자답변</div>
+          <div class="list--supply text__semibold text__center">작성자</div>
         </div>
 
         <c:choose>
-          <c:when test="${not empty inquiryList}">
+          <c:when test="${not empty postList}">
             <div class="bg__white">
-              <c:forEach items="${inquiryList}" var="inquiryVo" >
-                <div class="list-container list-content one-line" data-inquiry-no="${inquiryVo.inquiryNo}">
-                  <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
-                  <div class="list--title text__center">${inquiryVo.title}</div>
+              <c:forEach items="${postList}" var="postVo" >
+                <div class="list-container list-content one-line " data-post-no="${postVo.postNo}">
+                  <input type="hidden" id="noticeBoardNo" value="${postVo.noticeBoardNo}">
+                  <div class="list--supply text__center">${postVo.postNo}</div>
+                  <div class="list--title text__center">${postVo.title}</div>
                   <div class="list--date text__center">
-                    <fmt:formatDate value="${inquiryVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                    <fmt:formatDate value="${postVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                   </div>
-                  <div class="list--supply text__center">${inquiryVo.division}</div>
-                  <div class="list--supply text__center">${inquiryVo.answerTermination}</div>
+                  <div class="list--supply text__center">${postVo.email}</div>
                 </div>
               </c:forEach>
             </div>
           </c:when>
           <c:otherwise>
             <div class="list-container">
-              <div class="list--div list__empty bg text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
+              <div class="list--div list__empty text__semibold text__correct text__center">등록된 공지사항이 없습니다.</div>
             </div>
           </c:otherwise>
         </c:choose>
@@ -71,6 +72,7 @@
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
+      <input type="hidden" id="postSearch" name="postSearch" value="${postSearch}" />
     </form>
 
   </div>
@@ -79,5 +81,4 @@
 </section>
 
 </body>
-
 </html>

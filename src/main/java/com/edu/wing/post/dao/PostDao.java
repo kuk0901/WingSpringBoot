@@ -13,6 +13,10 @@ public interface PostDao {
 
   void addPost(PostVo postVo);
 
-  PostVo postSelectOne(int postNo);
+  Map<String, Object> postSelectOne(int postNo);
+
+  int updatePost(int postNo, String title, String content, int memberNo);
+
+  boolean deletePost(int postNo);
 
 }
