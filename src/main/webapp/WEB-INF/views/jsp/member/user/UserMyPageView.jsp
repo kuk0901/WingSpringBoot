@@ -34,7 +34,7 @@
           마이 페이지
         </div>
       </div>
-      <input type="hidden" id="memberNo" value="${memberVo.memberNo}" />
+
       <main class="main-container">
         <form id="myPageForm">
           <div id="memberDetailContainer" class="update_container">
@@ -44,6 +44,7 @@
             </div>
             <div class="detail_first_second_wrapper">
               <div class="detail_first_container detail_container">
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="email">이메일</label>
@@ -56,6 +57,7 @@
                     <span id="emailError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="Name">이름</label>
@@ -67,6 +69,7 @@
                     <span id="userNameError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="password">패스워드</label>
@@ -80,6 +83,7 @@
                     <span id="pwdError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="confirmPassword">패스워드 확인</label>
@@ -92,6 +96,7 @@
                     <span id="pwdCheckError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="phone">전화번호</label>
@@ -102,6 +107,7 @@
                     <span id="phoneError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container">
                     <label for="creDate">가입일</label>
@@ -112,6 +118,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="detail_second_container detail_container">
                 <div class="user-info-container one-line">
                   <div class="label-container text-right">
@@ -124,6 +131,7 @@
                     <span id="salaryError"></span>
                   </div>
                 </div>
+
                 <div class="user-info-container one-line">
                   <div class="label-container text-right">
                     <label for="monthlySalary" class="box__s">월급</label>
@@ -135,69 +143,71 @@
                     <span id="payError"></span>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
+
           <div class="two-btn-container color bg">
             <button id="updateButton" class="btn btn__generate">정보 수정</button>
             <button id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
           </div>
         </form>
+
         <c:choose>
-        <c:when test="${not empty sellingCard}">
-        <div id="card-container" class="card-container">
-          <div class="card-title text__semibold">보유 카드</div>
-          <div class="card-header">
-            <div class="header-item box__s text__semibold">카드 명</div>
-            <div class="header-item box__m text__semibold">혜택 요약</div>
-            <div class="header-item box__m text__semibold">등록 날짜</div>
-            <div class="header-item box__l text__semibold">카드 번호</div>
-            <div class="header-item box__m text__semibold">비고</div>
-          </div>
-
-          <div class="bg__white">
-            <div class="list-container list-content one-line">
-              <div class="list-item box__s text__center">
-                <div class="card-name">${sellingCard.CARDNAME}</div>
-                <div class="img-container">
-                  <img class="card--img" src="/img/card/${sellingCard.STOREDFILENAME}" alt="${sellingCard.CARDNAME}"/>
-                </div>
+          <c:when test="${not empty sellingCard}">
+            <div id="card-container" class="card-container">
+              <div class="card-title text__semibold">보유 카드</div>
+              <div class="card-header">
+                <div class="header-item box__s text__semibold">카드 명</div>
+                <div class="header-item box__m text__semibold">혜택 요약</div>
+                <div class="header-item box__m text__semibold">등록 날짜</div>
+                <div class="header-item box__l text__semibold">카드 번호</div>
+                <div class="header-item box__m text__semibold">비고</div>
               </div>
-              <div class="list-item box__m" id="benefit-container">
-                <c:forEach var="benefit" items="${benefits}">
-                  <div class="card-benefit">
-                    <p>
-                        ${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}
-                    </p>
+
+              <div class="bg__white">
+                <div class="list-container list-content one-line">
+                  <div class="list-item box__s text__center">
+                    <div class="card-name">${sellingCard.CARDNAME}</div>
+                    <div class="img-container">
+                      <img class="card--img" src="/img/card/${sellingCard.STOREDFILENAME}" alt="${sellingCard.CARDNAME}"/>
+                    </div>
                   </div>
-                </c:forEach>
-              </div>
+                  <div class="list-item box__m" id="benefit-container">
+                    <c:forEach var="benefit" items="${benefits}">
+                      <div class="card-benefit">
+                        <p>
+                            ${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}
+                        </p>
+                      </div>
+                    </c:forEach>
+                  </div>
 
-              <div class="list-item box__m text__center">
-                <c:out value="${fn:substring(sellingCard.SELLINGDATE, 0, 10)}"/>
-              </div>
-              <div class="list-item box__l text__center">${sellingCard.MEMBERCARDNO}</div>
-              <div class="list-item box__btn box__m">
-                <div id="button-container" class="btn-container text__center one-line">
-                  <button id="terminationRequestButton" class="btn btn__generate btn--vertical">해지 신청</button>
-                  <button id="cardUseDetail" class="btn btn__generate btn--vertical">상세 내역</button>
+                  <div class="list-item box__m text__center">
+                    <c:out value="${fn:substring(sellingCard.SELLINGDATE, 0, 10)}"/>
+                  </div>
+                  <div class="list-item box__l text__center">${sellingCard.MEMBERCARDNO}</div>
+                  <div class="list-item box__btn box__m">
+                    <div id="button-container" class="btn-container text__center one-line">
+                      <button id="terminationRequestButton" class="btn btn__generate btn--vertical">해지 신청</button>
+                      <button id="cardUseDetail" class="btn btn__generate btn--vertical">상세 내역</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <input id='sellingCardNo' type='hidden' value='${sellingCard.SELLINGCARDNO}
       </c:when>
     </c:choose>
-
-</main> <!-- main 태그 닫기 -->
-    </div> <!-- content 닫기 -->
-
+    </main>
 
     <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
   </section>
 
+    <input type="hidden" id="memberNo" value="${memberVo.memberNo}" />
+    <input id="sellingCardNo" type="hidden" value="${sellingCard.SELLINGCARDNO}" />
 </section>
+
 <jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp" />
 
 </body>

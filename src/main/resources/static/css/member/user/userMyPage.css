@@ -304,13 +304,6 @@
 
 .text-right {
   text-align: right;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: yellow;
-    padding: 10px;
-    border: 1px solid #ccc;
-    /* 초기에는 숨김 처리 */
 }
 /*
 여기부턴 detailcss*/

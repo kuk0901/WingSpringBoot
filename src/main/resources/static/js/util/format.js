@@ -85,8 +85,28 @@ export function formatPaymentAmountNumber(paymentAmount) {
   return Math.abs(Math.floor(paymentAmount)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+/**
+ * 회원 마이페이지에서 날짜 데이터
+ * @param {string} dateString
+ * @returns {string}
+ */
+export function formatDate(dateString) {
+  if (!dateString) return '해당 사항 없음'; // null 또는 undefined일 경우
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth는 0부터 시작
+  const day = date.getDate();
+  return `${year}년 ${month}월 ${day}일`;
+}
 
-
+/**
+ * 마이페이지 연봉, 월급 포맷팅
+ * @param {string} dateString
+ * @returns {string}
+ */
+export function unFormatNumberString(value) {
+  return parseInt(value.replace(/만원/g, '').replace(/,/g, '').trim());
+}
 
 
 

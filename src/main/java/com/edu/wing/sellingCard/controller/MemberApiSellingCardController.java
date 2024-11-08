@@ -8,10 +8,10 @@ import com.edu.wing.sellingCard.service.SellingCardService;
 import com.edu.wing.util.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,23 +80,16 @@ public class MemberApiSellingCardController {
   }
 
   @GetMapping("/purchase/{memberNo}")
-  public Map<String, Object> getSellingCards(@PathVariable int memberNo) {
+  public ResponseEntity<?> getSellingCards(@PathVariable int memberNo) {
     Map<String, Object> sellingCard = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
+    int cardNo = ((BigDecimal) sellingCard.get("CARDNO")).intValue();
+    List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
 
-    return sellingCard;
-  }
-  // 카드 혜택 정보를 가져오는 메소드 추가
-  @GetMapping("/cardBenefit/{cardNo}")
-  public ResponseEntity<List<CardBenefitVo>> getCardBenefits(@PathVariable int cardNo) {
-    try {
-      List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
-      if (benefits == null || benefits.isEmpty()) {
-        return ResponseEntity.notFound().build();
-      }
-      return ResponseEntity.ok(benefits);
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 오류 반환
-    }
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("sellingCard", sellingCard);
+    resultMap.put("benefits", benefits);
+
+    return ResponseEntity.ok().body(resultMap);
   }
 
   // FIXME: 추천 카드 구매
