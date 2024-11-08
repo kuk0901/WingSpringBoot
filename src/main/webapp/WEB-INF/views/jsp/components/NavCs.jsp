@@ -43,7 +43,7 @@
 
   <ul class="btn-container main-content" aria-label="주요 메뉴">
     <li>
-      <a href="#" class="btn btn__yellow text__semibold move-page" aria-current="page">
+      <a href="${pageContext.request.contextPath}/member/cs/post/list" class="btn btn__yellow text__semibold move-page" aria-current="page">
         공지사항
       </a>
     </li>

@@ -34,7 +34,7 @@
           <div class="entry-form one-line">
             <div class="entry-container one-line box__l">
               <div class="label-container">
-                <label for="datepicker">날짜:</label>
+                <label for="datepicker">날짜</label>
               </div>
               <div class="input-container">
                 <input type="date" id="datepicker" />
@@ -43,7 +43,7 @@
 
             <div class="entry-container one-line box__s">
               <div class="label-container">
-                <label for="incomeExpenseToggle">전환:</label>
+                <label for="incomeExpenseToggle">전환</label>
               </div>
               <div class="input-container">
                 <select id="incomeExpenseToggle" class="box__xs">

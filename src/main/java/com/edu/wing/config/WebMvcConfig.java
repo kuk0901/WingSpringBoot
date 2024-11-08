@@ -1,5 +1,6 @@
-package com.edu.wing.util;
+package com.edu.wing.config;
 
+import com.edu.wing.util.FileUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

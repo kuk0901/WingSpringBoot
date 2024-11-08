@@ -14,7 +14,6 @@
 
 .main-container {
   margin: 20px;
-  height: 680px;
 }
 
 .btn__freeBoard {
@@ -66,6 +65,10 @@
   line-height: normal;
 }
 
+#content .main-container .freeBoard-container.one-line {
+  flex-direction: column;
+}
+
 #content .main-container .freeBoard-container .list-container .list--supply {
   font-size: 17px;
   padding: 17px 13px;
@@ -109,18 +112,20 @@
   padding: 13px 19px;
 }
 
+#content .main-container .freeBoard-container .freeBoard-title {
+  width: 90%;
+}
+
 #content .main-container .freeBoard-container .freeBoard-title .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 20px 20px 20px 150px;
+  margin: 20px 10px 20px 0;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .info-item {
   width: 600px;
-  height: 25px;
-  line-height: 25px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .info-dv-item {
@@ -130,43 +135,46 @@
   border: 1px solid black;
 }
 
+#content .main-container .freeBoard-container .freeBoard-sub {
+  width: 90%;
+  justify-content: space-between;
+}
+
 #content .main-container .freeBoard-container .freeBoard-sub .info-title {
   width: 100px;
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 10px 150px;
+  margin-right: 10px;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-writer {
-  width: 500px;
-  height: 25px;
-  line-height: 25px;
+  width: 490px;
   border: 1px solid black;
+  margin-right: 10px;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-date {
-  width: 290px;
-  height: 25px;
-  line-height: 25px;
+  width: 280px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .info-content-div {
-  height: 25px;
-  line-height: 25px;
-  margin: 10px 20px 0 150px;
-  width: 1180px;
+  margin: 20px auto 10px;
+  width: 90%;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .info-content {
-  width: 1180px;
+  width: 90%;
   height: 400px;
-  margin: 20px 0 0 150px;
+  margin: 10px 85px;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .freeBoard-container .info-content .contentArea {
-  width: 1178px;
+  width: 90%;
   height: 398px;
   border: none;
   resize: none;

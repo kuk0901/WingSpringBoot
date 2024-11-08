@@ -210,8 +210,16 @@ a {
   z-index: 30;
 }
 
+.admin-nav > *:not(.signout-container) {
+  flex-shrink: 0; /* 추가: 다른 요소들의 크기 축소 방지 */
+}
+
 .member-nav {
   gap: 20px;
+}
+
+.admin-nav .user-container.btn-container li {
+  margin: 0;
 }
 
 .admin-nav .info-container {
@@ -258,10 +266,6 @@ a {
   align-items: center;
   gap: 20px;
 }
-
-/*.member-nav .btn-container.main-content li {*/
-/*  margin: 10px auto 10px;*/
-/*}*/
 
 .btn-container li .move-page {
   display: block;
@@ -313,6 +317,10 @@ a {
   width: 100px;
   height: 90px;
   object-fit: contain;
+}
+
+.admin-signout {
+  transform: translateY(-80px);
 }
 
 .admin-signout .btn__signout,

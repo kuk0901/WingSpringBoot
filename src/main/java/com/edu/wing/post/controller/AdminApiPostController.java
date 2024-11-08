@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +46,7 @@ public class AdminApiPostController {
         }
     }
 
-    @PostMapping("/update/{postNo}")
+    @PostMapping("/list/{postNo}/update")
     public ResponseEntity<?> updatePost(@PathVariable int postNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String postSearch,
                                         @RequestParam(defaultValue = "2") int noticeBoardNo) {
         log.info(LOG_TITLE);
@@ -79,7 +77,7 @@ public class AdminApiPostController {
         }
     }
 
-    @PatchMapping("/update/{postNo}")
+    @PatchMapping("/list/{postNo}/update")
     public ResponseEntity<?> postUpdate(@PathVariable int postNo,  @RequestBody Map<String, String> updateData, @RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String postSearch,
                                         @RequestParam(defaultValue = "2") int noticeBoardNo, HttpSession httpSession) {
         log.info(LOG_TITLE);
@@ -109,7 +107,7 @@ public class AdminApiPostController {
     }
 
 
-    @DeleteMapping("/delete/{postNo}")
+    @DeleteMapping("/list/{postNo}/delete")
     public ResponseEntity<?> deletePost(@PathVariable int postNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String postSearch,
                                         @RequestParam(defaultValue = "2") int noticeBoardNo) {
         log.info(LOG_TITLE);

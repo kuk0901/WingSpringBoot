@@ -64,7 +64,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/admin/cs/post/${postNo}`,
+    url: `/admin/cs/post/list/${postNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -96,7 +96,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
     </div>
 
     <main class="main-container bg__white">
-      <div class="post-container">
+      <div class="post-container post-detail-container">
         <div class="post-title one-line">
           <input type="hidden" id="postNo" value="${data.POSTNO}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
@@ -148,7 +148,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
     const postSearch = $(this).data("post-search");
 
     $.ajax( {
-      url: `/admin/api/cs/post/update/${postNo}`,
+      url: `/admin/api/cs/post/list/${postNo}/update`,
       type: 'POST',
       data: {
         curPage: curPage,
@@ -173,7 +173,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
     const postSearch = $(this).data("post-search");
 
     $.ajax({
-      url: `/admin/api/cs/post/delete/${postNo}`,
+      url: `/admin/api/cs/post/list/${postNo}/delete`,
       type: 'DELETE',
       data: {
         curPage: curPage,
@@ -203,7 +203,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
     </div>
 
     <main class="main-container bg__white">
-      <div class="post-container">
+      <div class="post-container post-detail-container">
         <div class="post-title one-line">
           <input type="hidden" id="memberNo"  value="${res.MEMBERNO}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
@@ -260,7 +260,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
     const content = $("#postContent").val();
 
     $.ajax({
-      url: `/admin/api/cs/post/update/${postNo}`,
+      url: `/admin/api/cs/post/list/${postNo}/update`,
       type: 'PATCH',
       contentType: 'application/json',
       data: JSON.stringify({

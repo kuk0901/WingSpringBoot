@@ -59,7 +59,7 @@ public class AdminFreeBoardController {
 
   }
 
-  @GetMapping("/{freeBoardNo}")
+  @GetMapping("/list/{freeBoardNo}")
   public ResponseEntity<Map<String, Object>> freeBoardDetail(@PathVariable int freeBoardNo
       , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam(defaultValue = "2") int noticeBoardNo){
 

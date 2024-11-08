@@ -55,7 +55,7 @@
   <span class="white-line"></span>
 
   <ul class="btn-container content-menu" aria-label="콘텐츠 메뉴">
-    <li><a href="#" class="btn btn__yellow text__semibold move-page">게시판</a></li>
+    <li><a href="${pageContext.request.contextPath}/member/freeBoard/list" class="btn btn__yellow text__semibold move-page">게시판</a></li>
   </ul>
 
   <ul class="btn-container signout-container member-signout">

@@ -1,4 +1,4 @@
-import {formatNumber, formatPhoneNumber, unformatNumber, formatPaymentAmountNumber, formatDate, unFormatNumberString} from "../../util/format.js"; // 상대 경로로 import
+import {formatNumber, formatPhoneNumber, formatPaymentAmountNumber, formatDate, unFormatNumberString} from "../../util/format.js"; // 상대 경로로 import
 import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
 import { emailRegex, pwdRegex, userNameRegex, phoneRegex, forbiddenPatterns, salaryRegex, validateInput } from "../../util/validation.js"
 
@@ -167,7 +167,7 @@ function updateMemberInfo(data) {
 
     },
     error: function (xhr, status, error) {
-      alert("회원 정보 수정 중 오류가 발생했습니다."); // 오류 메시지
+      showAlertMsg("회원 정보 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -195,14 +195,6 @@ $('#updateButton').on('click', function (e) {
   // AJAX 요청 함수 호출
   updateMemberInfo(formData);
 });
-
-
-
-
-
-
-
-
 
 $('#quitMemberButton').on('click', handleQuitButtonClick);
 function handleQuitButtonClick() {
@@ -232,10 +224,7 @@ function submitQuitRequest(memberNo) {
   });
 }
 
-
-
-
-/*여기서부터해지신청란*/
+/* 여기서부터해지신청란 */
 $("#terminationRequestButton").on("click", function (e) {
   e.preventDefault();
 
@@ -275,7 +264,7 @@ $("#terminationRequestButton").on("click", function (e) {
       });
     },
     error: function () {
-      showAlertMsg("판매 카드 정보를 불러오는 데 실패했습니다.");
+      showAlertMsg("판매 카드 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 })
@@ -358,8 +347,6 @@ $("#cardUseDetail").on('click', function () {
     type: 'GET',  // GET 방식으로 요청
     data: {memberNo: memberNo},  // memberNo를 쿼리 파라미터로 보냄
     success: function (response) {
-      // 응답이 성공적으로 오면, 데이터를 처리
-      console.log(response);  // 응답 받은 데이터 출력
 
       // 데이터 처리 예시 (받은 데이터로 화면 갱신)
       let htmlContent = '';
@@ -373,17 +360,31 @@ $("#cardUseDetail").on('click', function () {
         </div>
           <div class="payback-income" id="payback-income"></div>
         <div class="entry-form one-line">
-        <label for="categorySelect" class="category-label">분류:</label>
-        <select id="categorySelect" name="category">
-          <option value="">전체</option>
-        </select>
-            <input type="date" id="startDate" />
-             <button id="searchButton">검색</button> 
-             <button class="btn__generate" id="returnBtn">돌아가기</button>
+          <form class="entry-search-form one-line">
+            <div class="search-container one-line">
+              <div class="label-container">
+                <label for="categorySelect" class="category-label">분류</label>
+              </div>
+              <div class="input-container">
+                <select id="categorySelect" name="category">
+                  <option value="">전체</option>
+                </select>
+              </div>
+            </div>
+            <div class="search-container">
+              <div class="input-container">
+                <input type="date" id="startDate" />
+              </div>
+            </div>
+            <button class="btn btn__generate" id="searchButton">검색</button>
+          </form>
+          <div class="btn-container"> 
+            <button class="btn btn__generate" id="returnBtn">돌아가기</button>
+          </div>
         </div>    
          
         <main class="main-container">
-        <div class="detail-payback-title">카드 상세 내역</div>
+        <div class="detail-payback-title text__semibold">카드 상세 내역</div>
         <div class="detail-payback-container">
         <div class="entry-category info_head text__semibold one-line">
          <span>번호 </span>
@@ -425,7 +426,7 @@ $("#cardUseDetail").on('click', function () {
 
       // 페이백 총합을 화면에 추가 (id="payback-income"에 삽입)
       const formattedTotalPaybackAmount = formatPaymentAmountNumber(totalPaybackAmount); // 포맷팅 처리
-      $('#payback-income').html(`<span>총 페이백 금액: ${formattedTotalPaybackAmount}</span>`);
+      $('#payback-income').html(`<span class="text__center">총 페이백 금액: ${formattedTotalPaybackAmount}원</span>`);
 
       // 지출 카테고리 요청
       $.ajax({
@@ -444,21 +445,16 @@ $("#cardUseDetail").on('click', function () {
             }
           });
 
-
-
-
-
-
         },
         error: function () {
-          showAlertMsg("판매 카드 정보를 불러오는 데 실패했습니다.");
+          showAlertMsg("판매 카드 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
         }
       });
 
       $("#categorySelect").on('change', function () {
         const selectedCategory = $(this).val(); // 선택된 카테고리 값을 가져옴
         const memberNo = $('#memberNo').val();
-        console.log('Selected Category:', selectedCategory);
+
         // 카테고리 값이 있을 때만 요청을 보냄
         $.ajax({
           url: '/member/api/accountBook/myPage/detail',  // 요청할 API URL
@@ -491,7 +487,7 @@ $("#cardUseDetail").on('click', function () {
             $('.entry-list').html(htmlContent);
           },
           error: function (xhr, status, error) {
-            console.error('AJAX 요청 실패:', error);
+            showAlertMsg("상세 내역을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
           }
         });
       });
@@ -502,11 +498,6 @@ $("#cardUseDetail").on('click', function () {
         const selectedCategory = $('#categorySelect').val();
         const startDate = $('#startDate').val();
         const memberNo = $('#memberNo').val();
-
-        // 날짜 값이 비어있지 않으면, 'yyyy-mm-dd' 형식으로 변환 (필요시)
-        // 선택된 값이 없으면 빈 문자열을 보내서 전체를 조회
-        console.log('Selected Category:', selectedCategory);
-        console.log('Selected Start Date:', startDate);
 
         // AJAX 요청 보내기
         $.ajax({
@@ -529,28 +520,26 @@ $("#cardUseDetail").on('click', function () {
                 const formattedPaybackAmount = formatPaymentAmountNumber(item.paybackAmount);
 
                 htmlContent += `
-                        <div class="entry-info">
-                            <span class="account-book-no">${item.accountBookNo}</span>
-                            <span class="entry-date">${formattedDate}</span>
-                            <span class="entry-content">${item.content}</span>
-                            <span class="minus-category">${item.minusCategoryName}</span>
-                            <span class="payment-amount">${formattedPaymentAmount}</span>
-                            <span class="payback-amount">${formattedPaybackAmount}</span>
-                        </div>
-                    `;
+                  <div class="entry-info">
+                    <span class="account-book-no">${item.accountBookNo}</span>
+                    <span class="entry-date">${formattedDate}</span>
+                    <span class="entry-content">${item.content}</span>
+                    <span class="minus-category">${item.minusCategoryName}</span>
+                    <span class="payment-amount">${formattedPaymentAmount}</span>
+                    <span class="payback-amount">${formattedPaybackAmount}</span>
+                  </div>
+                `;
               });
-
 
               // 갱신된 내역을 entry-list에 넣기
               $('.entry-list').html(htmlContent);
             } else {
               $('.entry-list').html('<p>데이터가 없습니다.</p>');
-              console.error("서버 응답이 예상과 다릅니다.");
-
+              showAlertMsg("상세 내역을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
             }
           },
           error: function (xhr, status, error) {
-            console.error("AJAX 요청 오류:", status, error);
+            showAlertMsg("상세 내역을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
           }
         })
       });

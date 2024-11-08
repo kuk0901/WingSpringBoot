@@ -22,7 +22,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/member/cs/post/${postNo}`,
+    url: `/member/cs/post/list/${postNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -64,10 +64,14 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
         </div>
         
         <div class="post-sub one-line">
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.EMAIL}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formattedPostDate}</div> 
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+            <div class="info-writer bg__white text__black box__l">${data.EMAIL}</div>
+            </div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+            <div class="info-date bg__white text__black box__l">${formattedPostDate}</div> 
+          </div>
         </div>
         
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>

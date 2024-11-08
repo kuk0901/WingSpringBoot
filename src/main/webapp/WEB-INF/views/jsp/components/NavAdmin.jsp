@@ -66,9 +66,10 @@
 
   <ul class="btn-container" aria-label="사용자 및 콘텐츠 관리 메뉴">
     <li><a href="${pageContext.request.contextPath}/admin/member/list" class="btn btn__blue move-page">회원 관리</a></li>
-    <li><a href="#" class="btn btn__blue move-page">게시판 관리</a></li>
+    <li><a href="${pageContext.request.contextPath}/admin/freeBoard/list" class="btn btn__blue move-page">게시판 관리</a></li>
     <li><button id="csControlBtn" class="btn btn__blue move-page">고객센터 관리</button></li>
     <li id="inquiry" class="cs-line active"><a href="${pageContext.request.contextPath}/admin/cs/inquiry/list" class="btn btn__blue cs--inquiry move-page">1대1 문의</a></li>
+    <li id="post" class="cs-line active"><a href="${pageContext.request.contextPath}/admin/cs/post/list" class="btn btn__blue cs--inquiry move-page">공지사항</a></li>
   </ul>
 
   <ul class="btn-container signout-container admin-signout">

@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>계정 찾기</title>
+  <title>Find Account</title>
   <link rel="stylesheet" href="/css/auth/findAccount.css" />
   <script defer type="module" src="/js/auth/findAccount.js"></script>
 </head>
@@ -44,12 +44,12 @@
 
       <div class="account-container">
         <div class="label-container">
-          <label for="pwd" class="text__white">패스워드</label>
+          <label for="password" class="text__white">패스워드</label>
         </div>
         <div class="input-container">
           <input
-              id="pwd"
-              name="pwd"
+              id="password"
+              name="password"
               type="password"
               placeholder="비밀번호를 작성해 주세요."
               required

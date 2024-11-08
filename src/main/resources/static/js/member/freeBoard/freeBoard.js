@@ -27,7 +27,7 @@ $('.list-content').click(function () {
   console.log(noticeBoardNo);
 
   $.ajax({
-    url: `/member/freeBoard/${freeBoardNo}`,
+    url: `/member/freeBoard/list/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,

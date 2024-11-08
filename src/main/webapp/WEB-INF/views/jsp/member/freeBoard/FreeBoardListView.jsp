@@ -12,7 +12,7 @@
 <body>
 
 <section id="root">
-  <jsp:include page="/WEB-INF/views/jsp/components/NavCs.jsp" />
+  <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp" />
 
   <section id="memberSection">
 
@@ -74,9 +74,11 @@
         </div>
       </main>
 
-      <jsp:include page="/WEB-INF/views/jsp/common/Paging.jsp">
-        <jsp:param value="${pagingMap}" name="pagingMap" />
-      </jsp:include>
+      <c:if test="${not empty freeBoardList}">
+        <jsp:include page="/WEB-INF/views/jsp/common/Paging.jsp">
+          <jsp:param value="${pagingMap}" name="pagingMap" />
+        </jsp:include>
+      </c:if>
 
       <form id="pagingForm" action="./list" method="post">
         <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />

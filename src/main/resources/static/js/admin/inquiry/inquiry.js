@@ -58,22 +58,26 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
       <div class="inquiry-container">
         <div class="inquiry-title one-line">
           <input type="hidden" id="inquiryNo" value="${data.INQUIRYNO}">
-        
-          <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div class="info-item bg__white text__black box__l">${data.TITLE}</div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">제목</div>
+            <div class="info-item bg__white text__black box__l">${data.TITLE}</div>
+          </div>
 
-          <div class="info-title bg__gray text__black box__l text__center">분류</div>
-          <div class="info-dv-item bg__white text__black box__l">${data.DIVISION}</div>
-
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">분류</div>
+            <div class="info-dv-item bg__white text__black box__l">${data.DIVISION}</div>
+          </div>
         </div>
         
         <div class="inquiry-sub one-line">
-        
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.INQUIRYWRITEREMAIL}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
-          
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+            <div class="info-writer bg__white text__black box__l">${data.INQUIRYWRITEREMAIL}</div>
+          </div>
+          <div class="one-line">
+            <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+            <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+          </div>
         </div>
         
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
@@ -96,10 +100,14 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
           </div>
           <div class="answer-info">
             <div class="info-comment-container one-line">
-              <div class="info-item bg__gray text__black box__l text__center">관리자</div>
-              <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
-              <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
-              <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
+              <div class="one-line">
+                <div class="info-item bg__gray text__black box__l text__center">관리자</div>
+                <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
+              </div>
+              <div class="one-line">
+                <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
+                <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
+              </div>
             </div>
           </div>
           <div class="answer-content">
@@ -181,10 +189,14 @@ function createUpdateView(res) {
       </div>
       
       <div class="inquiry-sub one-line"> 
-        <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-        <div class="info-writer bg__white text__black box__l">${res.INQUIRYWRITEREMAIL}</div>
-        <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-        <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+          <div class="info-writer bg__white text__black box__l">${res.INQUIRYWRITEREMAIL}</div>
+        </div>
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+          <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+        </div>
       </div>
       
       <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>   
@@ -192,18 +204,18 @@ function createUpdateView(res) {
     </div>
     
     <div class="inquiry-comment-container answer-container">
+      <div class="reply-container one-line">
+        <input type="hidden" id="commentNo" value="${res.INQUIRYCOMMENTNO}">
+        <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
+      </div>
       
       <div class="answer-info">
-        <div class="info-comment-container one-line">
+        <div class="info-comment-container one-line answer-update">
           <div class="info-item bg__gray text__black box__l text__center">관리자</div>
           <div class="info-detail bg__white text__black box__l">${res.ANSWERWRITEREMAIL}</div>
         </div>
       </div>
       
-      <div class="reply-container one-line">
-        <input type="hidden" id="commentNo" value="${res.INQUIRYCOMMENTNO}">
-        <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
-      </div>
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
@@ -212,9 +224,10 @@ function createUpdateView(res) {
       </div>
     </div>
     
+    <!-- FIXME: 공지사항처럼 수정해 주세요. -->
     <div class="btn-container answer-btn-container one-line">
         <button id="cancleUpdate" class="btn btn__generate listMove">돌아가기</button>
-        <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}">답변 수정</button>
+        <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}">수정</button>
     </div>
   </main>
   `
@@ -272,11 +285,15 @@ function createAddView(res) {
         <div class="info-dv-item bg__white text__black box__l">${res.DIVISION}</div>
       </div>
       
-      <div class="inquiry-sub one-line"> 
-        <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-        <div class="info-writer bg__white text__black box__l">${res.INQUIRYWRITEREMAIL}</div>
-        <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-        <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+      <div class="inquiry-sub one-line">
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
+          <div class="info-writer bg__white text__black box__l">${res.INQUIRYWRITEREMAIL}</div>
+        </div>
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
+          <div class="info-date bg__white text__black box__l">${formattedInquiryDate}</div> 
+        </div>
       </div>
       
       <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>   

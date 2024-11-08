@@ -8,7 +8,7 @@
     <span>email: wing_@gmail.com</span>
   </div>
   <div class="cs-container">
-    <a href="${pageContext.request.contextPath}/member/cs/inquiry/list" class="cs">고객센터</a>
+    <a href="${pageContext.request.contextPath}/member/cs/post/list" class="cs">고객센터</a>
   </div>
 </footer>
 

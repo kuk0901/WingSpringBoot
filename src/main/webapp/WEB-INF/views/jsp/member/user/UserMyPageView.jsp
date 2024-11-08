@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>회원관리</title>
+  <title>마이페이지</title>
   <script src="https://code.jquery.com/jquery-3.7.0.js"
           integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
           crossorigin="anonymous">
@@ -78,7 +78,7 @@
                     <input type="password" id="password" name="password"
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
-                           value="${memberVo.pwd}"/>
+                           value="${memberVo.password}"/>
 
                     <span id="pwdError"></span>
                   </div>
@@ -92,7 +92,7 @@
                     <input type="password" id="confirmPassword" name="confirmPassword"
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
-                           value="${memberVo.pwd}"/>
+                           value="${memberVo.password}"/>
                     <span id="pwdCheckError"></span>
                   </div>
                 </div>

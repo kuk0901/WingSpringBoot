@@ -1,36 +1,39 @@
 server:
-  port: 8888
+  port: 8888 # 애플리케이션이 실행될 포트
   servlet:
     encoding:
-      charset: UTF-8
-      force: true
+      charset: UTF-8 # 기본 문자 인코딩
+      force: true # 모든 요청에 대해 강제로 인코딩 적용
   tomcat:
-    uri-encoding: UTF-8
+    uri-encoding: UTF-8 # URI 인코딩 설정
+  error:
+    whitelabel:
+      enabled: false # 기본 화이트라벨 에러 페이지 비활성화
 
 spring:
   application:
-    name: WingSpringBoot
+    name: WingSpringBoot # 애플리케이션 이름
   main:
-    web-application-type: servlet
+    web-application-type: servlet # 서블릿 기반 웹 애플리케이션으로 설정
   mvc:
     view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+      prefix: /WEB-INF/views/ # JSP 파일의 경로 접두사
+      suffix: .jsp # JSP 파일의 접미사
   datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
-    username: wing
-    password: 1234
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy # JDBC 드라이버 클래스
+    url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe # 데이터베이스 URL
+    username: wing # 데이터베이스 사용자 이름
+    password: 1234 # 데이터베이스 비밀번호
   jpa:
-    show-sql: true
+    show-sql: true # SQL 쿼리 출력 여부
     hibernate:
-      ddl-auto: update
+      ddl-auto: update # 데이터베이스 스키마 자동 업데이트
     properties:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.OracleDialect # 추가된 부분
-      enable_lazy_load_no_trans: true
+        format_sql: true # SQL 쿼리 포맷팅 여부
+        dialect: org.hibernate.dialect.OracleDialect # Oracle 데이터베이스를 위한 Hibernate 방언
+      enable_lazy_load_no_trans: true # 트랜잭션 없이 지연 로딩 허용
 
 mybatis:
-  config-location: classpath:mybatis-config.xml
-  mapper-locations: classpath:mappers/*.xml
+  config-location: classpath:mybatis-config.xml # MyBatis 설정 파일 위치
+  mapper-locations: classpath:mappers/*.xml # MyBatis 매퍼 XML 파일 위치
