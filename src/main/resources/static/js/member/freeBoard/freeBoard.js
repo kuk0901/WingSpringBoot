@@ -27,7 +27,7 @@ $('.list-content').click(function () {
   console.log(noticeBoardNo);
 
   $.ajax({
-    url: `/member/cs/freeBoard/${freeBoardNo}`,
+    url: `/member/freeBoard/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -60,7 +60,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         게시글 상세
       </div>
       <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove text__center" href="/member/cs/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}">
           돌아가기
         </a>
     </div>

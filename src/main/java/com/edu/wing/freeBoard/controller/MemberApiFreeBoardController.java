@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/member/api/cs/freeBoard")
+@RequestMapping("/member/api/freeBoard")
 public class MemberApiFreeBoardController {
 
   private static final Logger log = LoggerFactory.getLogger(MemberApiFreeBoardController.class);
