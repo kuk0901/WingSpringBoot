@@ -25,7 +25,7 @@ $("#addInquiry").click(function (e) {
   console.log(inquiryData);
 
   $.ajax({
-    url: '/member/api/cs/inquiry/add',
+    url: '/member/api/cs/inquiry/list/add',
     type: 'POST',
     contentType: 'application/json', // JSON 형식으로 전송
     data: JSON.stringify(inquiryData),
@@ -46,7 +46,7 @@ $('.list-container').click(function () {
   const curPage = $('#curPage').val() || '1';
 
   $.ajax({
-    url: `/member/cs/inquiry/${inquiryNo}`,
+    url: `/member/cs/inquiry/list/${inquiryNo}`,
     type: 'GET',
     data: {curPage: curPage},
     success: function (res) {

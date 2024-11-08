@@ -16,9 +16,9 @@ public interface SellingCardService {
   boolean memberSellingCardExist(SellingCardVo sellingCardVo);
   Map<String, Object> processMemberCardPurchase(SellingCardVo sellingCardVo, AccountBookVo accountBookVo);
 
-  List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
+  Map<String, Object> sellingCardSelectOneForUserPage(int memberNo);
 
-  int deleteCardSoft(int memberNo);
+  void deleteCardSoft(Map<String, Object> cardInfo, int memberNo);
 
   List<HashMap<String, Object>> totalCardsSoldLast5Years();
   List<HashMap<String, Object>> recommendedCardsPurchasedLast5Years();

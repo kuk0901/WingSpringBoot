@@ -64,8 +64,6 @@ public class MemberDaoImpl implements MemberDao {
     sqlSession.update(namespace + "adminSoftDeleteMember", memberVo);
   }
 
-
-
   @Override
   public MemberVo selectAdminMypageInfo(int memberNo) {
     return sqlSession.selectOne(namespace + "selectAdminMypageInfo", memberNo);
@@ -88,6 +86,21 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public void updateMemberQuitApply(MemberVo memberVo) {
     sqlSession.update(namespace + "updateMemberQuitApply", memberVo);
+  }
+
+  @Override
+  public void updateMemberCardPurchase(int memberNo) {
+    sqlSession.update(namespace + "updateMemberCardPurchase", memberNo);
+  }
+
+  @Override
+  public void updateMemberProductPurchase(int memberNo) {
+    sqlSession.update(namespace + "updateMemberProductPurchase", memberNo);
+  }
+
+  @Override
+  public MemberVo checkMemberProductPurchase(int memberNo) {
+    return sqlSession.selectOne(namespace + "checkMemberProductPurchase", memberNo);
   }
 
   @Override

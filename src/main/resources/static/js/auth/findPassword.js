@@ -1,11 +1,6 @@
 import { formatPhoneNumber } from "../util/format.js";
 import { showAlertMsg } from "../util/toast.js";
-import {
-  pwdRegex,
-  validateInput,
-  updateUI,
-  setupCustomValidityMessages
-} from "../util/validation.js";
+import { pwdRegex, setupCustomValidityMessages } from "../util/validation.js";
 
 // const $pwdInput = $("#pwd");
 // const $pwdError = $("#pwdError");

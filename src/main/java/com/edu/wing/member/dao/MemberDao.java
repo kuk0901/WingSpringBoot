@@ -24,6 +24,12 @@ public interface MemberDao {
   int updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
 
+  // 카드 신청
+  void updateMemberCardPurchase(int memberNo);
+  // 카드 해지
+  void updateMemberProductPurchase(int memberNo);
+  MemberVo checkMemberProductPurchase(int memberNo); // 신청, 해지 확인
+
   MemberVo findMemberAccount(Map<String, String> map);
   MemberVo findMemberPassword(Map<String, String> map);
 

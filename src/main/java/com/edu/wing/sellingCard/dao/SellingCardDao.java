@@ -16,13 +16,15 @@ public interface SellingCardDao {
   void memberPurchaseCard(SellingCardVo sellingCardVo);
   SellingCardVo memberPurchaseCardCheck(SellingCardVo sellingCardVo);
 
-  List<Map<String, Object>> sellingCardSelectOneForUserPage(int memberNo);
+ Map<String, Object> sellingCardSelectOneForUserPage(int memberNo);
 
-  int deleteCardSoft(int memberNo);
+  void deleteCardSoft(Map<String, Object> cardInfo);
+  SellingCardVo deleteCardSoftCheck(Map<String, Object> cardInfo);
 
   List<HashMap<String, Object>> totalCardsSoldLast5Years();
   List<HashMap<String, Object>> recommendedCardsPurchasedLast5Years();
   List<HashMap<String, Object>> terminatedCardsLast5Years();
 
   void memberPurchaseRecommendedCard(SellingCardVo sellingCardVo);
+
 }

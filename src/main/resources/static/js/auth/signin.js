@@ -1,6 +1,5 @@
-import { checkAndShowStoredMessage } from "../util/toast.js";
+import { checkAndShowStoredMessage, showAlertMsg } from "../util/toast.js";
 import { deleteCookie } from "../util/cookie.js";
-import { showAlertMsg } from "../util/toast.js"
 
 const email = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)userEmail\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
 const alertMsg = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)alertMsg\s*\=\s*([^;]*).*$)|^.*$/, "$1"));

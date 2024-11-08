@@ -1,242 +1,343 @@
 #content .title-container {
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
 }
 
 #content .title-container .title {
-    width: 250px;
-    height: 50px;
-    line-height: 50px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    font-size: 20px;
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
 }
+
 .main-container {
-    background-color: white;
-    height: 700px;
-    width: 1500px;
-    margin: auto;
-    overflow-y: auto; /* 세로 스크롤 활성화 */
+  background-color: white;
+  height: 700px;
+  width: 1500px;
+  margin: auto;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
 }
+
 .btn_red{
-    background-color:var(--btn-coral);
+  background-color:var(--btn-coral);
 }
+
 /*여긴 월<->이거*/
 .month-switch{
-    text-align: center;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;  /* 좌우 양끝에 배치 */
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;  /* 좌우 양끝에 배치 */
 }
 .month_btn {
-    border: none;
-    font-size: 24px;    /* 텍스트 크기 */
-    width: 50px;        /* 버튼 너비 */
-    height: 50px;       /* 버튼 높이 */
-    cursor: pointer;
-    border-radius: 10px; /* 둥근 모서리 */
-    background-color: white; /* 배경색 */
+  border: none;
+  font-size: 24px;    /* 텍스트 크기 */
+  width: 50px;        /* 버튼 너비 */
+  height: 50px;       /* 버튼 높이 */
+  cursor: pointer;
+  border-radius: 10px; /* 둥근 모서리 */
+  background-color: white; /* 배경색 */
 }
 
 .month_btn:hover {
-    background-color: darkgray; /* 마우스를 올렸을 때 배경색 변경 */
+  background-color: darkgray; /* 마우스를 올렸을 때 배경색 변경 */
 }
 
 .month_box{
-    display: flex;
-    height: 50px;
-    justify-content: center;  /* 가로 중앙 정렬 */
-    align-items: center;      /* 세로 중앙 정렬 */
-    font-weight: bold;
-    font-size: 18px;
-    text-align: center;
-    margin-right: 15px;
-    margin-left: 15px;
-    width: 200px;
+  display: flex;
+  height: 50px;
+  justify-content: center;  /* 가로 중앙 정렬 */
+  align-items: center;      /* 세로 중앙 정렬 */
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  margin-right: 15px;
+  margin-left: 15px;
+  width: 200px;
 }
-.entry-form{
-    height: 40px;
-    border:1px solid black;
+
+#accountBookForm .entry-form {
+  height: 40px;
+  border-bottom: 1px solid black;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 0 10px;
 }
+
+#accountBookForm .entry-form .entry-container {
+  margin: auto;
+}
+
+#accountBookForm .entry-form .entry-container.box__s {
+  width: 100px;
+}
+
+#accountBookForm .entry-form .entry-container.box__m {
+  width: 160px;
+}
+
+#accountBookForm .entry-form .entry-container.box__l {
+  width: 180px;
+}
+
+#accountBookForm .entry-form .entry-container.box__xl {
+  width: 300px;
+}
+
+#accountBookForm .entry-form .entry-container.one-line {
+  justify-content: center;
+  gap: 5px;
+}
+
+#accountBookForm .entry-form .entry-container .input-container input,
+#accountBookForm .entry-form .entry-container .input-container select {
+  height: 30px;
+}
+
+#accountBookForm .entry-form .entry-container .input-container input {
+  display: inline-block;
+}
+
+#accountBookForm .entry-form .entry-container .input-container select {
+  background-color: #e0e0e0;
+}
+
+#accountBookForm .entry-form .entry-container .box__xs {
+  width: 90px;
+}
+
+#accountBookForm .entry-form .entry-container .box__s {
+  width: 120px;
+}
+
+#accountBookForm .entry-form .entry-container .box__sm {
+  width: 150px;
+}
+
+#accountBookForm .entry-form .entry-container .box__m {
+  width: 175px;
+}
+
+#accountBookForm .entry-form .entry-container .box__l {
+  width: 300px;
+}
+
+
 /*전체내역,월지출,월수입*/
 .summary-details{
-    height: 70px;
-    justify-content: space-between; /* 왼쪽과 오른쪽 요소를 최대한 멀리 */
+  height: 70px;
+  justify-content: space-between; /* 왼쪽과 오른쪽 요소를 최대한 멀리 */
 }
-.total-entries{
-    border: 1px solid black;
-    background-color: #e0e0e0;
-    font-size: 18px;
-    height: 30px;
-    text-align: center;
-    margin-left: 15px;
+
+.total-entries {
+  border: 1px solid black;
+  background-color: #e0e0e0;
+  font-size: 18px;
+  height: 30px;
+  text-align: center;
+  margin-left: 15px;
+  line-height: 30px;
+  padding: 0 5px;
+}
+.payback-income {
+  border: 1px solid black;
+  background-color: #e0e0e0;
+  font-size: 18px;
+  height: 30px;
+  margin-left: 15px;
+  line-height: 30px;
+  padding: 0 5px;
+  border-radius: 10px;
+}
+.payback-container{
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
 }
 .right-section {
-    display: flex;
-    align-items: flex-end; /* 오른쪽 정렬 */
+  display: flex;
+  align-items: flex-end; /* 오른쪽 정렬 */
 }
-.total-income{
-    border: 1px solid black;
-    background-color: #e0e0e0;
-    font-size: 18px;
-    height: 30px;
-    margin-left: 15px;
+
+.total-income {
+  border: 1px solid black;
+  background-color: #e0e0e0;
+  font-size: 18px;
+  height: 30px;
+  margin-left: 15px;
+  line-height: 30px;
+  cursor: pointer;
+  padding: 0 5px;
+  border-radius: 10px;
 }
-.total-expense{
-     border: 1px solid black;
-     background-color: #e0e0e0;
-     font-size: 18px;
-     height: 30px;
-    margin-left: 15px;
-    margin-right: 15px;
- }
+
+.total-expense {
+  border: 1px solid black;
+  background-color: #e0e0e0;
+  font-size: 18px;
+  height: 30px;
+  margin-left: 15px;
+  margin-right: 15px;
+  line-height: 30px;
+  cursor: pointer;
+  padding: 0 5px;
+  border-radius: 10px;
+}
+
 /*가계부영역*/
 .info_head{
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 10px;
-    width: 1300px;
-    font-weight: bold;
-    height: 50px;
-    margin: auto;
-    margin-top: 10px;
-    justify-content: center;
-
+  background-color: var(--color-white);
+  color: var(--color-black);
+  padding: 10px;
+  width: 1300px;
+  height: 50px;
+  margin: 10px auto auto;
+  justify-content: center;
+  border: 1px solid black;
 }
+
 .entry-category span {
-    padding: 0 10px;  /* 요소 사이에 추가적인 간격을 줄 때 사용 */
-    flex: 1;          /* 각 요소가 동일한 공간을 차지하도록 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
+  padding: 0 10px;  /* 요소 사이에 추가적인 간격을 줄 때 사용 */
+  flex: 1;          /* 각 요소가 동일한 공간을 차지하도록 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
-
 
 .date-box {
-    width: 150px;              /* 작은 박스의 너비 설정 */
-    height: 30px;             /* 박스의 높이 설정 */
-    background-color: #e0e0e0; /* 배경색 */
-    margin-left: 30px;  /* 수직 간격과 중앙 정렬을 위해 margin 설정 */
-    display: flex;             /* 플렉스 레이아웃 */
-    justify-content: center;   /* 수평 중앙 정렬 */
-    align-items: center;       /* 수직 중앙 정렬 */
-    text-align: start;        /* 텍스트 중앙 정렬 */
-    font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  width: 150px;              /* 작은 박스의 너비 설정 */
+  height: 30px;             /* 박스의 높이 설정 */
+  background-color: #e0e0e0; /* 배경색 */
+  margin-left: 15px;  /* 수직 간격과 중앙 정렬을 위해 margin 설정 */
+  display: flex;             /* 플렉스 레이아웃 */
+  justify-content: center;   /* 수평 중앙 정렬 */
+  align-items: center;       /* 수직 중앙 정렬 */
+  text-align: start;        /* 텍스트 중앙 정렬 */
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-.entry-info{
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 10px;
-    display: flex;
-    width: 1300px;
-    font-weight: bold;
-    height: 50px;
-    margin: auto;
-    margin-top: 5px;
-    justify-content: center;
 
+.entry-info {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 10px;
+  display: flex;
+  width: 1300px;
+  height: 50px;
+  margin: 5px auto auto;
+  justify-content: center;
+  cursor: pointer;
 }
+
+.entry-info:hover,
+.total-income:hover,
+.total-expense:hover {
+  background-color: var(--color-darkgray);
+  color: var(--color-white);
+}
+
 .entry-info span {
-    padding: 0 10px;  /* 요소 사이에 추가적인 간격을 줄 때 사용 */
-    flex: 1;          /* 각 요소가 동일한 공간을 차지하도록 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    display: flex;             /* 플렉스 레이아웃 */
-    justify-content: center;   /* 수평 중앙 정렬 */
-    align-items: center;
+  padding: 0 10px;  /* 요소 사이에 추가적인 간격을 줄 때 사용 */
+  flex: 1;          /* 각 요소가 동일한 공간을 차지하도록 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  display: flex;             /* 플렉스 레이아웃 */
+  justify-content: center;   /* 수평 중앙 정렬 */
+  align-items: center;
 
 }
+
 /*여긴참고*/
-
 .button-container {
-    overflow: auto; /* float 해제 */
-
+  overflow: auto; /* float 해제 */
 }
+
 .btn_plus{
-    float: right;
-    margin-right: 15px;
+  float: right;
+  margin-right: 17px;
 }
 
 .line {
-    display: flex; /* 플렉스 박스 사용 */
-    align-items: center; /* 수직 정렬 */
-    margin-bottom: 15px; /* 각 줄 간격 */
-    height: 80px;
-    text-align: center;
+  display: flex; /* 플렉스 박스 사용 */
+  align-items: center; /* 수직 정렬 */
+  margin-bottom: 15px; /* 각 줄 간격 */
+  height: 80px;
+  text-align: center;
 }
 
 .form-label {
-    width: 120px; /* 레이블 고정 너비 */
-    font-weight: bold; /* 레이블 두껍게 */
+  width: 120px; /* 레이블 고정 너비 */
+  font-weight: bold; /* 레이블 두껍게 */
 }
 
 .form-input {
-    flex: 0 0 50%; /* 나머지 공간의 50%를 차지하도록 설정 */
-    padding: 8px; /* 입력 필드 안쪽 여백 */
-    border: 1px solid #ccc; /* 테두리 */
-    border-radius: 4px; /* 입력 필드 둥글게 */
-    margin-right: 10px;
-
+  flex: 0 0 50%; /* 나머지 공간의 50%를 차지하도록 설정 */
+  padding: 8px; /* 입력 필드 안쪽 여백 */
+  border: 1px solid #ccc; /* 테두리 */
+  border-radius: 4px; /* 입력 필드 둥글게 */
+  margin-right: 10px;
 }
 
 /*
 detail영역
 */
 .button-container {
-    display: flex;          /* Flexbox 활성화 */
-    justify-content: flex-end; /* 자식 요소를 오른쪽 정렬 */
-
+  display: flex;          /* Flexbox 활성화 */
+  justify-content: flex-end; /* 자식 요소를 오른쪽 정렬 */
 }
+
 .rtBtn{
-    padding: 10px 20px;   /* 버튼 안쪽 여백 */
-    width: 100px;
-    height: 70px;
-    margin-right: 70px;
-    margin-bottom: 30px;
+  padding: 10px 20px;   /* 버튼 안쪽 여백 */
+  width: 100px;
+  height: 70px;
+  margin-right: 70px;
+  margin-bottom: 30px;
 }
 
 .detail-container{
-    display: flex; /* Flexbox 활성화 */
-    align-items: center; /* 수평 가운데 정렬 */
-    justify-content: center; /* 수직 가운데 정렬 */
-    margin: 20px; /* 요소 간 여백 */
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 수평 가운데 정렬 */
+  justify-content: center; /* 수직 가운데 정렬 */
+  margin: 20px; /* 요소 간 여백 */
 }
 
 .detail-label{
-font-size: 20px;
-font-weight: bold;
-background-color: var(--color-gray);
-margin-right:15px;
-margin-bottom: 20px;
-    margin-top: 20px;
-    margin-left: 30px;
-height: 35px;
-width: 200px;
-text-align: center;
-display: inline-block;
-line-height: 35px;
-vertical-align: middle;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: var(--color-gray);
+  margin-right:15px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 30px;
+  height: 35px;
+  width: 200px;
+  text-align: center;
+  display: inline-block;
+  line-height: 35px;
+  vertical-align: middle;
 }
+
 .detail-value{
-    height: 35px;
-    width: 300px;
+  height: 35px;
+  width: 300px;
 }
 
 .select-value{
-    width: 300px; /* 원하는 너비로 설정 (200px 또는 %) */
-    height: 35px; /* 원하는 높이로 설정 */
-    padding: 5px; /* 안쪽 여백 추가 */
-    font-size: 16px; /* 글자 크기 조정 */
-    border: 1px solid #ccc; /* 테두리 설정 */
-    border-radius: 4px; /* 모서리 둥글게 */
+  width: 300px; /* 원하는 너비로 설정 (200px 또는 %) */
+  height: 35px; /* 원하는 높이로 설정 */
+  padding: 5px; /* 안쪽 여백 추가 */
+  font-size: 16px; /* 글자 크기 조정 */
+  border: 1px solid #ccc; /* 테두리 설정 */
+  border-radius: 4px; /* 모서리 둥글게 */
 }
 .button-container-bottom {
-    display: flex; /* Flexbox 활성화 */
-    justify-content: center; /* 수평 가운데 정렬 */
-    gap: 20px; /* 버튼 간의 간격 설정 */
-    margin-top: 20px; /* 버튼 컨테이너와 위 요소 간의 여백 */
+  display: flex; /* Flexbox 활성화 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  gap: 20px; /* 버튼 간의 간격 설정 */
+  margin-top: 20px; /* 버튼 컨테이너와 위 요소 간의 여백 */
 }
 .bottom-btn{
-    width: 100px;
-    height: 50px;
+  width: 100px;
+  height: 50px;
 }

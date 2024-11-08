@@ -9,6 +9,7 @@
         <result column="MEMBER_CARD_NO" property="memberCardNo"/>
         <result column="CARD_TERMINATION" property="cardTermination"/>
         <result column="TERMINATION_REASON" property="terminationReason"/>
+        <result column="TERMINATION_DATE" property="terminationDate" />
         <result column="SELLING_DATE" property="sellingDate" javaType="java.util.Date"/>
         <result column="cardRecommend" property="cardRecommend" />
         <result column="EMAIL" property="email" />
@@ -107,7 +108,7 @@
     </select>
 
     <select id="sellingCardSelectOneForUserPage" parameterType="int" resultType="map">
-        SELECT C.CARD_NAME AS cardName,
+        SELECT SC.SELLING_CARD_NO AS sellingCardNo, C.CARD_NAME AS cardName,
                TO_CHAR(SC.SELLING_DATE, 'YYYY-MM-DD HH24:MI:SS') AS sellingDate,
                C.STORED_FILE_NAME AS storedFileName,
                C.ORIGINAL_FILE_NAME AS originalFileName,
@@ -120,11 +121,24 @@
         WHERE SC.MEMBER_NO = #{memberNo}
     </select>
 
-    <update id="deleteCardSoft" parameterType="int">
-        UPDATE MEMBER
-        SET MEMBER_NO=1 ,PRODUCT_PURCHASE='N'
-        WHERE MEMBER_NO= #{memberNo}
+    <!-- 카드 삭제 -->
+    <update id="deleteCardSoft" parameterType="map">
+        UPDATE SELLING_CARD
+        SET MEMBER_NO = 1, CARD_TERMINATION = 'Y',
+            <if test="terminationReason != null and terminationReason != ''">
+                TERMINATION_REASON = #{terminationReason},
+            </if>
+            TERMINATION_DATE = SYSDATE
+        WHERE SELLING_CARD_NO = #{sellingCardNo}
+        AND MEMBER_CARD_NO = #{memberCardNo}
     </update>
+
+    <select id="deleteCardSoftCheck" parameterType="map" resultMap="sellingCardResultMap">
+        SELECT MEMBER_NO, CARD_TERMINATION, TERMINATION_REASON, TERMINATION_DATE
+        FROM SELLING_CARD
+        WHERE SELLING_CARD_NO = #{sellingCardNo}
+      AND MEMBER_CARD_NO = #{memberCardNo}
+    </select>
 
     <!-- 대시보드(판매 카드 수(년) - 5년 -->
     <select id="totalCardsSoldLast5Years" resultType="map">

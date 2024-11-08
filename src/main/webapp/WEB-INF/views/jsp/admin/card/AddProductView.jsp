@@ -33,13 +33,13 @@
             <label for="cardName" class="bg__gray text__semibold text__center box-s">*카드 명</label>
           </div>
           <div class="input-container">
-            <input id="cardName" name="cardName" required class="box-l" placeholder="ex) WING_Traffic"/>
+            <input id="cardName" name="cardName" required class="box-xl" placeholder="ex) WING_Traffic"/>
           </div>
           <div class="label-container">
             <label for="cardCompany" class="bg__gray text__semibold text__center box-s">*카드사</label>
           </div>
           <div class="input-container">
-            <input id="cardCompany" name="cardCompany" required class="box-m" placeholder="ex) WING_Card"/>
+            <input id="cardCompany" name="cardCompany" required class="box-l" placeholder="ex) WING_Card"/>
           </div>
         </div>
 

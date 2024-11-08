@@ -48,4 +48,10 @@ public interface AccountBookDao {
     List<AccountBookVo> selectMonthlyExpenseBook(int memberNo, Date startDate, Date endDate);
     List<AccountBookVo> selectMonthlyIncomeBook(int memberNo, Date startDate, Date endDate);
 
+    int insertPayback(Map<String, Object> paybackData);
+
+    List<AccountBookVo> getMonthlyPayback(Map<String, Object> params);
+
+    List<AccountBookVo> getCardDetailForMypage(int memberNo, Integer categoryNo, LocalDate startDate);
+
 }

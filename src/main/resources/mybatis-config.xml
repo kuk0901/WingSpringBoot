@@ -16,11 +16,15 @@
         <package name="com.edu.wing.cardBenefit.domain"/>
         <package name="com.edu.wing.inquiry.domain"/>
         <package name="com.edu.wing.inquiryComment.domain"/>
+        <package name="com.edu.wing.post.domain"/>
+        <package name="com.edu.wing.freeBoard.domain"/>
+        <package name="com.edu.wing.freeBoardComment.domain"/>
     </typeAliases>
 
     <mappers>
         <mapper resource="mappers/member/MemberMapper.xml" />
         <mapper resource="mappers/accountBook/AccountBookMapper.xml" />
+        <mapper resource="mappers/accountBook/payBackMapper.xml" />
         <mapper resource="mappers/card/SellingCardMapper.xml"/>
         <mapper resource="mappers/card/CardMapper.xml" />
         <mapper resource="mappers/category/MinusCategoryMapper.xml" />
@@ -29,6 +33,9 @@
         <mapper resource="mappers/card/CardBenefitMapper.xml"/>
         <mapper resource="mappers/inquiry/InquiryMapper.xml"/>
         <mapper resource="mappers/inquiry/InquiryCommentMapper.xml"/>
+        <mapper resource="mappers/post/PostMapper.xml"/>
+        <mapper resource="mappers/freeBoard/FreeBoardMapper.xml"/>
+        <mapper resource="mappers/freeBoard/FreeBoardCommentMapper.xml"/>
     </mappers>
 
 </configuration>

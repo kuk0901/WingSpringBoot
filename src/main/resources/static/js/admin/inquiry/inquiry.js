@@ -1,28 +1,7 @@
+import { showAlertMsg, checkAndShowStoredMessage } from "../../util/toast.js";
+checkAndShowStoredMessage();
+
 const $abc = $("#abc").value;
-
-$('.list-content').click(function() {
-  const inquiryNo = $(this).data('inquiry-no');
-  const curPage = $('#curPage').val() || '1'; // 기본값 설정
-  const answerTermination = $('#answerTermination').val();
-
-  $.ajax({
-    url: `/admin/api/cs/inquiry/${inquiryNo}`,
-    type: 'GET',
-    data: { curPage: curPage },
-    success: function(res) {
-      console.log('Server response:', res);
-      createDetailView(res, answerTermination);
-    },
-    error: function(xhr, status, error) {
-      console.error("Error fetching details:", error);
-      console.log("Status:", status);
-      console.log("Response:", xhr.responseText);
-      alert("데이터를 불러오는 데 실패했습니다. 관리자에게 문의하세요.");
-    }
-  });
-});
-
-
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -36,20 +15,42 @@ function formatDate(dateString) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-function createDetailView(data, answerTermination) {
+$('.list-content').click(function() {
+  const inquiryNo = $(this).data('inquiry-no');
+  const curPage = $('#curPage').val() || '1'; // 기본값 설정
+  const answerTermination = $(this).data('answer-termination');
+  const inquirySearch = $('#search').val();
+
+  $.ajax({
+    url: `/admin/cs/inquiry/${inquiryNo}`,
+    type: 'GET',
+    data: {
+      curPage: curPage,
+      answerTermination: answerTermination,
+      inquirySearch: inquirySearch
+    },
+    success: function(res) {
+      createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+    },
+    error: function(res) {
+      showAlertMsg(res.alertMsg);
+    }
+  });
+});
+
+function createDetailView(data, curPage, answerTermination, inquirySearch) {
   const formattedInquiryDate = formatDate(data.INQUIRYDATE);
   const formattedAnswerDate = data.ANSWERDATE ? formatDate(data.ANSWERDATE) : '';
 
-  console.log("Data received in createDetailView:", data);
   const inquiryDetail = `
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
         1대1 문의사항 상세
       </div>
       <div class="btn-container">
-        <button id="listMove" class="btn btn__generate listMove text__center" data-cur-page="${data.curPage}" data-answer-termination="${data.ANSWERTERMINATION}">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/inquiry/list?curPage=${curPage}&answerTermination=${answerTermination}&inquirySearch=${inquirySearch}">
           돌아가기
-        </button>
+        </a>
     </div>
     </div>
 
@@ -88,7 +89,7 @@ function createDetailView(data, answerTermination) {
             <input type="hidden" id="inquiryCommentNo" value="${data.INQUIRYCOMMENTNO}">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
             <div class="btn-container">
-              <button id="modReply" class="btn addReply btn__generate" data-cur-page=${data.curPage}" data-no="${data.INQUIRYNO}">
+              <button id="modReply" class="btn addReply btn__generate" data-cur-page=${data.curPage}" data-no="${data.INQUIRYNO}" data-inquiry-search="${data.inquirySearch}">
               답변 수정
               </button>
             </div>
@@ -121,12 +122,6 @@ function createDetailView(data, answerTermination) {
 
   $("#content").html(inquiryDetail);
 
-  $("#listMove").click(function() {
-    const curPage = $(this).data('cur-page') || '1';
-    const answerTermination = $(this).data('answer-termination');
-    window.location.href = `/admin/cs/inquiry/list?curPage=${curPage}&answerTermination=${answerTermination}`;
-  });
-
   $("#modReply").click(function(e) {
     e.preventDefault();
 
@@ -136,11 +131,10 @@ function createDetailView(data, answerTermination) {
       url: `/admin/api/cs/inquiry/update/${no}`,
       type: 'POST',
       success: function(res) {
-        console.log(res);
-        createUpdateView(res);
+        createUpdateView(res.inquiryVo);
       },
-      error: function(xhr, status, error) {
-        console.log(error);
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
       }
     })
   })
@@ -154,11 +148,10 @@ function createDetailView(data, answerTermination) {
       url: `/admin/api/cs/inquiry/add/${no}`,
       type: 'POST',
       success: function(res) {
-        console.log(res);
-        createAddView(res);
+        createAddView(res.inquiryVo);
       },
-      error: function(xhr, status, error) {
-        console.log(error);
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
       }
     })
   })
@@ -241,14 +234,10 @@ function createUpdateView(res) {
       contentType: 'application/json',
       data: JSON.stringify({ content: content }),
       success: function(res) {
-        console.log("작업 성공:", res);
-        if ($("#commentNo").val()) {
-          alert("답변이 성공적으로 수정되었습니다.");
-        }
+        showAlertMsg(res.alertMsg);
       },
-      error: function(xhr, status, error) {
-        console.log("수정 실패:", error);
-        alert("답변 수정에 실패했습니다.");
+      error: function(res) {
+        showAlertMsg(res.alertMsg)
       }
     });
   });
@@ -275,7 +264,8 @@ function createAddView(res) {
   <main class="main-container bg__white">
     <div class="inquiry-container">
       <div class="inquiry-title one-line">
-        <input type="hidden" id="inquiryNo" value="${res.INQUIRYNO}">  
+        <input type="hidden" id="inquiryNo" value="${res.INQUIRYNO}">
+        <input type="hidden" id="answerTermination" value="${res.ANSWERTERMINATION}">
         <div class="info-title bg__gray text__black box__l text__center">제목</div>
         <div class="info-item bg__white text__black box__l">${res.TITLE}</div>
         <div class="info-title bg__gray text__black box__l text__center">분류</div>
@@ -331,8 +321,6 @@ function createAddView(res) {
 
     const inquiryNo = $(this).data("add");
     const content = $("#answerContent").val();
-    const curPage = $('#curPage').val() || '1';
-    const answerTermination = $('#answerTermination').val() || '';
 
     $.ajax({
       url: `/admin/api/cs/inquiry/add/${inquiryNo}`,
@@ -340,14 +328,13 @@ function createAddView(res) {
       contentType: 'application/json',
       data: JSON.stringify({ CONTENT: content }),
       success: function(res) {
-        console.log("작업 성공:", res);
-        alert("답변이 성공적으로 추가되었습니다.");
+        const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
+
         // 성공 후 리스트 페이지로 이동하거나 현재 페이지를 새로고침
-        window.location.href = `/admin/cs/inquiry/list?curPage=${curPage}&answerTermination=${answerTermination}`;
+        window.location.href = `/admin/cs/inquiry/list?message=${message}`;
       },
-      error: function(xhr, status, error) {
-        console.log("추가 실패:", error);
-        alert("답변 추가에 실패했습니다.");
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
       }
     });
   });
