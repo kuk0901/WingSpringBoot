@@ -373,6 +373,7 @@ $("#cardUseDetail").on('click', function () {
         </div>
           <div class="payback-income" id="payback-income"></div>
         <div class="entry-form one-line">
+        <label for="categorySelect" class="category-label">분류:</label>
         <select id="categorySelect" name="category">
           <option value="">전체</option>
         </select>
