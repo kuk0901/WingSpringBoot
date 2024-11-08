@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/member/cs/freeBoard")
+@RequestMapping("/member/freeBoard")
 public class MemberFreeBoardController {
 
   private static final Logger log = LoggerFactory.getLogger(MemberFreeBoardController.class);

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin/cs/freeBoard")
+@RequestMapping("/admin/freeBoard")
 public class AdminFreeBoardController {
 
   private static final Logger log = LoggerFactory.getLogger(AdminFreeBoardController.class);

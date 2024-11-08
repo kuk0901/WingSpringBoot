@@ -27,7 +27,7 @@ $('.list-content').click(function () {
   console.log(noticeBoardNo);
 
   $.ajax({
-    url: `/admin/cs/freeBoard/${freeBoardNo}`,
+    url: `/admin/freeBoard/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -44,7 +44,6 @@ $('.list-content').click(function () {
 })
 
 function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
-  const formattedFreeBoardDate = formatDate(data.CREDATE);
 
   const freeBoardDetail = `
     <div class="title-container one-line">
@@ -52,7 +51,7 @@ function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
         게시글 상세
       </div>
       <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}">
           돌아가기
         </a>
     </div>
@@ -61,24 +60,24 @@ function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
     <main class="main-container bg__white">
       <div class="freeBoard-container">
         <div class="freeBoard-title one-line">
-          <input type="hidden" id="freeBoardNo" value="${data.FREEBOARDNO}">
+          <input type="hidden" id="freeBoardNo" value="${data.freeBoardNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
           <input type="hidden" id="freeBoardSearch" value="${freeBoardSearch}">
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div id="freeBoardTitle" class="info-item bg__white text__black box__l">${data.TITLE}</div>
+          <div id="freeBoardTitle" class="info-item bg__white text__black box__l">${data.title}</div>
         </div>
         
         <div class="freeBoard-sub one-line">
           <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${data.EMAIL}</div>
+          <div class="info-writer bg__white text__black box__l">${data.email}</div>
           <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formattedFreeBoardDate}</div> 
+          <div class="info-date bg__white text__black box__l">${formatDate(data.creDate)}</div> 
         </div>
         
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
       
         <div class="info-content bg__white text__black box__l">
-          <div id="freeBoardContent" class="bg__white text__black box__l">${data.CONTENT}</div>
+          <div id="freeBoardContent" class="bg__white text__black box__l">${data.content}</div>
         </div>      
       </div>
             
