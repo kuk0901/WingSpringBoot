@@ -79,6 +79,26 @@ public class MemberApiSellingCardController {
     }
   }
 
+  @GetMapping("/purchase/{memberNo}")
+  public Map<String, Object> getSellingCards(@PathVariable int memberNo) {
+    Map<String, Object> sellingCard = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
+
+    return sellingCard;
+  }
+  // 카드 혜택 정보를 가져오는 메소드 추가
+  @GetMapping("/cardBenefit/{cardNo}")
+  public ResponseEntity<List<CardBenefitVo>> getCardBenefits(@PathVariable int cardNo) {
+    try {
+      List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
+      if (benefits == null || benefits.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+      return ResponseEntity.ok(benefits);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 오류 반환
+    }
+  }
+
   // FIXME: 추천 카드 구매
   @PostMapping("/purchase/recommend")
   public ResponseEntity<Map<String, Object>> memberRecommendedCardPurchase(@RequestBody Map<String, Object> requestData) {

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
+<%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
 
 <body>
 <jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
-  <jsp:param value="${alertMsg}" name="alertMsg" />
+  <jsp:param value="${alertMsg}" name="alertMsg"/>
 </jsp:include>
 
 <section id="root">
@@ -34,7 +34,7 @@
           마이 페이지
         </div>
       </div>
-
+      <input type="hidden" id="memberNo" value="${memberVo.memberNo}" />
       <main class="main-container">
         <form id="myPageForm">
           <div id="memberDetailContainer" class="update_container">
@@ -49,11 +49,11 @@
                     <label for="email">이메일</label>
                   </div>
                   <div class="input-container">
-                  <input type="email" id="email" name="email"
-                         pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-                         autocomplete="off"
-                         value="${memberVo.email}" />
-                  <span id="emailError"></span>
+                    <input type="email" id="email" name="email"
+                           pattern="^(?=.{6,36}$)[a-z0-9_]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                           autocomplete="off"
+                           value="${memberVo.email}"/>
+                    <span id="emailError"></span>
                   </div>
                 </div>
                 <div class="user-info-container one-line">
@@ -62,7 +62,7 @@
                   </div>
                   <div class="input-container">
                     <input type="text" id="Name" name="Name"
-                           value="${memberVo.userName}" />
+                           value="${memberVo.userName}"/>
 
                     <span id="userNameError"></span>
                   </div>
@@ -73,10 +73,10 @@
                   </div>
                   <div class="input-container">
                     <input type="password" id="password" name="password"
-                         pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
-                         autocomplete="off"
-                           value="${memberVo.pwd}" />
-                         autocomplete="off"/>
+                           pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
+                           autocomplete="off"
+                           value="${memberVo.pwd}"/>
+
                     <span id="pwdError"></span>
                   </div>
                 </div>
@@ -88,8 +88,7 @@
                     <input type="password" id="confirmPassword" name="confirmPassword"
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
-                   value="${memberVo.pwd}" />
-                           autocomplete="off"/>
+                           value="${memberVo.pwd}"/>
                     <span id="pwdCheckError"></span>
                   </div>
                 </div>
@@ -109,7 +108,7 @@
                   </div>
                   <div class="input-container">
                     <input type="text" id="creDate" name="creDate" readonly
-                           value="<fmt:formatDate value='${memberVo.creDate}' pattern='yyyy-MM-dd' />" />
+                           value="<fmt:formatDate value='${memberVo.creDate}' pattern='yyyy-MM-dd' />"/>
                   </div>
                 </div>
               </div>
@@ -120,7 +119,7 @@
                   </div>
                   <div class="input-container">
                     <input type="text" id="yearlySalary" name="yearlySalary" class="box__m"
-                           value="${memberVo.yearlySalary}" />
+                           value="${memberVo.yearlySalary}"/>
                     <span>만원</span>
                     <span id="salaryError"></span>
                   </div>
@@ -144,9 +143,9 @@
             <button id="quitMemberButton" class="btn btn__generate">탈퇴 신청</button>
           </div>
         </form>
-<c:choose>
-  <c:when test="${not empty sellingCard}">
-        <div id="card-container" class="card-container" >
+        <c:choose>
+        <c:when test="${not empty sellingCard}">
+        <div id="card-container" class="card-container">
           <div class="card-title text__semibold">보유 카드</div>
           <div class="card-header">
             <div class="header-item box__s text__semibold">카드 명</div>
@@ -161,7 +160,7 @@
               <div class="list-item box__s text__center">
                 <div class="card-name">${sellingCard.CARDNAME}</div>
                 <div class="img-container">
-                  <img class="card--img" src="/img/card/${sellingCard.STOREDFILENAME}" alt="${sellingCard.CARDNAME}" />
+                  <img class="card--img" src="/img/card/${sellingCard.STOREDFILENAME}" alt="${sellingCard.CARDNAME}"/>
                 </div>
               </div>
               <div class="list-item box__m" id="benefit-container">
@@ -175,7 +174,7 @@
               </div>
 
               <div class="list-item box__m text__center">
-                <c:out value="${fn:substring(sellingCard.SELLINGDATE, 0, 10)}" />
+                <c:out value="${fn:substring(sellingCard.SELLINGDATE, 0, 10)}"/>
               </div>
               <div class="list-item box__l text__center">${sellingCard.MEMBERCARDNO}</div>
               <div class="list-item box__btn box__m">
@@ -188,14 +187,16 @@
           </div>
         </div>
         <input id='sellingCardNo' type='hidden' value='${sellingCard.SELLINGCARDNO}
-  </c:when>
-</c:choose>
-      </main> <!-- main 태그 닫기 -->
+      </c:when>
+    </c:choose>
+
+</main> <!-- main 태그 닫기 -->
     </div> <!-- content 닫기 -->
+
 
     <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
   </section>
-  <input type="hidden" id="memberNo" value="${sessionScope.member.memberNo}" />
+
 </section>
 <jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp" />
 
