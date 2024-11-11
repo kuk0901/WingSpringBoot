@@ -50,10 +50,7 @@ public class AdminMemberApiController {
 
         try {
             //1.가계부 내역 강제 삭제
-            accountBookService.deleteAllAccountBook(memberNo); // 가계부 삭제 호출
-            //2.게시판 댓글,게시글 삭제 예정
-
-
+            accountBookService.softAllDeleteAccountBook(memberNo); // 가계부 삭제 isdeleted변경
 
             // 3. 회원 삭제 -> isDeleted -> 'true' 변경
             MemberVo memberVo = new MemberVo();
@@ -95,6 +92,7 @@ public class AdminMemberApiController {
               return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultMap);  // 실패 응답
           }
       } catch (Exception e) {
+          e.printStackTrace();
           resultMap.put("status", "error");
           resultMap.put("message", "서버 오류가 발생했습니다.");
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);  // 오류 응답

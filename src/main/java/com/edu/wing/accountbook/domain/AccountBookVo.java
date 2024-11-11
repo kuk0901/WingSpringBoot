@@ -41,4 +41,6 @@ public class AccountBookVo {
   private int cardPercentage;       // 카드 혜택 비율
   private  int cardNo;
 
+  private String isDeleted;
+
 }

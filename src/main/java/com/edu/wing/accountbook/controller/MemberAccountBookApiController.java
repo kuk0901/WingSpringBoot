@@ -95,6 +95,7 @@ public class MemberAccountBookApiController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가계부 추가에 실패했습니다.");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
         }
     }
@@ -124,9 +125,9 @@ public class MemberAccountBookApiController {
 
     }
     // 가계부 삭제 API
-    @DeleteMapping("/{accountBookNo}")
-    public ResponseEntity<Void> deleteAccountBook(@PathVariable int accountBookNo) {
-        accountBookService.deleteAccountBook(accountBookNo);
+    @PatchMapping("/{accountBookNo}")
+    public ResponseEntity<Void> softDeleteAccountBook(@PathVariable int accountBookNo) {
+        accountBookService.softDeleteAccountBook(accountBookNo);
         return ResponseEntity.noContent().build(); // 204 No Content 반환
     }
     @PutMapping("/update")
