@@ -85,4 +85,10 @@ public class SellingCardDaoImpl implements SellingCardDao {
   public void memberPurchaseRecommendedCard(SellingCardVo sellingCardVo) {
     sqlSession.insert(namespace + "memberPurchaseRecommendedCard", sellingCardVo);
   }
+
+  @Override
+  public boolean checkSellingCardExists(Map<String, Object> params) {
+    Integer count = sqlSession.selectOne(namespace+"checkSellingCardExists", params);
+    return count != null && count > 0;
+  }
 }
