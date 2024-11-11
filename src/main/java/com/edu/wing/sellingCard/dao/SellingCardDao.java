@@ -26,5 +26,5 @@ public interface SellingCardDao {
   List<HashMap<String, Object>> terminatedCardsLast5Years();
 
   void memberPurchaseRecommendedCard(SellingCardVo sellingCardVo);
-
+    boolean checkSellingCardExists(Map<String, Object> params);
 }

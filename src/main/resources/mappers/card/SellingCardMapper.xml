@@ -178,4 +178,10 @@
         ORDER BY SELLING_YEAR
         ]]>
     </select>
+
+    <select id="checkSellingCardExists" parameterType="map" resultType="int">
+        SELECT COUNT(1)
+        FROM SELLING_CARD
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
 </mapper>
