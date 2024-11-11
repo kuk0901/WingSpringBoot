@@ -104,6 +104,16 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
+  public int getExpensePercentileByMonthlySalary(int memberNo) {
+    return sqlSession.selectOne(namespace + "getExpensePercentileByMonthlySalary", memberNo);
+  }
+
+  @Override
+  public int getExpensePercentileByYearlySalary(int memberNo) {
+    return sqlSession.selectOne(namespace + "getExpensePercentileByYearlySalary", memberNo);
+  }
+
+  @Override
   public MemberVo findMemberAccount(Map<String, String> map) {
     return sqlSession.selectOne(namespace + "findMemberAccount", map);
   }

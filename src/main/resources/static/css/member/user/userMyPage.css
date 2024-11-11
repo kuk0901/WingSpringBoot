@@ -1,88 +1,92 @@
+.main-container {
+  width: 98%;
+  margin: auto;
+}
+
 /*정보수정컨테이너ㄴ*/
-.detail_title_container{
-background-color: #e0e0e0;
-color: #333;
-padding: 15px;
-width: 1500px;
-font-weight: bold;
-height: 50px;
-margin: 10px auto auto;
-display: flex;                  /* Flexbox 활성화 */
-align-items: center;           /* 수직 중앙 정렬 */
+.detail_title_container {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 15px;
+  font-weight: bold;
+  height: 50px;
+  margin: 10px auto auto;
+  display: flex;                  /* Flexbox 활성화 */
+  align-items: center;           /* 수직 중앙 정렬 */
 
 }
 .update_container{
-background-color: white;
-height: 420px;
-width: 1500px;
-margin: auto;
+  background-color: white;
+  height: 420px;
+  width: 98%;
+  margin: auto;
 }
 
 .detail_first_second_wrapper {
-display: flex; /* Flexbox 활성화 */
-justify-content: center;
-padding: 20px; /* 여백 추가 */
+  display: flex; /* Flexbox 활성화 */
+  justify-content: center;
 }
 
 .detail_first_container,
 .detail_second_container {
-width: 48%; /* 두 컨테이너의 너비 설정 */
-box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
+  margin-top: 20px;
+  width: 48%; /* 두 컨테이너의 너비 설정 */
+  box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
 }
 
 .detail_first_container div,
 .detail_second_container div {
-margin-bottom: 10px; /* 각 입력 필드 간 여백 추가 */
+  margin-bottom: 10px; /* 각 입력 필드 간 여백 추가 */
 }
 
 .detail_container {
- display: flex; /* Flexbox 활성화 */
- flex-direction: column; /* 세로 방향으로 정렬 */
+  display: flex; /* Flexbox 활성화 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
 }
 
 .detail_container div {
-display: flex; /* Flexbox 활성화 */
-align-items: center; /* 수직 정렬 */
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 수직 정렬 */
 }
 
 .detail_container .label-container label {
-width: 120px; /* 레이블의 고정 너비 */
-font-weight: bold; /* 레이블 텍스트 두껍게 */
+  width: 120px; /* 레이블의 고정 너비 */
+  font-weight: bold; /* 레이블 텍스트 두껍게 */
 }
 
 .detail_container .input-container input {
-flex-grow: 1; /* 입력 필드가 가능한 공간을 모두 차지하게 함 */
-padding: 10px; /* 입력 필드 내부 여백 */
-border: 1px solid #ccc; /* 테두리 스타일 */
-border-radius: 5px; /* 테두리 둥글게 */
-font-size: 14px; /* 글자 크기 조정 */
-min-width: 300px; /* 최소 너비 설정 */
+  flex-grow: 1; /* 입력 필드가 가능한 공간을 모두 차지하게 함 */
+  padding: 10px; /* 입력 필드 내부 여백 */
+  border: 1px solid #ccc; /* 테두리 스타일 */
+  border-radius: 5px; /* 테두리 둥글게 */
+  font-size: 14px; /* 글자 크기 조정 */
+  min-width: 300px; /* 최소 너비 설정 */
 }
 
 .detail_container .input-container span {
-margin-left: 10px;
+  margin-left: 10px;
 }
 
 /*버튼*/
 .two-btn-container {
-height: 50px;
-width: 1500px;
-display: flex; /* Flexbox 활성화 */
-align-items: center; /* 자식 요소를 수직 중앙 정렬 */
-justify-content: center;
-margin: 30px auto 60px;
+  height: 50px;
+  width: 98%;
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+  justify-content: center;
+  margin: 30px auto 60px;
 }
 
 #quitMemberButton {
-position: absolute;
-right: 70px;
+  position: absolute;
+  right: 70px;
 }
 
 /*여기서부턴 카드컨테이너*/
 .card-container{
 background-color: white;
 height: 200px;
-width: 1500px;
+width: 98%;
 margin: auto;
 }
 
@@ -212,7 +216,7 @@ width: 100px;
 /*버튼*/
 .two-btn-container {
 height: 50px;
-width: 1500px;
+width: 98%;
 display: flex; /* Flexbox 활성화 */
 align-items: center; /* 자식 요소를 수직 중앙 정렬 */
 justify-content: center;
@@ -235,7 +239,7 @@ display: block;
 
 .card-delete-container {
 height: 236px;
-width: 1500px;
+width: 98%;
 margin: 40px auto;
 }
 
@@ -244,7 +248,7 @@ resize: none; /* 텍스트 영역 크기 조절 비활성화 (필요에 따라 �
 padding: 10px; /* 텍스트 영역 안쪽 여백 */
 color: #000000; /* 텍스트 색상 (필요에 따라 조정) */
 background-color: white;
-width: 1500px;
+width: 98%;
 height: 200px;
 border: none;
 outline: none;
@@ -292,18 +296,23 @@ border: 1px solid #ccc;
 /* 초기에는 숨김 처리 */
 }
 
+.detail_container .label-container .box__xs {
+  display: inline-block;
+  width: 50px;
+}
+
 .detail_container .label-container .box__s {
-display: inline-block;
-min-width: 100px;
+  display: inline-block;
+  min-width: 100px;
 }
 
 .detail_container .input-container .box__m {
-display: inline-block;
-min-width: 200px;
+  display: inline-block;
+  min-width: 200px;
 }
 
 .text-right {
-text-align: right;
+  text-align: right;
 }
 /*
 여기부턴 detailcss*/
@@ -413,4 +422,19 @@ gap: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.user-info-container.user-percentage-container {
+  display: block;
+}
+
+.user-info-container .percentage-container {
+  display: block;
+  margin: 35px auto;
+}
+
+.user-info-container .percentage-container .percentage {
+  padding: 20px;
+  font-size: 17px;
+  border-radius: 15px;
 }
