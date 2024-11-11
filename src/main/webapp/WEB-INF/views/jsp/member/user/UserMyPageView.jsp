@@ -192,10 +192,10 @@
                     </div>
                   </div>
                   <div class="list-item box__m" id="benefit-container">
-                    <c:forEach var="benefit" items="${benefits}">
+                    <c:forEach var="cardBenefitVo" items="${cardBenefitVoList}">
                       <div class="card-benefit">
                         <p>
-                            ${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}
+                            ${cardBenefitVo.cardBenefitDetail} ${cardBenefitVo.cardPercentage}% ${cardBenefitVo.cardBenefitDivision}
                         </p>
                       </div>
                     </c:forEach>
