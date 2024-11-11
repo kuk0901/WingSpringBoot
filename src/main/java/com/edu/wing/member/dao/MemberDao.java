@@ -30,9 +30,15 @@ public interface MemberDao {
   void updateMemberProductPurchase(int memberNo);
   MemberVo checkMemberProductPurchase(int memberNo); // 신청, 해지 확인
 
+  int getExpensePercentileByMonthlySalary(int memberNo);
+  int getExpensePercentileByYearlySalary(int memberNo);
+
   MemberVo findMemberAccount(Map<String, String> map);
   MemberVo findMemberPassword(Map<String, String> map);
 
   void updateMemberPassword(Map<String, String> map);
   MemberVo updateMemberPasswordCheck(Map<String, String> map);
+
+  List<Integer> selectDeletedMemberNos();
+
 }

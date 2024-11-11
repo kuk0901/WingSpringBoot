@@ -12,15 +12,15 @@ $.getJSON('/js/data/cautions.json', function(data) {
   cautionData = data;
 });
 
-$('.detail-card-btn').click(function() {
+$('#cardDetailBtn').click(function(e) {
+  e.preventDefault();
+
   const cardNo = $(this).data('card-no');
-  const curPage = $('#curPage').val();
-  const categoryName = $('#categoryName').val();
 
   $.ajax({
     url: `/member/api/product/card-detail/${cardNo}`,
     type: 'GET',
-    data: { cardNo: cardNo, curPage: curPage, categoryName: categoryName },
+    data: { cardNo: cardNo },
     success: function(res) {
       createDetailView(res);
     },
@@ -82,7 +82,8 @@ function createDetailView(data) {
       
       <section class="side-container">
         <div class="btn-container one-line">
-          <a href="./list?cardNo=${cardVo.cardNo}&curPage?${data.curPage}&categoryName=${data.categoryName}" class="btn btn__generate">돌아가기</a>
+          <!--  추천 카드의 상세 내용을 조회하는 버튼이 되어야 함   -->
+          <a href="/member/user/myPage" class="btn btn__generate">돌아가기</a>
           <button id="cardApplicationWindowBtn" class="btn btn__generate btn__primary">신청하러 가기</button>
         </div>
       </section>
@@ -247,10 +248,10 @@ function createDetailView(data) {
       memberNo: mn,
       paymentMethodNo: 3,
       content: "WING_ 카드 구매",
-      paymentAmount: "12,000",
+      paymentAmount: 12000,
     }
 
-    $.ajax("", {
+    $.ajax({
       url: `/member/api/sellingCard/purchase/recommend`,
       contentType: 'application/json',
       type: 'POST',

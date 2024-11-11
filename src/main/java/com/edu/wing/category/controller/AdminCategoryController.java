@@ -74,7 +74,7 @@ public class AdminCategoryController {
     if (count > 0) {
       resultMap.put("status", "success");
       resultMap.put("totalCount", count);
-      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
+      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
 
       return ResponseEntity.ok().body(resultMap);
     }
@@ -94,7 +94,7 @@ public class AdminCategoryController {
     if (count > 0) {
       resultMap.put("status", "success");
       resultMap.put("totalCount", count);
-      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
+      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
 
       return ResponseEntity.ok().body(resultMap);
     }
@@ -114,7 +114,7 @@ public class AdminCategoryController {
     if (count > 0) {
       resultMap.put("status", "success");
       resultMap.put("totalCount", count);
-      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
+      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
 
       return ResponseEntity.ok().body(resultMap);
     }
@@ -134,7 +134,7 @@ public class AdminCategoryController {
     if (count > 0) {
       resultMap.put("status", "success");
       resultMap.put("totalCount", count);
-      resultMap.put("msg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
+      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
 
       return ResponseEntity.ok().body(resultMap);
     }

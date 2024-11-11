@@ -7,6 +7,8 @@ import com.edu.wing.sellingCard.domain.SellingCardVo;
 import com.edu.wing.sellingCard.service.SellingCardService;
 import com.edu.wing.util.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +21,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/member/api/sellingCard")
 public class MemberApiSellingCardController {
+  private static final Logger log = LoggerFactory.getLogger(MemberApiSellingCardController.class);
+
   @Autowired
   private SellingCardService sellingCardService;
   
   @Autowired
   private CardBenefitService cardBenefitService;
+
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   // 일반 카드 구매
   @PostMapping("/purchase/general")
@@ -31,7 +37,6 @@ public class MemberApiSellingCardController {
     Map<String, Object> resultMap = new HashMap<>();
 
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
       SellingCardVo sellingCardVo = objectMapper.convertValue(requestData.get("sellingCardVo"), SellingCardVo.class);
       AccountBookVo accountBookVo = objectMapper.convertValue(requestData.get("accountBookVo"), AccountBookVo.class);
 
@@ -46,7 +51,7 @@ public class MemberApiSellingCardController {
 
       return ResponseEntity.ok().body(resultMap);
 
-    } catch (RuntimeException e) {
+    } catch (CustomException e) {
       resultMap.put("status", "failed");
       resultMap.put("alertMsg", e.getMessage());
       return ResponseEntity.badRequest().body(resultMap);
@@ -93,15 +98,17 @@ public class MemberApiSellingCardController {
     return ResponseEntity.ok().body(resultMap);
   }
 
-  // FIXME: 추천 카드 구매
+  // 추천 카드 구매
   @PostMapping("/purchase/recommend")
   public ResponseEntity<Map<String, Object>> memberRecommendedCardPurchase(@RequestBody Map<String, Object> requestData) {
     Map<String, Object> resultMap = new HashMap<>();
 
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
       SellingCardVo sellingCardVo = objectMapper.convertValue(requestData.get("sellingCardVo"), SellingCardVo.class);
       AccountBookVo accountBookVo = objectMapper.convertValue(requestData.get("accountBookVo"), AccountBookVo.class);
+
+      log.info("sellingCardVo: {}", sellingCardVo);
+      log.info("accountBookVo: {}", accountBookVo);
 
       if (sellingCardService.memberSellingCardExist(sellingCardVo)) {
         resultMap.put("status", "failed");
@@ -117,6 +124,10 @@ public class MemberApiSellingCardController {
       } else {
         return ResponseEntity.badRequest().body(resultMap);
       }
+    } catch (CustomException e) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", e.getMessage());
+      return ResponseEntity.badRequest().body(resultMap);
     } catch (Exception e) {
       resultMap.put("status", "failed");
       resultMap.put("alertMsg", "카드 구매 처리 중 오류가 발생했습니다. 관리자에게 문의해 주세요.");

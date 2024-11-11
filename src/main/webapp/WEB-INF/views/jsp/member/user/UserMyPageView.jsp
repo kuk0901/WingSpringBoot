@@ -2,22 +2,17 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
-  <title>마이페이지</title>
-  <script src="https://code.jquery.com/jquery-3.7.0.js"
-          integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-          crossorigin="anonymous">
-  </script>
-
-
-  <script defer type="module" src="/js/member/user/userMyPage.js"></script>
+  <title>마이페이지 </title>
+  <link rel="stylesheet" href="/css/member/card/memberProduct.css">
   <link rel="stylesheet" href="/css/member/user/userMyPage.css">
+  <script defer type="module" src="/js/member/user/userMyPage.js"></script>
+  <script defer type="module" src="/js/member/card/AjaxRecommendedCardDetail.js"></script>
 </head>
-
 
 <body>
 <jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
@@ -72,13 +67,13 @@
 
                 <div class="user-info-container one-line">
                   <div class="label-container">
-                    <label for="password">패스워드</label>
+                    <label for="pwd">패스워드</label>
                   </div>
                   <div class="input-container">
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="pwd" name="pwd"
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
-                           value="${memberVo.password}"/>
+                           value="${memberVo.pwd}"/>
 
                     <span id="pwdError"></span>
                   </div>
@@ -92,7 +87,7 @@
                     <input type="password" id="confirmPassword" name="confirmPassword"
                            pattern="^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,21}$"
                            autocomplete="off"
-                           value="${memberVo.password}"/>
+                           value="${memberVo.pwd}"/>
                     <span id="pwdCheckError"></span>
                   </div>
                 </div>
@@ -121,8 +116,8 @@
 
               <div class="detail_second_container detail_container">
                 <div class="user-info-container one-line">
-                  <div class="label-container text-right">
-                    <label for="yearlySalary" class="box__s">연봉</label>
+                  <div class="label-container">
+                    <label for="yearlySalary" class="box__xs">연봉</label>
                   </div>
                   <div class="input-container">
                     <input type="text" id="yearlySalary" name="yearlySalary" class="box__m"
@@ -133,8 +128,8 @@
                 </div>
 
                 <div class="user-info-container one-line">
-                  <div class="label-container text-right">
-                    <label for="monthlySalary" class="box__s">월급</label>
+                  <div class="label-container">
+                    <label for="monthlySalary" class="box__xs">월급</label>
                   </div>
                   <div class="input-container">
                     <input type="text" id="monthlySalary" name="monthlySalary" class="box__m"
@@ -144,6 +139,28 @@
                   </div>
                 </div>
 
+                <div class="user-info-container non-one-line user-percentage-container">
+                  <div class="percentage-container">
+                    <c:choose>
+                      <c:when test="${monthlySalaryPer == 0}">
+                        <div class="btn__red text__semibold percentage">이번 달 소비가 <span class="text__primary">동 월급 그룹 내에서 가장 적습니다!!</span></div>
+                      </c:when>
+                      <c:otherwise>
+                        <div class="btn__blue text__semibold percentage">이번 달 나의 소비는 <span class="text__primary">동 월급 그룹 내 하위 ${monthlySalaryPer}%!</span></div>
+                      </c:otherwise>
+                    </c:choose>
+                  </div>
+                  <div class="percentage-container">
+                    <c:choose>
+                      <c:when test="${yearSalaryPer == 0}">
+                        <div class="btn__red text__semibold percentage">이번 달 소비가 <span class="text__primary">동 연봉 그룹 내에서 가장 적습니다!!</span></div>
+                      </c:when>
+                      <c:otherwise>
+                        <div class="btn__blue text__semibold percentage">이번 달 나의 소비는 <span class="text__primary">동 연봉 그룹 내 하위 ${yearSalaryPer}%!</span></div>
+                      </c:otherwise>
+                    </c:choose>
+                  </div>
+              </div>
               </div>
             </div>
           </div>
@@ -175,10 +192,10 @@
                     </div>
                   </div>
                   <div class="list-item box__m" id="benefit-container">
-                    <c:forEach var="benefit" items="${benefits}">
+                    <c:forEach var="cardBenefitVo" items="${cardBenefitVoList}">
                       <div class="card-benefit">
                         <p>
-                            ${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}
+                            ${cardBenefitVo.cardBenefitDetail} ${cardBenefitVo.cardPercentage}% ${cardBenefitVo.cardBenefitDivision}
                         </p>
                       </div>
                     </c:forEach>
@@ -197,15 +214,66 @@
                 </div>
               </div>
             </div>
-      </c:when>
-    </c:choose>
-    </main>
+          </c:when>
+          <c:otherwise>
+            <c:if test="${recommendedCard.CARDNO > 0}">
+              <div class="btn__blue recommend-card-container one-line">
+                <div class="reco-card-info">
+                  <div class="reco-card-info--text">
+                    <c:choose>
+                      <c:when test="${fn:endsWith(fn:trim(recommendedCard.CATEGORYNAME), '비')}">
+                        <div class="reco-card-info--title">3개월 연속으로 ${recommendedCard.CATEGORYNAME}에 가장 많이 소비했습니다!</div>
+                      </c:when>
+                      <c:otherwise>
+                        <div class="reco-card-info--title">3개월 연속으로 ${recommendedCard.CATEGORYNAME}비에 가장 많이 소비했습니다!</div>
+                      </c:otherwise>
+                    </c:choose>
+                    <div class="reco-card-info--text reco-card-info--guide">
+                      ${recommendedCard.CARDNAME} 카드를 신청해보시는 건 어떠신가요?
+                    </div>
+                    <div class="reco-card-info--text reco-card-info--benefits">
+                      <c:forEach var="cardBenefit" items="${recommendedCard.cardBenefitList}" varStatus="status">
+                        <c:set var="benefitName" value="${fn:replace(cardBenefit.cardBenefitDivision, '할인', '')}" />
+                        <c:choose>
+                          <c:when test="${status.index == 0}">
+                            ${benefitName} ${cardBenefit.cardPercentage}%와 더불어
+                          </c:when>
+                          <c:when test="${status.index == 1}">
+                            ${benefitName} ${cardBenefit.cardPercentage}%,
+                          </c:when>
+                          <c:when test="${status.last}">
+                            ${benefitName} ${cardBenefit.cardPercentage}%
+                          </c:when>
+                          <c:otherwise>
+                            ${benefitName} ${cardBenefit.cardPercentage}%,
+                          </c:otherwise>
+                        </c:choose>
+                      </c:forEach>
+                      할인 등 다양한 혜택을 누릴 수 있습니다!
+                    </div>
+                  </div>
+                  <div class="reco-card-info--comment">회원님의 "슬기로운 소비 생활"을 위해 지금 당장 카드를 신청해 보세요!</div>
+                </div>
+                <div class="card-purchase text__center">
+                  <div class="card--name">${recommendedCard.CARDNAME} 카드</div>
+                  <div class="btn-container">
+                    <button id="cardDetailBtn" class="btn btn__generate" data-card-no="${recommendedCard.CARDNO}">신청하러 가기</button>
+                  </div>
+                </div>
+              </div>
+            </c:if>
+          </c:otherwise>
+        </c:choose>
 
+        <div class="hidden-ui"></div>
+      </main>
+
+    </div>
     <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
   </section>
 
-    <input type="hidden" id="memberNo" value="${memberVo.memberNo}" />
-    <input id="sellingCardNo" type="hidden" value="${sellingCard.SELLINGCARDNO}" />
+  <input type="hidden" id="memberNo" value="${memberVo.memberNo}" />
+  <input id="sellingCardNo" type="hidden" value="${sellingCard.SELLINGCARDNO}" />
 </section>
 
 <jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp" />

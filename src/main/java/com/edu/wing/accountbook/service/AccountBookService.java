@@ -39,5 +39,8 @@ public interface AccountBookService {
 
     List<AccountBookVo> getMonthlyPayback(Map<String, Object> params);
     List<AccountBookVo> getCardDetailForMypage(int memberNo, Integer categoryNo, LocalDate startDate);
+    int softDeleteAccountBook(int accountBookNo);
+    int softAllDeleteAccountBook(int accountBookNo);
+    int deleteAllPayBack(int memberNo);
 }
 

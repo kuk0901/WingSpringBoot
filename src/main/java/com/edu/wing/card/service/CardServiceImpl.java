@@ -7,13 +7,14 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.util.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,5 +117,21 @@ public class CardServiceImpl implements CardService {
   @Override
   public CardVo getCardByName(String cardName) {
     return cardDao.getCardByName(cardName);
+  }
+
+  @Override
+  public Map<String, Object> userRecommendCardSelect(int memberNo) {
+    Map<String, Object> result = cardDao.userRecommendCardSelect(memberNo);
+
+    if ("No Recommendation".equals(result.get("CARDNAME"))) {
+      return result;
+    }
+
+    int cardNo = ((BigDecimal) result.get("CARDNO")).intValue();
+    List<CardBenefitVo> cardBenefitList = cardBenefitDao.cardBenefitSelectListOne(cardNo);
+
+    result.put("cardBenefitList", cardBenefitList);
+
+    return result;
   }
 }

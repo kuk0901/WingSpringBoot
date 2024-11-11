@@ -143,7 +143,6 @@ public class ApiAuthController {
     return ResponseEntity.ok().body(resultMap);
   }
 
-  // FIXME: 비밀번호 변경 로직 추가, Mapper 작성 완료, dao-service 추가
   @PatchMapping("/find/password")
   public ResponseEntity<?> updateMemberPassword(@RequestBody Map<String, String> map) {
     HashMap<String, Object> resultMap = new HashMap<>();

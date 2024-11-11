@@ -1,5 +1,6 @@
 package com.edu.wing.member.service;
 
+import com.edu.wing.accountbook.dao.AccountBookDao;
 import com.edu.wing.member.dao.MemberDao;
 import com.edu.wing.member.domain.MemberVo;
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ public class MemberServiceImpl implements MemberService {
 
   @Autowired
   private MemberDao memberDao;
+  @Autowired
+  private AccountBookDao accountBookDao;
 
   @Override
   public MemberVo memberExist(String email, String pwd) {
@@ -66,9 +69,6 @@ public class MemberServiceImpl implements MemberService {
     memberDao.adminSoftDeleteMember(memberVo);
   }
 
-
-
-
   @Override
   public MemberVo getAdminMypageInfo(int memberNo) {
     return memberDao.selectAdminMypageInfo(memberNo);
@@ -94,6 +94,16 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
+  public int getExpensePercentileByMonthlySalary(int memberNo) {
+    return memberDao.getExpensePercentileByMonthlySalary(memberNo);
+  }
+
+  @Override
+  public int getExpensePercentileByYearlySalary(int memberNo) {
+    return memberDao.getExpensePercentileByYearlySalary(memberNo);
+  }
+
+  @Override
   public MemberVo findMemberAccount(Map<String, String> map) {
     return memberDao.findMemberAccount(map);
   }
@@ -114,4 +124,23 @@ public class MemberServiceImpl implements MemberService {
         && memberVo.getEmail().equals(map.get("email"))
         && memberVo.getPwd().equals(map.get("pwd"));
   }
+
+  @Override
+  public List<Integer> selectDeletedMemberNos() {
+    return memberDao.selectDeletedMemberNos();
+  }
+
+  // 매달 실행될 삭제 로직
+  @Transactional
+  @Override
+  public void deleteInactiveMembers() {
+    List<Integer> deletedMemberNos = memberDao.selectDeletedMemberNos();
+
+    for (int memberNo : deletedMemberNos) {
+      accountBookDao.deleteAllPayBack(memberNo);
+      accountBookDao.deleteAllAccountBook(memberNo);
+    }
+    System.out.println("월간데이터삭제");
+  }
+
 }

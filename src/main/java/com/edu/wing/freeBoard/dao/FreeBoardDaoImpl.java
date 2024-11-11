@@ -36,4 +36,19 @@ public class FreeBoardDaoImpl implements FreeBoardDao {
   public FreeBoardVo freeBoardSelectOne(int freeBoardNo) {
     return sqlSession.selectOne(NAMESPACE + "freeBoardSelectOne", freeBoardNo);
   }
+
+  @Override
+  public int addFreeBoard(FreeBoardVo freeBoardVo) {
+    return sqlSession.insert(NAMESPACE + "addFreeBoard", freeBoardVo);
+  }
+
+  @Override
+  public int updateFreeBoard(int freeBoardNo, String title, String content) {
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("freeBoardNo", freeBoardNo);
+    resultMap.put("title", title);
+    resultMap.put("content", content);
+
+    return sqlSession.update(NAMESPACE + "updateFreeBoard", resultMap);
+  }
 }

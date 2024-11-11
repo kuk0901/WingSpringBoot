@@ -24,8 +24,14 @@ public interface MemberService {
   void updateMemberInfo(MemberVo memberVo);
   void updateMemberQuitApply(MemberVo memberVo);
 
+  int getExpensePercentileByMonthlySalary(int memberNo);
+  int getExpensePercentileByYearlySalary(int memberNo);
+
   MemberVo findMemberAccount(Map<String, String> map);
   MemberVo findMemberPassword(Map<String, String> map);
 
   boolean changeMemberPasswordAndValidate(Map<String, String> map);
+
+  List<Integer> selectDeletedMemberNos();
+  void deleteInactiveMembers();
 }

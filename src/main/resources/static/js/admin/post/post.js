@@ -148,8 +148,8 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
     const postSearch = $(this).data("post-search");
 
     $.ajax( {
-      url: `/admin/api/cs/post/list/${postNo}/update`,
-      type: 'POST',
+      url: `/admin/cs/post/list/${postNo}/update`,
+      type: 'GET',
       data: {
         curPage: curPage,
         noticeBoardNo: noticeBoardNo,

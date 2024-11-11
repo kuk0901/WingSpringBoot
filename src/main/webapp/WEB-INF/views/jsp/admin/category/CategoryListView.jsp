@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CategoryListView</title>
   <link rel="stylesheet" href="/css/admin/category/adminCategory.css"></link>
-  <script defer src="/js/admin/category/category.js"></script>
+  <script defer type="module" src="/js/admin/category/category.js"></script>
 </head>
 <body>
 
@@ -43,12 +43,12 @@
         <c:choose>
           <c:when test="${not empty 'minusCategoryList'}">
             <c:forEach var="categoryVo" items="${minusCategoryList}">
-              <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">
+              <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}">
                 <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
                 <div id="minusValue" class="list--div text__center box__s">지출</div>
                 <div class="list--div box__l text__center bg__white">
-                  <button class="btn btn__generate btn__blue" onclick="moveModFunc(${categoryVo.categoryNo})">수정</button>
-                  <button class="btn btn__generate btn__red" onclick="moveDelFunc(${categoryVo.categoryNo})">삭제</button>
+                  <button class="btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">수정</button>
+                  <button class="btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">삭제</button>
                 </div>
               </div>
             </c:forEach>
@@ -75,12 +75,12 @@
         <c:choose>
           <c:when test="${not empty 'plusCategoryList'}">
             <c:forEach var="categoryVo" items="${plusCategoryList}">
-                <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">
+                <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}">
                   <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
                   <div id="plusValue" class="list--div text__center box__s">수입</div>
                   <div class="list--div box__l text__center bg__white">
-                    <button class="btn btn__generate btn__blue" onclick="moveModFunc(${categoryVo.categoryNo})">수정</button>
-                    <button class="btn btn__generate btn__red" onclick="moveDelFunc(${categoryVo.categoryNo})">삭제</button>
+                    <button class="btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">수정</button>
+                    <button class="btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">삭제</button>
                   </div>
                 </div>
             </c:forEach>

@@ -23,4 +23,9 @@ public class CustomErrorController implements ErrorController {
     return "jsp/error/500"; // 500 JSP 페이지로 이동
   }
 
+  @RequestMapping("/error/403") // 500 에러 처리
+  public String handle403() {
+    logger.warn("403 에러 발생");
+    return "jsp/error/403"; // 403 JSP 페이지로 이동
+  }
 }

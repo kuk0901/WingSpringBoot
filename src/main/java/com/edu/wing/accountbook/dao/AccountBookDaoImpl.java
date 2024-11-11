@@ -151,7 +151,20 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.selectList(NAMESPACE+"getCardDetailForMypage",params);
     }
 
+    @Override
+    public int softDeleteAccountBook(int accountBookNo) {
+        return sqlSession.update(NAMESPACE + "softDeleteAccountBook", accountBookNo);
+    }
 
+    @Override
+    public int softAllDeleteAccountBook(int accountBookNo) {
+        return sqlSession.update(NAMESPACE + "softAllDeleteAccountBook", accountBookNo);
+    }
+
+    @Override
+    public int deleteAllPayBack(int memberNo) {
+        return sqlSession.delete("com.edu.wing.payback.deleteAllPayBack", memberNo);
+    }
 
 
 }

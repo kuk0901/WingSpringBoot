@@ -453,3 +453,8 @@
 .h__m {
   height: 190px;
 }
+
+/* user mypage */
+#content .main-container .recommend-card-container .card-purchase .btn-container {
+  margin-right: 0;
+}

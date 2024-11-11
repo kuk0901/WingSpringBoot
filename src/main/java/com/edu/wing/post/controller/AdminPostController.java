@@ -63,7 +63,8 @@ public class AdminPostController {
   }
 
   @GetMapping("/list/add")
-  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo, @RequestParam String curPage, @RequestParam String postSearch, HttpSession httpSession) {
+  public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo
+          , @RequestParam String curPage, @RequestParam String postSearch, HttpSession httpSession) {
     log.info("{} - Retrieving @GetMapping postAdd", LOG_TITLE);
     log.info("@RequestMapping postAdd curPage: {}, postSearch: {}", curPage, postSearch);
 
@@ -72,12 +73,6 @@ public class AdminPostController {
     String formattedDate = currentDate.format(formatter);
 
     MemberVo member = (MemberVo) httpSession.getAttribute("member");
-
-    if (member == null) {
-      log.warn("Member is not found in session.");
-    } else {
-      log.info("Member found: {}", member);
-    }
 
     ModelAndView mav = new ModelAndView("jsp/admin/post/PostAddView");
     mav.addObject("currentDate", formattedDate);
@@ -112,6 +107,33 @@ public class AdminPostController {
     resultMap.put("postVo", postVo);
 
     return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/list/{postNo}/update")
+  public ResponseEntity<?> updatePost(@PathVariable int postNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String postSearch,
+                                      @RequestParam(defaultValue = "2") int noticeBoardNo) {
+    log.info(LOG_TITLE);
+    log.info("getGetForUpdate GET postNo: {}, curPage: {}, postSearch: {}", postNo, curPage, noticeBoardNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("postSearch", postSearch);
+    resultMap.put("noticeBoardNo", noticeBoardNo);
+
+    Map<String, Object> postVo = postService.postSelectOne(postNo);
+
+    if (postVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류가 발생하여 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요."); // 수정 실패에 대한 안내 메시지
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("postVo", postVo); // 수정 성공에 대한 안내 메시지
+
+    return ResponseEntity.ok().body(resultMap);
+
   }
 
 }

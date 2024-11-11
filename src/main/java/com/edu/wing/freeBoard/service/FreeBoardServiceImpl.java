@@ -38,4 +38,22 @@ public class FreeBoardServiceImpl implements FreeBoardService {
   public FreeBoardVo freeBoardSelectOne(int freeBoardNo) {
     return freeBoardDao.freeBoardSelectOne(freeBoardNo);
   }
+
+  @Override
+  public boolean addFreeBoard(String title, String content, String email, int noticeBoardNo, int memberNo) {
+    FreeBoardVo freeBoardVo = new FreeBoardVo();
+    freeBoardVo.setTitle(title);
+    freeBoardVo.setContent(content);
+    freeBoardVo.setEmail(email);
+    freeBoardVo.setNoticeBoardNo(noticeBoardNo);
+    freeBoardVo.setMemberNo(memberNo);
+
+    int result = freeBoardDao.addFreeBoard(freeBoardVo);
+    return result > 0;
+  }
+
+  @Override
+  public boolean updateFreeBoard(int freeBoardNo, String title, String content) {
+    return freeBoardDao.updateFreeBoard(freeBoardNo, title, content) > 0;
+  }
 }

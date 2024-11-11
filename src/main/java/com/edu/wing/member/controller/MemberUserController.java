@@ -1,5 +1,6 @@
 package com.edu.wing.member.controller;
 
+import com.edu.wing.card.service.CardService;
 import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.member.domain.MemberVo;
@@ -20,39 +21,54 @@ import java.util.Map;
 @RequestMapping("/member/user")
 @Controller
 public class MemberUserController {
-    private Logger log = LoggerFactory.getLogger(MemberUserController.class);
-    private final String logTitleMsg = "==MemberUserController==";
+  private Logger log = LoggerFactory.getLogger(MemberUserController.class);
+  private final String logTitleMsg = "==MemberUserController==";
 
-    @Autowired
-    private MemberService memberService;
-    @Autowired
-    private SellingCardService sellingCardService;
-    @Autowired
-    private CardBenefitService cardBenefitService;
-    // 마이페이지 화면 이동
-    @RequestMapping("/myPage")
-    public ModelAndView myPage(HttpSession session) {
-        log.info(logTitleMsg + " 마이페이지로 이동");
+  @Autowired
+  private MemberService memberService;
 
-        ModelAndView mav = new ModelAndView("jsp/member/user/UserMyPageView");
+  @Autowired
+  private SellingCardService sellingCardService;
 
-        MemberVo currentMember = (MemberVo) session.getAttribute("member");
+  @Autowired
+  private CardBenefitService cardBenefitService;
 
-        int memberNo = currentMember.getMemberNo();
-        MemberVo memberVo = memberService.getMyPageInfo(memberNo);
+  @Autowired
+  private CardService cardService;
 
+  // 마이페이지 화면 이동
+  @RequestMapping("/myPage")
+  public ModelAndView myPage(HttpSession session) {
+    log.info(logTitleMsg + " 마이페이지로 이동");
 
-        if ("Y".equals(memberVo.getProductPurchase())){
-            Map<String, Object> sellingCard = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
-            mav.addObject("sellingCard",sellingCard);
-            int cardNo = ((BigDecimal) sellingCard.get("CARDNO")).intValue();
-            List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
-            mav.addObject("benefits",benefits);
-        }
+    ModelAndView mav = new ModelAndView("jsp/member/user/UserMyPageView");
 
-        mav.addObject("memberVo",memberVo);
+    MemberVo currentMember = (MemberVo) session.getAttribute("member");
 
-        return mav;
+    int memberNo = currentMember.getMemberNo();
+    MemberVo memberVo = memberService.getMyPageInfo(memberNo);
+
+    if ("Y".equals(memberVo.getProductPurchase())){
+      Map<String, Object> sellingCard = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
+      mav.addObject("sellingCard",sellingCard);
+      int cardNo = ((BigDecimal) sellingCard.get("CARDNO")).intValue();
+      List<CardBenefitVo> cardBenefitVoList = cardBenefitService.cardBenefitSelectListOne(cardNo);
+      mav.addObject("cardBenefitVoList", cardBenefitVoList);
     }
+
+    mav.addObject("memberVo",memberVo);
+
+    Map<String, Object> recommendedCard = cardService.userRecommendCardSelect(memberNo);
+    log.info("recommendedCard:{}", recommendedCard);
+
+    if (!"No Recommendation".equals(recommendedCard.get("CARDNAME"))) {
+      mav.addObject("recommendedCard", recommendedCard);
+    }
+
+    mav.addObject("monthlySalaryPer", memberService.getExpensePercentileByMonthlySalary(memberNo));
+    mav.addObject("yearSalaryPer", memberService.getExpensePercentileByYearlySalary(memberNo));
+
+    return mav;
+  }
 
 }

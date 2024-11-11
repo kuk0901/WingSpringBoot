@@ -104,6 +104,16 @@ public class MemberDaoImpl implements MemberDao {
   }
 
   @Override
+  public int getExpensePercentileByMonthlySalary(int memberNo) {
+    return sqlSession.selectOne(namespace + "getExpensePercentileByMonthlySalary", memberNo);
+  }
+
+  @Override
+  public int getExpensePercentileByYearlySalary(int memberNo) {
+    return sqlSession.selectOne(namespace + "getExpensePercentileByYearlySalary", memberNo);
+  }
+
+  @Override
   public MemberVo findMemberAccount(Map<String, String> map) {
     return sqlSession.selectOne(namespace + "findMemberAccount", map);
   }
@@ -121,6 +131,11 @@ public class MemberDaoImpl implements MemberDao {
   @Override
   public MemberVo updateMemberPasswordCheck(Map<String, String> map) {
     return sqlSession.selectOne(namespace + "updateMemberPasswordCheck", map);
+  }
+
+  @Override
+  public List<Integer> selectDeletedMemberNos() {
+    return sqlSession.selectList(namespace + "selectDeletedMemberNos");
   }
 
 }

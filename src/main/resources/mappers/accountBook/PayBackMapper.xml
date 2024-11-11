@@ -44,4 +44,8 @@
     </insert>
     <!--위에 2는하드코딩해둠-->
 
+    <delete id="deleteAllPayBack" parameterType="int">
+        DELETE FROM PAYBACK WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
 </mapper>
