@@ -40,7 +40,7 @@
                 </where>
                 <![CDATA[
                 ORDER BY
-                    FB.CRE_DATE DESC
+                    FB.FREE_BOARD_NO DESC
             ) I
             WHERE ROWNUM <= #{end}
         )
@@ -55,4 +55,17 @@
         JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO
         WHERE FB.FREE_BOARD_NO = #{freeBoardNo}
     </select>
+    
+    <insert id="addFreeBoard" parameterType="map">
+        INSERT INTO FREE_BOARD (FREE_BOARD_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT)
+        VALUES (FREE_BOARD_NO_SEQ.NEXTVAL, #{noticeBoardNo}, #{memberNo}, #{title}, #{content})
+    </insert>
+
+    <update id="updateFreeBoard" parameterType="map">
+        UPDATE FREE_BOARD
+        SET TITLE = #{title},
+            CONTENT = #{content},
+            MOD_DATE = SYSDATE
+        WHERE FREE_BOARD_NO = #{freeBoardNo}
+    </update>
 </mapper>

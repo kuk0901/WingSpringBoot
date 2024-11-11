@@ -23,23 +23,6 @@ public class MemberApiInquiryController {
   @Autowired
   private InquiryService inquiryService;
 
-  @GetMapping("/list/{inquiryNo}")
-  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}", inquiryNo, curPage);
-
-
-    Map<String, Object> resultMap = inquiryService.inquirySelectOne(inquiryNo);
-
-    if (resultMap == null) {
-      return ResponseEntity.notFound().build();
-    }
-
-    resultMap.put("curPage", curPage);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
   @PostMapping("/list/add")
   public ResponseEntity<?> addInquiry(@RequestBody InquiryVo inquiryVo, HttpSession httpsSession) {
     log.info(LOG_TITLE);

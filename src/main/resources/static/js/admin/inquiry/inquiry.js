@@ -136,8 +136,8 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
     const no = $(this).data("no");
 
     $.ajax({
-      url: `/admin/api/cs/inquiry/update/${no}`,
-      type: 'POST',
+      url: `/admin/cs/inquiry/update/${no}`,
+      type: 'GET',
       success: function(res) {
         createUpdateView(res.inquiryVo);
       },
@@ -153,8 +153,8 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
     const no = $(this).data("no");
 
     $.ajax({
-      url: `/admin/api/cs/inquiry/add/${no}`,
-      type: 'POST',
+      url: `/admin/cs/inquiry/add/${no}`,
+      type: 'GET',
       success: function(res) {
         createAddView(res.inquiryVo);
       },

@@ -63,6 +63,33 @@ public class AdminPaymentMethodController {
     return ResponseEntity.ok().body(resultMap);
   }
 
+  @GetMapping("/countPaymentMethod/{paymentMethodNo}")
+  public ResponseEntity<?> getPaymentMethodCount(@PathVariable int paymentMethodNo) {
+    log.info(LOG_TITLE);
+    log.info("getPaymentMethodCount paymentMethodNo: {}", paymentMethodNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    if (paymentMethodNo == 3) {
+      resultMap.put("status", "success");
+      resultMap.put("msg", "해당 결제 수단은 수정이 불가능합니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+    
+    int totalCount = paymentMethodService.pmTotalCount(paymentMethodNo);
+
+    if (totalCount > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", totalCount);
+      resultMap.put("msg", "해당 결제 수단으로 작성된 가계부의 게시글이 " + totalCount + "개입니다. 해당 결제 수단을 수정할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
 
 
 }
