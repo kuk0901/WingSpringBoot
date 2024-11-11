@@ -16,4 +16,5 @@ public interface CardService {
   List<CardVo> userShowCardSelectList(int start, int end, String categoryName);
   int userShowCardSelectTotalCount(String categoryName);
   CardVo getCardByName(String cardName);
+  Map<String, Object> userRecommendCardSelect(int memberNo);
 }

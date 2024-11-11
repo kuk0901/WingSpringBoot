@@ -109,6 +109,14 @@ a {
   margin: 10px auto;
 }
 
+.text__primary {
+  color: #FFDE07FF;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--color-white);
+  margin: 5px;
+}
+
 /* btn */
 .btn {
   text-align: center;
@@ -192,6 +200,10 @@ a {
 .one-line {
   display: flex;
   align-items: center;
+}
+
+.non-one-line {
+  display: block;
 }
 
 /* nav */

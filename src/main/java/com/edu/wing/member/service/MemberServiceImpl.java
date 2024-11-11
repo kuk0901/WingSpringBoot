@@ -66,9 +66,6 @@ public class MemberServiceImpl implements MemberService {
     memberDao.adminSoftDeleteMember(memberVo);
   }
 
-
-
-
   @Override
   public MemberVo getAdminMypageInfo(int memberNo) {
     return memberDao.selectAdminMypageInfo(memberNo);
@@ -91,6 +88,16 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public void updateMemberQuitApply(MemberVo memberVo) {
     memberDao.updateMemberQuitApply(memberVo);
+  }
+
+  @Override
+  public int getExpensePercentileByMonthlySalary(int memberNo) {
+    return memberDao.getExpensePercentileByMonthlySalary(memberNo);
+  }
+
+  @Override
+  public int getExpensePercentileByYearlySalary(int memberNo) {
+    return memberDao.getExpensePercentileByYearlySalary(memberNo);
   }
 
   @Override
