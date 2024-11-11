@@ -275,7 +275,7 @@ function terminationPageHtml(data) {
 
   const benefitsHtml = benefits.map(benefit => `
     <div class="card-benefit">
-      <p>${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}</p>
+      <div class="card-benefit-info">${benefit.cardBenefitDetail} ${benefit.cardPercentage}% ${benefit.cardBenefitDivision}</div>
     </div>
   `).join('');
 
@@ -330,10 +330,12 @@ function terminationPageHtml(data) {
       <div class="benefit-container">
         <div class="list-item box_title">이런 <span class="underline">혜택</span>이 사라져요!</div>
         <!--   여기 안에 추가됨 카드 혜택 정보. map 사용     -->
-        <div class="list-item box__l" id="benefit-container">${benefitsHtml}</div>
+        <div class="list-item" id="benefit-container">${benefitsHtml}</div>
+        <div class="hidden-ui"></div>
       </div>
     </div>
   </main>
+  
   `;
 
   $("#content").html(terminationPageHTML);  // #card-container에 카드 영역 추가

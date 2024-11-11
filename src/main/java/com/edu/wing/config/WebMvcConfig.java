@@ -1,13 +1,18 @@
 package com.edu.wing.config;
 
+import com.edu.wing.auth.interceptor.AuthInterceptor;
 import com.edu.wing.util.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+  @Autowired
+  private AuthInterceptor authInterceptor;
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -34,4 +39,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .resourceChain(true)
         .addResolver(new PathResourceResolver());
   }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(authInterceptor)
+        .addPathPatterns("/member/**", "/admin/**")
+        .excludePathPatterns("/", "/auth/**", "/api/auth/**", "/css/**", "/js/**", "/images/**");
+  }
+
 }
