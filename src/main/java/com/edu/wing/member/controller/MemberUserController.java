@@ -48,13 +48,12 @@ public class MemberUserController {
     int memberNo = currentMember.getMemberNo();
     MemberVo memberVo = memberService.getMyPageInfo(memberNo);
 
-
     if ("Y".equals(memberVo.getProductPurchase())){
       Map<String, Object> sellingCard = sellingCardService.sellingCardSelectOneForUserPage(memberNo);
       mav.addObject("sellingCard",sellingCard);
       int cardNo = ((BigDecimal) sellingCard.get("CARDNO")).intValue();
-      List<CardBenefitVo> benefits = cardBenefitService.cardBenefitSelectListOne(cardNo);
-      mav.addObject("benefits",benefits);
+      List<CardBenefitVo> cardBenefitVoList = cardBenefitService.cardBenefitSelectListOne(cardNo);
+      mav.addObject("cardBenefitVoList", cardBenefitVoList);
     }
 
     mav.addObject("memberVo",memberVo);
