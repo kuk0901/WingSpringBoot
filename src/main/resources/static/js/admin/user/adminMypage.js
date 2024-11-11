@@ -164,8 +164,8 @@ $form.on("submit", function(e) {
         contentType: "application/json",
         dataType: "json",
         success: function(res) {
-
-            showAlertMsg(res.alertMsg)
+            window.location.href = `./${formData.memberNo}?message=${res.alertMsg}`;
+            /*showAlertMsg(res.alertMsg)*/
         },
         error: function(xhr, status, error) {
             let msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";

@@ -5,10 +5,10 @@ let memberNo;
 const today = new Date();
 let currentYear = today.getFullYear(); // 현재 연도
 let currentMonth = today.getMonth() + 1; // 현재 월
-
+let currentLimit = 5;
 $(document).ready(function() {
   memberNo = $('#memberNo').val(); // hidden input에서 memberNo 가져오기
-  let limit = 10;
+  currentLimit = 5;
   // 초기 설정
   // 현재 날짜를 기준으로 연도와 월 설정
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
   /*    let startDate = `${currentYear}-${currentMonth < 10 ? '0' : ''}${currentMonth}-01`; // YYYY-MM-DD 형식
       let endDate = new Date(currentYear, currentMonth, 1).toISOString().split('T')[0];*/ // 해당 월의 마지막 날
 
-  fetchAccountBooks(memberNo, startDate, endDate,limit);
+  fetchAccountBooks(memberNo, startDate, endDate,currentLimit);
   updateCurrentMonthDisplay(currentYear,currentMonth);
   loadCategories(); // 초기 카테고리 목록 로드
   loadPaymentMethods()//결제수단 목록 로드
@@ -97,7 +97,6 @@ $(document).ready(function() {
       }),
       success: function(response) {
         alert('가계부가 성공적으로 추가되었습니다!');
-        window.location.reload();
         $('#accountBookForm')[0].reset(); // 폼 초기화
       },
       error: function(xhr) {
@@ -114,7 +113,7 @@ function getCategoryNo(incomeExpense) {
   return $('#categorySelect').val(); // 예시로 선택된 값을 반환
 }
 
-let currentLimit = 5; // 초반디폴트  항목 수
+// 초반디폴트  항목 수
 
 // 현재 연도와 월 표시를 업데이트하는 함수
 function updateCurrentMonthDisplay(year, month) {
@@ -147,7 +146,7 @@ function getMonthlyAccountBooks(year, month, memberNo) {
 }
 
 // 가계부함수
-function fetchAccountBooks(memberNo, startDate, endDate,limit) {
+function fetchAccountBooks(memberNo, startDate, endDate,currentLimit) {
 
   $.ajax({
     url: '/member/api/accountBook/list/date',
@@ -193,11 +192,13 @@ function changeMonth(offset) {
   /*  const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
     const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];*/
   const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
-
+  console.log(startDate, endDate);
   fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
   // 월 표시 업데이트 및 데이터 재로드
   updateCurrentMonthDisplay(currentYear, currentMonth);
+  calculateMonthlyTotal(memberNo, startDate, endDate);
   getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
+  fetchMonthlyPayback( startDate, endDate,memberNo)
 
 }
 
@@ -622,12 +623,12 @@ function formatDate(dateString) {
   return date.toISOString().substring(0, 10); // YYYY-MM-DD 형식으로 변환
 }
 
-//가계부detail에서삭제
+/*//가계부detail에서삭제
 function deleteAccountBook(accountBookNo) {
   if (confirm("정말로 이 가계부 항목을 삭제하시겠습니까?")) {
     $.ajax({
       url: `/member/api/accountBook/${accountBookNo}`, // DELETE 요청을 보낼 URL
-      type: 'DELETE',
+      type: 'PATCH',
       success: function() {
         alert("가계부 항목이 삭제되었습니다.");
         // 목록 페이지로 리다이렉트 또는 삭제 후 UI 업데이트
@@ -639,7 +640,7 @@ function deleteAccountBook(accountBookNo) {
       }
     });
   }
-}
+}*/
 
 //가계부detail에서수정
 function editAccountBook(accountBookNo,memberNo) {
@@ -698,7 +699,7 @@ function getStartAndEndDates(year, month) {
   const startDate = `${year}-${month < 10 ? '0' + month : month}-01`;
 
   // 각 월의 마지막 날을 하드코딩
-  const lastDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]; // 인덱스 0은 사용하지 않음 (1월부터 12월까지)
+  const lastDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,31]; // 인덱스 0은 사용하지 않음 (1월부터 12월까지)
 
   let endDate;
   if (month === 2) {
@@ -854,7 +855,7 @@ $(document).on("click", "#deleteBtn", function(e) {
   if (confirm("정말로 이 가계부 항목을 삭제하시겠습니까?")) {
     $.ajax({
       url: `/member/api/accountBook/${accountBookNo}`, // DELETE 요청을 보낼 URL
-      type: 'DELETE',
+      type: 'PATCH',
       success: function() {
         alert("가계부 항목이 삭제되었습니다.");
         // 목록 페이지로 리다이렉트 또는 삭제 후 UI 업데이트

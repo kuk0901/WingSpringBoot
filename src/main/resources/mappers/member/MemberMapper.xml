@@ -112,7 +112,7 @@
         UPDATE MEMBER
         SET EMAIL = #{email},
             USER_NAME = #{userName},
-            PWD = #{password},
+            PWD = #{pwd},
             PHONE = #{phone}
         WHERE MEMBER_NO = #{memberNo}
     </update>
@@ -139,7 +139,7 @@
         SET
         EMAIL = #{email},
         USER_NAME = #{userName},
-        PWD = #{password},
+        PWD = #{pwd},
         PHONE = #{phone},
         MONTH_SALARY = #{monthlySalary},
         YEARLY_SALARY = #{yearlySalary}
@@ -290,7 +290,7 @@
         SELECT MEMBER_NO, EMAIL
         FROM MEMBER
         WHERE PHONE = #{phone}
-        AND PWD = #{password}
+        AND PWD = #{pwd}
     </select>
 
     <!-- 비밀번호 찾기 -->
@@ -303,7 +303,7 @@
 
     <update id="updateMemberPassword" parameterType="map">
         UPDATE MEMBER
-        SET PWD = #{password}
+        SET PWD = #{pwd}
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
@@ -312,6 +312,6 @@
         FROM MEMBER
         WHERE USER_NAME = #{userName}
         AND EMAIL = #{email}
-        AND PWD = #{password}
+        AND PWD = #{pwd}
     </select>
 </mapper>
