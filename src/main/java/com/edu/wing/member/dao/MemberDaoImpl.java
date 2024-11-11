@@ -133,4 +133,9 @@ public class MemberDaoImpl implements MemberDao {
     return sqlSession.selectOne(namespace + "updateMemberPasswordCheck", map);
   }
 
+  @Override
+  public List<Integer> selectDeletedMemberNos() {
+    return sqlSession.selectList(namespace + "selectDeletedMemberNos");
+  }
+
 }

@@ -161,5 +161,10 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.update(NAMESPACE + "softAllDeleteAccountBook", accountBookNo);
     }
 
+    @Override
+    public int deleteAllPayBack(int memberNo) {
+        return sqlSession.delete("com.edu.wing.payback.deleteAllPayBack", memberNo);
+    }
+
 
 }

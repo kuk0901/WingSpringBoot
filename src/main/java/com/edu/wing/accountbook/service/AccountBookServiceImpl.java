@@ -89,8 +89,21 @@ public class AccountBookServiceImpl implements AccountBookService {
 
       // SELLING_CARD가 존재할 때만 PAYBACK을 삽입하도록 조건 추가
       boolean hasSellingCard = sellingCardDao.checkSellingCardExists(sellingCardCheckParams);
-      int plusCategoryNo = Integer.parseInt((String) params.get("plusCategoryNo"));
-      int paymentMethodNo = Integer.parseInt((String) params.get("paymentMethodNo"));
+      // 기본값 설정
+      int minusCategoryNo =1;
+      int plusCategoryNo = 1; // 기본값
+      int paymentMethodNo = 1; // 기본값
+
+      // plusCategoryNo가 String 타입인 경우 int로 변환
+      if (params.get("plusCategoryNo") != null && params.get("plusCategoryNo") instanceof String) {
+        plusCategoryNo = Integer.parseInt((String) params.get("plusCategoryNo"));
+      }
+
+      // paymentMethodNo가 String 타입인 경우 int로 변환
+      if (params.get("paymentMethodNo") != null && params.get("paymentMethodNo") instanceof String) {
+        paymentMethodNo = Integer.parseInt((String) params.get("paymentMethodNo"));
+      }
+
       if (hasSellingCard  && plusCategoryNo == 1 && paymentMethodNo== 2) {
         Map<String, Object> paybackData = new HashMap<>();
         paybackData.put("accountBookNo", params.get("accountBookNo"));
@@ -198,6 +211,11 @@ public class AccountBookServiceImpl implements AccountBookService {
   @Override
   public int softAllDeleteAccountBook(int accountBookNo) {
     return accountBookDao.softAllDeleteAccountBook(accountBookNo);
+  }
+
+  @Override
+  public int deleteAllPayBack(int memberNo) {
+    return accountBookDao.deleteAllPayBack(memberNo);
   }
 
 
