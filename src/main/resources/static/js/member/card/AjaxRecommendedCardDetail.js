@@ -248,10 +248,10 @@ function createDetailView(data) {
       memberNo: mn,
       paymentMethodNo: 3,
       content: "WING_ 카드 구매",
-      paymentAmount: "12,000",
+      paymentAmount: 12000,
     }
 
-    $.ajax("", {
+    $.ajax({
       url: `/member/api/sellingCard/purchase/recommend`,
       contentType: 'application/json',
       type: 'POST',

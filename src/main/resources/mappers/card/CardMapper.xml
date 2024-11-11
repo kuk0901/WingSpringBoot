@@ -171,7 +171,7 @@
                         ROW_NUMBER() OVER (PARTITION BY TRUNC(CRE_DATE, 'MM') ORDER BY COUNT(*) DESC) AS rn
                  FROM ACCOUNT_BOOK
                  WHERE MEMBER_NO = #{memberNo}
-                   AND CRE_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -2)
+                   AND CRE_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -3)
                    AND CRE_DATE < TRUNC(SYSDATE, 'MM')
                  GROUP BY TRUNC(CRE_DATE, 'MM'), MINUS_CATEGORY_NO
              ),
@@ -188,18 +188,18 @@
                  FROM top_categories
              ),
              recommended_card AS (
-                 SELECT C.CARD_NO, C.CARD_NAME, MC.CATEGORY_NAME  -- CATEGORY_NAME을 MINUS_CATEGORY 테이블에서 가져오기 위해 조인합니다.
+                 SELECT C.CARD_NO, C.CARD_NAME, MC.CATEGORY_NAME
                  FROM CARD C
                           JOIN recommended_category RC ON C.CATEGORY_NO = RC.recommended_category
                           CROSS JOIN member_check MC
-                          JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO  -- MINUS_CATEGORY와 조인하여 CATEGORY_NAME을 가져옵니다.
+                          JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
                  WHERE RC.recommended_category != 0
                    AND MC.is_eligible = 1
              )
         SELECT RC.recommended_category AS categoryNo,
                COALESCE(RCARD.CARD_NO, 0) AS cardNo,
                COALESCE(RCARD.CARD_NAME, 'No Recommendation') AS cardName,
-               COALESCE(RCARD.CATEGORY_NAME, 'Unknown Category') AS categoryName  -- CATEGORY_NAME 반환
+               COALESCE(RCARD.CATEGORY_NAME, 'Unknown Category') AS categoryName
         FROM recommended_category RC
                  LEFT JOIN recommended_card RCARD ON 1=1
         ]]>

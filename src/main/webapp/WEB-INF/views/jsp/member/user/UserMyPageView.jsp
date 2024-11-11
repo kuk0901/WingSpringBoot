@@ -2,13 +2,16 @@
          pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/views/jsp/common/common.jsp" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>마이페이지 </title>
-  <script defer type="module" src="/js/member/user/userMyPage.js"></script>
+  <link rel="stylesheet" href="/css/member/card/memberProduct.css">
   <link rel="stylesheet" href="/css/member/user/userMyPage.css">
+  <script defer type="module" src="/js/member/user/userMyPage.js"></script>
+  <script defer type="module" src="/js/member/card/AjaxRecommendedCardDetail.js"></script>
 </head>
 
 <body>
@@ -215,25 +218,44 @@
       <c:otherwise>
         <c:if test="${recommendedCard.CARDNO > 0}">
           <div class="btn__blue recommend-card-container one-line">
-            <div class="card-info">
-              <div class="card-info--text card-info--title">3개월 연속으로 ${recommendedCard.CATEGORYNAME}비에 가장 많이 소비했습니다!</div>
-              <div class="card-info--text">
+            <div class="reco-card-info">
+              <div class="reco-card-info--text">
                 <c:choose>
-                  <c:when test="${fn:endsWith(recommendedCard.CATEGORYNAME, '비')}">
-                    <div class="card-info--guide">3개월 연속으로 ${recommendedCard.CATEGORYNAME}에 가장 많이 소비했습니다!</div>
+                  <c:when test="${fn:endsWith(fn:trim(recommendedCard.CATEGORYNAME), '비')}">
+                    <div class="reco-card-info--title">3개월 연속으로 ${recommendedCard.CATEGORYNAME}에 가장 많이 소비했습니다!</div>
                   </c:when>
                   <c:otherwise>
-                    <div class="card-info--guide">3개월 연속으로 ${recommendedCard.CATEGORYNAME} 비에 가장 많이 소비했습니다!</div>
+                    <div class="reco-card-info--title">3개월 연속으로 ${recommendedCard.CATEGORYNAME}비에 가장 많이 소비했습니다!</div>
                   </c:otherwise>
                 </c:choose>
-                <div class="card-info--text card-info--benefits">
-                    <%--  span  foreach    --%> 등 다양한 혜택을 누릴 수 있습니다!
+                <div class="reco-card-info--text reco-card-info--guide">
+                  ${recommendedCard.CARDNAME} 카드를 신청해보시는 건 어떠신가요?
+                </div>
+                <div class="reco-card-info--text reco-card-info--benefits">
+                  <c:forEach var="cardBenefit" items="${recommendedCard.cardBenefitList}" varStatus="status">
+                    <c:set var="benefitName" value="${fn:replace(cardBenefit.cardBenefitDivision, '할인', '')}" />
+                    <c:choose>
+                      <c:when test="${status.index == 0}">
+                        ${benefitName} ${cardBenefit.cardPercentage}%와 더불어
+                      </c:when>
+                      <c:when test="${status.index == 1}">
+                        ${benefitName} ${cardBenefit.cardPercentage}%,
+                      </c:when>
+                      <c:when test="${status.last}">
+                        ${benefitName} ${cardBenefit.cardPercentage}%
+                      </c:when>
+                      <c:otherwise>
+                        ${benefitName} ${cardBenefit.cardPercentage}%,
+                      </c:otherwise>
+                    </c:choose>
+                  </c:forEach>
+                  할인 등 다양한 혜택을 누릴 수 있습니다!
                 </div>
               </div>
-              <div>회원님의 "슬기로운 소비 생활"을 위해 지금 당장 카드를 신청해 보세요!</div>
+              <div class="reco-card-info--comment">회원님의 "슬기로운 소비 생활"을 위해 지금 당장 카드를 신청해 보세요!</div>
             </div>
-            <div class="card-purchase">
-              <div class="card--name">${recommendedCard.CARDNAME}</div>
+            <div class="card-purchase text__center">
+              <div class="card--name">${recommendedCard.CARDNAME} 카드</div>
               <div class="btn-container">
                 <button id="cardDetailBtn" class="btn btn__generate" data-card-no="${recommendedCard.CARDNO}">신청하러 가기</button>
               </div>

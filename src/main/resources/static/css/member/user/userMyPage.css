@@ -1,10 +1,14 @@
-.main-container {
+#content .main-container {
   width: 98%;
   margin: auto;
 }
 
-/*정보수정컨테이너ㄴ*/
-.detail_title_container {
+#content .main-container .user-info-container {
+  justify-content: flex-start;
+}
+
+/* 정보수정컨테이너 */
+#content .main-container .detail_title_container {
   background-color: #e0e0e0;
   color: #333;
   padding: 15px;
@@ -13,48 +17,48 @@
   margin: 10px auto auto;
   display: flex;                  /* Flexbox 활성화 */
   align-items: center;           /* 수직 중앙 정렬 */
-
 }
-.update_container{
+
+#content .main-container .update_container {
   background-color: white;
   height: 420px;
   width: 98%;
   margin: auto;
 }
 
-.detail_first_second_wrapper {
+#content .main-container .detail_first_second_wrapper {
   display: flex; /* Flexbox 활성화 */
   justify-content: center;
 }
 
-.detail_first_container,
-.detail_second_container {
+#content .main-container .detail_first_container,
+#content .main-container .detail_second_container {
   margin-top: 20px;
   width: 48%; /* 두 컨테이너의 너비 설정 */
   box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
 }
 
-.detail_first_container div,
-.detail_second_container div {
+#content .main-container .detail_first_container div,
+#content .main-container .detail_second_container div {
   margin-bottom: 10px; /* 각 입력 필드 간 여백 추가 */
 }
 
-.detail_container {
+#content .main-container .detail_container {
   display: flex; /* Flexbox 활성화 */
   flex-direction: column; /* 세로 방향으로 정렬 */
 }
 
-.detail_container div {
+#content .main-container .detail_container div {
   display: flex; /* Flexbox 활성화 */
   align-items: center; /* 수직 정렬 */
 }
 
-.detail_container .label-container label {
+#content .main-container .detail_container .label-container label {
   width: 120px; /* 레이블의 고정 너비 */
   font-weight: bold; /* 레이블 텍스트 두껍게 */
 }
 
-.detail_container .input-container input {
+#content .main-container .detail_container .input-container input {
   flex-grow: 1; /* 입력 필드가 가능한 공간을 모두 차지하게 함 */
   padding: 10px; /* 입력 필드 내부 여백 */
   border: 1px solid #ccc; /* 테두리 스타일 */
@@ -63,12 +67,12 @@
   min-width: 300px; /* 최소 너비 설정 */
 }
 
-.detail_container .input-container span {
+#content .main-container .detail_container .input-container span {
   margin-left: 10px;
 }
 
 /*버튼*/
-.two-btn-container {
+#content .main-container .two-btn-container {
   height: 50px;
   width: 98%;
   display: flex; /* Flexbox 활성화 */
@@ -77,246 +81,245 @@
   margin: 30px auto 60px;
 }
 
-#quitMemberButton {
+#content .main-container #quitMemberButton {
   position: absolute;
   right: 70px;
 }
 
 /*여기서부턴 카드컨테이너*/
-.card-container{
-background-color: white;
-height: 200px;
-width: 98%;
-margin: auto;
+#content .main-container .card-container {
+  background-color: white;
+  height: 200px;
+  width: 98%;
+  margin: auto;
 }
 
-.card-title {
-background-color: #f0f0f0; /* 회색 배경 */
-padding: 10px;
+#content .main-container .card-title {
+  background-color: #f0f0f0; /* 회색 배경 */
+  padding: 10px;
 }
 
-.card-header {
-display: flex; /* Flexbox 사용 */
-justify-content: space-between; /* 좌우 분할 */
+#content .main-container .card-header {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-between; /* 좌우 분할 */
 }
 
-.card-info {
-flex: 1; /* 각 div 요소가 같은 크기를 가짐 */
-text-align: center; /* 가운데 정렬 */
-padding: 10px; /* 추가적인 여백 */
-border: 1px solid black; /*임시*/
+#content .main-container .card-info {
+  flex: 1; /* 각 div 요소가 같은 크기를 가짐 */
+  text-align: center; /* 가운데 정렬 */
+  padding: 10px; /* 추가적인 여백 */
+  border: 1px solid black; /*임시*/
 }
 
 /* 카드 헤더 스타일 */
-.card-header {
-display: flex; /* 플렉스 박스 사용 */
-justify-content: space-around; /* 요소들 사이에 여백 */
-padding: 10px; /* 패딩 */
-text-align: center;
+#content .main-container .card-header {
+  display: flex; /* 플렉스 박스 사용 */
+  justify-content: space-around; /* 요소들 사이에 여백 */
+  padding: 10px; /* 패딩 */
+  text-align: center;
 }
 
-.card-header .header-item.box__s {
-width: 200px;
+#content .main-container .card-header .header-item.box__s {
+  width: 200px;
 }
 
-.card-header .header-item.box__m {
-width: 300px;
+#content .main-container .card-header .header-item.box__m {
+  width: 300px;
 }
 
-.card-header .header-item.box__l {
-width: 400px;
+#content .main-container .card-header .header-item.box__l {
+  width: 400px;
 }
 
 /* 카드 정보 스타일 */
-.card-info {
-flex: 1; /* 균등 분배 */
-text-align: center; /* 중앙 정렬 */
+#content .main-container .card-info {
+  flex: 1; /* 균등 분배 */
+  text-align: center; /* 중앙 정렬 */
 }
 
 /* 버튼 컨테이너 스타일 */
-#button-container {
-display: flex; /* 플렉스 박스 사용 */
-justify-content: center; /* 중앙 정렬 */
-flex-direction: column;
-gap: 10px;
+#content .main-container #button-container {
+  display: flex; /* 플렉스 박스 사용 */
+  justify-content: center; /* 중앙 정렬 */
+  flex-direction: column;
+  gap: 10px;
 }
 
-.detail_second_container input {
-margin-left: 10px;
-text-align: right;
+#content .main-container .detail_second_container input {
+  margin-left: 10px;
+  text-align: right;
 }
 
 /* 카드 내용 스타일 */
-.list-container {
-display: flex;
-align-items: center; /* 중앙 정렬 */
+#content .main-container .list-container {
+  display: flex;
+  align-items: center; /* 중앙 정렬 */
 }
 
-.list-container.list-content.one-line {
-justify-content: space-around;
-text-align: center;
+#content .main-container .list-container.list-content.one-line {
+  justify-content: space-around;
+  text-align: center;
 }
 
 /* 리스트 아이템 스타일 */
-.list--div {
-text-align: center; /* 중앙 정렬 */
-padding: 10px; /* 패딩 */
+#content .main-container .list--div {
+  text-align: center; /* 중앙 정렬 */
+  padding: 10px; /* 패딩 */
 }
 
-.card-benefit{
-margin-top: 10px;
+#content .main-container .card-benefit{
+  margin-top: 10px;
 }
 
-.list-item.box__s{
-text-align: center;
-display: block;
+#content .main-container .list-item.box__s{
+  text-align: center;
+  display: block;
 }
 
-.img-container{
-display: block;
-margin-right: 50px;
-margin-left: 50px;
+#content .main-container .img-container{
+  display: block;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
-.card--img {
-width: 120px;
-height: 100px;
+#content .main-container .card--img {
+  width: 120px;
+  height: 100px;
 }
 
-.list-item.box__date {
-font-weight: bold;
+#content .main-container .list-item.box__date {
+  font-weight: bold;
 }
 
-.list-item.box__no {
-margin-left: 100px;
-font-weight: bold;
+#content .main-container .list-item.box__no {
+  margin-left: 100px;
+  font-weight: bold;
 }
 
-.list-container .list-item.box__s {
-width: 200px;
+#content .main-container .list-container .list-item.box__s {
+  width: 200px;
 }
 
-.list-container .list-item.box__m {
-width: 300px;
+#content .main-container .list-container .list-item.box__m {
+  width: 300px;
 }
 
-.list-container .list-item.box__l {
-width: 400px;
+#content .main-container .list-container .list-item.box__l {
+  width: 400px;
 }
 
-.list-container .list-item .btn-container {
-justify-content: center;
+#content .main-container .list-container .list-item .btn-container {
+  justify-content: center;
 }
 
-.list-container .list-item #button-container.btn-container .btn--vertical {
-width: 100px;
+#content .main-container .list-container .list-item #button-container.btn-container .btn--vertical {
+  width: 100px;
 }
 
 
 /*버튼*/
-.two-btn-container {
-height: 50px;
-width: 98%;
-display: flex; /* Flexbox 활성화 */
-align-items: center; /* 자식 요소를 수직 중앙 정렬 */
-justify-content: center;
+#content .main-container .two-btn-container {
+  height: 50px;
+  width: 98%;
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 자식 요소를 수직 중앙 정렬 */
+  justify-content: center;
 }
 
-#quitMemberButton {
-position: absolute;
-right: 70px;
+#content .main-container #quitMemberButton {
+  position: absolute;
+  right: 70px;
 }
 
 /* 여기부턴 삭제페이지 영역 */
-.card--delete--img {
-width: 200px;
-height: 200px;
+#content .main-container .card--delete--img {
+  width: 200px;
+  height: 200px;
 }
 
-.img-delete-container {
-display: block;
+#content .main-container .img-delete-container {
+  display: block;
 }
 
-.card-delete-container {
+#content .main-container .card-delete-container {
 height: 236px;
 width: 98%;
 margin: 40px auto;
 }
 
-.termination-input textarea {
-resize: none; /* 텍스트 영역 크기 조절 비활성화 (필요에 따라 조정) */
-padding: 10px; /* 텍스트 영역 안쪽 여백 */
-color: #000000; /* 텍스트 색상 (필요에 따라 조정) */
-background-color: white;
-width: 98%;
-height: 200px;
-border: none;
-outline: none;
+#content .main-container .termination-input textarea {
+  resize: none; /* 텍스트 영역 크기 조절 비활성화 (필요에 따라 조정) */
+  padding: 10px; /* 텍스트 영역 안쪽 여백 */
+  color: #000000; /* 텍스트 색상 (필요에 따라 조정) */
+  background-color: white;
+  width: 98%;
+  height: 200px;
+  border: none;
+  outline: none;
 }
 
-.benefit-container {
-text-align: center;
-color:white;
-background-color: var(--color-bg);
+#content .main-container .benefit-container {
+  text-align: center;
+  color:white;
+  background-color: var(--color-bg);
 }
 
-.benefit-container .list-item .card-benefit p {
-font-size: 18px;
-text-align: center;
-color:white;
+#content .main-container .benefit-container .list-item .card-benefit p {
+  font-size: 18px;
+  text-align: center;
+  color:white;
 }
 
-.box_title {
-font-size: 25px;
-font-weight: bold;
-margin-bottom: 20px;
+#content .main-container .box_title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.underline {
-text-decoration: underline; /* 밑줄 추가 */
+#content .main-container .underline {
+  text-decoration: underline; /* 밑줄 추가 */
 }
 
-.title-containerSecond {
-width: 100%;
-display: flex;
+#content .main-container .title-containerSecond {
+  width: 100%;
+  display: flex;
 }
 
-#backButton {
-position: absolute;
-right: 70px;
+#content .main-container #backButton {
+  position: absolute;
+  right: 70px;
 }
 
-#quitApplyNotice {
-position: absolute;
-top: 20px;
-right: 20px;
-background-color: yellow;
-padding: 10px;
-border: 1px solid #ccc;
-/* 초기에는 숨김 처리 */
+#content .main-container #quitApplyNotice {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: yellow;
+  padding: 10px;
+  border: 1px solid #ccc;
 }
 
-.detail_container .label-container .box__xs {
+#content .main-container .detail_container .label-container .box__xs {
   display: inline-block;
   width: 50px;
 }
 
-.detail_container .label-container .box__s {
+#content .main-container .detail_container .label-container .box__s {
   display: inline-block;
   min-width: 100px;
 }
 
-.detail_container .input-container .box__m {
+#content .main-container .detail_container .input-container .box__m {
   display: inline-block;
   min-width: 200px;
 }
 
-.text-right {
+#content .main-container .text-right {
   text-align: right;
 }
-/*
-여기부턴 detailcss*/
-.entry-form {
+
+/* 여기부턴 detail css */
+#content .main-container .entry-form {
   width: 90%;
   margin: auto;
   height: 40px;
@@ -324,37 +327,37 @@ border: 1px solid #ccc;
   gap: 10px;
 }
 
-.entry-form .entry-search-form {
-gap: 20px;
+#content .main-container .entry-form .entry-search-form {
+  gap: 20px;
 }
 
-.entry-form .entry-search-form .search-container {
-gap: 10px;
+#content .main-container .entry-form .entry-search-form .search-container {
+  gap: 10px;
 }
 
-#categorySelect {
+#content .main-container #categorySelect {
   height: 30px;
   width: 100px;
   font-size: 18px;
 }
 
-.category-label {
+#content .main-container .category-label {
   font-size: 18px;        /* 글자 크기 */
   color: #fff;
   font-weight: bold;
 }
 
-#startDate {
+#content .main-container #startDate {
   height: 30px;
   font-size: 18px;
 }
 
-#searchButton,
-#returnBtn {
+#content .main-container #searchButton,
+#content .main-container #returnBtn {
   font-size: 17px;
 }
 
-.payback-income {
+#content .main-container .payback-income {
   display: flex;
   justify-content: center; /* 자식 요소를 가로로 중앙 정렬 */
   align-items: center;
@@ -362,7 +365,8 @@ gap: 10px;
   border-radius: 10px;
   margin-bottom: 35px;
 }
-.payback-income span {
+
+#content .main-container .payback-income span {
   background-color: var(--color-white);
   font-size: 18px;
   min-height: 40px;
@@ -373,13 +377,13 @@ gap: 10px;
   padding: 10px;
 }
 
-.detail-payback-container {
+#content .main-container .detail-payback-container {
   background-color: white;
   margin: auto;
   width: 90%;
 }
 
-.detail-payback-title {
+#content .main-container .detail-payback-title {
   background-color: #f0f0f0; /* 회색 배경 */
   padding: 10px;
   height: 50px;
@@ -389,7 +393,7 @@ gap: 10px;
   font-size: 18px;
 }
 
-.info_head {
+#content .main-container .info_head {
   background-color: var(--color-white);
   color: var(--color-black);
   padding: 10px;
@@ -399,14 +403,14 @@ gap: 10px;
   justify-content: center;
 }
 
-.entry-category span {
+#content .main-container .entry-category span {
   flex: 1;
   padding: 0 10px;
   text-align: center;
   font-size: 18px;
 }
 
-.entry-info {
+#content .main-container .entry-info {
   padding: 10px;
   display: flex;
   width: 90%;
@@ -415,7 +419,7 @@ gap: 10px;
   justify-content: center;
 }
 
-.entry-info span {
+#content .main-container .entry-info span {
   padding: 0 10px;
   flex: 1;
   text-align: center;
@@ -424,17 +428,59 @@ gap: 10px;
   align-items: center;
 }
 
-.user-info-container.user-percentage-container {
+/* 백분율 */
+#content .main-container .user-info-container.user-percentage-container {
   display: block;
 }
 
-.user-info-container .percentage-container {
+#content .main-container .user-info-container .percentage-container {
   display: block;
   margin: 35px auto;
 }
 
-.user-info-container .percentage-container .percentage {
+#content .main-container .user-info-container .percentage-container .percentage {
   padding: 20px;
   font-size: 17px;
   border-radius: 15px;
+}
+
+/* 추천 카드 */
+.main-container .recommend-card-container {
+  padding: 30px 20px;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+
+.main-container .recommend-card-container .reco-card-info {
+  width: 70%;
+  font-size: 18px;
+  margin-left: 30px;
+}
+
+.main-container .recommend-card-container .card-purchase {
+  width: 30%;
+  font-size: 18px;
+}
+
+.main-container .recommend-card-container .reco-card-info .reco-card-info--title,
+.main-container .recommend-card-container .reco-card-info .reco-card-info--comment,
+.main-container .recommend-card-container .card-purchase .card--name {
+  margin: 20px 0;
+}
+
+.main-container .recommend-card-container .reco-card-info .reco-card-info--guide,
+.main-container .recommend-card-container .reco-card-info .reco-card-info--benefits {
+}
+
+.main-container .recommend-card-container .card-purchase .btn-container .btn {
+  font-size: 17px;
+}
+
+#content .main-container .summary-info .info-container .card-info {
+  padding: 0;
+  width: 70px;
+  margin: 5px;
+  text-align: left;
+  border: none;
+  flex: none;
 }
