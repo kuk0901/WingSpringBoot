@@ -38,4 +38,7 @@ public interface MemberDao {
 
   void updateMemberPassword(Map<String, String> map);
   MemberVo updateMemberPasswordCheck(Map<String, String> map);
+
+  List<Integer> selectDeletedMemberNos();
+
 }

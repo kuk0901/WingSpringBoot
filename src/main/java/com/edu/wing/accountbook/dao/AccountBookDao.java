@@ -55,4 +55,6 @@ public interface AccountBookDao {
     List<AccountBookVo> getCardDetailForMypage(int memberNo, Integer categoryNo, LocalDate startDate);
     int softDeleteAccountBook(int accountBookNo);
     int softAllDeleteAccountBook(int accountBookNo);
+
+    int deleteAllPayBack(int memberNo);
 }

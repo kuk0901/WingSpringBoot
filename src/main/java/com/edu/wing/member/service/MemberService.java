@@ -31,4 +31,7 @@ public interface MemberService {
   MemberVo findMemberPassword(Map<String, String> map);
 
   boolean changeMemberPasswordAndValidate(Map<String, String> map);
+
+  List<Integer> selectDeletedMemberNos();
+  void deleteInactiveMembers();
 }

@@ -81,7 +81,9 @@
       </div>
     </main>
     <div id="pagingContainer">
-      <jsp:include page="/WEB-INF/views/jsp/common/Paging.jsp"/>
+      <jsp:include page="/WEB-INF/views/jsp/common/Paging.jsp">
+        <jsp:param value="${pagingMap}" name="pagingMap" />
+      </jsp:include>
     </div>
   </div>
 

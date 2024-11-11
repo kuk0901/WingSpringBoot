@@ -32,6 +32,7 @@ public class AdminMemberController {
         log.info(logTitleMsg);
         log.info("@RequestMapping getAllMembersForAdmin curPage: {}", curPage);
         int totalCount = memberService.selectTotalMembersCount();
+
         Paging pagingVo = new Paging(totalCount, curPage);
         int start = pagingVo.getPageBegin();
         int end = pagingVo.getPageEnd();
@@ -40,6 +41,7 @@ public class AdminMemberController {
         Map<String, Object> pagingMap = new HashMap<>();
         pagingMap.put("totalCount", totalCount);
         pagingMap.put("pagingVo", pagingVo);
+        pagingMap.put("curPage" , curPage);
 
         ModelAndView mav = new ModelAndView("jsp/admin/member/AdminMemberListView");
         mav.addObject("memberList", memberList);

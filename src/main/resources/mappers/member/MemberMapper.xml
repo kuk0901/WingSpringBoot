@@ -60,12 +60,16 @@
         SELECT MEMBER_NO, EMAIL, USER_NAME,CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY
         FROM (
                  SELECT MEMBER_NO, EMAIL,USER_NAME, CRE_DATE, PHONE, PRODUCT_PURCHASE, QUIT_APPLY,
-                        ROW_NUMBER() OVER (ORDER BY CRE_DATE DESC) AS RNUM
+                        ROW_NUMBER() OVER ( ORDER BY   CASE WHEN QUIT_APPLY = 'Y' THEN 1 ELSE 2 END,  -- 'Y'인 경우 우선 순위
+                            CRE_DATE DESC,   -- 'CRE_DATE' 기준으로 정렬
+                            MEMBER_NO DESC ) AS RNUM
                  FROM MEMBER
                  WHERE GRADE = 'MEMBER' AND IS_DELETED='false'
              ) MEMBER_WITH_RNUM
         WHERE RNUM >= #{start} AND RNUM <= #{end}
-
+        ORDER BY
+            CASE WHEN QUIT_APPLY = 'Y' THEN 1 ELSE 2 END,
+            CRE_DATE DESC
         ]]>
 </select>
 
@@ -314,4 +318,14 @@
         AND EMAIL = #{email}
         AND PWD = #{pwd}
     </select>
+
+
+    <!-- IS_DELETED가 'true'인 회원번호를 조회 스케줄용 -->
+    <select id="selectDeletedMemberNos" resultType="int">
+        SELECT MEMBER_NO
+        FROM MEMBER
+        WHERE IS_DELETED = 'true'
+    </select>
+
+
 </mapper>
