@@ -98,6 +98,14 @@ $(document).ready(function() {
       success: function(response) {
         alert('가계부가 성공적으로 추가되었습니다!');
         $('#accountBookForm')[0].reset(); // 폼 초기화
+        const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
+        console.log(startDate, endDate);
+        fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
+        // 월 표시 업데이트 및 데이터 재로드
+        updateCurrentMonthDisplay(currentYear, currentMonth);
+        calculateMonthlyTotal(memberNo, startDate, endDate);
+        getMonthlyAccountBooks(currentYear, currentMonth, memberNo);
+        fetchMonthlyPayback( startDate, endDate,memberNo)
       },
       error: function(xhr) {
         alert('오류 발생: ' + xhr.responseText);
@@ -189,8 +197,6 @@ function changeMonth(offset) {
     currentYear++;
   }
 
-  /*  const startDate = `${currentYear}-${currentMonth < 10 ? '0' + currentMonth : currentMonth}-01`;
-    const endDate = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];*/
   const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
   console.log(startDate, endDate);
   fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출

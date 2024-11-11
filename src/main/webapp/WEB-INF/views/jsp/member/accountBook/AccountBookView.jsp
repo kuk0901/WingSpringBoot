@@ -112,9 +112,9 @@
             <div class="entry-info one-line"></div>
           </div>
         </div>
-       <%-- <div class="btn-container">
+        <div class="btn-container">
           <button id="loadMore" class="btn btn_plus">더보기</button>
-        </div>--%>
+        </div>
       </main>
     </div>
 
