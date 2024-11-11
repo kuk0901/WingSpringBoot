@@ -2,7 +2,9 @@ package com.edu.wing.inquiry.controller;
 
 import com.edu.wing.inquiry.domain.InquiryVo;
 import com.edu.wing.inquiry.service.InquiryService;
+import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.util.Paging;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +81,55 @@ public class AdminInquiryController {
     resultMap.put("inquiryVo", inquiryVo);
 
     return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session) {
+    log.info(LOG_TITLE);
+    log.info("getInquiryForReply GET inquiryNo: {}", inquiryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+    if (resultMap == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 추가 페이지로 이동할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    inquiryVo.put("adminEmail", member.getEmail());
+
+    resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
+    resultMap.put("alertMsg", "정보 불러오기에 성공했습니다.");
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/update/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForUpdate(@PathVariable int inquiryNo) {
+    log.info(LOG_TITLE);
+    log.info("getInquiryForUpdate GET inquiryNo: {}", inquiryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
+    if (inquiryVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요."); // 실패 메시지
+
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
+    resultMap.put("alertMsg", "정보 불러오기에 성공했습니다."); // 성공 메시지
+
+    return ResponseEntity.ok().body(resultMap);
+
   }
 
 }

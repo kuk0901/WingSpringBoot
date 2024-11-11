@@ -12,4 +12,8 @@ public interface FreeBoardDao {
   List<FreeBoardVo> freeBoardSelectList(Map<String, Object> map);
 
   FreeBoardVo freeBoardSelectOne(int freeBoardNo);
+
+  int addFreeBoard(FreeBoardVo freeBoardVo);
+
+  int updateFreeBoard(int freeBoardNo, String title, String content);
 }

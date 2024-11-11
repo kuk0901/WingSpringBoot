@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +47,6 @@ public class MemberFreeBoardController {
     int end = pagingVo.getPageEnd();
 
     List<FreeBoardVo> freeBoardList = freeBoardService.freeBoardSelectList(start, end, freeBoardSearch, noticeBoardNo);
-
-    log.info("freeBoardList: {}", freeBoardList);
 
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);
@@ -98,4 +98,55 @@ public class MemberFreeBoardController {
 
     return ResponseEntity.ok().body(resultMap);
   }
+
+  @GetMapping("/add")
+  public ModelAndView freeBoardAdd(@RequestParam(defaultValue = "") String freeBoardSearch
+          , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession) {
+    log.info(LOG_TITLE);
+    log.info("@RequestMapping freeBoardAdd freeBoardSearch: {}, curPage: {}, noticeBoardNo: {}", freeBoardSearch, curPage, noticeBoardNo);
+
+    LocalDate currentDate = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String formattedDate = currentDate.format(formatter);
+
+    MemberVo member = (MemberVo) httpSession.getAttribute("member");
+
+    ModelAndView mav = new ModelAndView("jsp/member/freeBoard/FreeBoardAddView");
+
+    mav.addObject("freeBoardSearch", freeBoardSearch);
+    mav.addObject("curPage", curPage);
+    mav.addObject("member", member);
+    mav.addObject("currentDate", formattedDate);
+    mav.addObject("noticeBoardNo", noticeBoardNo);
+
+    return mav;
+
+  }
+
+  @GetMapping("/list/{freeBoardNo}/update")
+  public ResponseEntity<?> updateFreeBoard(@PathVariable int freeBoardNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
+                                           @RequestParam(defaultValue = "3") int noticeBoardNo) {
+    log.info(LOG_TITLE);
+    log.info("updateFreeBoard GET freeBoardNo: {}, curPage: {}, noticeBoardNo: {}, freeBoardSearch: {}", freeBoardNo, curPage, noticeBoardNo, freeBoardSearch);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("freeBoardSearch", freeBoardSearch);
+    resultMap.put("noticeBoardNo", noticeBoardNo);
+
+    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    if(freeBoardVo == null){
+      resultMap.put("success", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("freeBoardVo", freeBoardVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
 }

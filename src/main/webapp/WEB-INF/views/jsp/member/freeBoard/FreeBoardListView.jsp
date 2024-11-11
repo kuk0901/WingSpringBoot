@@ -34,7 +34,7 @@
         </div>
 
         <div class="addBtn-container">
-          <a class="btn btn__generate addMove text__center" href="./list/add?noticeBoardNo=${postVo.noticeBoardNo}&curPage=${pagingMap.pagingVo.curPage}&postSearch=${postSearch}">
+          <a class="btn btn__generate addMove text__center" href="./add?noticeBoardNo=${postVo.noticeBoardNo}&curPage=${pagingMap.pagingVo.curPage}&freeBoardSearch=${freeBoardSearch}">
             게시글 작성
           </a>
         </div>

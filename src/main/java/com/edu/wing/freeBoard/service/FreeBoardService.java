@@ -12,4 +12,8 @@ public interface FreeBoardService {
   List<FreeBoardVo> freeBoardSelectList(int start, int end, String freeBoardSearch, int noticeBoardNo);
 
   FreeBoardVo freeBoardSelectOne(int freeBoardNo);
+
+  boolean addFreeBoard(String title, String content, String email, int noticeBoardNo, int memberNo);
+
+  boolean updateFreeBoard(int freeBoardNo, String title, String content);
 }

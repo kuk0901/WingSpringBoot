@@ -97,15 +97,31 @@ $(".update-pm-btn").click(function(e) {
 
   const no = $(this).data("pmn");
 
-  $.ajax( {
-    url: `/admin/api/paymentMethod/update/${no}`,
-    type: 'POST',
-    success: function(res) {
-      createUpdateView(res);
-    },
-    error: function(xhr, status, error) {
-      const msg = xhr.responseJSON.alertMsg;
-      showAlertMsg(msg);
+  $.ajax({
+    url: `/admin/paymentMethod/countPaymentMethod/${no}`,
+    type: 'GET',
+    success: function (res) {
+
+      if(no === 3) {
+        window.location.href = `/admin/paymentMethod/list?message=${res.msg}`;
+      }
+
+      if(res.totalCount > 0) {
+        console.log(res);
+        window.location.href = `/admin/paymentMethod/list?message=${res.msg}`;
+      }
+
+      $.ajax( {
+        url: `/admin/api/paymentMethod/update/${no}`,
+        type: 'POST',
+        success: function(res) {
+          createUpdateView(res);
+        },
+        error: function(xhr, status, error) {
+          const msg = xhr.responseJSON.alertMsg;
+          showAlertMsg(msg);
+        }
+      })
     }
   })
 });
