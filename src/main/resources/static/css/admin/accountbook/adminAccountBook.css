@@ -10,19 +10,19 @@
   font-size: 18px;
 }
 .table_container th, .table_container td {
-  padding: 10px; /* 셀 패딩 추가 */
+  padding: 15px; /* 셀 패딩 추가 */
   text-align: center; /* 텍스트 정렬 */
 }
 .top-container {
-  margin: 20px 0; /* 위 아래 간격 확보 */
+  width: 98%;
+  margin: 20px auto; /* 위 아래 간격 확보 */
 }
 
 .category-container,
 .payment-container {
   margin-bottom: 10px; /* 각 컨테이너 간의 간격 */
-  margin-left: 20px;
-
 }
+
 .topCategoriesBox,
 .topPaymentMethodsBox {
   display: inline-block; /* inline-block으로 변경 */
@@ -52,9 +52,9 @@
 
 
 .main-container {
+  width: 98%;
   background-color: white;
-  margin-left: 20px;
-  margin-top: 20px; /* 위쪽 여백 추가 */
+  margin: auto;
 }
 
 #content .title-container {
@@ -72,9 +72,9 @@
 }
 
 #content .form-container {
-  margin-left: 12px;
-  width: 100%;
-  padding: 10px;
+  margin: auto auto 20px;
+  width: 98%;
+  padding: 0;
 }
 
 #searchForm.one-line {
@@ -103,3 +103,14 @@
   width: 200px; /* 선택 박스 너비 설정 */
 }
 
+.table_container .title-container {
+  border-bottom: 1px solid black;
+}
+
+.table_container #resultContainer .list-container {
+  border-bottom: 1px dotted black;
+}
+
+.table_container #resultContainer .list-container:last-child {
+  border-bottom: none;
+}

@@ -200,6 +200,7 @@ $form.on("submit", function(e) {
         error: function(xhr, status, error) {
             let msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
             console.log("왜안되??")
+
             if (xhr.responseJSON.emailMsg) {
                 msg = xhr.responseJSON.emailMsg;
                 updateUI($email, $emailError, { isValid: false, message: msg });
