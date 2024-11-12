@@ -73,9 +73,25 @@ public class MemberServiceImpl implements MemberService {
   public MemberVo getAdminMypageInfo(int memberNo) {
     return memberDao.selectAdminMypageInfo(memberNo);
   }
+
   @Override
-  public int updateMember(MemberVo memberVo) {
-    return memberDao.updateMember(memberVo);
+  @Transactional
+  public MemberVo updateMember(MemberVo memberVo) {
+    // 업데이트 전 회원 정보 조회
+    MemberVo originalMemberVo = memberDao.updateMemberSelect(memberVo.getMemberNo());
+
+    // 업데이트
+    memberDao.updateMember(memberVo);
+
+    // 업데이트 후 회원 정보 조회
+    MemberVo updatedMemberVo = memberDao.updateMemberSelect(memberVo.getMemberNo());
+
+    // 두 객체 비교 (equals를 오버라이딩하거나, 특정 필드만 비교)
+    if (originalMemberVo.equals(updatedMemberVo)) {
+      System.out.println("업데이트가 반영되지 않았습니다.");
+    }
+
+    return updatedMemberVo;
   }
 
   @Override
@@ -84,8 +100,18 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public void updateMemberInfo(MemberVo memberVo) {
+  public MemberVo updateMemberInfo(MemberVo memberVo) {
+    // 업데이트 전 회원 정보 조회
+    MemberVo originalMemberVo = memberDao.selectUpdatedMemberInfo(memberVo.getMemberNo());
+    // 업데이트
     memberDao.updateMemberInfo(memberVo);
+    // 업데이트 후 회원 정보 조회
+    MemberVo updatedMemberVo = memberDao.selectUpdatedMemberInfo(memberVo.getMemberNo());
+    // 두 객체 비교 (equals를 오버라이딩하거나, 특정 필드만 비교)
+    if (originalMemberVo.equals(updatedMemberVo)) {
+      System.out.println("업데이트가 반영되지 않았습니다.");
+    }
+    return updatedMemberVo;
   }
 
   @Override

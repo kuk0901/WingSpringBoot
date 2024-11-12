@@ -16,7 +16,7 @@ formatNumber(monthlySalaryInput);
 const $submitBtn = $("#updateButton");
 const $form = $("#myPageForm");
 const $email = $("#email");
-const $userName = $("#Name"); // 수정 필요
+const $userName = $("#memberName"); // 수정 필요
 const $emailError = $("#emailError");
 const $pwdInput = $("#pwd");
 const $pwdCheck = $("#confirmPassword");
@@ -167,7 +167,13 @@ function updateMemberInfo(data) {
 
     },
     error: function (xhr, status, error) {
-      showAlertMsg("회원 정보 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      if (xhr.status === 409) {  // Conflict (이메일 중복) 상태 처리
+        const errorMsg = xhr.responseJSON.alertMsg || "회원 정보 수정에 실패했습니다.";
+        showAlertMsg(errorMsg);  // 이메일 중복 메시지 출력
+      } else {
+        // 다른 오류 처리
+        showAlertMsg("회원 정보 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      }
     }
   });
 }
@@ -215,7 +221,7 @@ function submitQuitRequest(memberNo) {
     contentType: "application/json",
     data: JSON.stringify({memberNo: memberNo}),
     success: function (response) {
-      showAlertMsg(response.alertMsg);
+      window.location.href = `/?message=${response.alertMsg}`;
     },
     error: function (xhr, status, error) {
       const errorMsg = xhr.responseJSON ? xhr.responseJSON.message : "탈퇴 처리 중 오류가 발생했습니다.";

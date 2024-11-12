@@ -73,10 +73,12 @@ public class AdminMemberApiController {
       Map<String, String> resultMap = new HashMap<>();
 
       try {
+
           MemberVo currentMember = (MemberVo) session.getAttribute("member");
-          String currentEmail = currentMember != null ? currentMember.getEmail() : null;
-          //이메일 검증로직
-          if (!memberVo.getEmail().equals(currentEmail)) {
+
+          /*System.out.println("session정보확인: " + session.getAttribute("email"));*/
+          //이메일 검증로직 중복시응답
+          if (!memberVo.getEmail().equals(currentMember.getEmail())) {
               if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
                   resultMap.put("status", "failed");
                   resultMap.put("email", memberVo.getEmail());
@@ -86,19 +88,15 @@ public class AdminMemberApiController {
               }
           }
 
-          int result = memberService.updateMember(memberVo);
-
-          if (result > 0) {
+          MemberVo updatedMemberVo = memberService.updateMember(memberVo);
+          updatedMemberVo.setGrade("ADMIN");
+          System.out.println(updatedMemberVo);
+          if (updatedMemberVo != null) {
               // 현재 회원 정보가 존재하면 업데이트
-              if (currentMember != null) {
-                  currentMember.setUserName(memberVo.getUserName()); // 이름 업데이트
-                  session.setAttribute("member", currentMember); // 세션 업데이트
-              }
-              session.setAttribute("email", currentEmail);
+              session.setAttribute("member", updatedMemberVo); // 세션 업데이트
               resultMap.put("status", "success");
               resultMap.put("alertMsg", "회원 정보가 업데이트되었습니다.");
               return ResponseEntity.ok(resultMap);  // 성공 응답
-
           } else {
               resultMap.put("status", "fail");
               resultMap.put("message", "회원 정보 업데이트에 실패했습니다.");

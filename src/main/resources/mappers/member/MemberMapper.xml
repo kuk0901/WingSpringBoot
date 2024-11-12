@@ -114,7 +114,7 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
 
-    <update id="updateMember" parameterType="MemberVo">
+    <update id="updateMember" parameterType="memberVo">
         UPDATE MEMBER
         SET EMAIL = #{email},
             USER_NAME = #{userName},
@@ -122,6 +122,11 @@
             PHONE = #{phone}
         WHERE MEMBER_NO = #{memberNo}
     </update>
+    <select id="updateMemberSelect" resultType="memberVo">
+        select EMAIL,USER_NAME,PWD,PHONE
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
 
     <!-- 관리자의 마이페이지 조회쿼리 -->
     <select id="selectAdminMypageInfo" parameterType="int" resultType="MemberVo">
@@ -151,7 +156,11 @@
         YEARLY_SALARY = #{yearlySalary}
         WHERE MEMBER_NO = #{memberNo}
     </update>
-
+    <select id="selectUpdatedMemberInfo" parameterType="int" resultType="MemberVo">
+        SELECT MEMBER_NO, EMAIL, USER_NAME, PWD, PHONE, MONTH_SALARY, YEARLY_SALARY
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
     <update id="updateMemberQuitApply"  parameterType="MemberVo">
         UPDATE MEMBER
         SET QUIT_APPLY='Y'
