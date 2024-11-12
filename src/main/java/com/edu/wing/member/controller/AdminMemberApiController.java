@@ -73,15 +73,28 @@ public class AdminMemberApiController {
       Map<String, String> resultMap = new HashMap<>();
 
       try {
+          MemberVo currentMember = (MemberVo) session.getAttribute("member");
+          String currentEmail = currentMember != null ? currentMember.getEmail() : null;
+          //이메일 검증로직
+          if (!memberVo.getEmail().equals(currentEmail)) {
+              if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
+                  resultMap.put("status", "failed");
+                  resultMap.put("email", memberVo.getEmail());
+                  resultMap.put(ALERT_MSG, "이미 존재하는 이메일입니다.");
+
+                  return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap); // 이메일 중복 응답
+              }
+          }
+
           int result = memberService.updateMember(memberVo);
 
           if (result > 0) {
-              MemberVo currentMember = (MemberVo) session.getAttribute("member");
               // 현재 회원 정보가 존재하면 업데이트
               if (currentMember != null) {
                   currentMember.setUserName(memberVo.getUserName()); // 이름 업데이트
                   session.setAttribute("member", currentMember); // 세션 업데이트
               }
+              session.setAttribute("email", currentEmail);
               resultMap.put("status", "success");
               resultMap.put("alertMsg", "회원 정보가 업데이트되었습니다.");
               return ResponseEntity.ok(resultMap);  // 성공 응답

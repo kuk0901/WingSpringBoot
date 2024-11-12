@@ -47,6 +47,7 @@
       <div class="line">
         <label class="form-label">이름:</label>
         <input type="text" name="userName" id="userName" value="${memberInfo.userName}" class="form-input"/>
+        <span id="userNameError"></span>
       </div>
       <div class="line">
         <label class="form-label">비밀번호:</label>
