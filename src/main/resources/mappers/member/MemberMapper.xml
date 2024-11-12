@@ -123,7 +123,7 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
     <select id="updateMemberSelect" resultType="memberVo">
-        select EMAIL,USER_NAME,PWD,PHONE
+        select MEMBER_NO,EMAIL,USER_NAME,PWD,PHONE,GRADE
         FROM MEMBER
         WHERE MEMBER_NO = #{memberNo}
     </select>
@@ -157,7 +157,7 @@
         WHERE MEMBER_NO = #{memberNo}
     </update>
     <select id="selectUpdatedMemberInfo" parameterType="int" resultType="MemberVo">
-        SELECT MEMBER_NO, EMAIL, USER_NAME, PWD, PHONE, MONTH_SALARY, YEARLY_SALARY
+        SELECT MEMBER_NO, EMAIL, USER_NAME, PWD, PHONE, MONTH_SALARY, YEARLY_SALARY,GRADE
         FROM MEMBER
         WHERE MEMBER_NO = #{memberNo}
     </select>
