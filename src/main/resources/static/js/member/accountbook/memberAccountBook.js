@@ -430,6 +430,7 @@ function goToDetail(accountBookNo, memberNo) {
     },
     dataType: 'json',
     success: function(data) {
+      console.log(data)
       renderAccountBookDetail(data);
       loadCategoriesForDetail(data);
 
@@ -464,7 +465,7 @@ function renderAccountBookDetail(accountBook) {
             <div>
                 <div class="detail-container">
                     <span class="detail-label">일자</span>
-                   <input type="text"  id="dateInput" class="detail-value" value="${formatDate(accountBook.creDate)}"/>
+                   <input type="date"  id="dateInput" class="detail-value" value="${formatDate(accountBook.creDate)}"/>
                 </div>
                 <div class="detail-container">
                     <span class="detail-label">분류</span>
@@ -573,6 +574,7 @@ function loadCategoriesForDetail(accountBook) {
             const option = document.createElement("option");
             option.value = index + 2; // 카테고리 ID를 2부터 시작하도록 수정
             option.textContent = category; // 카테고리 이름
+            option.setAttribute("data-category", "income"); // 수입 카테고리로 설정
             // 현재 선택된 카테고리 설정
             if (category === accountBook.plusCategoryName) {
               option.selected = true; // 현재 선택된 카테고리 설정
@@ -598,6 +600,8 @@ function loadCategoriesForDetail(accountBook) {
             const option = document.createElement("option");
             option.value = index + 2; // 카테고리 ID를 1부터 시작하도록 수정
             option.textContent = category; // 카테고리 이름
+            option.setAttribute("data-category", "expense"); // 지출 카테고리로 설정
+
             // 현재 선택된 카테고리 설정
             if (category === accountBook.minusCategoryName) {
               option.selected = true; // 현재 선택된 카테고리 설정
@@ -622,13 +626,18 @@ $(document).on("blur", "#amountInput", function(e) {
   formatNumber(this);
 });
 
-//date폼
+
 function formatDate(dateString) {
   if (!dateString) return '내용 없음'; // 값이 없으면 기본 메시지 반환
   const date = new Date(dateString);
-  return date.toISOString().substring(0, 10); // YYYY-MM-DD 형식으로 변환
-}
 
+  // 로컬 타임존을 기준으로 날짜 포맷 (YYYY-MM-DD 형식)
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
 /*//가계부detail에서삭제
 function deleteAccountBook(accountBookNo) {
   if (confirm("정말로 이 가계부 항목을 삭제하시겠습니까?")) {
@@ -809,17 +818,25 @@ $(document).on("click", "#editBtn", function(e) {
   const amountValue = $("#amountInput").val();
   const contentValue = $("#contentInput").val();
   const dateValue = $("#dateInput").val();
-  const formattedDate = new Date(dateValue).toISOString().split('T')[0];
-
+ /* const formattedDate = new Date(dateValue).toLocaleDateString("en-CA").split('T')[0];*/
+  const localDate = new Date(dateValue);  // Date 객체로 변환
+  const formattedDate = localDate.toLocaleDateString("en-CA"); // 'YYYY-MM-DD' 형식으로 포맷
+  console.log(formattedDate); // 2024-11-01 (로컬 타임존에 맞춰 표시)
   let plusCategoryNo = 1;
   let minusCategoryNo = 1;
   const selectedCategoryValue = parseInt(categorySelect.val(), 10);
 
-  console.log(selectedCategoryValue);
+  // 선택된 카테고리의 data-category 값에 따라 분기
+  const selectedCategoryData = categorySelect.find("option:selected").data("category");
 
-  if (categorySelect.find("option:first").text() === "수입 카테고리 선택") {
+  console.log(formattedDate);
+
+// 카테고리 선택에 따른 조건 분기
+  if (selectedCategoryData === "income") {
+    // 수입 카테고리 선택된 경우
     plusCategoryNo = selectedCategoryValue;
-  } else if (categorySelect.find("option:first").text() === "지출 카테고리 선택") {
+  } else if (selectedCategoryData === "expense") {
+    // 지출 카테고리 선택된 경우
     minusCategoryNo = selectedCategoryValue;
   }
 
@@ -844,6 +861,7 @@ $(document).on("click", "#editBtn", function(e) {
     data: JSON.stringify(updatedData),
     success: function(response) {
       alert("수정되었습니다");
+
       goToDetail(accountBookNo, memberNo);
     },
     error: function(xhr, status, error) {

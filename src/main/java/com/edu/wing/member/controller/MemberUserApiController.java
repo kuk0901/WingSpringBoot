@@ -40,14 +40,26 @@ public class MemberUserApiController {
 
         try {
             // 회원 정보 업데이트 수행
-            memberService.updateMemberInfo(memberVo);
 
-            // 세션에서 현재 사용자 정보 업데이트
             MemberVo currentMember = (MemberVo) session.getAttribute("member");
+            String currentEmail = (String) session.getAttribute("email");
+            System.out.println("session 정보확인: " + session.getAttribute("email"));
+            //이메일 검증로직 중복시응답
+            if (!memberVo.getEmail().equals(currentEmail)) {
+                if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
+                    resultMap.put("status", "failed");
+                    resultMap.put("email", memberVo.getEmail());
+                    resultMap.put("alertMsg", "이미 존재하는 이메일입니다.");
+                    System.out.println("중복이메일발생: " + memberVo.getEmail());
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap); // 이메일 중복 응답
+                }
+            }
+            memberService.updateMemberInfo(memberVo); //업데이트
+            
             if (currentMember != null) {
-                currentMember.setUserName(memberVo.getUserName()); // 예: 이름 업데이트
-                // 필요한 경우 다른 정보도 업데이트
-                session.setAttribute("member", currentMember); // 세션에 업데이트된 회원 정보 저장
+                currentMember.setUserName(memberVo.getUserName()); // 이름 업데이트
+                session.setAttribute("member", currentMember); // 세션 업데이트
+                session.setAttribute("email", currentEmail);
             }
 
             resultMap.put("status", "success");

@@ -73,10 +73,12 @@ public class AdminMemberApiController {
       Map<String, String> resultMap = new HashMap<>();
 
       try {
+
           MemberVo currentMember = (MemberVo) session.getAttribute("member");
-          String currentEmail = currentMember != null ? currentMember.getEmail() : null;
-          //이메일 검증로직
-          if (!memberVo.getEmail().equals(currentEmail)) {
+          String currentEmail = (String) session.getAttribute("email");
+          System.out.println("session정보확인: " + session.getAttribute("email"));
+          //이메일 검증로직 중복시응답
+          if (currentEmail != null && !memberVo.getEmail().equals(currentEmail)) {
               if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
                   resultMap.put("status", "failed");
                   resultMap.put("email", memberVo.getEmail());
@@ -93,8 +95,9 @@ public class AdminMemberApiController {
               if (currentMember != null) {
                   currentMember.setUserName(memberVo.getUserName()); // 이름 업데이트
                   session.setAttribute("member", currentMember); // 세션 업데이트
+                  session.setAttribute("email", currentEmail);
               }
-              session.setAttribute("email", currentEmail);
+
               resultMap.put("status", "success");
               resultMap.put("alertMsg", "회원 정보가 업데이트되었습니다.");
               return ResponseEntity.ok(resultMap);  // 성공 응답
