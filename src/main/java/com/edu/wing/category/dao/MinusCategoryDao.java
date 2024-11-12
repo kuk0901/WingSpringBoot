@@ -16,7 +16,7 @@ public interface MinusCategoryDao {
 
   void minusCategoryInsertOne(String categoryName);
 
-  MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
+  int minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
 
   MinusCategoryVo minusCategorySelectOne(int categoryNo);
 

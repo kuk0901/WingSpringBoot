@@ -74,9 +74,8 @@ function paymentMethodDelete(deleteNo) {
                 showAlertMsg(alertMsg);
               }
             },
-            error: function (xhr, status, error) {
-              const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 삭제에 실패했습니다.";
-              showAlertMsg(msg);
+            error: function (res) {
+              showAlertMsg(alertMsg);
             }
           });
         }
@@ -84,9 +83,8 @@ function paymentMethodDelete(deleteNo) {
         showAlertMsg(alertMsg);
       }
     },
-    error: function (xhr, status, error) {
-      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 삭제에 실패했습니다.";
-      showAlertMsg(msg);
+    error: function (res) {
+      showAlertMsg(alertMsg);
     }
   });
 }
@@ -107,7 +105,6 @@ $(".update-pm-btn").click(function(e) {
       }
 
       if(res.totalCount > 0) {
-        console.log(res);
         window.location.href = `/admin/paymentMethod/list?message=${res.msg}`;
       }
 
@@ -117,9 +114,8 @@ $(".update-pm-btn").click(function(e) {
         success: function(res) {
           createUpdateView(res);
         },
-        error: function(xhr, status, error) {
-          const msg = xhr.responseJSON.alertMsg;
-          showAlertMsg(msg);
+        error: function(res) {
+          showAlertMsg(alertMsg);
         }
       })
     }
@@ -170,9 +166,8 @@ function createUpdateView(res) {
       success: function(res) {
         showAlertMsg(res.alertMsg);
       },
-      error: function(xhr, status, error) {
-        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg  : "결제 수단 수정에 실패했습니다.";
-        showAlertMsg(msg);
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
       }
     });
   });

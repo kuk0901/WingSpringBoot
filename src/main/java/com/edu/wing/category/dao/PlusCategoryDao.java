@@ -17,7 +17,7 @@ public interface PlusCategoryDao {
 
   void plusCategoryInsertOne(String categoryName);
 
-  PlusCategoryVo plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo);
+  int plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo);
 
   PlusCategoryVo plusCategorySelectOne(int categoryNo);
 

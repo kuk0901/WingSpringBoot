@@ -7,4 +7,6 @@ import java.util.List;
 public interface FreeBoardCommentDao {
 
   List<FreeBoardCommentVo> freeBoardCommentSelectList(int freeBoardNo);
+
+  int addComment(FreeBoardCommentVo freeBoardCommentVo);
 }
