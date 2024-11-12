@@ -1,4 +1,7 @@
 import { showAlertMsg } from "../../util/toast.js"
+import { createDetailView } from "./AjaxCardDetail.js";
+
+const $productInsertBtn = $("#productInsertBtn");
 
 const today = new Date().toISOString().split('T')[0];
 $("#registerDate").attr("min", today).val(today).on("change", function() {
@@ -78,9 +81,6 @@ $benefitAddBtn.on("click", function(e) {
   e.stopPropagation();
   addProductClickEvent(e);
 });
-
-// ajax -> insert
-const $productInsertBtn = $("#productInsertBtn");
 
 const validateForm = () => {
   // 필수 필드 체크
@@ -168,9 +168,7 @@ const submitForm = (formData) => {
     processData: false,
     contentType: false,
     success: function(res) {
-      if (res.status === "success") {
-        window.location.href = `/admin/api/productManagement/card-detail?cardNo=${res.cardNo}&message=${encodeURIComponent(res.alertMsg)}`;
-      }
+        fetchCardDetails(res.cardNo, res.alertMsg);
     },
     error: function(xhr, status, error) {
       const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
@@ -195,3 +193,27 @@ $productInsertBtn.on('click', function(e) {
 
   submitForm(formData);
 });
+
+const fetchCardDetails = (cardNo, message) => {
+
+  const curPage = $productInsertBtn.data("curPage");
+  const categoryName = $productInsertBtn.data("categoryName");
+
+  $.ajax({
+    url: `/admin/api/productManagement/card-detail/${cardNo}`,
+    method: 'GET',
+    data: { "cardNo": cardNo, "message": message, "curPage": curPage, "categoryName": categoryName },
+    success: function(res) {
+      if (res.status === "success") {
+        // 가져온 데이터로 화면 업데이트
+        createDetailView(res);
+        showAlertMsg(res.alertMsg);
+      } else {
+        showAlertMsg("카드 정보를 가져오는데 실패했습니다.");
+      }
+    },
+    error: function(xhr, status, error) {
+      showAlertMsg("카드 정보를 가져오는 중 오류가 발생했습니다.");
+    }
+  });
+};
