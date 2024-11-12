@@ -33,20 +33,22 @@
         SELECT MEMBER_NO, USER_NAME, EMAIL
         FROM MEMBER
         WHERE EMAIL = #{email}
+        AND IS_DELETED = 'false'
     </select>
 
     <select id="memberExist" parameterType="map"
             resultMap="memberResultMap">
-        SELECT MEMBER_NO, USER_NAME, EMAIL, GRADE
+        SELECT MEMBER_NO, USER_NAME, EMAIL, GRADE, IS_DELETED
         FROM MEMBER
         WHERE EMAIL = #{email}
-          AND PWD = #{pwd}
+        AND PWD = #{pwd}
     </select>
 
     <select id="memberSelectOne" parameterType="String" resultMap="memberResultMap">
         SELECT MEMBER_NO, EMAIL
         FROM MEMBER
         WHERE EMAIL = #{email}
+        AND IS_DELETED = 'false'
     </select>
 
     <insert id="memberInsertOne" parameterType="memberVo">

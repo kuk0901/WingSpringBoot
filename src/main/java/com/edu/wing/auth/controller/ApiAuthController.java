@@ -37,12 +37,10 @@ public class ApiAuthController {
     Map<String, String> resultMap = new HashMap<>();
 
     try {
-
       if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
         resultMap.put(STATUS, STATUS_FAIL);
         resultMap.put("email", memberVo.getEmail());
         resultMap.put("emailMsg", "이미 존재하는 이메일입니다.");
-
         return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap);
       }
 
@@ -73,31 +71,40 @@ public class ApiAuthController {
     try {
       MemberVo user = memberService.memberExist(memberVo.getEmail(), memberVo.getPwd());
 
-      if (user != null) {
-        // 세션에 사용자 정보 저장
-        session.setAttribute("member", user);
-
-        List<CardBenefitVo> cardBenefitVoList = cardBenefitService.userAccountBookDiscountRateList(user.getMemberNo());
-
-        if (!cardBenefitVoList.isEmpty()) {
-          for (CardBenefitVo benefit : cardBenefitVoList) {
-            String key = "cardBenefit_" + benefit.getCardBenefitDivision();
-            session.setAttribute(key, benefit.getCardPercentage());
-          }
-        }
-
-        resultMap.put(STATUS, STATUS_SUCCESS);
-        resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
-            ? randomAlertMessage.getRandomAdminLoginAlert()
-            : randomAlertMessage.getRandomMemberLoginAlert());
-        resultMap.put("grade", user.getGrade());
-
-        return ResponseEntity.ok().body(resultMap);
-      } else {
+      if (user == null) {
         resultMap.put(STATUS, STATUS_FAIL);
         resultMap.put(ALERT_MSG, "로그인에 실패했습니다. 이메일 또는 비밀번호를 확인해주세요.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resultMap);
       }
+
+      if ("true".equals(user.getIsDeleted())) {
+        resultMap.put(STATUS, STATUS_FAIL);
+        resultMap.put(ALERT_MSG, "계정을 찾을 수 없습니다. 회원가입 후 이용해 주세요.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resultMap);
+      }
+
+      // 세션에 사용자 정보 저장
+      session.setAttribute("member", user);
+
+      // 카드 혜택 정보 세션에 저장
+      List<CardBenefitVo> cardBenefitVoList = cardBenefitService.userAccountBookDiscountRateList(user.getMemberNo());
+
+      if (!cardBenefitVoList.isEmpty()) {
+        for (CardBenefitVo benefit : cardBenefitVoList) {
+          String key = "cardBenefit_" + benefit.getCardBenefitDivision();
+          session.setAttribute(key, benefit.getCardPercentage());
+        }
+      }
+
+      // 성공 응답 생성
+      resultMap.put(STATUS, STATUS_SUCCESS);
+      resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
+          ? randomAlertMessage.getRandomAdminLoginAlert()
+          : randomAlertMessage.getRandomMemberLoginAlert());
+      resultMap.put("grade", user.getGrade());
+
+      return ResponseEntity.ok().body(resultMap);
+
     } catch (Exception e) {
       resultMap.put(STATUS, STATUS_ERROR);
       resultMap.put(ALERT_MSG, "서버 오류가 발생했습니다.");

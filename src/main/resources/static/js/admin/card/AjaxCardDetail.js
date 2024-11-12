@@ -27,7 +27,7 @@ $('.detail-card-btn').click(function() {
 });
 
 
-function createDetailView(data) {
+export function createDetailView(data) {
   const cardVo = data.cardVo
 
   const cardDetail = `
@@ -76,7 +76,7 @@ function createDetailView(data) {
       
       <section class="side-container">
         <div class="btn-container">
-          <a href="./list?cardNo=${cardVo.cardNo}&curPage=${data.curPage}&categoryName=${data.categoryName}" class="btn btn__generate">돌아가기</a>
+          <a href="/admin/productManagement/list?cardNo=${cardVo.cardNo}&curPage=${data.curPage}&categoryName=${data.categoryName}" class="btn btn__generate">돌아가기</a>
         </div>
       </section>
       
