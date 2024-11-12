@@ -76,7 +76,6 @@ public class ApiAuthController {
       if (user != null) {
         // 세션에 사용자 정보 저장
         session.setAttribute("member", user);
-        session.setAttribute("email", memberVo.getEmail());
 
         List<CardBenefitVo> cardBenefitVoList = cardBenefitService.userAccountBookDiscountRateList(user.getMemberNo());
 

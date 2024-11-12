@@ -186,7 +186,6 @@ $form.on("submit", function(e) {
     // memberNo를 정수형으로 변환
     formData.memberNo = parseInt($("#memberNo").val(), 10); // 여기에 로그인한 관리자의 memberNo 값을 추가
 
-    
     $.ajax({
         type: "PATCH",
         url: "/admin/api/member/update",
@@ -194,8 +193,8 @@ $form.on("submit", function(e) {
         contentType: "application/json",
         dataType: "json",
         success: function(res) {
-
-            window.location.href = `./${formData.memberNo}?message=${res.alertMsg}`;
+            console.log(res);
+           /* window.location.href = `./${formData.memberNo}?message=${res.alertMsg}`;*/
 
         },
         error: function(xhr, status, error) {
