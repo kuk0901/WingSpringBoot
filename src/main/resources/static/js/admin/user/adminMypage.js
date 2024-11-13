@@ -194,7 +194,7 @@ $form.on("submit", function(e) {
         dataType: "json",
         success: function(res) {
             console.log(res);
-           /* window.location.href = `./${formData.memberNo}?message=${res.alertMsg}`;*/
+          window.location.href = `./${formData.memberNo}?message=${res.alertMsg}`;
 
         },
         error: function(xhr, status, error) {
