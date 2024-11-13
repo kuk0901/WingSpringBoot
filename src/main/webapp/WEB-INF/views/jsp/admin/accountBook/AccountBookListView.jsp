@@ -67,7 +67,7 @@
         <main  class="main-container">
             <div class="table_container">
                 <table>
-                    <tr>
+                    <tr class="title-container">
                         <th class="no">번호</th>
                         <th>작성일자</th>
                         <th>이메일</th>
@@ -77,8 +77,7 @@
                     </tr>
                     <tbody id="resultContainer">
                     <c:forEach var="accountBook" items="${accountBookList}">
-                        <tr>
-
+                        <tr class="list-container">
                             <td class="no">${accountBook.accountBookNo}</td>
                             <td><fmt:formatDate value="${accountBook.creDate}" pattern="yyyy-MM-dd"/></td>
                             <td>${accountBook.memberEmail}</td>

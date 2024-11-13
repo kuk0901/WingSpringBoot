@@ -77,9 +77,6 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public MemberVo updateMember(MemberVo memberVo) {
-    // 업데이트 전 회원 정보 조회
-    MemberVo originalMemberVo = memberDao.updateMemberSelect(memberVo.getMemberNo());
-
     // 업데이트
     memberDao.updateMember(memberVo);
 
@@ -87,11 +84,11 @@ public class MemberServiceImpl implements MemberService {
     MemberVo updatedMemberVo = memberDao.updateMemberSelect(memberVo.getMemberNo());
 
     // 두 객체 비교 (equals를 오버라이딩하거나, 특정 필드만 비교)
-    if (originalMemberVo.equals(updatedMemberVo)) {
+    if (memberVo.equals(updatedMemberVo)) {
       System.out.println("업데이트가 반영되지 않았습니다.");
     }
 
-    return updatedMemberVo;
+    return memberDao.memberExist(updatedMemberVo.getEmail(), updatedMemberVo.getPwd());
   }
 
   @Override
