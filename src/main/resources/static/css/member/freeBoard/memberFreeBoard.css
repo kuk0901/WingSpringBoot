@@ -371,6 +371,7 @@ input, textarea {
   height: 80px;
 }
 
+
 .box__l {
   width: 200px;
 }
@@ -386,3 +387,4 @@ input, textarea {
 .info-container.box__l {
   width: 40%;
 }
+

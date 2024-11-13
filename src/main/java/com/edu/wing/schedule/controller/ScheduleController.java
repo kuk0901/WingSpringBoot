@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class ScheduleController {
 
     @Autowired
-    private MemberService memberService;  // 인터페이스 타입으로 주입받음
+    private MemberService memberService;
 
     // 매달 15일 자정에 실행
     @Scheduled(cron = "0 0 0 15 * ?")

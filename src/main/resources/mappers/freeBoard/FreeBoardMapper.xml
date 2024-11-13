@@ -49,7 +49,7 @@
     </select>
 
     <select id="freeBoardSelectOne" parameterType="int" resultMap="freeBoardResultMap">
-        SELECT FB.FREE_BOARD_NO, FB.TITLE, M.EMAIL, FB.CRE_DATE,
+        SELECT FB.FREE_BOARD_NO, FB.TITLE, M.EMAIL, FB.CRE_DATE,FB.MOD_DATE,
         FB.CONTENT, FB.MEMBER_NO
         FROM FREE_BOARD FB
         JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO

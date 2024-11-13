@@ -12,6 +12,9 @@
 </head>
 
 <body>
+<jsp:include page="/WEB-INF/views/jsp/components/toast.jsp">
+  <jsp:param value="${alertMsg}" name="alertMsg" />
+</jsp:include>
 <section id="root">
   <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp"/>
 
@@ -115,6 +118,7 @@
         <div class="btn-container">
           <button id="loadMore" class="btn btn_plus">더보기</button>
         </div>
+        <div class="hidden-ui"></div>
       </main>
     </div>
 
