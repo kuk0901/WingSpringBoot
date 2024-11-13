@@ -91,4 +91,9 @@ public class SellingCardDaoImpl implements SellingCardDao {
     Integer count = sqlSession.selectOne(namespace+"checkSellingCardExists", params);
     return count != null && count > 0;
   }
+
+  @Override
+  public void updateDeleteCard(int memberNo) {
+    sqlSession.update(namespace+"updateDeleteCard",memberNo);
+  }
 }

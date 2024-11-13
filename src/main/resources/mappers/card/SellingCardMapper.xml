@@ -185,4 +185,11 @@
         FROM SELLING_CARD
         WHERE MEMBER_NO = #{memberNo}
     </select>
+
+    <update id="updateDeleteCard" parameterType="int">
+        update SELLING_CARD
+        set MEMBER_NO=1
+        where CARD_TERMINATION='Y'
+          AND MEMBER_NO=#{memberNo}
+    </update>
 </mapper>
