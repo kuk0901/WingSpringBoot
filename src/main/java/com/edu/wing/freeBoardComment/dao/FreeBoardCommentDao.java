@@ -9,4 +9,6 @@ public interface FreeBoardCommentDao {
   List<FreeBoardCommentVo> freeBoardCommentSelectList(int freeBoardNo);
 
   int addComment(FreeBoardCommentVo freeBoardCommentVo);
+
+  boolean deleteComment(int freeBoardCommentNo);
 }

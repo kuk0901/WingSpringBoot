@@ -1,4 +1,5 @@
-import { showAlertMsg } from "../../util/toast.js";
+import { showAlertMsg, checkAndShowStoredMessage } from "../../util/toast.js";
+checkAndShowStoredMessage();
 
 $("#paymentMethodAdd").click(function(e) {
   e.preventDefault();
@@ -164,7 +165,10 @@ function createUpdateView(res) {
       type: 'PATCH',
       data: { paymentMethodName: updatedName },
       success: function(res) {
-        showAlertMsg(res.alertMsg);
+        const message = encodeURIComponent(res.alertMsg || "결제수단 수정에 성공했습니다");
+
+        // 성공 후 리스트 페이지로 이동하거나 현재 페이지를 새로고침
+        window.location.href = `/admin/paymentMethod/list?message=${message}`;
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);

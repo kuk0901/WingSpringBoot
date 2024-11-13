@@ -3,6 +3,7 @@ import { createDetailView } from "./AjaxCardDetail.js";
 
 const $productInsertBtn = $("#productInsertBtn");
 
+
 const today = new Date().toISOString().split('T')[0];
 $("#registerDate").attr("min", today).val(today).on("change", function() {
   if ($(this).val() < today) {
@@ -205,6 +206,8 @@ const fetchCardDetails = (cardNo, message) => {
     data: { "cardNo": cardNo, "message": message, "curPage": curPage, "categoryName": categoryName },
     success: function(res) {
       if (res.status === "success") {
+        $("#content").scrollTop(0);
+
         // 가져온 데이터로 화면 업데이트
         createDetailView(res);
         showAlertMsg(res.alertMsg);

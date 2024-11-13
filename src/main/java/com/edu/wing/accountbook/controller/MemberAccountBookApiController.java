@@ -82,21 +82,30 @@ public class MemberAccountBookApiController {
 
         return accountBookService.getMonthlyEntries(memberNo, startDate, endDate);
     }
-
-    // 가계부 추가 API
+    
+    //가계부 추가
     @PostMapping("/add")
-    public ResponseEntity<String> addAccountBook(@RequestBody Map<String, Object> params) {
+    public ResponseEntity<Map<String, String>> addAccountBook(@RequestBody Map<String, Object> params) {
+        Map<String, String> resultMap = new HashMap<>();
         try {
-
             int result = accountBookService.addAccountBook(params);
             if (result > 0) {
-                return ResponseEntity.status(HttpStatus.CREATED).body("가계부가 성공적으로 추가되었습니다.");
+                // 성공 시 상태와 메시지를 resultMap에 담아서 반환
+                resultMap.put("status", "success");
+                resultMap.put("alertMsg", "가계부가 추가되었습니다");
+                return ResponseEntity.status(HttpStatus.CREATED).body(resultMap);
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("가계부 추가에 실패했습니다.");
+                // 실패 시 상태와 메시지를 resultMap에 담아서 반환
+                resultMap.put("status", "failure");
+                resultMap.put("alertMsg", "가계부 추가에 실패했습니다.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resultMap);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+            // 예외 발생 시 상태와 메시지를 resultMap에 담아서 반환
+            resultMap.put("status", "error");
+            resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
         }
     }
 
@@ -124,25 +133,54 @@ public class MemberAccountBookApiController {
 
 
     }
-    // 가계부 삭제 API
     @PatchMapping("/{accountBookNo}")
-    public ResponseEntity<Void> softDeleteAccountBook(@PathVariable int accountBookNo) {
-        accountBookService.softDeleteAccountBook(accountBookNo);
-        return ResponseEntity.noContent().build(); // 204 No Content 반환
-    }
-    @PutMapping("/update")
-    public ResponseEntity<String> updateAccountBook(@RequestBody Map<String, Object> params) {
+    public ResponseEntity<Map<String, String>> softDeleteAccountBook(@PathVariable int accountBookNo) {
+        Map<String, String> resultMap = new HashMap<>();
 
+        try {
+            accountBookService.softDeleteAccountBook(accountBookNo);
 
-        int updatedRows = accountBookService.updateAccountBook(params);
+            // 성공적인 삭제 후 상태와 메시지를 resultMap에 담기
+            resultMap.put("status", "success");
+            resultMap.put("alertMsg", "가계부가 성공적으로 삭제되었습니다.");
 
-        if (updatedRows > 0) {
-            return ResponseEntity.ok("가계부가 성공적으로 업데이트되었습니다.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 실패");
+            return ResponseEntity.status(HttpStatus.OK).body(resultMap); // 200 OK 상태 코드와 resultMap 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // 예외 발생 시 상태와 메시지를 resultMap에 담기
+            resultMap.put("status", "error");
+            resultMap.put("alertMsg", "가계부 삭제에 실패했습니다.");
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap); // 500 상태 코드 반환
         }
     }
+    @PutMapping("/update")
+    public ResponseEntity<Map<String, String>> updateAccountBook(@RequestBody Map<String, Object> params) {
+        Map<String, String> resultMap = new HashMap<>();
 
+        try {
+            int updatedRows = accountBookService.updateAccountBook(params);
+
+            if (updatedRows > 0) {
+                // 업데이트 성공 시 상태와 메시지를 resultMap에 담기
+                resultMap.put("status", "success");
+                resultMap.put("alertMsg", "가계부가 성공적으로 업데이트되었습니다.");
+                return ResponseEntity.status(HttpStatus.OK).body(resultMap); // 200 OK 상태 코드와 resultMap 반환
+            } else {
+                // 업데이트 실패 시 상태와 메시지를 resultMap에 담기
+                resultMap.put("status", "failure");
+                resultMap.put("alertMsg", "업데이트 실패");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap); // 500 상태 코드 반환
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 예외 발생 시 상태와 메시지를 resultMap에 담기
+            resultMap.put("status", "error");
+            resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap); // 500 상태 코드 반환
+        }
+    }
     // 월별 지출 조회 API
     @GetMapping("/list/monthlyExpense")
     public ResponseEntity<List<AccountBookVo>> getMonthlyExpenseBook(

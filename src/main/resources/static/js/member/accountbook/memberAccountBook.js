@@ -1,5 +1,6 @@
 import { formatPaymentAmountNumber, formatNumber, unformatNumber } from "../../util/format.js";
-
+import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
+checkAndShowStoredMessage();
 // accountBook.jsp의 js파일 유저용
 let memberNo;
 const today = new Date();
@@ -96,7 +97,7 @@ $(document).ready(function() {
         paymentAmount: amount
       }),
       success: function(response) {
-        alert('가계부가 성공적으로 추가되었습니다!');
+        showAlertMsg(response.alertMsg)
         $('#accountBookForm')[0].reset(); // 폼 초기화
         const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
         console.log(startDate, endDate);
@@ -108,7 +109,8 @@ $(document).ready(function() {
         fetchMonthlyPayback( startDate, endDate,memberNo)
       },
       error: function(xhr) {
-        alert('오류 발생: ' + xhr.responseText);
+        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+        showAlertMsg(msg)
       }
     });
   });
@@ -656,58 +658,58 @@ function deleteAccountBook(accountBookNo) {
     });
   }
 }*/
-
-//가계부detail에서수정
-function editAccountBook(accountBookNo,memberNo) {
-  // 필요한 입력 필드 값 가져오기
-
-  const paymentMethodNo = parseInt(document.getElementById('paymentMethodSelect').value, 10); // 결제 수단 형변환
-
-  const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 요소
-  const amountValue = document.getElementById("amountInput").value;
-  const contentValue = document.getElementById("contentInput").value;
-  const dateValue = document.getElementById("dateInput").value;
-  const formattedDate = new Date(dateValue).toISOString().split('T')[0]; // "YYYY-MM-DD" 형식으로 변환
-
-  // 카테고리 선택 값에 따라 plusCategoryNo와 minusCategoryNo 설정
-  let plusCategoryNo = 1;
-  let minusCategoryNo = 1;
-  const selectedCategoryValue = parseInt(categorySelect.value, 10); // 카테고리 값 형변환
-
-  if (categorySelect.options[0].textContent === "수입 카테고리 선택") {
-    plusCategoryNo = selectedCategoryValue;
-  } else if (categorySelect.options[0].textContent === "지출 카테고리 선택") {
-    minusCategoryNo = selectedCategoryValue;
-  }
-
-  const updatedData = {
-    memberNo: memberNo,
-    creDate: formattedDate,
-    accountBookNo: accountBookNo,
-    plusCategoryNo: plusCategoryNo,
-    minusCategoryNo: minusCategoryNo,
-    content: contentValue,
-    paymentMethodNo: paymentMethodNo,
-    paymentAmount: unformatNumber(amountValue)
-  };
-  console.log(updatedData);
-  console.log("함수 내 memberNo:", memberNo);
-  // AJAX 요청 보내기
-  $.ajax({
-    url: `/member/api/accountBook/update`, // 수정 API 엔드포인트
-    type: 'PUT', // 또는 'PATCH'
-    contentType: 'application/json', // JSON 형식으로 요청
-    data: JSON.stringify(updatedData), // 데이터 객체를 JSON으로 변환
-    success: function(response) {
-      alert("수정되었습니다")
-      goToDetail(accountBookNo, memberNo);
-    },
-    error: function(xhr, status, error) {
-
-      console.error('가계부 수정 실패:', error);
-    }
-  });
-}
+//
+// //가계부detail에서수정
+// function editAccountBook(accountBookNo,memberNo) {
+//   // 필요한 입력 필드 값 가져오기
+//
+//   const paymentMethodNo = parseInt(document.getElementById('paymentMethodSelect').value, 10); // 결제 수단 형변환
+//
+//   const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 요소
+//   const amountValue = document.getElementById("amountInput").value;
+//   const contentValue = document.getElementById("contentInput").value;
+//   const dateValue = document.getElementById("dateInput").value;
+//   const formattedDate = new Date(dateValue).toISOString().split('T')[0]; // "YYYY-MM-DD" 형식으로 변환
+//
+//   // 카테고리 선택 값에 따라 plusCategoryNo와 minusCategoryNo 설정
+//   let plusCategoryNo = 1;
+//   let minusCategoryNo = 1;
+//   const selectedCategoryValue = parseInt(categorySelect.value, 10); // 카테고리 값 형변환
+//
+//   if (categorySelect.options[0].textContent === "수입 카테고리 선택") {
+//     plusCategoryNo = selectedCategoryValue;
+//   } else if (categorySelect.options[0].textContent === "지출 카테고리 선택") {
+//     minusCategoryNo = selectedCategoryValue;
+//   }
+//
+//   const updatedData = {
+//     memberNo: memberNo,
+//     creDate: formattedDate,
+//     accountBookNo: accountBookNo,
+//     plusCategoryNo: plusCategoryNo,
+//     minusCategoryNo: minusCategoryNo,
+//     content: contentValue,
+//     paymentMethodNo: paymentMethodNo,
+//     paymentAmount: unformatNumber(amountValue)
+//   };
+//   console.log(updatedData);
+//   console.log("함수 내 memberNo:", memberNo);
+//   // AJAX 요청 보내기
+//   $.ajax({
+//     url: `/member/api/accountBook/update`, // 수정 API 엔드포인트
+//     type: 'PUT', // 또는 'PATCH'
+//     contentType: 'application/json', // JSON 형식으로 요청
+//     data: JSON.stringify(updatedData), // 데이터 객체를 JSON으로 변환
+//     success: function(response) {
+//       showAlertMsg(response.alertmsg);
+//       goToDetail(accountBookNo, memberNo);
+//     },
+//     error: function(xhr, status, error) {
+//
+//       console.error('가계부 수정 실패:', error);
+//     }
+//   });
+// }
 
 function getStartAndEndDates(year, month) {
   // 시작 날짜 (YYYY-MM-DD 형식)
@@ -851,18 +853,18 @@ $(document).on("click", "#editBtn", function(e) {
     paymentAmount: unformatNumber(amountValue)
   };
 
-  console.log(updatedData);
-  console.log("함수 내 memberNo:", memberNo);
+
 
   $.ajax({
     url: `/member/api/accountBook/update`,
     type: 'PUT',
     contentType: 'application/json',
     data: JSON.stringify(updatedData),
-    success: function(response) {
-      alert("수정되었습니다");
-
+    success: function(res) {
+      console.log(res);
       goToDetail(accountBookNo, memberNo);
+      const message = encodeURIComponent(res.alertMsg || "가계부 수정에 성공했습니다");
+      window.location.href = `/member/accountBook/list?message=${message}`; // 카테고리 목록 페이지로 이동
     },
     error: function(xhr, status, error) {
       console.error('가계부 수정 실패:', error);
@@ -880,10 +882,9 @@ $(document).on("click", "#deleteBtn", function(e) {
     $.ajax({
       url: `/member/api/accountBook/${accountBookNo}`, // DELETE 요청을 보낼 URL
       type: 'PATCH',
-      success: function() {
-        alert("가계부 항목이 삭제되었습니다.");
-        // 목록 페이지로 리다이렉트 또는 삭제 후 UI 업데이트
-        window.location.href = '/member/accountBook/list'; // 목록 페이지로 이동
+      success: function(response) {
+        window.location.href = "./list?message=" + encodeURIComponent(response.alertMsg);
+
       },
       error: function(error) {
         console.error("가계부 항목 삭제 실패:", error);

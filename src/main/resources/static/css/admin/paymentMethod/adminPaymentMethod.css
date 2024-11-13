@@ -79,7 +79,6 @@
 
 #content .main-container .list-container .list--div {
     width: 450px;
-    padding: 20px;
 }
 
 #content .main-container .list-container .list--note {
@@ -103,7 +102,7 @@
 }
 
 .list-content {
-    margin: 5px 0 10px 20px;
+    margin: 5px 0 20px 20px;
 }
 
 .content_margin {

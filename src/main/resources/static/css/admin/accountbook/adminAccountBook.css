@@ -31,19 +31,17 @@
   height: 35px;
   background-color: var(--color-gray);
   vertical-align: middle; /* 수직 정렬을 위해 설정 */
-  text-align: center;
-  padding-top: 6px; /* 정렬이왜안되지? */
-  margin-right: 15px; /* 흰색 박스와의 간격 설정 */
+  margin-right: 10px; /* 흰색 박스와의 간격 설정 */
+  line-height: 36px;
 }
+
 .category-item,
 .payment-item {
   margin-right: 15px; /* 각 항목 간의 간격 */
   display: inline-block; /* inline-block으로 변경 */
   width: 350px;
   height: 35px;
-
   font-size: 16px; /* 글자 크기 */
-  font-weight: bold; /* 글자 두께 */
   /* 박스 스타일 추가 */
   background-color: white; /* 배경색 흰색 */
   padding: 10px; /* 내부 여백 추가 */
@@ -95,12 +93,13 @@
   text-align: center; /* 레이블 텍스트 중앙 정렬 */
   display: inline-block; /* 높이 적용을 위해 inline-block으로 변경 */
   line-height: 35px; /* 레이블 중앙 정렬을 위해 line-height 설정 */
-  vertical-align: middle; /* 수직 정렬을 위해 설정 */
 }
 .categoryForm-container select,
 .paymentForm-container select {
   height: 35px; /* 선택 박스 높이 조정 */
   width: 200px; /* 선택 박스 너비 설정 */
+  font-size: 17px;
+  padding: 5px;
 }
 
 .table_container .title-container {

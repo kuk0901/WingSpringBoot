@@ -3,6 +3,7 @@ package com.edu.wing.member.service;
 import com.edu.wing.accountbook.dao.AccountBookDao;
 import com.edu.wing.member.dao.MemberDao;
 import com.edu.wing.member.domain.MemberVo;
+import com.edu.wing.sellingCard.dao.SellingCardDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class MemberServiceImpl implements MemberService {
   private MemberDao memberDao;
   @Autowired
   private AccountBookDao accountBookDao;
+  @Autowired
+  private SellingCardDao sellingCardDao;
 
   @Override
   public MemberVo memberExist(String email, String pwd) {
@@ -162,6 +165,7 @@ public class MemberServiceImpl implements MemberService {
     for (int memberNo : deletedMemberNos) {
       accountBookDao.deleteAllPayBack(memberNo);
       accountBookDao.deleteAllAccountBook(memberNo);
+      sellingCardDao.updateDeleteCard(memberNo);
     }
     System.out.println("월간데이터삭제");
   }

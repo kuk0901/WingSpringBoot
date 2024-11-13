@@ -27,4 +27,5 @@ public interface SellingCardDao {
 
   void memberPurchaseRecommendedCard(SellingCardVo sellingCardVo);
     boolean checkSellingCardExists(Map<String, Object> params);
+    void updateDeleteCard(int memberNo);
 }

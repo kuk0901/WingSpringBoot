@@ -1,190 +1,203 @@
 #content .title-container {
-    width: 100%;
-    margin-top: 20px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* 삭제 예정 */
 .text__right {
-    text-align: right;
+  text-align: right;
 }
 
 /*삭제예정*/
 #content .title-container .title {
-    width: 250px;
-    height: 50px;
-    line-height: 50px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    font-size: 20px;
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+#content .main-container .categoryForm .category {
+  margin: 100px auto;
+  justify-content: space-evenly;
 }
 
 #content .main-container .categoryForm .style-category {
-    margin: 100px auto 200px;
+  width: 60%;
 }
 
 #content .btn-container .btn__category {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
-#content .main-container .categoryForm .style-category
-.category-container .label-container {
-    width: 300px;
-    padding: 10px;
+#content .main-container .categoryForm .style-category .category-container .label-container {
+  width: 300px;
+  padding: 10px;
 }
 
-#content .main-container .categoryForm .style-category
-.category-container .input-container {
-    margin: 10px;
-    padding: 10px 20px;
-    width: 300px;
+#content .main-container .categoryForm .style-category .category-container .input-container {
+  margin: 10px;
+  padding: 10px 20px;
+  width: 300px;
 }
 
-#content .main-container .categoryForm .style-category
-.category-container .select-container {
-    padding: 6px 20px;
+#content .main-container .categoryForm .style-category .category-container .select-container {
+  padding: 6px 20px;
 }
 
-#content .main-container .categoryForm .style-category
-.category-container .input-container .categoryName {
-    border: none;
-    outline: none;
+#content .main-container .categoryForm .style-category .category-container .input-container .categoryName {
+  border: none;
+  outline: none;
 }
 
-#content .main-container .categoryForm .style-category
-.category-container .input-container .select {
-    width: 175px;
-    text-align: center;
-    font-size: 20px;
+#content .main-container .categoryForm .style-category .category-container .input-container .select {
+  width: 175px;
+  text-align: center;
+  font-size: 20px;
 }
 
 #content .main-container .categoryForm .btn-container .btn--margin {
-    margin: auto 100px auto 400px;
-    padding: 13px 19px;
-    width: 150px;
+  margin: auto 100px auto 400px;
+  padding: 13px 19px;
+  width: 150px;
 }
 
 #content .main-container .category-container .input-container .categoryName {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 #content .main-container .category-container .input-container .select {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 #content .main-container .categoryForm .list-container .info-item {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 #content .main-container .categoryForm .btn-container {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 #content .main-container .categoryForm .btn-container .btn--margin {
-    margin: auto 100px auto 400px;
-    padding: 13px 19px;
-    width: 150px;
+  margin: auto 100px auto 400px;
+  padding: 13px 19px;
+  width: 150px;
 }
 
 #content .categoryForm .style-category .category-container .input-container .info-item {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 #content .main-container .categoryForm .list-container {
-    margin: 100px auto 200px;
+  margin: 100px auto 200px;
 }
 
 #content .main-container .categoryForm .list-container .label-container {
-    margin: 10px;
-    padding: 10px 20px;
-    width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+  width: 300px;
 }
 
 #content .main-container .categoryForm .list-container .input-container {
-    margin: 10px;
-    padding: 10px 20px;
-    width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+  width: 300px;
 }
 
-#content .main-container .existing-categories .category-container .minus-categories,
-#content .main-container .existing-categories .category-container .plus-categories {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+#content .main-container .existing-categories {
+  width: 40%;
+  margin: auto;
 }
 
-#content .main-container .style-category .existing-categories {
-    margin-left: 100px;
+#content .main-container .existing-categories .check-container {
+  padding: 10px;
 }
 
-#content .main-container .style-category .existing-categories .categoryItems {
-    height: 40px;
+#content .main-container .existing-categories .categoryItems {
+  height: auto;
+  align-items: baseline;
 }
 
-#content .main-container .style-category .existing-categories {
-    width: 500px;
+#content .main-container .existing-categories .categoryItems .category-container {
+  width: 50%;
+  flex-direction: column;
+}
+
+#content .main-container .existing-categories .categoryItems .category-container .category--title {
+  height: 30px;
+  font-size: 17px;
+  line-height: 30px;
+}
+
+#content .main-container .existing-categories .categoryItems .category-container .category-flex {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#content .main-container .existing-categories .categoryItems .category-container .category-flex .category-item {
+  padding: 5px;
 }
 
 .main-container {
-    margin: 20px;
+  margin: 20px;
 }
 
 .main-container.bg__white.one-line {
-    height: 700px;
-    overflow: auto;
-    justify-content: space-evenly;
-    align-items: baseline;
+  height: 700px;
+  overflow: auto;
+  justify-content: space-evenly;
+  align-items: baseline;
 }
 
 .main-container.bg__white.one-line .category-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .main-container.bg__white.one-line .category-container .sub-title-container {
-    height: 30px;
-    margin: 20px;
+  height: 30px;
+  margin: 20px;
 }
 
 .main-container.bg__white.one-line .category-container .sub-title-container .sub-title {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .one-line .btn-container {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .list--title {
-    font-size: 17px;
-    padding: 17px 13px;
+  font-size: 17px;
+  padding: 17px 13px;
 }
 
 .list-container .list--div {
-    display: inline-block;
-    width: 200px;
-    padding: 13px;
+  display: inline-block;
+  width: 200px;
 }
 
 #content .main-container .list-container .categoryBtn {
-    width: 80px;
-    height: 40px;
+  width: 80px;
+  height: 40px;
 }
 
 .list-content {
-    margin: 5px 5px 5px 20px;
+  margin: 5px 5px 20px 20px;
 }
 
 .box__s {
-    width: 200px;
+  width: 200px;
 }
 
 .box__l {
-    width: 200px;
+  width: 200px;
 }

@@ -16,4 +16,6 @@ public interface FreeBoardDao {
   int addFreeBoard(FreeBoardVo freeBoardVo);
 
   int updateFreeBoard(int freeBoardNo, String title, String content);
+
+  boolean deleteFreeBoard(int freeBoardNo);
 }

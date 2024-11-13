@@ -26,4 +26,11 @@ public class FreeBoardCommentDaoImpl implements FreeBoardCommentDao {
     return sqlSession.insert(NAMESPACE + ".addComment", freeBoardCommentVo);
   }
 
+  @Override
+  public boolean deleteComment(int freeBoardCommentNo) {
+    int result = sqlSession.delete(NAMESPACE + ".deleteComment", freeBoardCommentNo);
+
+    return result > 0;
+  }
+
 }

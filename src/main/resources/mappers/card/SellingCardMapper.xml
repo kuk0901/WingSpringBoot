@@ -119,12 +119,13 @@
                  JOIN CARD C ON SC.CARD_NO = C.CARD_NO
                  JOIN MEMBER M ON SC.MEMBER_NO = M.MEMBER_NO
         WHERE SC.MEMBER_NO = #{memberNo}
+        AND SC.CARD_TERMINATION='N'
     </select>
 
     <!-- 카드 삭제 -->
     <update id="deleteCardSoft" parameterType="map">
         UPDATE SELLING_CARD
-        SET MEMBER_NO = 1, CARD_TERMINATION = 'Y',
+        SET CARD_TERMINATION = 'Y',
             <if test="terminationReason != null and terminationReason != ''">
                 TERMINATION_REASON = #{terminationReason},
             </if>
@@ -184,4 +185,11 @@
         FROM SELLING_CARD
         WHERE MEMBER_NO = #{memberNo}
     </select>
+
+    <update id="updateDeleteCard" parameterType="int">
+        update SELLING_CARD
+        set MEMBER_NO=1
+        where CARD_TERMINATION='Y'
+          AND MEMBER_NO=#{memberNo}
+    </update>
 </mapper>
