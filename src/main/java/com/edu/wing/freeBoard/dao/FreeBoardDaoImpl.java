@@ -51,4 +51,11 @@ public class FreeBoardDaoImpl implements FreeBoardDao {
 
     return sqlSession.update(NAMESPACE + "updateFreeBoard", resultMap);
   }
+
+  @Override
+  public boolean deleteFreeBoard(int freeBoardNo) {
+    int result = sqlSession.delete(NAMESPACE + "deleteFreeBoard", freeBoardNo);
+
+    return result > 0;
+  }
 }

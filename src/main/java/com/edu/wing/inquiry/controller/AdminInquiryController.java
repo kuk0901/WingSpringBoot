@@ -31,8 +31,6 @@ public class AdminInquiryController {
 
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView inquiryList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String inquirySearch) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping categoryList curPage: {}", curPage);
 
     int totalCount = inquiryService.inquirySelectTotalCount(inquirySearch);
 
@@ -41,8 +39,6 @@ public class AdminInquiryController {
     int end = pagingVo.getPageEnd();
 
     List<InquiryVo> inquiryList = inquiryService.inquirySelectList(start, end, inquirySearch);
-
-    log.info("inquiryList: {}", inquiryList);
 
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);

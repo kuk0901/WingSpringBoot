@@ -14,7 +14,7 @@
 
     <select id="freeBoardCommentSelectList" parameterType="map" resultMap="freeBoardCommentResultMap">
         SELECT FBC.FREE_BOARD_COMMENT_NO,
-        FBC.FREE_BOARD_NO, FBC.CONTENT, FBC.CRE_DATE, FBC.MEMBER_NO, M.EMAIL
+        FBC.FREE_BOARD_NO, FBC.CONTENT as content, FBC.CRE_DATE, FBC.MEMBER_NO, M.EMAIL
         FROM FREE_BOARD_COMMENT FBC
         JOIN MEMBER M ON FBC.MEMBER_NO = M.MEMBER_NO
         WHERE FBC.FREE_BOARD_NO = #{freeBoardNo}
@@ -24,5 +24,10 @@
         INSERT INTO FREE_BOARD_COMMENT (FREE_BOARD_COMMENT_NO, FREE_BOARD_NO, MEMBER_NO, CONTENT, CRE_DATE)
         VALUES (FREE_BOARD_COMMENT_NO_SEQ.NEXTVAL, #{freeBoardNo}, #{memberNo}, #{content}, SYSDATE)
     </insert>
+
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM FREE_BOARD_COMMENT
+        WHERE FREE_BOARD_COMMENT_NO = #{freeBoardCommentNo}
+    </delete>
 
 </mapper>

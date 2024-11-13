@@ -69,9 +69,6 @@ public class MemberFreeBoardController {
       , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch
       , @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession){
 
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping postDetail freeBoardNo: {}, curPage: {}, freeBoardSearch: {}, noticeBoardNo: {}", freeBoardNo, curPage, freeBoardSearch, noticeBoardNo);
-
     Map<String, Object> resultMap = new HashMap<>();
 
     MemberVo member = (MemberVo) httpSession.getAttribute("member");
