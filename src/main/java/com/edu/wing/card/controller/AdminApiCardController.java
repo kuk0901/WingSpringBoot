@@ -36,9 +36,12 @@ public class AdminApiCardController {
   private SellingCardService sellingCardService;
 
   @GetMapping("/card-detail/{cardNo}")
-  public ResponseEntity<?> productDetail(@PathVariable("cardNo") String cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
+  public ResponseEntity<?> productDetail(@RequestParam(defaultValue = "1") int cardNo,
+                                         @RequestParam(defaultValue = "") String message,
+                                         @RequestParam(defaultValue = "1") int curPage,
+                                         @RequestParam(defaultValue = "all") String categoryName) {
 
-    CardVo cardVo = cardService.cardSelectOne(Integer.parseInt(cardNo));
+    CardVo cardVo = cardService.cardSelectOne(cardNo);
 
     List<CardBenefitVo> allBenefits = cardBenefitService.cardBenefitSelectList();
     List<CardBenefitVo> benefitList =  CardBenefitUtil.filterBenefitsForCard(cardVo, allBenefits);
@@ -49,6 +52,7 @@ public class AdminApiCardController {
     resultMap.put("benefitList", benefitList);
     resultMap.put("curPage", curPage);
     resultMap.put("categoryName", categoryName);
+    resultMap.put("alertMsg", message);
 
     return ResponseEntity.ok().body(resultMap);
   }

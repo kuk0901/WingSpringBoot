@@ -12,7 +12,7 @@
 <body>
 
 <section id="root">
-  <jsp:include page="/WEB-INF/views/jsp/components/NavCs.jsp" />
+  <jsp:include page="/WEB-INF/views/jsp/components/NavMember.jsp" />
 
   <div id="content" class="bg">
 

@@ -35,8 +35,11 @@ public class PostServiceImpl implements PostService{
   }
 
   @Override
-  public void addPost(PostVo postVo) {
-    postDao.addPost(postVo);
+  public boolean addPost(PostVo postVo) {
+
+    int result = postDao.addPost(postVo);
+
+    return result > 0;
   }
 
   @Override

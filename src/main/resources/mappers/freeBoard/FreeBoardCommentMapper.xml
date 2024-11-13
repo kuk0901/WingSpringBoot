@@ -20,4 +20,9 @@
         WHERE FBC.FREE_BOARD_NO = #{freeBoardNo}
     </select>
 
+    <insert id="addComment" parameterType="freeBoardCommentVo">
+        INSERT INTO FREE_BOARD_COMMENT (FREE_BOARD_COMMENT_NO, FREE_BOARD_NO, MEMBER_NO, CONTENT, CRE_DATE)
+        VALUES (FREE_BOARD_COMMENT_NO_SEQ.NEXTVAL, #{freeBoardNo}, #{memberNo}, #{content}, SYSDATE)
+    </insert>
+
 </mapper>

@@ -169,6 +169,12 @@
 .list-container .list--div {
     display: inline-block;
     width: 200px;
+    padding: 13px;
+}
+
+#content .main-container .list-container .categoryBtn {
+    width: 80px;
+    height: 40px;
 }
 
 .list-content {

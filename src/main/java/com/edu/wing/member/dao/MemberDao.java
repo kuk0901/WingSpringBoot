@@ -19,9 +19,10 @@ public interface MemberDao {
 
   MemberVo selectAdminMypageInfo(int memberNo);//관리자 마이페이지용
   int updateMember(MemberVo memberVo);//관리자마이페이지수정용
-
+  MemberVo updateMemberSelect(int memberNo);
   MemberVo selectMyPageInfo(int memberNo); // 회원 정보마이페이지 조회 메서드
   int updateMemberInfo(MemberVo memberVo);
+  MemberVo selectUpdatedMemberInfo(int memberNo);
   void updateMemberQuitApply(MemberVo memberVo);
 
   // 카드 신청

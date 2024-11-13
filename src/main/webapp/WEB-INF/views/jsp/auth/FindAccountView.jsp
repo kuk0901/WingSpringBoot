@@ -44,12 +44,12 @@
 
       <div class="account-container">
         <div class="label-container">
-          <label for="password" class="text__white">패스워드</label>
+          <label for="pwd" class="text__white">패스워드</label>
         </div>
         <div class="input-container">
           <input
-              id="password"
-              name="password"
+              id="pwd"
+              name="pwd"
               type="password"
               placeholder="비밀번호를 작성해 주세요."
               required

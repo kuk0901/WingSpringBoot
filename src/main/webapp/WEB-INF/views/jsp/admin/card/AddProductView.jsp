@@ -6,6 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>product insert</title>
+  <link rel="stylesheet" href="/css/admin/card/adminProductManagement.css" />
   <link rel="stylesheet" href="/css/admin/card/adminAddProduct.css" />
   <script defer src="/js/admin/card/previewImage.js"></script>
   <script defer type="module" src="/js/admin/card/addProductViewAllFncs.js"></script>
@@ -30,13 +31,13 @@
       <form id="productAddForm" class="productAddForm bg__white" enctype="multipart/form-data">
         <div class="product-container one-line">
           <div class="label-container">
-            <label for="cardName" class="bg__gray text__semibold text__center box-s">*카드 명</label>
+            <label for="cardName" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 카드 명</label>
           </div>
           <div class="input-container">
             <input id="cardName" name="cardName" required class="box-xl" placeholder="ex) WING_Traffic"/>
           </div>
           <div class="label-container">
-            <label for="cardCompany" class="bg__gray text__semibold text__center box-s">*카드사</label>
+            <label for="cardCompany" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 카드사</label>
           </div>
           <div class="input-container">
             <input id="cardCompany" name="cardCompany" required class="box-l" placeholder="ex) WING_Card"/>
@@ -45,7 +46,7 @@
 
         <div class="product-container one-line">
           <div class="label-container">
-            <label for="categoryNo" class="bg__gray text__semibold text__center box-s">*분류</label>
+            <label for="categoryNo" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 분류</label>
           </div>
           <div class="input-container">
             <select id="categoryNo" name="categoryNo" class="box-s">
@@ -55,7 +56,7 @@
             </select>
           </div>
           <div class="label-container">
-            <label for="registerDate" class="bg__gray text__semibold text__center box-s">*등록 날짜</label>
+            <label for="registerDate" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 등록 날짜</label>
           </div>
           <div class="input-container">
             <input type="date" id="registerDate" name="registerDate" required />
@@ -64,7 +65,7 @@
 
         <div class="product-container one-line">
           <div class="label-container">
-            <label for="cardImgName" class="bg__gray text__semibold text__center box-m">*파일(카드 이미지)</label>
+            <label for="cardImgName" class="bg__gray text__semibold text__center box-m"><span class="text__red">*</span> 카드 이미지(파일)</label>
           </div>
           <div class="input-container">
             <input id="cardImgName" type="file" accept="image/*"  name="originalFileName" onchange="previewImage(this);" required class="btn bg__white" />
@@ -89,7 +90,7 @@
 
         <div class="product-container benefit-container">
           <div class="label-container">
-            <div class="bg__gray text__semibold text__center label--style">*주요 혜택</div>
+            <div class="bg__gray text__semibold text__center label--style"><span class="text__red">*</span> 주요 혜택</div>
           </div>
 
           <div class="border-style">
@@ -98,17 +99,14 @@
             </div>
             <div class="card-insert one-line">
               <div class="input-container">
-                <label for="cardBenefitDivision"></label>
                 <input id="cardBenefitDivision" name="cardBenefitDivision" type="text" class="box-m" placeholder="교통할인" />
               </div>
 
               <div class="input-container">
-                <label for="cardBenefitDetail"></label>
                 <input id="cardBenefitDetail" name="cardBenefitDetail" type="text" class="box-l" placeholder="항공사, 기차, 고속버스, 대중교통" />
               </div>
 
               <div class="input-container">
-                <label for="cardPercentage"></label>
                 <input
                   id="cardPercentage"
                   name="cardPercentage"
@@ -119,7 +117,6 @@
               </div>
             </div>
 
-            <%--   데이터 추가될 영역       --%>
             <div id="service">
               <ul class="service-content-header one-line">
                 <li class="service-li box-m text__semibold text__center">구분</li>
@@ -133,15 +130,14 @@
       </form>
 
       <div class="btn-container one-line">
-        <button id="productInsertBtn" type="button" class="btn btn__generate text__center">등록</button>
-        <a href="${pageContext.request.contextPath}/admin/productManagement/list?curPage=${pagingMap.pagingVo.curPage}&categoryName=${categoryName}"
+        <button id="productInsertBtn" type="button" class="btn btn__generate text__center" data-cur-page="${curPage}" data-category-name="${categoryName}">등록</button>
+        <a href="${pageContext.request.contextPath}/admin/productManagement/list?curPage=${curPage}&categoryName=${categoryName}"
           class="btn btn__generate"
         >취소</a>
       </div>
     </main>
   </div>
 </section>
-
 <section>
   <div class="hidden-ui"></div>
 </section>

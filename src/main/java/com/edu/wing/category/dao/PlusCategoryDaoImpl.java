@@ -44,10 +44,8 @@ public class PlusCategoryDaoImpl implements PlusCategoryDao {
   }
 
   @Override
-  public PlusCategoryVo plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo) {
-    sqlSession.update(NAMESPACE + "plusCategoryUpdateOne", plusCategoryVo);
-
-    return plusCategoryVo;
+  public int plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo) {
+    return sqlSession.update(NAMESPACE + "plusCategoryUpdateOne", plusCategoryVo);
   }
 
   @Override

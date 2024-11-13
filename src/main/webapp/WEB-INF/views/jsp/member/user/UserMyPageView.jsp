@@ -55,10 +55,10 @@
 
                 <div class="user-info-container one-line">
                   <div class="label-container">
-                    <label for="Name">이름</label>
+                    <label for="memberName">이름</label>
                   </div>
                   <div class="input-container">
-                    <input type="text" id="Name" name="Name"
+                    <input type="text" id="memberName" name="userName"
                            value="${memberVo.userName}"/>
 
                     <span id="userNameError"></span>

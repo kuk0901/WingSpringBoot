@@ -11,7 +11,7 @@
           integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
           crossorigin="anonymous">
   </script>
-  <script defer  type="module" src="/js/admin/user/adminMypage.js"></script>
+  <script defer type="module" src="/js/admin/user/adminMypage.js"></script>
 
  <link rel="stylesheet" href="/css/admin/user/adminMypage.css">
   <jsp:include page="/WEB-INF/views/jsp/common/common.jsp"/>
@@ -46,7 +46,8 @@
       </div>
       <div class="line">
         <label class="form-label">이름:</label>
-        <input type="text" name="userName" id="userName" value="${memberInfo.userName}" class="form-input"/>
+        <input type="text" name="userName" id="memberName" value="${memberInfo.userName}" class="form-input"/>
+        <span id="userNameError"></span>
       </div>
       <div class="line">
         <label class="form-label">비밀번호:</label>
@@ -69,6 +70,7 @@
         <input type="text" name="phone" id="phone" value="${memberInfo.phone}" class="form-input"
                pattern="^01[016789]-?[0-9]{3,4}-?[0-9]{4}$"
                maxlength="14"/>
+        <span id="phoneError"></span>
       </div>
       <div class="line">
         <label class="form-label">가입일자:</label>
