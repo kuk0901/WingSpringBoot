@@ -31,17 +31,17 @@
             </div>
         </div>
         <div class="top-container ">
-            <div id="topCategoriesContainer" class="category-container one-line">Top 카테고리</div>
-            <div id="topPaymentMethods" class="payment-container one-line">Top 결제 수단</div>
+            <div id="topCategoriesContainer" class="category-container one-line text__semibold">Top 카테고리</div>
+            <div id="topPaymentMethods" class="payment-container one-line text__semibold">Top 결제 수단</div>
         </div>
 
 
         <div class="form-container">
             <form id="searchForm" class="one-line">
                 <div class="categoryForm-container ">
-                    <label for="categorySelect">카테고리 선택:</label>
+                    <label for="categorySelect">카테고리</label>
                     <select name="category" id="categorySelect">
-                        <option value="all" selected>전체 선택</option> <!-- 전체 선택 옵션을 기본으로 선택 -->
+                        <option value="all" selected>전체</option> <!-- 전체 선택 옵션을 기본으로 선택 -->
 
                         <c:forEach var="category" items="${categoryList}">
                             <c:if test="${not empty category}">
@@ -52,9 +52,9 @@
                 </div>
 
                 <div class="paymentForm-container">
-                    <label for="paymentMethodSelect">결제 방법 선택:</label>
+                    <label for="paymentMethodSelect">결제 방법</label>
                     <select name="paymentMethod" id="paymentMethodSelect">
-                        <option value="all" selected>전체 선택</option> <!-- 전체 선택 옵션을 기본으로 선택 -->
+                        <option value="all" selected>전체</option> <!-- 전체 선택 옵션을 기본으로 선택 -->
                         <c:forEach var="paymentMethod" items="${paymentMethodList}">
                             <option value="${paymentMethod}">${paymentMethod}</option>
                         </c:forEach>

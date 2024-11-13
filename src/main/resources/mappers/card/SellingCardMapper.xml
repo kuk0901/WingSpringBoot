@@ -124,7 +124,7 @@
     <!-- 카드 삭제 -->
     <update id="deleteCardSoft" parameterType="map">
         UPDATE SELLING_CARD
-        SET MEMBER_NO = 1, CARD_TERMINATION = 'Y',
+        SET CARD_TERMINATION = 'Y',
             <if test="terminationReason != null and terminationReason != ''">
                 TERMINATION_REASON = #{terminationReason},
             </if>

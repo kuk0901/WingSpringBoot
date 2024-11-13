@@ -30,7 +30,7 @@
           var formattedDate = year+"-"+ month+"-"+day;
           // paymentAmount를 포맷팅
           var formattedPaymentAmount = formatNumber(accountBook.paymentAmount);
-          tableBody += '<tr>';
+          tableBody += '<tr class="list-container">';
           tableBody += '<td class="no">' + accountBook.accountBookNo + '</td>';
           tableBody += '<td>' + formattedDate + '</td>';
           tableBody += '<td>' + accountBook.memberEmail + '</td>';
@@ -64,10 +64,10 @@
         paymentMethodsContainer.empty(); // 기존 내용 삭제
 
         // "Top 결제 수단" 텍스트 추가
-        paymentMethodsContainer.append('<span class="topPaymentMethodsBox">Top 결제 수단</span>');
+        paymentMethodsContainer.append('<div class="topPaymentMethodsBox text__center">Top 결제 수단</div>');
         // 결제 방법 리스트를 화면에 출력
         data.forEach(function(method) {
-          paymentMethodsContainer.append(`<span class="category-item text__semibold">${method.paymentMethodName} (사용 횟수: ${method.usageCount}회)</span> `);
+          paymentMethodsContainer.append(`<div class="category-item text__normal">${method.paymentMethodName} (사용 횟수: <span class="text__semibold">${method.usageCount}회</span>)</div> `);
         });
       },
       error: function(xhr, status, error) {
@@ -84,10 +84,10 @@
           const categoriesContainer = $('#topCategoriesContainer'); // 카테고리 컨테이너 선택 (id 변경)
           categoriesContainer.empty(); // 기존 내용 지우기
           // "Top 카테고리" 텍스트 추가
-          categoriesContainer.append('<span class="topCategoriesBox">Top 카테고리</span>');
+          categoriesContainer.append('<div class="topCategoriesBox text__center">Top 카테고리</div>');
           // 데이터를 처리하여 화면에 출력
           data.forEach(category => {
-            categoriesContainer.append(`<span class="category-item text__semibold">${category.minusCategoryName} (사용 횟수: ${category.usageCount}회)</span> `);
+            categoriesContainer.append(`<div class="category-item text__normal">${category.minusCategoryName} (사용 횟수: <span class="text__semibold">${category.usageCount}회</span>)</div> `);
           });
         },
         error: function(xhr, status, error) {

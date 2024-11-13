@@ -95,7 +95,7 @@
 
           <div class="border-style">
             <div class="btn-container one-line">
-              <button id="benefitAddBtn" class="btn btn__generate text__center text__semibold">등록</button>
+              <button id="benefitAddBtn" class="btn btn__generate text__center text__semibold">추가</button>
             </div>
             <div class="card-insert one-line">
               <div class="input-container">
@@ -130,16 +130,16 @@
       </form>
 
       <div class="btn-container one-line">
-        <button id="productInsertBtn" type="button" class="btn btn__generate text__center" data-cur-page="${curPage}" data-category-name="${categoryName}">등록</button>
         <a href="${pageContext.request.contextPath}/admin/productManagement/list?curPage=${curPage}&categoryName=${categoryName}"
           class="btn btn__generate"
         >취소</a>
+        <button id="productInsertBtn" type="button" class="btn btn__generate text__center" data-cur-page="${curPage}" data-category-name="${categoryName}">등록</button>
       </div>
+
+      <div class="hidden-ui"></div>
     </main>
   </div>
-</section>
-<section>
-  <div class="hidden-ui"></div>
+
 </section>
 </body>
 </html>

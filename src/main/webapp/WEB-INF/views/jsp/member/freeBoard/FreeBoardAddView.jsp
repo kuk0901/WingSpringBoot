@@ -28,38 +28,56 @@
           <input type="hidden" id="memberNo"  value="${member.memberNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
 
-          <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black box__s text__center">
+              <label for="titleVal">제목</label>
+            </div>
+            <div class="input-container">
+              <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+            </div>
+          </div>
         </div>
 
         <div class="freeBoard-sub one-line">
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <input id="emailVal" type="text" class="info-writer bg__white text__black box__l" value="${member.email}" readonly>
-
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <input type="text" id="writeDate" class="info-date bg__white text__black box__l" value="${currentDate}" readonly>
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black box__s text__center">
+              <label for="emailVal">작성자</label>
+            </div>
+            <div class="input-container">
+              <input id="emailVal" type="text" class="info-writer bg__white text__black box__l" value="${member.email}" readonly>
+            </div>
+          </div>
+          <div class="info-container one-line box__l">
+            <div class="label-container bg__gray text__black box__s text__center">
+              <label for="writeDate">작성일</label>
+            </div>
+            <div class="input-container">
+              <input type="text" id="writeDate" class="info-date bg__white text__black box__l" value="${currentDate}" readonly>
+            </div>
+          </div>
         </div>
 
-        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
-
-        <div class="info-content bg__white text__black box__l">
-          <textarea id="contentVal" class="contentArea" placeholder="내용을 입력하세요"></textarea>
+        <div class="info-container">
+          <div class="label-container reason--title bg__gray text__black box__xl text__center">
+            <label for="contentVal">내용</label>
+          </div>
+          <div class="input-container textarea-content">
+            <textarea id="contentVal" class="contentArea" placeholder="내용을 입력하세요"></textarea>
+          </div>
         </div>
       </div>
     </main>
 
-    <div class="btn-container-all one-line">
-      <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove" href="/member/freeBoard/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&freeBoardSearch=${freeBoardSearch}">
-          취소
-        </a>
-      </div>
-      <div class="btn-container">
-        <button id="addFreeBoard" class="btn btn__generate listMove text__center text__bold">
-          게시글 등록
-        </button>
-      </div>
+
+    <div class="btn-container one-line">
+      <a id="listMove" class="btn btn__generate listMove" href="/member/freeBoard/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&freeBoardSearch=${freeBoardSearch}">
+        취소
+      </a>
+      <button id="addFreeBoard" class="btn btn__generate listMove text__center text__bold">
+        게시글 등록
+      </button>
     </div>
+
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />

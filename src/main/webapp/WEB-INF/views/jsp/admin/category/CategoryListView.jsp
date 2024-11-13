@@ -96,5 +96,6 @@
   </div>
 </section>
 
+<jsp:include page="/WEB-INF/views/jsp/components/scrollToTop.jsp" />
 </body>
 </html>
