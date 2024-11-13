@@ -54,54 +54,71 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
       <div id="title" class="title btn__yellow text__white">
         게시글 상세
       </div>
-      <div class="btn-container">
+      <div class="btn-container detailP-btn-container">
         <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}">
           돌아가기
         </a>
     </div>
     </div>
 
-    <main class="main-container bg__white">
+    <main class="main-container detail-board-content bg__white">
       <div class="freeBoard-container">
-        <div class="freeBoard-title one-line">
+        <div class="freeBoard-title">
           <input type="hidden" id="freeBoardNo" value="${freeBoardVo.freeBoardNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
           <input type="hidden" id="freeBoardSearch" value="${freeBoardSearch}">
           <input type="hidden" id="memberNo" value="${freeBoardVo.memberNo}">
           <input type="hidden" id="memberNumber" value="${currentMemberNo}">
-          <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <div id="freeBoardTitle" class="info-item bg__white text__black box__l">${freeBoardVo.title}</div>
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black text__center box__s">
+              <label for="freeBoardTitle" class="info-title">제목</label>
+            </div>
+            <div class="input-container bg__white text__black">
+              <input id="freeBoardTitle" class="info-item" value="${freeBoardVo.title}" />
+           </div>
+          </div>
         </div>
         
         <div class="freeBoard-sub one-line">
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${freeBoardVo.email}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formatDate(freeBoardVo.creDate)}</div> 
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black text__center box__s">
+              <label for="email" class="info-title">작성자</label>
+            </div>
+            <div class="input-container bg__white text__black">
+              <input id="email" class="info-writer" value="${freeBoardVo.email}" />
+            </div>
+          </div>
+          
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black text__center box__s">
+             <label for="creDate" class="info-title">작성일</label>
+            </div>
+            <div class="input-container bg__white text__black">
+              <input id="creDate" class="info-date" value="${formatDate(freeBoardVo.creDate)}" /> 
+            </div>
+          </div>
         </div>
         
-        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
-      
-        <div class="info-content bg__white text__black box__l">
-          <div id="freeBoardContent" class="bg__white text__black box__l">${freeBoardVo.content}</div>
-        </div>      
+        <div class="info-container">
+          <div class="label-container reason--title bg__gray text__black text__center">
+           <label for="freeBoardContent" class="info-content-div">내용</label>
+          </div>
+          <div class="input-container bg__white text__black textarea-content">
+            <textarea id="freeBoardContent" class="contentArea">${freeBoardVo.content}</textarea>
+          </div>      
+        </div>
       </div>
       
       ${freeBoardVo.memberNo == currentMemberNo ? `
-
-        <div class="member-btn-container one-line">
-          <div>
-            <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
-              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              삭제
-            </button>
-          </div>
-          <div>
-            <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
-              data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              수정
-            </button>
-          </div>
+        <div class="btn-container one-line">
+          <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+            삭제
+          </button>
+          <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
+            data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+            수정
+          </button>
         </div>
         ` : `
         <div class="member-btn-container one-line">
@@ -191,44 +208,63 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
       </div>
     </div>
 
-    <main class="main-container bg__white">
+    <main class="main-container detail-board-content bg__white">
       <div class="freeBoard-container">
-        <div class="freeBoard-title one-line">
+        <div class="freeBoard-title">
           <input type="hidden" id="freeBoardNo" value="${freeBoardVo.freeBoardNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
           <input type="hidden" id="freeBoardSearch" value="${freeBoardSearch}">
           <input type="hidden" id="memberNo" value="${freeBoardVo.memberNo}">
-          <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <input id="freeBoardTitle" class="info-item bg__white text__black box__l" value="${freeBoardVo.title}">
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black text__center box__s">
+              <label for="freeBoardTitle" class="info-title">제목</label>
+            </div>
+            <div class="input-container bg__white text__black">
+              <input id="freeBoardTitle" class="info-item" value="${freeBoardVo.title}">
+            </div>
+          </div>
         </div>
         
         <div class="freeBoard-sub one-line">
-          <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-          <div class="info-writer bg__white text__black box__l">${freeBoardVo.email}</div>
-          <div class="info-title bg__gray text__black box__l text__center">작성일</div>
-          <div class="info-date bg__white text__black box__l">${formatDate(freeBoardVo.modDate)}</div> 
+          <div class="info-container one-line">
+            <div class="label-container bg__gray text__black text__center box__s">
+              <label for="email" class="info-title">작성자</label>
+            </div>
+            <div class="input-container bg__white text__black">
+              <input id="email" class="info-writer" value="${freeBoardVo.email}" />
+            </div>
+          </div>
+          <div class="info-container text__center text__black one-line">
+            <div class="label-container info-title bg__gray box__s">
+              <label for="modDate">작성일</label>
+            </div>
+            <div class="input-container bg__white">
+              <input id="modDate" class="info-date" value="${formatDate(freeBoardVo.modDate)}" />
+            </div>
+          </div> 
         </div>
         
-        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
+        <div class="info-container">
+          <div class="label-container reason--title bg__gray text__black text__center">
+            <label for="freeBoardContent" class="reason--title">내용</label>
+          </div>
       
-        <div class="info-content bg__white text__black box__l">
-          <textarea id="freeBoardContent" class="bg__white text__black box__l">${freeBoardVo.content}</textarea>
-        </div>      
+          <div class="input-container textarea-content bg__white text__black">
+            <textarea id="freeBoardContent" class="contentArea">${freeBoardVo.content}</textarea>
+          </div>    
+        </div>  
       </div>
 
-        <div class="member-btn-container one-line">
-          <div class="btn-container">
-            <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&noticeBoardNo=${noticeBoardNo}">
-              돌아가기
-            </a>
-          </div>
-          <div>
-            <button id="updateBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
-              data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              수정
-            </button>
-          </div>
-        </div>
+        
+      <div class="btn-container one-line">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&noticeBoardNo=${noticeBoardNo}">
+          돌아가기
+        </a>
+        <button id="updateBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
+          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+          수정
+        </button>
+      </div>
     </main>
     
     <div class="hidden-ui"></div>

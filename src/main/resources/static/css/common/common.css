@@ -97,6 +97,10 @@ a {
   color: transparent;
 }
 
+.text__normal {
+  font-weight: 500;
+}
+
 .text__semibold {
   font-weight: 700;
 }

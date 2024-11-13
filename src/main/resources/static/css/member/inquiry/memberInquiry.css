@@ -165,13 +165,22 @@
   padding: 10px;
 }
 
+#content .main-container .inquiry-comment-container .answer-info {
+  width: 90%;
+  margin: auto;
+}
+
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container {
   margin-top: 10px;
 }
 
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container.one-line {
+  gap: 20px;
+}
+
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-item {
   width: 100px;
-  margin-right: 20px;
+  margin-right: 10px;
   padding: 10px;
 }
 
@@ -186,6 +195,7 @@
   height: 160px;
   margin: 20px auto;
   border: 1px solid black;
+  padding: 10px;
 }
 
 #content .main-container .inquiry-comment-container .no-data-container {
