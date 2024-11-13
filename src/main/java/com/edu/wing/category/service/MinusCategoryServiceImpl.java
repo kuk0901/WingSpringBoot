@@ -45,8 +45,8 @@ public class MinusCategoryServiceImpl implements MinusCategoryService {
   }
 
   @Override
-  public MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
-    return minusCategoryDao.minusCategoryUpdateOne(minusCategoryVo);
+  public boolean minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
+    return minusCategoryDao.minusCategoryUpdateOne(minusCategoryVo) > 0;
   }
 
   @Override

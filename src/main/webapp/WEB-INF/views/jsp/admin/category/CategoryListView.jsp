@@ -47,8 +47,8 @@
                 <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
                 <div id="minusValue" class="list--div text__center box__s">지출</div>
                 <div class="list--div box__l text__center bg__white">
-                  <button class="btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">수정</button>
-                  <button class="btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">삭제</button>
+                  <button class="categoryBtn btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">수정</button>
+                  <button class="categoryBtn btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">삭제</button>
                 </div>
               </div>
             </c:forEach>
@@ -79,8 +79,8 @@
                   <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
                   <div id="plusValue" class="list--div text__center box__s">수입</div>
                   <div class="list--div box__l text__center bg__white">
-                    <button class="btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">수정</button>
-                    <button class="btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">삭제</button>
+                    <button class="categoryBtn btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">수정</button>
+                    <button class="categoryBtn btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">삭제</button>
                   </div>
                 </div>
             </c:forEach>

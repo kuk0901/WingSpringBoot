@@ -14,7 +14,7 @@ public interface MinusCategoryService {
 
   boolean minusCategoryInsertOne(String categoryName);
 
-  MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
+  boolean minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo);
 
   MinusCategoryVo minusCategorySelectOne(int categoryNo);
 

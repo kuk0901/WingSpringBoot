@@ -11,7 +11,7 @@ public interface PostDao {
 
   List<PostVo> postSelectList(Map<String, Object> map);
 
-  void addPost(PostVo postVo);
+  int addPost(PostVo postVo);
 
   Map<String, Object> postSelectOne(int postNo);
 

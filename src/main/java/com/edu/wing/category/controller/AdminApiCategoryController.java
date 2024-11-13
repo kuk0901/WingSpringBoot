@@ -55,7 +55,6 @@ public class AdminApiCategoryController {
     return ResponseEntity.ok().body(resultMap);
   }
 
-
   @PostMapping("/addMinus")
   public ResponseEntity<?> addMinusCategory(@RequestParam String categoryName) {
     log.info("카테고리 추가 요청: 이름 = {}", categoryName);
@@ -70,7 +69,7 @@ public class AdminApiCategoryController {
 
     // 새로운 결제 방법 추가
     boolean isAdded = minusCategoryService.minusCategoryInsertOne(categoryName);
-    if (isAdded) {
+    if (!isAdded) {
       resultMap.put("status", "fail");
       resultMap.put("alertMsg", "카테고리 추가에 실패했습니다.");
       return ResponseEntity.badRequest().body(resultMap);
@@ -85,54 +84,46 @@ public class AdminApiCategoryController {
 
   @PatchMapping("/updatePlus/{categoryNo}")
   public ResponseEntity<?> plusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> plusCategoryMap) {
-    log.info(LOG_TITLE);
-    log.info("updatePlusCategory Patch paymentMethodNo: {}, paymentMethodMap: {}",
-        categoryNo, plusCategoryMap);
 
     PlusCategoryVo plusCategoryVo = new PlusCategoryVo();
     plusCategoryVo.setCategoryNo(categoryNo);
     plusCategoryVo.setCategoryName(plusCategoryMap.get("categoryName"));
 
-    try {
-      plusCategoryService.plusCategoryUpdateOne(plusCategoryVo);
-    } catch (Exception e) {
-      Map<String, String> errorResponseMap = new HashMap<>();
-      errorResponseMap.put("errorMsg", "결제 수단 업데이트 중 오류가 발생했습니다.");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .contentType(MediaType.APPLICATION_JSON).body(errorResponseMap);
-    }
-
     Map<String, Object> resultMap = new HashMap<>();
 
+    boolean plusCategoryUpdate = plusCategoryService.plusCategoryUpdateOne(plusCategoryVo);
+
+    if(!plusCategoryUpdate) {
+      resultMap.put("status", "fail");
+      resultMap.put("alertMsg", "서버 오류로 인해 카테고리가 수정되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("alertMsg", "카테고리가 성공적으로 수정되었습니다");
     return ResponseEntity.ok().body(resultMap);
   }
 
   @PatchMapping("/updateMinus/{categoryNo}")
   public ResponseEntity<?> minusCategoryUpdateOne(@PathVariable int categoryNo,
                                                   @RequestParam Map<String, String> minusCategoryMap) {
-    log.info(LOG_TITLE);
-    log.info("updateMinusCategory Patch paymentMethodNo: {}, paymentMethodMap: {}",
-        categoryNo, minusCategoryMap);
-
-    MinusCategoryVo minusCategoryVo = new MinusCategoryVo();
-    minusCategoryVo.setCategoryNo(categoryNo);
-    minusCategoryVo.setCategoryName(minusCategoryMap.get("categoryName"));
-    // 필요한 다른 필드들도 여기에 추가
-
-    log.info("minusCategoryVo: {}", minusCategoryVo);
-
-    try {
-      minusCategoryService.minusCategoryUpdateOne(minusCategoryVo);
-    } catch (Exception e) {
-      log.error("결제 수단 업데이트 중 오류 발생", e);
-      Map<String, String> errorResponseMap = new HashMap<>();
-      errorResponseMap.put("errorMsg", "결제 수단 업데이트 중 오류가 발생했습니다.");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-          .contentType(MediaType.APPLICATION_JSON).body(errorResponseMap);
-    }
 
     Map<String, Object> resultMap = new HashMap<>();
 
+    MinusCategoryVo minusCategoryVo = new MinusCategoryVo();
+
+    minusCategoryVo.setCategoryNo(categoryNo);
+    minusCategoryVo.setCategoryName(minusCategoryMap.get("categoryName"));
+
+    boolean minusCategoryUpdate = minusCategoryService.minusCategoryUpdateOne(minusCategoryVo);
+
+    if(!minusCategoryUpdate) {
+      resultMap.put("status", "fail");
+      resultMap.put("alertMsg", "서버 오류로 인해 카테고리가 수정되지 않았습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("alertMsg", "카테고리가 성공적으로 수정되었습니다.");
     return ResponseEntity.ok().body(resultMap);
   }
 
@@ -237,21 +228,21 @@ public class AdminApiCategoryController {
 
     if (minusCategoryVo == null) {
       resultMap.put("status", "error");
-      resultMap.put("message", "카테고리를 찾을 수 없습니다.");
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
+      resultMap.put("alertMsg", "카테고리를 찾을 수 없습니다.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
     boolean isDeleted = minusCategoryService.minusCategoryDeleteOne(categoryNo);
 
-    if (isDeleted) {
-      resultMap.put("status", "success");
-      resultMap.put("message", "'" + minusCategoryVo.getCategoryName() + "' 카테고리가 성공적으로 삭제되었습니다.");
-      return ResponseEntity.ok(resultMap);
-    } else {
+    if (!isDeleted) {
       resultMap.put("status", "error");
-      resultMap.put("message", "카테고리 삭제에 실패했습니다.");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+      resultMap.put("alertMsg", "카테고리 삭제에 실패했습니다.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
+
+    resultMap.put("status", "success");
+    resultMap.put("alertMsg", "'" + minusCategoryVo.getCategoryName() + "' 카테고리가 성공적으로 삭제되었습니다.");
+    return ResponseEntity.ok(resultMap);
 
   }
 }

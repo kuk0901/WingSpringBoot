@@ -46,13 +46,11 @@ $("#addPost").click(function (e) {
     contentType: 'application/json',
     data: JSON.stringify(postData),
     success: function (res) {
-      alert("게시글이 성공적으로 추가되었습니다.");
-      // 게시글 목록 페이지로 리다이렉트
-      window.location.href = '/admin/cs/post/list';
+      const message = encodeURIComponent(res.alertMsg || "공지사항 등록에 성공했습니다");
+      window.location.href = `/admin/cs/post/list?message=${message}`;
     },
-    error: function (xhr, status, error) {
-      console.error("게시글 추가 중 오류가 발생했습니다.", error);
-      alert("게시글 추가 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    error: function (res) {
+      showAlertMsg(res.alertMsg);
     }
   });
 });
@@ -272,7 +270,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         email: email
       }),
       success: function(res) {
-        const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
+        const message = encodeURIComponent(res.alertMsg || "공지사항이 수정되었습니다");
         window.location.href = `/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}&message=${message}`;
       },
       error: function(res) {

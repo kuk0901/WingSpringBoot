@@ -1,5 +1,6 @@
 package com.edu.wing.freeBoardComment.dao;
 
+import com.edu.wing.freeBoard.domain.FreeBoardVo;
 import com.edu.wing.freeBoardComment.domain.FreeBoardCommentVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class FreeBoardCommentDaoImpl implements FreeBoardCommentDao {
   @Override
   public List<FreeBoardCommentVo> freeBoardCommentSelectList(int freeBoardNo) {
     return sqlSession.selectList(NAMESPACE + ".freeBoardCommentSelectList", freeBoardNo);
+  }
+
+  @Override
+  public int addComment(FreeBoardCommentVo freeBoardCommentVo) {
+    return sqlSession.insert(NAMESPACE + ".addComment", freeBoardCommentVo);
   }
 
 }

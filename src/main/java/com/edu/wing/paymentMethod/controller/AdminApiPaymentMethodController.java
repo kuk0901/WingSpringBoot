@@ -69,7 +69,7 @@ public class AdminApiPaymentMethodController {
     if (paymentMethod == null) {
       resultMap.put("status", "error");
       resultMap.put("alertMsg", "결제 방법을 찾을 수 없습니다.");
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
     resultMap.put("status", "success");
@@ -88,7 +88,7 @@ public class AdminApiPaymentMethodController {
     if (paymentMethod == null) {
       resultMap.put("status", "error");
       resultMap.put("alertMsg", "결제 방법을 찾을 수 없습니다.");
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMap);
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
     boolean isDeleted = paymentMethodService.paymentMethodDeleteOne(paymentMethodNo);
@@ -96,39 +96,26 @@ public class AdminApiPaymentMethodController {
     if (isDeleted) {
       resultMap.put("status", "success");
       resultMap.put("alertMsg", "'" + paymentMethod.getPaymentMethodName() + "' 결제 방법이 성공적으로 삭제되었습니다.");
-      return ResponseEntity.ok(resultMap);
+      return ResponseEntity.ok().body(resultMap);
     } else {
       resultMap.put("status", "error");
       resultMap.put("alertMsg", "결제 방법 삭제에 실패했습니다.");
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultMap);
+      return ResponseEntity.badRequest().body(resultMap);
     }
   }
 
   @PatchMapping("/update/{paymentMethodNo}")
   public ResponseEntity<?> paymentMethodUpdateOne(@PathVariable int paymentMethodNo,
     @RequestParam Map<String, String> paymentMethodMap) {
-    log.info(LOG_TITLE);
-    log.info("updatePaymentMethod Patch paymentMethodNo: {}, paymentMethodMap: {}",
-        paymentMethodNo, paymentMethodMap);
 
     Map<String, Object> resultMap = new HashMap<>();
 
     PaymentMethodVo paymentMethodVo = new PaymentMethodVo();
     paymentMethodVo.setPaymentMethodNo(paymentMethodNo);
     paymentMethodVo.setPaymentMethodName(paymentMethodMap.get("paymentMethodName"));
-    // 필요한 다른 필드들도 여기에 추가
 
-    log.info("paymentMethodVo: {}", paymentMethodVo);
 
     paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
-
-//    try {
-//      paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
-//    } catch (Exception e) {
-//      log.error("결제 수단 업데이트 중 오류 발생", e);
-//      resultMap.put("alertMsg", "결제 수단 업데이트 중 오류가 발생했습니다.");
-//      return ResponseEntity.internalServerError().body(resultMap);
-//    }
 
     if (paymentMethodService.paymentMethodSelectOne(paymentMethodNo) != null) {
       resultMap.put("status", "success");
@@ -138,7 +125,7 @@ public class AdminApiPaymentMethodController {
 
     resultMap.put("status", "failed");
     resultMap.put("alertMsg", "서버 오류로 인해 결제 수단 명이 변경되지 않았습니다. 잠시 후 다시 시도해 주세요.");
-    return ResponseEntity.internalServerError().body(resultMap);
+    return ResponseEntity.badRequest().body(resultMap);
   }
 
   @PostMapping("/update/{paymentMethodNo}")

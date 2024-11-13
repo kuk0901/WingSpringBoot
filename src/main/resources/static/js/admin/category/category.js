@@ -71,8 +71,8 @@ $(".moveModFunc").click(function (e) {
           success: function (res) {
             createPlusUpdateView(res);
           },
-          error: function (xhr, status, error) {
-            console.log(error);
+          error: function (res) {
+            showAlertMsg(res.alertMsg);
           }
         });
       }
@@ -91,11 +91,10 @@ $(".moveModFunc").click(function (e) {
           url: `/admin/api/category/updateMinus/${no}`,
           type: 'POST',
           success: function (res) {
-            console.log(res);
             createMinusUpdateView(res);
           },
-          error: function (xhr, status, error) {
-            console.log(error);
+          error: function (res) {
+            showAlertMsg(res.alertMsg);
           }
         });
       }
@@ -154,12 +153,11 @@ function updatePlusCategory(categoryNo) {
     type: 'PATCH',
     data: { categoryName: categoryName },
     success: function(res) {
-      console.log("수정 성공:", res);
-      alert("카테고리가 성공적으로 수정되었습니다.");
+      const message = encodeURIComponent(res.alertMsg || "카테고리 수정에 성공했습니다");
+      window.location.href = `/admin/category/list?message=${message}`;
     },
-    error: function(xhr, status, error) {
-      console.log("수정 실패:", error);
-      alert("카테고리 수정에 실패했습니다.");
+    error: function(res) {
+      showAlertMsg(res.alertMsg);
     }
   });
 }
@@ -214,10 +212,11 @@ function updateMinusCategory(categoryNo) {
     type: 'PATCH',
     data: { categoryName: categoryName },
     success: function(res) {
-      alert("카테고리가 성공적으로 수정되었습니다.");
+      const message = encodeURIComponent(res.alertMsg || "카테고리 수정에 성공했습니다");
+      window.location.href = `/admin/category/list?message=${message}`;
     },
-    error: function(xhr, status, error) {
-      alert("카테고리 수정에 실패했습니다.");
+    error: function(res) {
+      showAlertMsg(res.alertMsg);
     }
   });
 }

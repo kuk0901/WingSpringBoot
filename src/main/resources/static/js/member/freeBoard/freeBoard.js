@@ -43,9 +43,9 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
 
   const commentList = freeBoardCommentList.map(comment => `
       <div class="comment-container one-line">
-        <div>${comment.email}</div>
-        <div>${comment.content}</div>
-        <div>${formatDate(comment.creDate)}</div>
+        <div class="comment-email">${comment.email}</div>
+        <div class="comment-content">${comment.content}</div>
+        <div class="comment-date">${formatDate(comment.creDate)}</div>
       </div>
   `).join("");
 
@@ -103,11 +103,21 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
             </button>
           </div>
         </div>
-        ` : ""
+        ` : `
+        <div class="member-btn-container one-line">
+          <div id="member-addBtn-container" class="one-line">
+            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+              답변 추가
+            </button>
+          </div>
+        </div>
+        `
       }
     </main>
     
-    ${freeBoardCommentList ? `<div id="comment-list-container">${commentList}</div>` : ""}
+    ${freeBoardCommentList ? `<div id="comment-list-container" class="comment-list-container bg__white">${commentList}</div>` : ""}
     
     <div class="hidden-ui"></div>
   `;
@@ -131,7 +141,39 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         freeBoardSearch: freeBoardSearch,
       },
       success: function (res) {
-        createUpdateView(res.freeBoardVo, curPage, noticeBoardNo, freeBoardSearch);
+        createUpdateView(res.freeBoardVo, res.curPage, res.noticeBoardNo, res.freeBoardSearch);
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
+
+  $("#addCommentBtn").click(function (e) {
+    e.preventDefault();
+
+    const content = $("#comment-textarea").val();
+    const freeBoardNo = $(this).data("free-board-no");
+    const noticeBoardNo = $(this).data("notice-board");
+    const curPage = $(this).data("cur-page");
+    const freeBoardSearch = $(this).data("free-board-search");
+
+    console.log(content);
+
+    $.ajax({
+      url: `/member/api/freeBoard/list/${freeBoardNo}/addComment`,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        freeBoardNo: freeBoardNo,
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        freeBoardSearch: freeBoardSearch,
+        content: content,
+      }),
+      success: function (res) {
+        const message = encodeURIComponent(res.alertMsg || "답글 등록에 성공했습니다");
+        window.location.href = `/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&message=${message}`;
       },
       error: function (res) {
         showAlertMsg(res.alertMsg);
@@ -141,8 +183,6 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
 }
 
 function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) {
-
-  console.log(noticeBoardNo);
 
   const freeBoardUpdate = `
     <div class="title-container one-line">
@@ -262,7 +302,7 @@ $("#addFreeBoard").click(function (e) {
     data: JSON.stringify(freeBoardData),
     success: function (res) {
       const message = encodeURIComponent(res.alertMsg || "게시글 추가에 성공했습니다");
-      window.location.href = `/member/freeBoard/list?message=${res.alertMsg}`;
+      window.location.href = `/member/freeBoard/list?message=${message}`;
     },
     error: function (res) {
       showAlertMsg(res.alertMsg);
