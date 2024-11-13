@@ -30,5 +30,9 @@ public class FreeBoardCommentServiceImpl implements FreeBoardCommentService{
     return freeBoardCommentDao.addComment(freeBoardCommentVo) > 0;
   }
 
+  @Override
+  public boolean deleteComment(int freeBoardCommentNo) {
+    return freeBoardCommentDao.deleteComment(freeBoardCommentNo);
+  }
 
 }

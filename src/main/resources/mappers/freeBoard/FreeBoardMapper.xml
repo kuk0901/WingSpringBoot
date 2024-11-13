@@ -50,7 +50,7 @@
 
     <select id="freeBoardSelectOne" parameterType="int" resultMap="freeBoardResultMap">
         SELECT FB.FREE_BOARD_NO, FB.TITLE, M.EMAIL, FB.CRE_DATE,FB.MOD_DATE,
-        FB.CONTENT, FB.MEMBER_NO
+        FB.CONTENT, FB.MEMBER_NO, FB.MOD_DATE
         FROM FREE_BOARD FB
         JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO
         WHERE FB.FREE_BOARD_NO = #{freeBoardNo}
@@ -65,7 +65,13 @@
         UPDATE FREE_BOARD
         SET TITLE = #{title},
             CONTENT = #{content},
-            MOD_DATE = SYSDATE
+            MOD_DATE = SYSDATE,
+            CRE_DATE = SYSDATE
         WHERE FREE_BOARD_NO = #{freeBoardNo}
     </update>
+
+    <delete id="deleteFreeBoard" parameterType="int">
+        DELETE FROM FREE_BOARD
+        WHERE FREE_BOARD_NO = #{freeBoardNo}
+    </delete>
 </mapper>

@@ -16,4 +16,6 @@ public interface FreeBoardService {
   boolean addFreeBoard(String title, String content, String email, int noticeBoardNo, int memberNo);
 
   boolean updateFreeBoard(int freeBoardNo, String title, String content);
+
+  boolean deleteFreeBoard(int freeBoardNo);
 }

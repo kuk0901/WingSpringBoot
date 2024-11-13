@@ -28,20 +28,14 @@ public class AdminFreeBoardController {
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView freeBoardList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
                     @RequestParam(defaultValue = "3") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping freeBoardList curPage: {}, noticeBoardNo: {}, freeBoardSearch: {}", curPage, noticeBoardNo, freeBoardSearch);
 
     int totalCount = freeBoardService.freeBoardSelectTotalCount(noticeBoardNo, freeBoardSearch);
-
-    log.info("totalCount: {}", totalCount);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));
     int start = pagingVo.getPageBegin();
     int end = pagingVo.getPageEnd();
 
     List<FreeBoardVo> freeBoardList = freeBoardService.freeBoardSelectList(start, end, freeBoardSearch, noticeBoardNo);
-
-    log.info("freeBoardList: {}", freeBoardList);
 
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);

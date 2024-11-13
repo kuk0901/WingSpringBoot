@@ -28,7 +28,7 @@ public class FreeBoardServiceImpl implements FreeBoardService {
     Map<String, Object> map = new HashMap<>();
     map.put("start", start);
     map.put("end", end);
-    map.put("postSearch", freeBoardSearch);
+    map.put("freeBoardSearch", freeBoardSearch);
     map.put("noticeBoardNo", noticeBoardNo);
 
     return freeBoardDao.freeBoardSelectList(map);
@@ -55,5 +55,10 @@ public class FreeBoardServiceImpl implements FreeBoardService {
   @Override
   public boolean updateFreeBoard(int freeBoardNo, String title, String content) {
     return freeBoardDao.updateFreeBoard(freeBoardNo, title, content) > 0;
+  }
+
+  @Override
+  public boolean deleteFreeBoard(int freeBoardNo) {
+    return freeBoardDao.deleteFreeBoard(freeBoardNo);
   }
 }
