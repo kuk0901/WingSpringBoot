@@ -29,21 +29,30 @@ public class AdminApiPostController {
     log.info(LOG_TITLE);
     log.info("addPost postVo: {}", postVo);
 
+    Map<String, Object> resultMap = new HashMap<>();
+
     MemberVo member = (MemberVo) httpSession.getAttribute("member");
 
-    if (member != null) {
-      postVo.setMemberNo(member.getMemberNo()); // memberNo를 InquiryVo에 설정
-    } else {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 정보가 없습니다.");
+    if (member == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "로그인 정보가 없습니다.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
-    try {
-      postService.addPost(postVo);
-      return ResponseEntity.ok().body("문의가 성공적으로 등록되었습니다");
-    }catch (Exception e) {
-      log.error("Error occurred while adding post: {}", e.getMessage());
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문의 등록 중 오류가 발생했습니다");
+    postVo.setMemberNo(member.getMemberNo());
+
+    boolean addPost = postService.addPost(postVo);
+
+    if(!addPost) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 공지사항이 등록되지 않았습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
+
+    resultMap.put("status", "success");
+    resultMap.put("alertMsg", "공지사항이 성공적으로 등록되었습니다.");
+    return ResponseEntity.ok().body(resultMap);
+
   }
 
   @PatchMapping("/list/{postNo}/update")

@@ -32,8 +32,8 @@ public class PostDaoImpl implements PostDao {
   }
 
   @Override
-  public void addPost(PostVo postVo) {
-    sqlSession.insert(NAMESPACE + "addPost", postVo);
+  public int addPost(PostVo postVo) {
+    return sqlSession.insert(NAMESPACE + "addPost", postVo);
   }
 
   @Override

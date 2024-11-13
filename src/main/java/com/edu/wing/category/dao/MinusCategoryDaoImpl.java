@@ -45,10 +45,10 @@ public class MinusCategoryDaoImpl implements MinusCategoryDao {
   }
 
   @Override
-  public MinusCategoryVo minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
+  public int minusCategoryUpdateOne(MinusCategoryVo minusCategoryVo) {
     sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", minusCategoryVo);
 
-    return minusCategoryVo;
+    return sqlSession.update(NAMESPACE + "minusCategoryUpdateOne", minusCategoryVo);
   }
 
   @Override

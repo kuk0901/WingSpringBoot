@@ -9,6 +9,7 @@
   --color-gray: #d9d9d9;
   --color-darkgray: #a29d9d;
   --color-error: #fd4242;
+  --color-red: #FF0000FF;
   --color-correct: #1fff50;
   --color-navy: #001f3f;
   --color-shadow: rgba(0, 0, 0, 0.4);
@@ -86,6 +87,10 @@ a {
 
 .text__correct {
   color: var(--color-correct);
+}
+
+.text__red {
+  color: var(--color-red);
 }
 
 .text__transparent {

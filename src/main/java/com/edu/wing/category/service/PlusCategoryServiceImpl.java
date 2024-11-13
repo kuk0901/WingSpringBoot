@@ -46,8 +46,8 @@ public class PlusCategoryServiceImpl implements PlusCategoryService {
   }
 
   @Override
-  public PlusCategoryVo plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo) {
-    return plusCategoryDao.plusCategoryUpdateOne(plusCategoryVo);
+  public boolean plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo) {
+    return plusCategoryDao.plusCategoryUpdateOne(plusCategoryVo) > 0;
   }
 
   @Override

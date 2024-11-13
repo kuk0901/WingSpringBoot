@@ -15,7 +15,7 @@ public interface PlusCategoryService {
 
   boolean plusCategoryInsertOne(String categoryName);
 
-  PlusCategoryVo plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo);
+  boolean plusCategoryUpdateOne(PlusCategoryVo plusCategoryVo);
 
   PlusCategoryVo plusCategorySelectOne(int categoryNo);
 

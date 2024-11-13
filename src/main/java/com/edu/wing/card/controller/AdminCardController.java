@@ -56,17 +56,9 @@ public class AdminCardController {
 
   @GetMapping("/list/card/insert")
   public ModelAndView cardInsertOne(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "all") String categoryName) {
-    int totalCount = cardService.cardSelectTotalCount(categoryName);
-
-    Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));
-    pagingVo.setPageScale(3);
-
-    Map<String, Object> pagingMap = new HashMap<>();
-    pagingMap.put("totalCount", totalCount);
-    pagingMap.put("pagingVo", pagingVo);
-
     ModelAndView mav = new ModelAndView("jsp/admin/card/AddProductView");
-    mav.addObject("pagingMap", pagingMap);
+
+    mav.addObject("curPage", curPage);
     mav.addObject("categoryName", categoryName);
 
     return mav;

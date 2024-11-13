@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="search">
-        AND C.IS_DELETED = 'false'
+        C.IS_DELETED = 'false'
         <if test="categoryName != null and categoryName != 'all'">
             AND CASE MC.CATEGORY_NAME
             WHEN '교통' THEN 'Traffic'
@@ -29,7 +29,7 @@
     </sql>
 
     <sql id="userShowSearch">
-        AND C.IS_DELETED = 'false'
+        C.IS_DELETED = 'false'
         <![CDATA[
             AND C.REGISTER_DATE <= SYSDATE
         ]]>
@@ -46,26 +46,26 @@
     <select id="cardSelectList" parameterType="map" resultMap="cardResultMap">
         SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
             , REGISTER_DATE, CATEGORY_NAME
+        FROM (
+            SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
+            , REGISTER_DATE, CATEGORY_NAME
+            , ROW_NUMBER() OVER (ORDER BY REGISTER_DATE DESC, CARD_NO DESC) AS RNUM
             FROM (
-                SELECT ROWNUM AS RNUM
-                , C.CARD_NO
-                , C.CARD_NAME
-                , C.STORED_FILE_NAME
-                , C.ORIGINAL_FILE_NAME
+                SELECT C.CARD_NO, C.CARD_NAME, C.STORED_FILE_NAME, C.ORIGINAL_FILE_NAME
                 , C.REGISTER_DATE
                 , CASE MC.CATEGORY_NAME
-                WHEN '교통' THEN 'Traffic'
-                WHEN '쇼핑' THEN 'Shopping'
-                WHEN '생활' THEN 'Daily'
-                ELSE MC.CATEGORY_NAME
+                    WHEN '교통' THEN 'Traffic'
+                    WHEN '쇼핑' THEN 'Shopping'
+                    WHEN '생활' THEN 'Daily'
+                    ELSE MC.CATEGORY_NAME
                 END AS CATEGORY_NAME
                 FROM CARD C
                 JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
                 <where>
                     <include refid="search" />
                 </where>
-                ORDER BY C.REGISTER_DATE DESC
             )
+        )
         WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
 
@@ -93,10 +93,11 @@
         FROM CARD C
                  JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
         WHERE C.CARD_NO = #{cardNo}
+        AND IS_DELETED = 'false'
     </select>
 
     <select id="cardExist" parameterType="String" resultMap="cardResultMap">
-        SELECT CARD_NO, CARD_NAME, CARD_COMPANY
+        SELECT CARD_NO, CARD_NAME, CARD_COMPANY, IS_DELETED
         FROM CARD
         WHERE CARD_NAME = #{cardName}
           AND IS_DELETED = 'false'

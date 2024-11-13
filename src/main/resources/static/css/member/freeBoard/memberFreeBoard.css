@@ -301,3 +301,70 @@
 #content .main-container .btn-container.answer-btn-container {
   margin-top: 10px;
 }
+
+#content .main-container .member-btn-container {
+  width: 90%;
+  margin: auto;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+#content .main-container .member-btn-container #deleteBtn,
+#content .main-container .member-btn-container #updateMoveBtn {
+  width: 150px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+#content .main-container .member-addBtn-container {
+  width: 90%;
+  margin: auto;
+  margin-top: 15px;
+}
+
+#content .comment-list-container {
+  padding: 18px;
+  margin: 0 20px;
+}
+
+#content .comment-list-container .comment-container {
+  padding: 20px;
+}
+
+#content .comment-list-container .comment-container .comment-email {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+#content .comment-list-container .comment-container .comment-content {
+  width: 800px;
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+#content .comment-list-container .comment-container .comment-date {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+#content .main-container .freeBoard-container .info-content #freeBoardContent {
+  border: none;
+  resize: none;
+  width: 1178px;
+  height: 398px;
+  font-size: 20px;
+}
+
+#content .main-container .member-btn-container #listMove,
+#content .main-container .member-btn-container #updateBtn {
+  width: 150px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+#content .main-container .member-btn-container .member-addBtn-container #comment-textarea {
+  border: none;
+  resize: none;
+  width: 900px;
+  height: 80px;
+}
