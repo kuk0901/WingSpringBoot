@@ -366,26 +366,27 @@ $("#cardUseDetail").on('click', function () {
             마이 페이지
           </div>
         </div>
-          <div class="payback-income" id="payback-income"></div>
+     
         <div class="entry-form one-line">
           <form class="entry-search-form one-line">
             <div class="search-container one-line">
-              <div class="label-container">
+              <div class="label-container bg__gray text__center text__semibold">
                 <label for="categorySelect" class="category-label">분류</label>
               </div>
-              <div class="input-container">
+              <div class="input-container bg__white">
                 <select id="categorySelect" name="category">
                   <option value="">전체</option>
                 </select>
               </div>
             </div>
             <div class="search-container">
-              <div class="input-container">
+              <div class="input-container bg__white">
                 <input type="date" id="startDate" />
               </div>
             </div>
             <button class="btn btn__generate" id="searchButton">검색</button>
           </form>
+          <div class="payback-income" id="payback-income"></div>
           <div class="btn-container"> 
             <button class="btn btn__generate" id="returnBtn">돌아가기</button>
           </div>

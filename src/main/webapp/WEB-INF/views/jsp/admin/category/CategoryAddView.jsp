@@ -25,41 +25,54 @@
     <main class="main-container">
       <form id="categoryForm" class="categoryForm">
 
-        <div class="style-category">
-          <div class="category-container one-line">
-            <div class="label-container bg__gray text__center">
-              <label for="categoryName" class="text__semibold">카테고리 명</label>
-            </div>
-            <div class="input-container bg__white">
-              <input id="categoryName" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
+        <div class="one-line category">
+          <div class="style-category">
+            <div class="category-container one-line">
+              <div class="label-container bg__gray text__center">
+                <label for="categoryName" class="text__semibold">카테고리 명</label>
+              </div>
+              <div class="input-container bg__white">
+                <input id="categoryName" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
+              </div>
             </div>
 
-            <div class="existing-categories bg">
-              <div class="bg__gray text__center text__semibold">기존 카테고리</div>
-              <div id="categoryList" class="category-container bg__white">
-                <div id="categoryItems" class="text__center categoryItems">
-                  <c:forEach items="${minusCategories}" var="category" varStatus="status">
-                    <span class="category-item minus">${category}<c:if test="${!status.last}">, </c:if></span>
-                  </c:forEach>
-                  <c:forEach items="${plusCategories}" var="category" varStatus="status">
-                    <span class="category-item plus" style="display: none;">${category}<c:if test="${!status.last}">, </c:if></span>
-                  </c:forEach>
+            <div class="category-container one-line">
+              <div class="label-container bg__gray text__center">
+                <label for="division" class="text__semibold">수입 / 지출</label>
+              </div>
+              <div class="input-container select-container bg__gray">
+                <select id="division" name="division" class="select bg__gray">
+                  <option value="minus" selected>-</option>
+                  <option value="plus">+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="existing-categories bg">
+            <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
+            <div id="categoryList" class="category-container bg__white">
+              <div id="categoryItems" class="text__center categoryItems one-line">
+                <div class="category-container one-line">
+                  <div class="category--title">마이너스</div>
+                  <div class="category-flex one-line">
+                    <c:forEach items="${minusCategories}" var="minus">
+                      <div class="category-item">${minus}</div>
+                    </c:forEach>
+                  </div>
+                </div>
+                <div class="category-container one-line">
+                  <div class="category--title">플러스</div>
+                  <div class="category-flex one-line">
+                    <c:forEach items="${plusCategories}" var="plus">
+                      <div class="category-item">${plus}</div>
+                    </c:forEach>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="category-container one-line">
-            <div class="label-container bg__gray text__center">
-              <label for="division" class="text__semibold">수입 / 지출</label>
-            </div>
-            <div class="input-container select-container bg__gray">
-              <select id="division" name="division" class="select bg__gray">
-                <option value="minus" selected>-</option>
-                <option value="plus">+</option>
-              </select>
-            </div>
-          </div>
         </div>
 
         <div class="btn-container">

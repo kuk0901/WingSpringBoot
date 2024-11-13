@@ -40,9 +40,9 @@
         </div>
       </div>
 
-      <main class="main-container freeBoard__list">
+      <main class="main-container freeBoard__list bg__white">
         <div class="freeBoard-container">
-          <div class="list-container list-container--title container-title one-line bg__white">
+          <div class="list-container list-container--title container-title one-line ">
             <div class="list--supply text__semibold text__center">번호</div>
             <div class="list--title text__semibold text__center">제목</div>
             <div class="list--supply text__semibold text__center">작성자</div>

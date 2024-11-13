@@ -336,18 +336,30 @@ margin: 40px auto;
   gap: 10px;
 }
 
-#content .main-container .entry-form .entry-search-form {
+#content .entry-form .entry-search-form {
   gap: 20px;
 }
 
-#content .main-container .entry-form .entry-search-form .search-container {
+#content .entry-form .entry-search-form .search-container {
   gap: 10px;
 }
 
-#content .main-container #categorySelect {
+#content .entry-form .entry-search-form .search-container .label-container {
+  width: 100px;
+  padding: 10px;
+}
+
+#content .entry-form .entry-search-form .search-container .input-container {
+  padding: 3px;
+  border: 1px solid black;
+}
+
+#content .entry-form .entry-search-form .search-container .input-container #categorySelect {
   height: 30px;
   width: 100px;
   font-size: 18px;
+  border: none;
+  outline: none;
 }
 
 #content .main-container .category-label {
@@ -356,9 +368,11 @@ margin: 40px auto;
   font-weight: bold;
 }
 
-#content .main-container #startDate {
+#content .entry-form .entry-search-form .search-container .input-container #startDate {
   height: 30px;
   font-size: 18px;
+  border: none;
+  outline: none;
 }
 
 #content .main-container #searchButton,
@@ -366,16 +380,16 @@ margin: 40px auto;
   font-size: 17px;
 }
 
-#content .main-container .payback-income {
+#content .entry-form .payback-income {
   display: flex;
   justify-content: center; /* 자식 요소를 가로로 중앙 정렬 */
   align-items: center;
   padding: 0 5px;
   border-radius: 10px;
-  margin-bottom: 35px;
+  margin: auto
 }
 
-#content .main-container .payback-income span {
+#content .entry-form .payback-income span {
   background-color: var(--color-white);
   font-size: 18px;
   min-height: 40px;
@@ -389,14 +403,12 @@ margin: 40px auto;
 #content .main-container .detail-payback-container {
   background-color: white;
   margin: auto;
-  width: 90%;
 }
 
 #content .main-container .detail-payback-title {
   background-color: #f0f0f0; /* 회색 배경 */
   padding: 10px;
   height: 50px;
-  width: 90%;
   margin: 10px auto 0;
   line-height: 30px;
   font-size: 18px;
@@ -497,6 +509,11 @@ margin: 40px auto;
 .main-container .card-container .list-container.list-content:hover {
   background-color: var(--color-white);
   cursor: auto;
+}
+
+#content .entry-form {
+  width: 98%;
+  margin: auto;
 }
 
 .hidden-ui {

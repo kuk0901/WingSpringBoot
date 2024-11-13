@@ -1,130 +1,148 @@
-.table_container{
-    height: 100%;
-
-}
 .table_container table {
-    border-collapse: collapse;
-    width: 100%; /* 전체 너비를 사용하도록 설정 */
-    border-spacing: 0; /* 셀 간의 간격을 없애기 */
-    height:700px;
+  border-collapse: collapse;
+  width: 100%; /* 전체 너비를 사용하도록 설정 */
+  border-spacing: 0; /* 셀 간의 간격을 없애기 */
+  height:700px;
 }
 
 .table_container th, .table_container td {
-    padding: 10px; /* 셀 패딩 추가 */
-    text-align: center; /* 텍스트 정렬 */
-}
-.top-container {
-    margin: 20px 0; /* 위 아래 간격 확보 */
-}
-.paging{
-    margin-top: 20px;
+  text-align: center; /* 텍스트 정렬 */
 }
 
+.table_container .list-container.one-line {
+  line-height: 40px;
+  width: 100%;
+  padding: 0;
+}
+
+.table_container .list-container.one-line .list-item {
+  padding: 15px;
+}
+
+.top-container {
+  margin: 20px 0; /* 위 아래 간격 확보 */
+}
+
+.paging{
+  margin-top: 20px;
+}
 
 .main-container {
-    background-color: white;
-    margin-left: 20px;
-    margin-top: 20px; /* 위쪽 여백 추가 */
-    height: 700px;
-    margin-right: 10px;
+  background-color: white;
+  width: 98%;
+  margin: auto;
+  height: auto;
 }
 
 #content .title-container {
-    width: 100%;
-    margin-top: 20px;
-    display: flex;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
 }
 
 #content .title-container .title {
-    width: 250px;
-    height: 50px;
-    line-height: 50px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    font-size: 20px;
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
 }
 #content .form-container {
-    margin-left: 12px;
-    width: 100%;
-    padding: 10px;
+  margin-left: 12px;
+  width: 100%;
+  padding: 10px;
 }
 
 .aTagStyle{
-    cursor: pointer;
-    color:blue;
+  cursor: pointer;
+  color:blue;
 }
 .aTagStyle:hover{
-    color:lightgreen;
-    background: gray;
+  color:lightgreen;
+  background: gray;
 }
 
 /*여기서부턴js detail쪽css*/
 .main-container {
-    padding: 20px;
-    background-color: #f9f9f9; /* 큰 흰색 상자 */
-    border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9; /* 큰 흰색 상자 */
+  border-radius: 8px;
 }
 
 .one-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0; /* 줄 간격 */
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0; /* 줄 간격 */
+  border-bottom: 1px solid #ddd;
 }
 
 .label {
-    background-color: #e0e0e0; /* 컬럼명 - 회색 */
-    color: #333;
-    padding: 10px;
-    width: 30%; /* 컬럼명 크기 고정 */
-    font-weight: bold;
+  background-color: #e0e0e0; /* 컬럼명 - 회색 */
+  color: #333;
+  padding: 10px;
+  width: 30%; /* 컬럼명 크기 고정 */
+  font-weight: bold;
 }
 
 .value {
-    background-color: #fff; /* 내용 - 흰색 */
-    color: #000;
-    padding: 10px;
-    width: 70%; /* 내용 크기 */
+  background-color: #fff; /* 내용 - 흰색 */
+  color: #000;
+  padding: 10px;
+  width: 70%; /* 내용 크기 */
 }
 
 
 
 
 .termination-reason-container {
-    background-color: #e0e0e0; /* 해지 사유 큰 상자 - 회색 */
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+  background-color: #e0e0e0; /* 해지 사유 큰 상자 - 회색 */
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
 .termination-reason-container h4 {
-    margin: 0;
-    padding-bottom: 10px;
-    color: #333;
+  margin: 0;
+  padding-bottom: 10px;
+  color: #333;
 }
 
 .termination-reason-container p {
-    margin: 0;
-    color: #555;
-    background-color: #fff; /* 내용 - 흰색 */
-    padding: 15px;
-    border-radius: 8px;
+  margin: 0;
+  color: #555;
+  background-color: #fff; /* 내용 - 흰색 */
+  padding: 15px;
+  border-radius: 8px;
 }
 .title.btn__yellow.text__white{
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column-reverse;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column-reverse;
 }
 .title-containerSecond{
-    width: 100%;
-    display: flex;
+  width: 100%;
+  display: flex;
 }
 .btn-back-container{
-    text-align: right;
-    margin-right: 10px
+  text-align: right;
+  margin-right: 10px
 }
 .btn.btn__generate{
-    height: 50px;
+  height: 50px;
 }
+
+.box__l {
+  width: 200px;
+}
+
+.box__m {
+
+}
+
+.box__s {
+  width: 120px;
+}
+
 

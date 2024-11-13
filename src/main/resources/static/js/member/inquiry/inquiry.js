@@ -132,15 +132,20 @@ function createDetailView(data, answerTermination) {
           </div>
           <div class="answer-info">
             <div class="info-comment-container one-line">
-              <div class="info-item bg__gray text__black box__l text__center">관리자</div>
-              <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
-              <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
-              <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
+              <div class="comment-title one-line">
+                <div class="info-item bg__gray text__black box__l text__center">관리자</div>
+                <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
+              </div>
+              <div class="comment-title one-line">
+                <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
+                <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
+              </div>
             </div>
           </div>
           <div class="answer-content">
             <div class="reason--content bg__white text__black">${data.ANSWERCONTENT}</div>
           </div>
+          <div class="hidden-ui"></div>
         ` : `
           <div class="reply-container one-line">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
