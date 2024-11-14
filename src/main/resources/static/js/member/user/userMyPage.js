@@ -502,12 +502,12 @@ $("#cardUseDetail").on('click', function () {
       });
 
 
-      $("#searchButton").on('click', function () {
+      $("#searchButton").on('click', function (e) {
         // 선택된 카테고리 값과 날짜 값을 가져오기
         const selectedCategory = $('#categorySelect').val();
         const startDate = $('#startDate').val();
         const memberNo = $('#memberNo').val();
-        event.preventDefault()
+        e.preventDefault()
         // 날짜 또는 카테고리가 선택되지 않았다면 요청 중단
         if (!startDate && !selectedCategory) {
           showAlertMsg("날짜와 카테고리를 선택해 주세요.");
