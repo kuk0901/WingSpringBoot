@@ -192,10 +192,11 @@
                  SELECT C.CARD_NO, C.CARD_NAME, MC.CATEGORY_NAME
                  FROM CARD C
                           JOIN recommended_category RC ON C.CATEGORY_NO = RC.recommended_category
-                          CROSS JOIN member_check MC
+                          CROSS JOIN member_check MCH
                           JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
                  WHERE RC.recommended_category != 0
-                   AND MC.is_eligible = 1
+                   AND MCH.is_eligible = 1
+                   AND C.IS_DELETED = 'N'
              )
         SELECT RC.recommended_category AS categoryNo,
                COALESCE(RCARD.CARD_NO, 0) AS cardNo,
