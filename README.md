@@ -89,8 +89,49 @@ mvn clean install
 
 5. 애플리케이션 실행:
 
-- IntelliJ IDEA를 사용하는 경우, Tomcat 서버 설정 후 실행
-- 또는 명령줄에서: `mvn tomcat7:run`
+- IntelliJ IDEA를 사용하는 경우:
+
+  1. main 브랜치를 이용한 방법:
+     ```shell
+     git clone https://github.com/kuk0901/WingSpringBoot.git
+     ```
+    - IntelliJ IDEA에서 File > Open을 선택하고 클론한 프로젝트 폴더를 선택합니다.
+    - WingApplication 클래스를 찾아 우클릭 후 'Run WingApplication'을 선택합니다.
+
+  <br />
+
+  2. ZIP 파일을 이용한 방법:
+    - GitHub에서 프로젝트를 ZIP 파일로 다운로드합니다.
+    - IntelliJ IDEA에서 File > New > Project from Existing Sources를 선택합니다.
+    - 압축 해제한 프로젝트 폴더를 선택하고 'Open'을 클릭합니다.
+    - Import project from external model에서 Maven을 선택하고 'Finish'를 클릭합니다.
+    - WingApplication 클래스를 찾아 우클릭 후 'Run WingApplication'을 선택합니다.
+
+<br />
+
+- Eclipse를 사용하는 경우:
+
+  1. eclipse-version 브랜치를 이용한 방법:
+     ```shell
+     git clone -b eclipse-version https://github.com/kuk0901/WingSpringBoot.git
+     ```
+    - Eclipse에서 File > Import > General > Existing Projects into Workspace 선택
+    - 클론한 프로젝트 디렉토리를 선택하고 'Finish' 클릭
+    - 프로젝트 우클릭 > Run As > Spring Boot App 선택
+
+  <br />
+
+  2. ZIP 파일을 이용한 방법:
+    - GitHub에서 eclipse-version 브랜치의 프로젝트를 ZIP 파일로 다운로드합니다.
+    - Eclipse에서 File > Import > General > Existing Projects into Workspace 선택
+    - "Select archive file"을 선택하고 다운로드 받은 ZIP 파일을 지정합니다.
+    - 프로젝트를 선택하고 'Finish' 클릭
+    - 프로젝트 우클릭 > Run As > Spring Boot App 선택
+
+- 또는 명령줄에서:
+  ```shell
+  ./mvnw spring-boot:run
+  ```
 
 6. 브라우저에서 `http://localhost:8888` 접속
 
@@ -170,10 +211,10 @@ WING\_ 애플리케이션은 Oracle 데이터베이스를 사용합니다. 다�
 
 2. 새로운 데이터베이스 연결을 생성합니다:
 
-  - 사용자 이름: wing
-  - 비밀번호: 1234
-  - 호스트 및 포트: (your_host:your_port)
-  - SID 또는 서비스 이름: (your_sid_or_service_name)
+- 사용자 이름: wing
+- 비밀번호: 1234
+- 호스트 및 포트: (your_host:your_port)
+- SID 또는 서비스 이름: (your_sid_or_service_name)
 
 3. 'docs/sql' 폴더에서 'WING\_ DB DOC.sql' 파일을 찾습니다.
 
@@ -181,11 +222,12 @@ WING\_ 애플리케이션은 Oracle 데이터베이스를 사용합니다. 다�
 
 5. 찾은 SQL 파일을 열고 전체 내용을 실행합니다.
 
-  - 이 스크립트는 필요한 모든 테이블과 시퀀스를 생성합니다.
+- 이 스크립트는 필요한 모든 테이블과 시퀀스를 생성합니다.
 
 6. (선택사항) 초기 데이터 없이 시작하려면:
-  - SQL 파일에서 테이블 생성(CREATE TABLE)과 시퀀스 생성(CREATE SEQUENCE) 문만 실행하세요.
-  - INSERT 문은 실행하지 마세요.
+
+- SQL 파일에서 테이블 생성(CREATE TABLE)과 시퀀스 생성(CREATE SEQUENCE) 문만 실행하세요.
+- INSERT 문은 실행하지 마세요.
 
 주의:
 
