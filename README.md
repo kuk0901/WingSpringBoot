@@ -148,7 +148,7 @@ WING\_ 애플리케이션은 카드 이미지를 저장하기 위해 특정 디�
 2. 프로젝트 doc/images 폴더에 미리 준비된 카드 이미지 파일(.jpg, .jpeg, 또는 .png)을 이 디렉토리에 복사합니다.
 
 3. 이미지 파일명을 데이터베이스의 카드 정보와 일치하도록 변경합니다.
-   예: `WingCardTraffic.png`, `WingCardShopping.jpg`, `WingCardDaily.jpg`
+   예: `WingCardTraffic.png`, `WingCardShopping.png`, `WingCardDaily.png`
 
 4. 애플리케이션을 실행하면, 이 디렉토리에 있는 이미지들을 자동으로 인식하고 사용합니다.
 
@@ -175,11 +175,11 @@ WING\_ 애플리케이션은 Oracle 데이터베이스를 사용합니다. 다�
   - 호스트 및 포트: (your_host:your_port)
   - SID 또는 서비스 이름: (your_sid_or_service_name)
 
-3. 'docs/sql' 폴더에서 'WING\_ DB DOC.zip' 파일을 찾아 압축을 해제합니다.
+3. 'docs/sql' 폴더에서 'WING\_ DB DOC.sql' 파일을 찾습니다.
 
 4. SQL Developer에서 wing/1234 계정으로 접속합니다.
 
-5. 압축 해제한 SQL 파일을 열고 전체 내용을 실행합니다.
+5. 찾은 SQL 파일을 열고 전체 내용을 실행합니다.
 
   - 이 스크립트는 필요한 모든 테이블과 시퀀스를 생성합니다.
 
