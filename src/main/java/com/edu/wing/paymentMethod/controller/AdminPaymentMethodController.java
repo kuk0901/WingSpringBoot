@@ -40,7 +40,12 @@ public class AdminPaymentMethodController {
   public ModelAndView paymentMethodAdd() {
     log.info("{} - Retrieving @GetMapping paymentMethod add", LOG_TITLE);
 
-    return new ModelAndView("jsp/admin/paymentMethod/PaymentMethodAddView");
+    List<String> paymentMethodList = paymentMethodService.getPaymentMethodName();
+
+    ModelAndView mav = new ModelAndView("jsp/admin/paymentMethod/PaymentMethodAddView");
+    mav.addObject("paymentMethodList", paymentMethodList);
+
+    return mav;
   }
 
   @GetMapping("/delete/{paymentMethodNo}")

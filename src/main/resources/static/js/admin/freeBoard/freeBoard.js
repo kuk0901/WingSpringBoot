@@ -21,11 +21,6 @@ $('.list-content').click(function () {
   const freeBoardSearch = $('#search').val() || '';
   const noticeBoardNo = $('#noticeBoardNo').val();
 
-  console.log(freeBoardNo);
-  console.log(curPage);
-  console.log(freeBoardSearch);
-  console.log(noticeBoardNo);
-
   $.ajax({
     url: `/admin/freeBoard/list/${freeBoardNo}`,
     type: 'GET',
@@ -35,7 +30,7 @@ $('.list-content').click(function () {
       noticeBoardNo: noticeBoardNo
     },
     success: function (res) {
-      createDetailView(res.freeBoardVo, curPage, freeBoardSearch, noticeBoardNo);
+      createDetailView(res.freeBoardVo, res.freeBoardCommentVoList, curPage, freeBoardSearch, noticeBoardNo);
     },
     error: function (res) {
       showAlertMsg(res.alertMsg);
@@ -43,7 +38,22 @@ $('.list-content').click(function () {
   })
 })
 
-function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
+function createDetailView(data, freeBoardCommentVoList, curPage, freeBoardSearch, noticeBoardNo) {
+
+  const commentList = freeBoardCommentVoList.map(comment => `
+    <div class="comment-container one-line">
+      <div class="comment-email">${comment.email}</div>
+      <div class="comment-content"><input class="" value="${comment.content}" readonly /></div>
+      <div class="comment-date">${formatDate(comment.creDate)}</div>
+      <div class="btn-container">
+        <button class="btn btn__generate deleteCommentBtn text__center commentDelBtn" 
+          data-free-board-comment-no="${comment.freeBoardCommentNo}" data-free-board-no="${data.freeBoardNo}" 
+          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+          삭제
+        </button>
+      </div>
+    </div>
+  `).join("");
 
   const freeBoardDetail = `
     <div class="title-container one-line">
@@ -84,10 +94,73 @@ function createDetailView(data, curPage, freeBoardSearch, noticeBoardNo) {
           <div id="freeBoardContent" class="bg__white text__black box__l">${data.content}</div>
         </div>      
       </div>
+      
+      <div class="btn-container one-line">
+        <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+          data-free-board-no="${data.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+          삭제
+        </button>
+      </div> 
             
     </main>
+    
+    ${freeBoardCommentVoList.length > 0 ?
+      `<div id="comment-list-container" class="comment-list-container bg__white">
+        ${commentList}
+      </div>` : `<div class="hiddenDiv"></div>`}
   `;
 
   $("#content").html(freeBoardDetail);
 
+  $("#deleteBtn").click(function (e) {
+    e.preventDefault();
+
+    const freeBoardNo = $(this).data("free-board-no");
+    const curPage = $(this).data("cur-page");
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const freeBoardSearch = $(this).data("free-board-search");
+
+    $.ajax({
+      url: `/admin/api/freeBoard/list/${freeBoardNo}/delete`,
+      type: 'DELETE',
+      data: {
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        freeBoardSearch: freeBoardSearch
+      },
+      success: function (res) {
+        const message = encodeURIComponent(res.alertMsg || "게시글 삭제에 성공했습니다");
+        window.location.href = `/admin/freeBoard/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&freeBoardSearch=${freeBoardSearch}&message=${message}`;
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
+
+  $(".commentDelBtn").click(function (e) {
+    e.preventDefault();
+
+    const freeBoardCommentNo = $(this).data("free-board-comment-no");
+    const curPage = $(this).data("cur-page");
+    const freeBoardSearch = $(this).data("free-board-search");
+    const freeBoardNo = $(this).data("free-board-no");
+
+    $.ajax({
+      url: `/admin/api/freeBoard/list/${freeBoardCommentNo}/deleteComment?freeBoardNo=${freeBoardNo}`,
+      type: 'DELETE',
+      data: JSON.stringify({
+        freeBoardNo: freeBoardNo,
+        curPage: curPage,
+        freeBoardSearch: freeBoardSearch
+      }),
+      success: function (res) {
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo);
+        showAlertMsg(res.alertMsg);
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
 }

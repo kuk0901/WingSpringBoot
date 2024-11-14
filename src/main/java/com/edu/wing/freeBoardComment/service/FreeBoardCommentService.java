@@ -11,4 +11,6 @@ public interface FreeBoardCommentService {
   boolean addComment(int freeBoardNo, String content, int memberNo);
 
   boolean deleteComment(int freeBoardCommentNo);
+
+  boolean updateComment(FreeBoardCommentVo freeBoardCommentVo);
 }

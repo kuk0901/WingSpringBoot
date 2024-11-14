@@ -58,4 +58,9 @@
             PAYMENT_METHOD_NAME = #{paymentMethodName}
         WHERE PAYMENT_METHOD_NO = #{paymentMethodNo}
     </update>
+
+    <select id="getPaymentMethodName" resultType="String">
+        SELECT PAYMENT_METHOD_NAME
+        FROM PAYMENT_METHOD
+    </select>
 </mapper>

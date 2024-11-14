@@ -72,7 +72,7 @@
 #content .main-container .post-container .list-container .list--supply {
   font-size: 17px;
   padding: 17px 13px;
-  width: 300px;
+  width: 75px;
 }
 
 #content .main-container .post-container .list-container .list--date {
@@ -84,7 +84,7 @@
 #content .main-container .post-container .list-container .list--title {
   font-size: 17px;
   padding: 17px 13px;
-  width: 600px;
+  width: 900px;
 }
 
 #content .search-container .input-container{
@@ -242,6 +242,10 @@
 #content .main-container .btn-container {
   width: 90%;
   margin: auto;
+  justify-content: space-around;
+}
+
+#content .main-container .list-container.one-line {
   justify-content: space-around;
 }
 

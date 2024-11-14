@@ -38,8 +38,10 @@ public class InquiryServiceImpl implements InquiryService {
   }
 
   @Override
-  public void addInquiry(InquiryVo inquiryVo) {
-    inquiryDao.addInquiry(inquiryVo);
+  public boolean addInquiry(InquiryVo inquiryVo) {
+        int result = inquiryDao.addInquiry(inquiryVo);
+
+        return result > 0;
   }
 
   @Override

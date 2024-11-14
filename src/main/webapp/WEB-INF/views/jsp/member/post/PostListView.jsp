@@ -39,7 +39,6 @@
             <div class="list--supply text__semibold text__center">번호</div>
             <div class="list--title text__semibold text__center">제목</div>
             <div class="list--date text__semibold text__center">작성날짜</div>
-            <div class="list--supply text__semibold text__center">작성자</div>
           </div>
 
           <c:choose>
@@ -49,11 +48,10 @@
                   <div class="list-container list-content one-line " data-post-no="${postVo.postNo}">
                     <input type="hidden" id="noticeBoardNo" value="${postVo.noticeBoardNo}">
                     <div class="list--supply text__center">${postVo.postNo}</div>
-                    <div class="list--title text__center">${postVo.title}</div>
+                    <div class="list--title">${postVo.title}</div>
                     <div class="list--date text__center">
                       <fmt:formatDate value="${postVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                     </div>
-                    <div class="list--supply text__center">${postVo.email}</div>
                   </div>
                 </c:forEach>
               </div>

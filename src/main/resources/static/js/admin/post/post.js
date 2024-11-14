@@ -220,7 +220,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
           <div id="writeDate" class="info-date bg__white text__black box__l">${formattedPostDate}</div>
         </div>
 
-        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
+        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
 
         <div class="info-content bg__white text__black box__l">
           <textarea id="postContent" class="contentArea">${res.CONTENT}</textarea>

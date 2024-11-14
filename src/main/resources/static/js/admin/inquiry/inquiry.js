@@ -105,7 +105,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
                 <div class="info-detail bg__white text__black box__l">${data.ANSWERWRITEREMAIL}</div>
               </div>
               <div class="one-line">
-                <div class="info-item bg__gray text__black box__l text__center">답변 등록일</div>
+                <div class="answer-creDate info-item bg__gray text__black box__l text__center">답변 등록일</div>
                 <div class="info-detail bg__white text__black box__l">${formattedAnswerDate}</div>
               </div>
             </div>

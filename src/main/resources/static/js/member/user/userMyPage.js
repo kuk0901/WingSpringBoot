@@ -502,11 +502,17 @@ $("#cardUseDetail").on('click', function () {
       });
 
 
-      $("#searchButton").on('click', function () {
+      $("#searchButton").on('click', function (e) {
         // 선택된 카테고리 값과 날짜 값을 가져오기
         const selectedCategory = $('#categorySelect').val();
         const startDate = $('#startDate').val();
         const memberNo = $('#memberNo').val();
+        e.preventDefault()
+        // 날짜 또는 카테고리가 선택되지 않았다면 요청 중단
+        if (!startDate && !selectedCategory) {
+          showAlertMsg("날짜와 카테고리를 선택해 주세요.");
+          return;
+        }
 
         // AJAX 요청 보내기
         $.ajax({
@@ -544,7 +550,7 @@ $("#cardUseDetail").on('click', function () {
               $('.entry-list').html(htmlContent);
             } else {
               $('.entry-list').html('<p>데이터가 없습니다.</p>');
-              showAlertMsg("상세 내역을 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
+             /* showAlertMsg("데이터가 없습니다");*/
             }
           },
           error: function (xhr, status, error) {

@@ -1,3 +1,6 @@
+import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
+checkAndShowStoredMessage();
+
 const $abc = $("#abc").value;
 
 $("#listMove").click(function () {
@@ -30,13 +33,11 @@ $("#addInquiry").click(function (e) {
     contentType: 'application/json', // JSON 형식으로 전송
     data: JSON.stringify(inquiryData),
     success: function (res) {
-      console.log("문의가 성공적으로 등록되었습니다:", res);
-      alert("문의가 성공적으로 등록되었습니다.");
-      window.location.href = '/member/cs/inquiry/list';
+      const message = encodeURIComponent(res.alertMsg || "문의가 성공적으로 등록되었습니다");
+      window.location.href = `/member/cs/inquiry/list?message=${message}`;
     },
-    error: function (xhr, status, error) {
-      console.error("문의 등록 실패:", error);
-      alert("문의 등록에 실패하였습니다.");
+    error: function (res) {
+      showAlertMsg(res.alertMsg)
     }
   });
 });
@@ -50,14 +51,10 @@ $('.list-container').click(function () {
     type: 'GET',
     data: {curPage: curPage},
     success: function (res) {
-      console.log('Server response:', res);
       createDetailView(res);
     },
-    error: function (xhr, status, error) {
-      console.error("Error fetching details:", error);
-      console.log("Status:", status);
-      console.log("Response:", xhr.responseText);
-      alert("데이터를 불러오는 데 실패했습니다. 관리자에게 문의하세요.");
+    error: function (res) {
+      showAlertMsg(res.alertMsg)
     }
   });
 });

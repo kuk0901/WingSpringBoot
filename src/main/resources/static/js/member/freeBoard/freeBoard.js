@@ -38,31 +38,33 @@ $('.list-content').click(function () {
   })
 })
 
-// data -> freeBoardVo로 수정
 function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, currentMemberNo) {
 
   const commentList = freeBoardCommentList.map(comment => `
-      <div class="comment-container one-line">
-        <div class="comment-email">${comment.email}</div>
-        <div class="comment-content">${comment.content}</div>
-        <div class="comment-date">${formatDate(comment.creDate)}</div>
-        <div>
-          ${comment.memberNo == currentMemberNo ? `
-            <button id="commentDelBtn" class="btn btn__generate deleteCommentBtn text__center" 
-              data-free-board-comment-no="${comment.freeBoardCommentNo}" data-free-board-no="${freeBoardVo.freeBoardNo}" 
-              data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              삭제
-            </button>
-            <button id="commentModBtn" class="btn btn__generate updateCommentBtn text__center" 
-              data-comment-no="${comment.commentNo}" data-free-board-no="${freeBoardVo.freeBoardNo}" 
-              data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}"">
-              수정
-            </button>
-          ` : ''}
-        </div>
-      </div>
+    <div class="comment-container one-line">
+      <div class="comment-email">${comment.email}</div>
+      ${comment.memberNo === currentMemberNo ? `
+        <div class="comment-content"><input id="inputComment" value="${comment.content}" /></div>
+      ` : `
+        <div class="comment-content"><input value="${comment.content}" readonly /></div>
+      `}
       
-
+      <div class="comment-date">${formatDate(comment.creDate)}</div>
+      <div class="btn-container">
+        ${comment.memberNo == currentMemberNo ? `
+          <button class="btn btn__generate updateCommentBtn text__center commentModBtn" 
+            data-free-board-comment-no="${comment.freeBoardCommentNo}" data-free-board-no="${freeBoardVo.freeBoardNo}" 
+            data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}"">
+            수정
+          </button>
+          <button class="btn btn__generate deleteCommentBtn text__center commentDelBtn" 
+            data-free-board-comment-no="${comment.freeBoardCommentNo}" data-free-board-no="${freeBoardVo.freeBoardNo}" 
+            data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+            삭제
+          </button>
+        ` : `<div class="hiddenDiv"></div>`}
+      </div>
+    </div>
   `).join("");
 
   const freeBoardDetail = `
@@ -90,7 +92,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
               <label for="freeBoardTitle" class="info-title">제목</label>
             </div>
             <div class="input-container bg__white text__black">
-              <input id="freeBoardTitle" class="info-item" value="${freeBoardVo.title}" />
+              <input id="freeBoardTitle" class="info-item" readonly value="${freeBoardVo.title}" />
            </div>
           </div>
         </div>
@@ -101,7 +103,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
               <label for="email" class="info-title">작성자</label>
             </div>
             <div class="input-container bg__white text__black">
-              <input id="email" class="info-writer" value="${freeBoardVo.email}" />
+              <input id="email" class="info-writer" value="${freeBoardVo.email}" readonly/>
             </div>
           </div>
           
@@ -110,7 +112,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
              <label for="creDate" class="info-title">작성일</label>
             </div>
             <div class="input-container bg__white text__black">
-              <input id="creDate" class="info-date" value="${formatDate(freeBoardVo.creDate)}" /> 
+              <input id="creDate" class="info-date" value="${formatDate(freeBoardVo.creDate)}" readonly/> 
             </div>
           </div>
         </div>
@@ -120,49 +122,53 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
            <label for="freeBoardContent" class="info-content-div">내용</label>
           </div>
           <div class="input-container bg__white text__black textarea-content">
-            <textarea id="freeBoardContent" class="contentArea">${freeBoardVo.content}</textarea>
+            <textarea id="freeBoardContent" class="contentArea" readonly>${freeBoardVo.content}</textarea>
           </div>      
         </div>
       </div>
       
       ${freeBoardVo.memberNo == currentMemberNo ? `
         <div class="btn-container one-line">
-          <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
-            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-            삭제
-          </button>
           <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
             data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
             수정
           </button>
-        </div>
-        ` : `
-        <div class="member-btn-container one-line">
-          <div id="member-addBtn-container" class="one-line">
-            <textarea id="comment-textarea" class="comment-textarea"></textarea>
-            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
-              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              답변 추가
-            </button>
-          </div>
-          
-        </div>
-        
-        <div class="member-btn-container one-line">
-          <div id="member-addBtn-container" class="one-line">
-            <textarea id="comment-textarea" class="comment-textarea"></textarea>
-            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
-              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-              답변 추가
-            </button>
-          </div>
-        </div>
-        `
+          <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+            삭제
+          </button>
+        </div> 
+        ` : ""
       }
     </main>
     
-    ${freeBoardCommentList ? 
-      `<div id="comment-list-container" class="comment-list-container bg__white">${commentList}</div>` : ""}
+    ${freeBoardCommentList.length > 0 ? 
+      `<div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="comment-add-container one-line">
+          <div class="input-container">
+            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+          </div>   
+          <div id="member-addBtn-container" class="btn-container one-line text__center">
+            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+              댓글 추가
+            </button>
+          </div>
+        </div>
+        ${commentList}
+      </div>` : `
+      <div class="comment-add-container one-line">
+        <div class="input-container">
+          <textarea id="comment-textarea" class="comment-textarea"></textarea>
+        </div>   
+        <div id="member-addBtn-container" class="btn-container one-line text__center">
+          <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+            댓글 추가
+          </button>
+        </div>
+      </div>
+      `}
     
     <div class="hidden-ui"></div>
   `;
@@ -241,15 +247,16 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         content: content,
       }),
       success: function (res) {
-        const message = encodeURIComponent(res.alertMsg || "답글 등록에 성공했습니다");
-        window.location.href = `/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&message=${message}`;
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
+        showAlertMsg(res.alertMsg);
       },
       error: function (res) {
         showAlertMsg(res.alertMsg);
       }
     })
   })
-  $("#commentDelBtn").click(function (e) {
+
+  $(".commentDelBtn").click(function (e) {
     e.preventDefault();
 
     const freeBoardCommentNo = $(this).data("free-board-comment-no");
@@ -266,8 +273,37 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         freeBoardSearch: freeBoardSearch
       }),
       success: function (res) {
-        const message = encodeURIComponent(res.alertMsg || "답글 삭제에 성공했습니다");
-        window.location.href = `/member/freeBoard/list/${freeBoardNo}?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&message=${message}`;
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
+        showAlertMsg(res.alertMsg);
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
+
+  $(".commentModBtn").click(function (e) {
+    e.preventDefault();
+
+    const freeBoardCommentNo = $(this).data("free-board-comment-no");
+    const curPage = $(this).data("cur-page");
+    const freeBoardSearch = $(this).data("free-board-search");
+    const freeBoardNo = $(this).data("free-board-no");
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const freeBoardCommentContent = $("#inputComment").val();
+
+    $.ajax({
+      url: `/member/api/freeBoard/list/${freeBoardCommentNo}/updateComment?freeBoardNo=${freeBoardNo}`,
+      type: 'PATCH',
+      data: {
+        curPage: curPage,
+        noticeBoardNo: noticeBoardNo,
+        freeBoardSearch: freeBoardSearch,
+        freeBoardCommentContent: freeBoardCommentContent
+      },
+      success: function (res) {
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
+        showAlertMsg(res.alertMsg);
       },
       error: function (res) {
         showAlertMsg(res.alertMsg);
@@ -281,7 +317,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
   const freeBoardUpdate = `
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
-        게시글 상세
+        게시글 수정
       </div>
     </div>
 
@@ -359,8 +395,6 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
     const title = $("#freeBoardTitle").val();
     const content = $("#freeBoardContent").val();
 
-    console.log(noticeBoardNo);
-
     $.ajax({
       url: `/member/api/freeBoard/list/${freeBoardNo}/update`,
       type: 'PATCH',
@@ -373,8 +407,8 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
         content: content,
       }),
       success: function (res) {
-        const message = encodeURIComponent(res.alertMsg || "게시글 수정에 성공했습니다");
-        window.location.href = `/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&message=${message}`;
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
+        showAlertMsg(res.alertMsg);
       },
       error: function (res) {
         showAlertMsg(res.alertMsg);

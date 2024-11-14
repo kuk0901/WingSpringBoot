@@ -19,4 +19,6 @@ public interface PaymentMethodService {
   boolean paymentMethodDeleteOne(int paymentMethodNo);
 
   void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo);
+
+  List<String> getPaymentMethodName();
 }

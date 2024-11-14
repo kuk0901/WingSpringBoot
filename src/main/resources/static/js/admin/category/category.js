@@ -282,7 +282,7 @@ function plusCategoryDelete(deleteNo) {
           });
         }
       } else {
-        alert(res.alertMsg || "카테고리를 찾을 수 없습니다.");
+        showAlertMsg(res.alertMsg);
       }
     },
     error: function (res) {

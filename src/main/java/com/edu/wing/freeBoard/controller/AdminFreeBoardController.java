@@ -2,6 +2,8 @@ package com.edu.wing.freeBoard.controller;
 
 import com.edu.wing.freeBoard.domain.FreeBoardVo;
 import com.edu.wing.freeBoard.service.FreeBoardService;
+import com.edu.wing.freeBoardComment.domain.FreeBoardCommentVo;
+import com.edu.wing.freeBoardComment.service.FreeBoardCommentService;
 import com.edu.wing.util.Paging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,12 @@ public class AdminFreeBoardController {
   @Autowired
   private FreeBoardService freeBoardService;
 
+  @Autowired
+  private FreeBoardCommentService freeBoardCommentService;
+
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView freeBoardList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
                     @RequestParam(defaultValue = "3") int noticeBoardNo) {
-
     int totalCount = freeBoardService.freeBoardSelectTotalCount(noticeBoardNo, freeBoardSearch);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));
@@ -50,19 +54,17 @@ public class AdminFreeBoardController {
     mav.addObject("noticeBoardNo", noticeBoardNo);
 
     return mav;
-
   }
 
   @GetMapping("/list/{freeBoardNo}")
-  public ResponseEntity<Map<String, Object>> freeBoardDetail(@PathVariable int freeBoardNo
-      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam(defaultValue = "2") int noticeBoardNo){
-
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping postDetail freeBoardNo: {}, curPage: {}, freeBoardSearch: {}, noticeBoardNo: {}", freeBoardNo, curPage, freeBoardSearch, noticeBoardNo);
+  public ResponseEntity<Map<String, Object>> freeBoardDetail(@PathVariable int freeBoardNo, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam(defaultValue = "2") int noticeBoardNo){
 
     Map<String, Object> resultMap = new HashMap<>();
 
     FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    List<FreeBoardCommentVo> freeBoardCommentVoList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
 
     if(freeBoardVo == null){
       resultMap.put("success", false);
@@ -71,10 +73,11 @@ public class AdminFreeBoardController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    resultMap.put("freeBoardVo", freeBoardVo);
+    resultMap.put("freeBoardCommentVoList", freeBoardCommentVoList);
     resultMap.put("curPage", curPage);
     resultMap.put("freeBoardSearch", freeBoardSearch);
     resultMap.put("noticeBoardNo", noticeBoardNo);
-    resultMap.put("freeBoardVo", freeBoardVo);
 
     return ResponseEntity.ok().body(resultMap);
   }

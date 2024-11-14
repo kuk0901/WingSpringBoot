@@ -66,7 +66,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
         <div class="post-sub one-line">
           <div class="one-line">
             <div class="info-title bg__gray text__black box__l text__center">작성자</div>
-            <div class="info-writer bg__white text__black box__l">${data.EMAIL}</div>
+            <div class="info-writer bg__white text__black box__l">WING_ 고객센터</div>
             </div>
           <div class="one-line">
             <div class="info-title bg__gray text__black box__l text__center">작성일</div>
