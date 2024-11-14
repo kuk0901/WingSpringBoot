@@ -513,8 +513,7 @@ $("#cardUseDetail").on('click', function () {
           showAlertMsg("날짜와 카테고리를 선택해 주세요.");
           return;
         }
-        console.log(selectedCategory)
-        console.log(startDate)
+
         // AJAX 요청 보내기
         $.ajax({
           url: '/member/api/accountBook/myPage/detail',  // 요청할 API URL
