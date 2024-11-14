@@ -2,8 +2,10 @@ package com.edu.wing.freeBoard.controller;
 
 import com.edu.wing.freeBoard.domain.FreeBoardVo;
 import com.edu.wing.freeBoard.service.FreeBoardService;
+import com.edu.wing.freeBoardComment.domain.FreeBoardCommentVo;
 import com.edu.wing.freeBoardComment.service.FreeBoardCommentService;
 import com.edu.wing.member.domain.MemberVo;
+import com.edu.wing.util.CustomException;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,25 +15,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/member/api/freeBoard")
 public class MemberApiFreeBoardController {
 
-  private static final Logger log = LoggerFactory.getLogger(MemberApiFreeBoardController.class);
-  private static final String LOG_TITLE = "==MemberApiFreeBoardController==";
-
   @Autowired
   private FreeBoardService freeBoardService;
 
   @Autowired
-  FreeBoardCommentService freeBoardCommentService;
+  private FreeBoardCommentService freeBoardCommentService;
 
   @PostMapping("/add")
   public ResponseEntity<?> addFreeBoard(@RequestBody FreeBoardVo freeBoardVo, HttpSession session) {
-    log.info(LOG_TITLE);
-    log.info("addFreeBoard freeBoardVo: {}", freeBoardVo);
 
     Map<String, Object> resultMap = new HashMap<>();
 
@@ -58,11 +56,11 @@ public class MemberApiFreeBoardController {
   @PatchMapping("/list/{freeBoardNo}/update")
   public ResponseEntity<?> updateFreeBoard(@PathVariable int freeBoardNo, @RequestBody Map<String, String> updateData
       , @RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String freeBoardSearch
-      , @RequestParam(defaultValue = "3") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("updateFreeBoard freeBoardNo: {}, updateData: {}, curPage: {}, freeBoardSearch: {}, noticeBoardNo: {}", freeBoardNo, updateData, curPage, freeBoardSearch, noticeBoardNo);
+      , @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession session) {
 
     Map<String, Object> resultMap = new HashMap<>();
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
 
     resultMap.put("curPage", curPage);
     resultMap.put("freeBoardSearch", freeBoardSearch);
@@ -76,15 +74,23 @@ public class MemberApiFreeBoardController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
+
+    resultMap.put("freeBoardVo", freeBoardVo);
+    resultMap.put("freeBoardCommentList", freeBoardCommentList);
+    resultMap.put("currentMemberNo", member.getMemberNo());
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "게시글이 성공적으로 수정되었습니다");
-    return ResponseEntity.ok().body(resultMap);
 
+    return ResponseEntity.ok().body(resultMap);
   }
 
   @PostMapping("/list/{freeBoardNo}/addComment")
   public ResponseEntity<?> addComment(@PathVariable int freeBoardNo, @RequestBody Map<String, String> addData
-      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession session){
+      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch
+      , @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession session){
 
     Map<String, Object> resultMap = new HashMap<>();
 
@@ -108,6 +114,13 @@ public class MemberApiFreeBoardController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
+
+    resultMap.put("freeBoardCommentList", freeBoardCommentList);
+    resultMap.put("freeBoardVo", freeBoardVo);
+    resultMap.put("currentMemberNo", member.getMemberNo());
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "답글 추가에 성공했습니다");
     return ResponseEntity.ok().body(resultMap);
@@ -137,9 +150,10 @@ public class MemberApiFreeBoardController {
 
   @DeleteMapping("list/{freeBoardCommentNo}/deleteComment")
   public ResponseEntity<?> deleteComment(@PathVariable int freeBoardCommentNo, @RequestParam(defaultValue = "1") String curPage
-      , @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam int freeBoardNo){
-
+      , @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam int freeBoardNo, HttpSession session){
     Map<String, Object> resultMap = new HashMap<>();
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
 
     resultMap.put("curPage", curPage);
     resultMap.put("freeBoardSearch", freeBoardSearch);
@@ -153,8 +167,60 @@ public class MemberApiFreeBoardController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
+
+    resultMap.put("freeBoardVo", freeBoardVo);
+    resultMap.put("freeBoardCommentList", freeBoardCommentList);
+    resultMap.put("currentMemberNo", member.getMemberNo());
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "댓글 삭제에 성공했습니다.");
     return ResponseEntity.ok().body(resultMap);
+  }
+
+  @PatchMapping("/list/{freeBoardCommentNo}/updateComment")
+  public ResponseEntity<?> updateFreeBoardComment(@PathVariable int freeBoardCommentNo,  @RequestParam String freeBoardCommentContent, @RequestParam(defaultValue = "1") String curPage
+      , @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam int freeBoardNo, HttpSession session ) {
+    Map<String ,Object> resultMap = new HashMap<>();
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+
+    try {
+      resultMap.put("curPage", curPage);
+      resultMap.put("freeBoardSearch", freeBoardSearch);
+      resultMap.put("freeBoardNo", freeBoardNo);
+
+      FreeBoardCommentVo freeBoardCommentVo = new FreeBoardCommentVo();
+
+      freeBoardCommentVo.setContent(freeBoardCommentContent);
+      freeBoardCommentVo.setFreeBoardCommentNo(freeBoardCommentNo);
+
+      if(!freeBoardCommentService.updateComment(freeBoardCommentVo)) {
+        resultMap.put("status", "failed");
+        resultMap.put("alertMsg", "서버 오류로 인해 댓글 수정이 불가능합니다. 잠시 후 다시 시도해주세요.");
+        return ResponseEntity.badRequest().body(resultMap);
+      }
+
+      FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+      List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
+
+      resultMap.put("freeBoardVo", freeBoardVo);
+      resultMap.put("freeBoardCommentList", freeBoardCommentList);
+      resultMap.put("currentMemberNo", member.getMemberNo());
+      resultMap.put("status", "success");
+      resultMap.put("alertMsg", "댓글이 수정되었습니다.");
+      return ResponseEntity.ok().body(resultMap);
+
+    } catch (CustomException e) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "댓글 수정에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    } catch (Exception e) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 댓글 수정에 실패했습니다. 관리자에게 문의해 주세요.");
+      return ResponseEntity.internalServerError().body(resultMap);
+    }
   }
 }

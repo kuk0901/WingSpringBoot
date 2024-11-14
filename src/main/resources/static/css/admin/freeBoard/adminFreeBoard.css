@@ -1,3 +1,9 @@
+input, textarea {
+  border: none;
+  outline: none;
+  resize: none;
+}
+
 #content .title-container {
   width: 100%;
   margin-top: 20px;
@@ -69,10 +75,20 @@
   flex-direction: column;
 }
 
-#content .main-container .freeBoard-container .list-container .list--supply {
+#content .main-container .freeBoard-container .list-container {
+  justify-content: space-around;
+}
+
+#content .main-container .freeBoard-container .list-container .list--freeBoardNo {
   font-size: 17px;
   padding: 17px 13px;
-  width: 300px;
+  width: 75px;
+}
+
+#content .main-container .freeBoard-container .list-container .list--email {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 150px;
 }
 
 #content .main-container .freeBoard-container .list-container .list--date {
@@ -290,6 +306,46 @@
 #content .btn-container-patch-move .btn-container .freeBoardUpdateBtn {
   font-size: 16px;
   padding: 11.5px;
+}
+
+#content .comment-list-container {
+  padding: 18px;
+  margin: 0 20px;
+}
+
+#content .comment-list-container .comment-container {
+  padding: 20px;
+  justify-content: space-between;
+}
+
+#content .comment-list-container .comment-container .comment-email {
+  font-size: 18px;
+}
+
+#content .comment-list-container .comment-container .comment-content {
+  max-width: 1300px;
+  min-width: 1000px;
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#content .comment-list-container .hiddenDiv {
+  width: 135px;
+}
+
+#content .comment-list-container .comment-container .btn-container {
+  width: 140px;
+}
+
+#content .comment-list-container .comment-container .comment-date {
+  font-size: 16px;
+}
+
+#content .comment-list-container .comment-container .comment-content input {
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
 }
 
 .text__right {

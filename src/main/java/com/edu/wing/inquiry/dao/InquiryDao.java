@@ -15,7 +15,7 @@ public interface InquiryDao {
 
   int insertInquiryComment(int inquiryNo, String content, int memberNo);
 
-  void addInquiry(InquiryVo inquiryVo);
+  int addInquiry(InquiryVo inquiryVo);
 
   int updateAnswerTermination(int inquiryNo);
 

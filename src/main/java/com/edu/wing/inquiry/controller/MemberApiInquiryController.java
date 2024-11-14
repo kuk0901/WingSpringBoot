@@ -11,37 +11,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/member/api/cs/inquiry")
 public class MemberApiInquiryController {
 
-  private static final Logger log = LoggerFactory.getLogger(MemberApiInquiryController.class);
-  private static final String LOG_TITLE = "==MemberApiInquiryController==";
-
   @Autowired
   private InquiryService inquiryService;
 
   @PostMapping("/list/add")
   public ResponseEntity<?> addInquiry(@RequestBody InquiryVo inquiryVo, HttpSession httpsSession) {
-    log.info(LOG_TITLE);
-    log.info("addInquiry inquiryVo: {}", inquiryVo);
+
+    Map<String, Object> resultMap = new HashMap<>();
 
     MemberVo member = (MemberVo) httpsSession.getAttribute("member");
-    if (member != null) {
-      inquiryVo.setMemberNo(member.getMemberNo()); // memberNo를 InquiryVo에 설정
-    } else {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 정보가 없습니다.");
+
+    boolean addInquiry = inquiryService.addInquiry(inquiryVo);
+
+    if(!addInquiry) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 문의 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
-    try {
-      inquiryService.addInquiry(inquiryVo);
-      return ResponseEntity.ok().body("문의가 성공적으로 등록되었습니다");
-    }catch (Exception e) {
-      log.error("Error occurred while adding inquiry: {}", e.getMessage());
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("문의 등록 중 오류가 발생했습니다");
-    }
+    resultMap.put("status", "success");
+    resultMap.put("alertMsg", "문의 등록에 성공했습니다.");
+    return ResponseEntity.ok().body("문의가 성공적으로 등록되었습니다");
   }
-
 }

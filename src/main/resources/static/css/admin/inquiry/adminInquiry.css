@@ -201,6 +201,10 @@
   padding: 10px;
 }
 
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container .answer-creDate {
+  width: 120px;
+}
+
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container .info-detail {
   width: 380px;
   border: 1px solid black;

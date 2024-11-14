@@ -40,12 +40,12 @@
         </div>
       </div>
 
-      <main class="main-container freeBoard__list bg__white">
+      <main class="main-container freeBoard__list">
         <div class="freeBoard-container">
-          <div class="list-container list-container--title container-title one-line ">
-            <div class="list--supply text__semibold text__center">번호</div>
+          <div class="list-container list-container--title container-title one-line bg__white">
+            <div class="list--freeBoardNo text__semibold text__center">번호</div>
             <div class="list--title text__semibold text__center">제목</div>
-            <div class="list--supply text__semibold text__center">작성자</div>
+            <div class="list--email text__semibold text__center">작성자</div>
             <div class="list--date text__semibold text__center">작성날짜</div>
           </div>
 
@@ -55,9 +55,9 @@
                 <c:forEach items="${freeBoardList}" var="freeBoardVo" >
                   <div class="list-container list-content one-line " data-free-board-no="${freeBoardVo.freeBoardNo}">
                     <input type="hidden" id="noticeBoardNo" value="${freeBoardVo.noticeBoardNo}">
-                    <div class="list--supply text__center">${freeBoardVo.freeBoardNo}</div>
-                    <div class="list--title text__center">${freeBoardVo.title}</div>
-                    <div class="list--supply text__center">${freeBoardVo.email}</div>
+                    <div class="list--freeBoardNo text__center">${freeBoardVo.freeBoardNo}</div>
+                    <div class="list--title">${freeBoardVo.title}</div>
+                    <div class="list--email text__center">${freeBoardVo.email}</div>
                     <div class="list--date text__center">
                       <fmt:formatDate value="${freeBoardVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                     </div>

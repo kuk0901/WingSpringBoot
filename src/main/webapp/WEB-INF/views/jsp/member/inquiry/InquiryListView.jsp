@@ -48,7 +48,7 @@
                 <c:forEach items="${inquiryList}" var="inquiryVo" >
                   <div class="list-container list-content one-line" data-inquiry-no="${inquiryVo.inquiryNo}">
                     <div class="list--supply text__center">${inquiryVo.inquiryNo}</div>
-                    <div class="list--title text__center">${inquiryVo.title}</div>
+                    <div class="list--title">${inquiryVo.title}</div>
                     <div class="list--date text__center">
                       <fmt:formatDate value="${inquiryVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                     </div>
