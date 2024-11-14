@@ -25,10 +25,10 @@ WING\_은 사용자의 소비 습관을 분석하고 개선하는 것을 목표�
   - 가상의 맞춤형 카드 추천 시스템
   - 카드 종류 조회
 
-![메인 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/images/sampleUI/signin.png)
-![회원 가계부 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/images/sampleUI/user_main.png)
-![카드 추천 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/images/sampleUI/user_mypage.png)
-![관리자 대시보드 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/sampleUI/images/admin_main.png)
+![메인 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/img/sampleUI/signin.png)
+![회원 가계부 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/img/sampleUI/user_main.png)
+![카드 추천 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/img/sampleUI/user_mypage.png)
+![관리자 대시보드 화면](https://raw.githubusercontent.com/kuk0901/WingSpringBoot/project-documents/docs/img/sampleUI/admin_main.png)
 
 - **개발 중점**: 실제 서비스와 유사한 환경의 웹 애플리케이션 구현
 
