@@ -116,3 +116,27 @@
 #content .btn-container {
     margin-right: 20px;
 }
+
+#content .main-container .existing-payments {
+    width: 40%;
+    margin: auto;
+}
+
+#content .main-container .existing-payments .paymentMethodItems {
+    height: auto;
+    align-items: baseline;
+}
+
+#content .main-container .existing-payments .paymentMethodItems .paymentMethod-container {
+    width: 50%;
+    flex-direction: column;
+}
+
+#content .main-container .existing-payments .paymentMethodItems .paymentMethod-container .paymentMethod-flex {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#content .main-container .existing-payments .paymentMethodItems .paymentMethod-container .paymentMethod-flex .paymentMethod-item {
+    padding: 5px;
+}

@@ -30,7 +30,7 @@
 
             <div class="one-line">
               <div class="info-title bg__gray text__black box__l text__center">제목</div>
-              <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+              <input id="titleVal" max="25" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
             </div>
             <div class="one-line">
               <div class="info-title bg__gray text__black box__l text__center">분류</div>

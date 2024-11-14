@@ -56,4 +56,7 @@ public class PaymentMethodDaoImpl implements PaymentMethodDao {
   public void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo) {
     sqlSession.update(NAMESPACE + "paymentMethodUpdateOne", paymentMethodVo);
   }
+
+  @Override
+  public List<String> getPaymentMethodName() { return sqlSession.selectList(NAMESPACE + "getPaymentMethodName"); }
 }

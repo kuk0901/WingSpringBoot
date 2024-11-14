@@ -30,4 +30,15 @@
         WHERE FREE_BOARD_COMMENT_NO = #{freeBoardCommentNo}
     </delete>
 
+    <update id="updateComment" parameterType="freeBoardCommentVo">
+        UPDATE FREE_BOARD_COMMENT
+        SET CONTENT = #{content} , MOD_DATE = SYSDATE
+        WHERE FREE_BOARD_COMMENT_NO = #{freeBoardCommentNo}
+    </update>
+
+    <select id="compareFreeBoardComment" parameterType="freeBoardCommentVo" resultMap="freeBoardCommentResultMap">
+        SELECT FREE_BOARD_COMMENT_NO, CONTENT
+        FROM FREE_BOARD_COMMENT
+        WHERE FREE_BOARD_COMMENT_NO = #{freeBoardCommentNo}
+    </select>
 </mapper>

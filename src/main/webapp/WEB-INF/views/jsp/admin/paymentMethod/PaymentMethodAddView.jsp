@@ -32,6 +32,21 @@
           <div class="input-container bg__white text__black">
             <input type="text" id="paymentMethodName" name="paymentMethodName" class="info-item" placeholder="ex) 계좌이체" required>
           </div>
+
+          <div class="existing-payments bg">
+            <div class="bg__gray text__center text__semibold check-container">기존 결제수단</div>
+            <div id="paymentMethodList" class="category-container bg__white">
+              <div id="paymentMethodItems" class="text__center categoryItems one-line">
+                <div class="paymentMethod-container one-line">
+                  <div class="paymentMethod-flex one-line">
+                    <c:forEach items="${paymentMethodList}" var="paymentMethod">
+                      <div class="paymentMethod-item">${paymentMethod}</div>
+                    </c:forEach>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="btn-container">

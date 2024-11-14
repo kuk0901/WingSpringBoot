@@ -13,7 +13,7 @@ public interface InquiryService {
 
   Map<String, Object> inquirySelectOne(int inquiryNo);
 
-  void addInquiry(InquiryVo inquiryVo);
+  boolean addInquiry(InquiryVo inquiryVo);
 
   boolean addInquiryReply(int inquiryNo, String content, int memberNo);
 

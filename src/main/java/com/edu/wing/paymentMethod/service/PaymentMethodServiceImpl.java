@@ -54,6 +54,8 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     // 3. 데이터베이스 업데이트 수행
 
    paymentMethodDao.paymentMethodUpdateOne(paymentMethodVo);
-
   }
+
+  @Override
+  public List<String> getPaymentMethodName() {return paymentMethodDao.getPaymentMethodName();}
 }

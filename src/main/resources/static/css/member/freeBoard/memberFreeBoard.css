@@ -67,10 +67,20 @@ input, textarea {
   line-height: normal;
 }
 
-#content .main-container .freeBoard-container .list-container .list--supply {
+#content .main-container .freeBoard-container .list-container {
+  justify-content: space-around;
+}
+
+#content .main-container .freeBoard-container .list-container .list--freeBoardNo {
   font-size: 17px;
   padding: 17px 13px;
-  width: 300px;
+  width: 75px;
+}
+
+#content .main-container .freeBoard-container .list-container .list--email {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 150px;
 }
 
 #content .main-container .freeBoard-container .list-container .list--date {
@@ -100,10 +110,6 @@ input, textarea {
 
 #content .search-container .addBtn-container .addMove {
   padding: 13px 19px;
-}
-
-#content .main-container .freeBoard-container {
-  padding: 0 20px 20px;
 }
 
 #content .main-container.detail-board-content {
@@ -331,46 +337,79 @@ input, textarea {
 
 #content .comment-list-container .comment-container {
   padding: 20px;
+  justify-content: space-between;
 }
 
 #content .comment-list-container .comment-container .comment-email {
-  margin-right: 20px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #content .comment-list-container .comment-container .comment-content {
-  width: 800px;
-  margin-right: 20px;
-  font-size: 20px;
+  max-width: 1300px;
+  min-width: 1000px;
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#content .comment-list-container .hiddenDiv {
+  width: 135px;
+}
+
+#content .comment-list-container .comment-container .btn-container {
+  width: 140px;
 }
 
 #content .comment-list-container .comment-container .comment-date {
-  margin-right: 20px;
-  font-size: 20px;
+  font-size: 16px;
 }
+
+#content .comment-list-container .comment-container .comment-content input {
+  display: inline-block;
+  width: 100%;
+  font-size: 18px;
+}
+
+
 
 #content .main-container .freeBoard-container .info-content #freeBoardContent {
   border: none;
   resize: none;
   width: 1178px;
   height: 398px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #content .main-container .member-btn-container #listMove,
 #content .main-container .member-btn-container #updateBtn {
   width: 150px;
   height: 50px;
-  margin-right: 20px;
 }
 
-#content .main-container .member-btn-container .member-addBtn-container #comment-textarea {
+#content .comment-add-container {
+  justify-content: space-between;
+  gap: 20px;
+}
+
+#content .comment-add-container .input-container {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 7px;
+  width: 85%;
+  height: 100px;
+}
+
+#content .comment-add-container .input-container .comment-textarea {
+  width: 100%;
+  height: 100%;
   border: none;
   resize: none;
-  width: 900px;
-  height: 80px;
+  font-size: 16px;
 }
 
+#content .comment-add-container .btn-container {
+  width: 20%;
+}
 
 .box__l {
   width: 200px;

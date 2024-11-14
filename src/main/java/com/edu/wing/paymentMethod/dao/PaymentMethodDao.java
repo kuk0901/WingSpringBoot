@@ -21,4 +21,6 @@ public interface PaymentMethodDao {
   boolean paymentMethodDeleteOne(int paymentMethodNo);
 
   void paymentMethodUpdateOne(PaymentMethodVo paymentMethodVo);
+
+  List<String> getPaymentMethodName();
 }

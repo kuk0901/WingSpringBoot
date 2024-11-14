@@ -23,16 +23,11 @@ import java.util.Map;
 @RequestMapping("/member/cs/inquiry")
 public class MemberInquiryController {
 
-  private static final Logger log = LoggerFactory.getLogger(MemberInquiryController.class);
-  private static final String LOG_TITLE = "==MemberInquiryController==";
-
   @Autowired
   private InquiryService inquiryService;
 
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView inquiryList(@RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch, HttpSession httpSession) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping inquiryList curPage: {}", curPage);
 
     int totalCount = inquiryService.inquirySelectTotalCount(inquirySearch);
 
@@ -59,7 +54,6 @@ public class MemberInquiryController {
 
   @GetMapping("/list/add")
   public ModelAndView inquiryAdd(HttpSession httpSession) {
-    log.info("{} - Retrieving @GetMapping inquiryAdd", LOG_TITLE);
 
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -78,13 +72,13 @@ public class MemberInquiryController {
 
   @GetMapping("/list/{inquiryNo}")
   public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}", inquiryNo, curPage);
 
     Map<String, Object> resultMap = inquiryService.memberInquirySelectOne(inquiryNo);
 
     if (resultMap == null) {
-      return ResponseEntity.notFound().build();
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
     resultMap.put("curPage", curPage);

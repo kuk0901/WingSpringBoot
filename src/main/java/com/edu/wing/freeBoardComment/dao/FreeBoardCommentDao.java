@@ -11,4 +11,8 @@ public interface FreeBoardCommentDao {
   int addComment(FreeBoardCommentVo freeBoardCommentVo);
 
   boolean deleteComment(int freeBoardCommentNo);
+
+  void updateComment(FreeBoardCommentVo freeBoardCommentVo);
+
+  FreeBoardCommentVo compareFreeBoardComment(FreeBoardCommentVo freeBoardCommentVo);
 }

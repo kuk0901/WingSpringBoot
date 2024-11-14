@@ -37,8 +37,6 @@ public class MemberFreeBoardController {
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView freeBoardList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
                                     @RequestParam(defaultValue = "3") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping freeBoardList curPage: {}, noticeBoardNo: {}, freeBoardSearch: {}", curPage, noticeBoardNo, freeBoardSearch);
 
     int totalCount = freeBoardService.freeBoardSelectTotalCount(noticeBoardNo, freeBoardSearch);
 
@@ -78,13 +76,11 @@ public class MemberFreeBoardController {
     List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
 
     if(freeBoardVo == null){
-      resultMap.put("success", false);
+      resultMap.put("status", "failed");
       resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.");
 
       return ResponseEntity.badRequest().body(resultMap);
     }
-
-    log.info("freeBoardVo: {}", freeBoardVo);
 
     resultMap.put("curPage", curPage);
     resultMap.put("freeBoardSearch", freeBoardSearch);
@@ -99,8 +95,6 @@ public class MemberFreeBoardController {
   @GetMapping("/add")
   public ModelAndView freeBoardAdd(@RequestParam(defaultValue = "") String freeBoardSearch
           , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping freeBoardAdd freeBoardSearch: {}, curPage: {}, noticeBoardNo: {}", freeBoardSearch, curPage, noticeBoardNo);
 
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -123,8 +117,6 @@ public class MemberFreeBoardController {
   @GetMapping("/list/{freeBoardNo}/update")
   public ResponseEntity<?> updateFreeBoard(@PathVariable int freeBoardNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
                                            @RequestParam(defaultValue = "3") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("updateFreeBoard GET freeBoardNo: {}, curPage: {}, noticeBoardNo: {}, freeBoardSearch: {}", freeBoardNo, curPage, noticeBoardNo, freeBoardSearch);
 
     Map<String, Object> resultMap = new HashMap<>();
 
@@ -135,7 +127,7 @@ public class MemberFreeBoardController {
     FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
 
     if(freeBoardVo == null){
-      resultMap.put("success", "failed");
+      resultMap.put("status", "failed");
       resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요");
       return ResponseEntity.badRequest().body(resultMap);
     }
@@ -144,6 +136,39 @@ public class MemberFreeBoardController {
     resultMap.put("freeBoardVo", freeBoardVo);
 
     return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/list/{freeBoardCommentNo}/updateComment")
+  public ResponseEntity<?> updateComment(@PathVariable int freeBoardCommentNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
+                                         @RequestParam(defaultValue = "3") int noticeBoardNo, @RequestParam int freeBoardNo, HttpSession httpSession) {
+    Map<String, Object> resultMap = new HashMap<>();
+
+    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
+
+    List<FreeBoardCommentVo> freeBoardCommentVo = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
+
+    if (freeBoardVo == null){
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    if (freeBoardCommentVo == null){
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("freeBoardCommentNo", freeBoardCommentNo);
+    resultMap.put("noticeBoardNo", noticeBoardNo);
+    resultMap.put("freeBoardNo", freeBoardNo);
+    resultMap.put("freeBoardVo", freeBoardVo);
+    resultMap.put("freeBoardCommentVo", freeBoardCommentVo);
+
+    return ResponseEntity.ok().body(resultMap);
+
+
   }
 
 }
