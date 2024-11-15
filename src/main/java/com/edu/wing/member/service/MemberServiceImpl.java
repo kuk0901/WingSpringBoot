@@ -4,6 +4,7 @@ import com.edu.wing.accountbook.dao.AccountBookDao;
 import com.edu.wing.member.dao.MemberDao;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.sellingCard.dao.SellingCardDao;
+import com.edu.wing.util.CustomEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,17 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public MemberVo memberExist(String email, String pwd) {
 
-    return memberDao.memberExist(email, pwd);
+    String decodedPassword = CustomEncoding.decode(pwd);
+
+    return memberDao.memberExist(email, decodedPassword);
   }
 
   @Override
   public boolean memberInsertOne(MemberVo memberVo) {
+    // 비밀번호 디코딩
+    String decodedPassword = CustomEncoding.decode(memberVo.getPwd());
+    memberVo.setPwd(decodedPassword); // 디코딩된 비밀번호를 설정
+
     memberDao.memberInsertOne(memberVo);
     MemberVo result = memberDao.memberSelectOne(memberVo.getEmail());
 
@@ -131,6 +138,9 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public MemberVo findMemberAccount(Map<String, String> map) {
+    String decodedPassword = CustomEncoding.decode(map.get("pwd"));
+    map.put("pwd", decodedPassword); // 디코딩된 비밀번호를 설정
+
     return memberDao.findMemberAccount(map);
   }
 
@@ -142,6 +152,9 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public boolean changeMemberPasswordAndValidate(Map<String, String> map) {
+    String decodedPassword = CustomEncoding.decode(map.get("pwd"));
+    map.put("pwd", decodedPassword); // 디코딩된 비밀번호를 설정
+
     memberDao.updateMemberPassword(map);
 
     MemberVo memberVo = memberDao.updateMemberPasswordCheck(map);
@@ -167,7 +180,6 @@ public class MemberServiceImpl implements MemberService {
       accountBookDao.deleteAllAccountBook(memberNo);
       sellingCardDao.updateDeleteCard(memberNo);
     }
-    System.out.println("월간데이터삭제");
   }
 
 }

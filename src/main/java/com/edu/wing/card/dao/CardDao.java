@@ -16,5 +16,5 @@ public interface CardDao {
   List<CardVo> userShowCardSelectList(Map<String, String> map);
   int userShowCardSelectTotalCount(String categoryName);
   CardVo getCardByName(String cardName);
-  List<Map<String, Object>> userRecommendCardSelect(int memberNo);
+  Map<String, Object> userRecommendCardSelect(int memberNo);
 }

@@ -4,6 +4,7 @@ import {
 } from '../util/validation.js';
 import { formatNumber, formatPhoneNumber, unformatNumber } from "../util/format.js";
 import { showAlertMsg } from "../util/toast.js";
+import { encodeCustom } from "../util/base62.js"
 
 const $form = $("#signupForm");
 const $email = $("#email");
@@ -140,9 +141,12 @@ $form.on("submit", function(e) {
   const formData = {};
   $(this).serializeArray().forEach(function(item) {
     switch(item.name) {
-      case 'yearlySalary':
-      case 'monthlySalary':
+      case "yearlySalary":
+      case "monthlySalary":
         formData[item.name] = unformatNumber(item.value);
+        break;
+      case "pwd":
+        formData[item.name] = encodeCustom(item.value);
         break;
       default:
         formData[item.name] = item.value;
@@ -174,89 +178,5 @@ $form.on("submit", function(e) {
 
 // 커스텀 유효성 검사 메시지 설정
 setupCustomValidityMessages($form, {
-  pwd: "올바른 비밀번호 형식으로 입력해주세요. (8자의 영문자와 숫자 조합, 대소문자 구분 없음, 공백 제외)"
+  pwd: "올바른 비밀번호 형식으로 입력해주세요. (8자의 영문자와 숫자 조합, 대소문자 구분, 공백 제외)"
 });
-
-// $pwdInput.on("blur", function() {
-//   const pwdValue = $(this).val();
-//   if (pwdValue === "") {
-//     $pwdError.text("필수 입력 항목입니다.")
-//         .removeClass("text__correct")
-//         .addClass("text__error");
-//   } else {
-//     validatePassword(); // 비밀번호 유효성 검사
-//   }
-// });
-//
-// $pwdCheck.on("blur", function() {
-//   const pwdCheckValue = $(this).val();
-//   if (pwdCheckValue === "") {
-//     $pwdCheckError.text("필수 입력 항목입니다.")
-//         .removeClass("text__correct")
-//         .addClass("text__error");
-//   } else {
-//     validatePassword(); // 비밀번호 확인 유효성 검사
-//   }
-// });
-//
-// $userName.on("blur", function() {
-//   updateUI($userName, $userNameError, validateInput($(this).val(), userNameRegex, "2~7자의 한글 이름을 입력해주세요."));
-// });
-//
-// $phoneInput.on("blur", function() {
-//   formatPhoneNumber(this);
-//   updateUI($phoneInput, $phoneError, validateInput($(this).val(), phoneRegex, "올바른 휴대폰 번호 형식으로 입력해주세요."));
-// });
-//
-// $salaryInput.on("blur", function() {
-//   formatNumber(this);
-//   updateUI($salaryInput, $salaryError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요. (예: 4,500 또는 6,000)"));
-// });
-//
-// $payInput.on("blur", function() {
-//   formatNumber(this);
-//   updateUI($payInput, $payError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요. (예: 300 또는 500)"));
-// });
-//
-// $form.on("submit", function(e) {
-//   e.preventDefault();
-//
-//   if (!this.checkValidity()) {
-//     this.reportValidity();
-//     return;
-//   }
-//
-//   const formData = {};
-//   $(this).serializeArray().forEach(function(item) {
-//     switch(item.name) {
-//       case 'yearlySalary':
-//       case 'monthlySalary':
-//         formData[item.name] = unformatNumber(item.value);
-//         break;
-//       default:
-//         formData[item.name] = item.value;
-//     }
-//   });
-//
-//   $.ajax({
-//     type: "POST",
-//     url: "/api/auth/signup",
-//     data: JSON.stringify(formData),
-//     contentType: "application/json",
-//     dataType: "json",
-//     success: function(res) {
-//       const message = encodeURIComponent(res.alertMsg || "회원가입이 완료되었습니다.");
-//       window.location.href = `/?message=${message}`;
-//     },
-//     error: function(xhr, status, error) {
-//       let msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
-//
-//       if (xhr.responseJSON.emailMsg) {
-//         msg = xhr.responseJSON.emailMsg;
-//         updateUI($email, $emailError, { isValid: false, message: msg });
-//       }
-//
-//       showAlertMsg(msg);
-//     }
-//   });
-// });

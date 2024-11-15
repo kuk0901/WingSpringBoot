@@ -144,7 +144,7 @@ function createUpdateView(res) {
           </div>
         </div>
          
-        <div class="btn-container">
+        <div class="btn-container one-line">
           <button id="paymentMethodAdd" class="btn btn__generate btn--margin">수정</button>
           <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>

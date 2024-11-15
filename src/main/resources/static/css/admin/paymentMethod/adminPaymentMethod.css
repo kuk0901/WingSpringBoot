@@ -35,7 +35,6 @@
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin-top: 50px;
     flex-wrap: wrap;
 }
 
@@ -46,7 +45,7 @@
 #content .main-container .addPaymentMethodForm .paymentMethod-form .one-line {
     display: flex;
     justify-content: flex-start;
-    gap: 100px;
+    gap: 10px;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form .label-container {
@@ -85,8 +84,11 @@
     padding: 20px;
 }
 
-#content .main-container .addPaymentMethodForm .btn-container .btn--margin {
-    margin: auto 100px auto 400px;
+#content .main-container .addPaymentMethodForm .btn-container.one-line {
+    justify-content: space-around;
+}
+
+#content .main-container .addPaymentMethodForm .btn-container .btn {
     padding: 13px 19px;
     width: 150px;
 }
@@ -139,4 +141,24 @@
 
 #content .main-container .existing-payments .paymentMethodItems .paymentMethod-container .paymentMethod-flex .paymentMethod-item {
     padding: 5px;
+}
+
+#content .main-container .existing-payments .check-container {
+    padding: 10px;
+}
+
+#content .main-container .existing-payments .category-container .categoryItems.one-line {
+    justify-content: space-around;
+}
+
+#content .main-container .existing-payments .category-container .paymentMethod-container .paymentMethod-flex.one-line {
+    padding: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#content .main-container .existing-payments .category-container .paymentMethod-container .paymentMethod-flex .paymentMethod-item {
+    width: 170px;
+    height: 30px;
+    line-height: 30px;
 }
