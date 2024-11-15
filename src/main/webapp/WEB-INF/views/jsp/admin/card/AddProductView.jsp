@@ -56,7 +56,7 @@
             </select>
           </div>
           <div class="label-container">
-            <label for="registerDate" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 등록 날짜</label>
+            <label for="registerDate" class="bg__gray text__semibold text__center box-sm"><span class="text__red">*</span> 등록 날짜</label>
           </div>
           <div class="input-container">
             <input type="date" id="registerDate" name="registerDate" required />
