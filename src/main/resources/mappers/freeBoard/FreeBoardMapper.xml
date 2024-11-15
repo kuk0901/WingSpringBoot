@@ -11,6 +11,8 @@
         <result column="CRE_DATE" property="creDate" />
         <result column="MOD_DATE" property="modDate" />
         <result column="EMAIL" property="email" />
+        <result column="COMPARE_DATE" property="compareDate" />
+        <result column="IS_MODIFIED" property="isModified" />
     </resultMap>
 
     <sql id="search">
@@ -28,11 +30,19 @@
     </select>
 
     <select id="freeBoardSelectList" parameterType="map" resultMap="freeBoardResultMap">
-        SELECT FREE_BOARD_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, CRE_DATE, EMAIL
+        SELECT FREE_BOARD_NO, NOTICE_BOARD_NO, MEMBER_NO, TITLE, CONTENT, CRE_DATE, MOD_DATE, EMAIL,
+        CASE
+            WHEN MOD_DATE > CRE_DATE THEN 1
+            ELSE 0
+        END AS IS_MODIFIED,
+        CASE
+            WHEN MOD_DATE > CRE_DATE THEN MOD_DATE
+            ELSE CRE_DATE
+        END AS COMPARE_DATE
         FROM (
             SELECT ROWNUM AS RNUM, I.*
             FROM (
-                SELECT FB.FREE_BOARD_NO, FB.NOTICE_BOARD_NO, FB.MEMBER_NO, FB.TITLE, FB.CONTENT, FB.CRE_DATE, M.EMAIL
+                SELECT FB.FREE_BOARD_NO, FB.NOTICE_BOARD_NO, FB.MEMBER_NO, FB.TITLE, FB.CONTENT, FB.CRE_DATE, FB.MOD_DATE, M.EMAIL
                 FROM FREE_BOARD FB
                 JOIN MEMBER M ON FB.MEMBER_NO = M.MEMBER_NO
                 <where>
@@ -65,8 +75,7 @@
         UPDATE FREE_BOARD
         SET TITLE = #{title},
             CONTENT = #{content},
-            MOD_DATE = SYSDATE,
-            CRE_DATE = SYSDATE
+            MOD_DATE = SYSDATE
         WHERE FREE_BOARD_NO = #{freeBoardNo}
     </update>
 

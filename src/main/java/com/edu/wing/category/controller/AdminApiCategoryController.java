@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -125,30 +126,6 @@ public class AdminApiCategoryController {
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "카테고리가 성공적으로 수정되었습니다.");
     return ResponseEntity.ok().body(resultMap);
-  }
-
-  @PostMapping("/updatePlus/{categoryNo}")
-  public ResponseEntity<?> updatePlusCategory(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("updatePlusCategory Get categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    PlusCategoryVo plusCategoryVo = plusCategoryService.plusCategorySelectOne(categoryNo);
-
-    return ResponseEntity.ok().body(plusCategoryVo);
-  }
-
-  @PostMapping("/updateMinus/{categoryNo}")
-  public ResponseEntity<?> updateMinusCategory(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("updateMinusCategory Get categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    MinusCategoryVo minusCategoryVo = minusCategoryService.minusCategorySelectOne(categoryNo);
-
-    return ResponseEntity.ok().body(minusCategoryVo);
   }
 
   @DeleteMapping("/deletePlusCategory/{categoryNo}")

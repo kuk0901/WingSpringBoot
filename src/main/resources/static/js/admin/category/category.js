@@ -66,10 +66,10 @@ $(".moveModFunc").click(function (e) {
         }
 
         $.ajax({
-          url: `/admin/api/category/updatePlus/${no}`,
-          type: 'POST',
+          url: `/admin/category/updatePlus/${no}`,
+          type: 'GET',
           success: function (res) {
-            createPlusUpdateView(res);
+            createPlusUpdateView(res.plusCategories, res.plusCategoryVo);
           },
           error: function (res) {
             showAlertMsg(res.alertMsg);
@@ -88,10 +88,10 @@ $(".moveModFunc").click(function (e) {
         }
 
         $.ajax({
-          url: `/admin/api/category/updateMinus/${no}`,
-          type: 'POST',
+          url: `/admin/category/updateMinus/${no}`,
+          type: 'GET',
           success: function (res) {
-            createMinusUpdateView(res);
+            createMinusUpdateView(res.minusCategories, res.minusCategoryVo);
           },
           error: function (res) {
             showAlertMsg(res.alertMsg);
@@ -102,10 +102,13 @@ $(".moveModFunc").click(function (e) {
   }
 })
 
-
 // update view 화면을 구현함
-function createPlusUpdateView(res) {
-  console.log(res)
+function createPlusUpdateView(plusCategories, plusCategoryVo) {
+
+  const plusCategoryNames = plusCategories.map(name => `
+    <div class="category-item">${name}</div>
+  `).join("");
+
   const plusCategoryUpdate = `
     <div class="title-container">
       <div class="title btn__yellow text__white">
@@ -115,12 +118,28 @@ function createPlusUpdateView(res) {
     
     <main class="main-container payment-method__change">
       <form class="categoryForm">
-        <div class="list-container one-line">
-          <div class="label-container info-item bg__gray text__black box__l text__center">
-            <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
+        <div class="one-line category">
+          <div class="list-container one-line">
+            <div class="label-container info-item bg__gray text__black box__l text__center">
+              <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
+            </div>
+            <div class="input-container info-item bg__white text__black box__l">
+              <input id="categoryName" name="categoryName" value="${plusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
+            </div>
           </div>
-          <div class="input-container info-item bg__white text__black box__l">
-            <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l"/>
+          
+          <div class="existing-categories bg">
+            <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
+            <div id="categoryList" class="category-container bg__white">
+              <div id="categoryItems" class="text__center categoryItems one-line">
+                <div class="plus-category-container one-line">
+                  <div class="category--title">플러스</div>
+                  <div class="category-flex one-line">
+                    ${plusCategoryNames}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
        
@@ -162,8 +181,12 @@ function updatePlusCategory(categoryNo) {
   });
 }
 
-function createMinusUpdateView(res) {
-  console.log(res)
+function createMinusUpdateView(minusCategories, minusCategoryVo) {
+
+  const minusCategoryNames = minusCategories.map(name => `
+    <div class="category-item">${name}</div>
+  `).join("");
+
   const minusCategoryUpdate = `
     <div class="title-container">
       <div class="title btn__yellow text__white">
@@ -178,9 +201,23 @@ function createMinusUpdateView(res) {
             <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
           </div>
           <div class="input-container info-item bg__white text__black box__l">
-            <input id="categoryName" name="categoryName" value="${res.categoryName}" class="info-item bg__white text__black box__l"/>
+            <input id="categoryName" name="categoryName" value="${minusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
           </div>
         </div>
+        
+        <div class="existing-categories bg">
+            <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
+            <div id="categoryList" class="category-container bg__white">
+              <div id="categoryItems" class="text__center categoryItems one-line">
+                <div class="category-container one-line">
+                  <div class="category--title">마이너스</div>
+                  <div class="category-flex one-line">
+                    ${minusCategoryNames}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
        
         <div class="btn-container">
           <button id="minusCatergoryUpdate" class="btn btn__generate btn--margin">수정</button>

@@ -162,7 +162,7 @@ input, textarea {
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub.one-line {
-  justify-content: space-between;
+  gap: 20px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-title {
@@ -246,6 +246,10 @@ input, textarea {
 }
 
 #content .main-container .list-container .list--div {
+  margin-top: 20px;
+}
+
+#content .main-container .btn-container.btn-marginTop {
   margin-top: 20px;
 }
 
