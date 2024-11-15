@@ -10,11 +10,21 @@
         <result column="CRE_DATE" property="creDate" />
         <result column="MOD_DATE" property="modDate" />
         <result column="EMAIL" property="email" />
+        <result column="COMPARE_DATE" property="compareDate" />
+        <result column="IS_MODIFIED" property="isModified" />
     </resultMap>
 
     <select id="freeBoardCommentSelectList" parameterType="map" resultMap="freeBoardCommentResultMap">
         SELECT FBC.FREE_BOARD_COMMENT_NO,
-        FBC.FREE_BOARD_NO, FBC.CONTENT as content, FBC.CRE_DATE, FBC.MEMBER_NO, M.EMAIL
+        FBC.FREE_BOARD_NO, FBC.CONTENT as content, FBC.CRE_DATE, FBC.MOD_DATE, FBC.MEMBER_NO, M.EMAIL,
+        CASE
+            WHEN FBC.MOD_DATE > FBC.CRE_DATE THEN 1
+            ELSE 0
+            END AS IS_MODIFIED,
+        CASE
+            WHEN FBC.MOD_DATE > FBC.CRE_DATE THEN FBC.MOD_DATE
+            ELSE FBC.CRE_DATE
+        END AS COMPARE_DATE
         FROM FREE_BOARD_COMMENT FBC
         JOIN MEMBER M ON FBC.MEMBER_NO = M.MEMBER_NO
         WHERE FBC.FREE_BOARD_NO = #{freeBoardNo}

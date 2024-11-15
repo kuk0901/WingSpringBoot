@@ -237,7 +237,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
       <div class="btn-container">
         <button id="postUpdateBtn" class="btn btn__generate postUpdateBtn text__center text__bold" 
           data-post-no="${res.POSTNO}" data-notice-board-no="${noticeBoardNo}" data-cur-page="${curPage}" data-post-search="${postSearch}" data-email="${res.EMAIL}">
-          문의 수정
+          수정
         </button>
       </div>
     </div>

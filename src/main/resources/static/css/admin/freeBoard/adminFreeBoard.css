@@ -139,7 +139,7 @@ input, textarea {
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .info-item {
-  width: 600px;
+  width: 800px;
   border: 1px solid black;
   padding: 10px;
 }
@@ -153,7 +153,7 @@ input, textarea {
 
 #content .main-container .freeBoard-container .freeBoard-sub {
   width: 90%;
-  justify-content: space-between;
+  gap: 20px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-title {
@@ -163,14 +163,14 @@ input, textarea {
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-writer {
-  width: 490px;
+  width: 600px;
   border: 1px solid black;
   margin-right: 10px;
   padding: 10px;
 }
 
 #content .main-container .freeBoard-container .freeBoard-sub .info-date {
-  width: 280px;
+  width: 490px;
   border: 1px solid black;
   padding: 10px;
 }

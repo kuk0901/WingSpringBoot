@@ -95,6 +95,22 @@ public class AdminPaymentMethodController {
     return ResponseEntity.ok().body(resultMap);
   }
 
+  @GetMapping("/update/{paymentMethodNo}")
+  public ResponseEntity<?> updatePaymentMethod(@PathVariable int paymentMethodNo) {
+    log.info(LOG_TITLE);
+    log.info("updatePaymentMethod Get paymentMethodNo: {}", paymentMethodNo);
 
+    Map<String, Object> resultMap = new HashMap<>();
+
+    PaymentMethodVo paymentMethodVo = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
+
+    List<String> paymentMethodList = paymentMethodService.getPaymentMethodName();
+
+    resultMap.put("status", "success");
+    resultMap.put("paymentMethodList", paymentMethodList);
+    resultMap.put("paymentMethodVo", paymentMethodVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
 
 }

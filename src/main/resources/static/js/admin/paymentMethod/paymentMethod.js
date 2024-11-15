@@ -110,10 +110,10 @@ $(".update-pm-btn").click(function(e) {
       }
 
       $.ajax( {
-        url: `/admin/api/paymentMethod/update/${no}`,
-        type: 'POST',
+        url: `/admin/paymentMethod/update/${no}`,
+        type: 'GET',
         success: function(res) {
-          createUpdateView(res);
+          createUpdateView(res.paymentMethodList, res.paymentMethodVo);
         },
         error: function(res) {
           showAlertMsg(alertMsg);
@@ -125,7 +125,12 @@ $(".update-pm-btn").click(function(e) {
 
 
 // update view 화면을 구현함
-function createUpdateView(res) {
+function createUpdateView(paymentMethodList, paymentMethodVo) {
+
+  const paymentMethodNames = paymentMethodList.map(name => `
+    <div class="paymentMethod-item">${name}</div>
+  `).join("");
+
   const paymentMethodUpdate = `
     <div class="title-container">
       <div class="title btn__yellow text__white">
@@ -140,11 +145,24 @@ function createUpdateView(res) {
             <label for="paymentMethodName" class="text__black text__center label-size">결제수단 명</label>
           </div>
           <div class="input-container bg__white text__black label-size">
-            <input id="paymentMethodName" name="paymentMethodName" value="${res.paymentMethodName}" class="info-item bg__white text__black box__l label-size"/>
+            <input id="paymentMethodName" name="paymentMethodName" value="${paymentMethodVo.paymentMethodName}" class="info-item bg__white text__black box__l label-size"/>
+          </div>
+          
+          <div class="existing-payments bg">
+            <div class="bg__gray text__center text__semibold check-container">기존 결제수단</div>
+            <div id="paymentMethodList" class="category-container bg__white">
+              <div id="paymentMethodItems" class="text__center categoryItems one-line">
+                <div class="paymentMethod-container one-line">
+                  <div class="paymentMethod-flex one-line">
+                    ${paymentMethodNames}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
          
-        <div class="btn-container">
+        <div class="btn-container one-line">
           <button id="paymentMethodAdd" class="btn btn__generate btn--margin">수정</button>
           <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>

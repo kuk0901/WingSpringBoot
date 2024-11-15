@@ -1,5 +1,6 @@
 package com.edu.wing.auth.controller;
 
+import com.edu.wing.card.service.CardService;
 import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.member.domain.MemberVo;
@@ -28,6 +29,9 @@ public class ApiAuthController {
 
   @Autowired
   MemberService memberService;
+
+  @Autowired
+  CardService cardService;
 
   @Autowired
   CardBenefitService cardBenefitService;
@@ -96,12 +100,22 @@ public class ApiAuthController {
         }
       }
 
+      Map<String, Object> recommendedCard = cardService.userRecommendCardSelect(user.getMemberNo());
+
       // 성공 응답 생성
       resultMap.put(STATUS, STATUS_SUCCESS);
-      resultMap.put(ALERT_MSG, user.getGrade().equals("ADMIN")
-          ? randomAlertMessage.getRandomAdminLoginAlert()
-          : randomAlertMessage.getRandomMemberLoginAlert());
       resultMap.put("grade", user.getGrade());
+
+      if (user.getGrade().equals("ADMIN")) {
+        resultMap.put(ALERT_MSG, randomAlertMessage.getRandomAdminLoginAlert());
+      } else {
+        // 추천 카드가 null이거나 비어 있거나 "No Recommendation"인 경우 처리
+        if (recommendedCard == null || recommendedCard.isEmpty() || "No Recommendation".equals(recommendedCard.get("cardName"))) {
+          resultMap.put(ALERT_MSG, randomAlertMessage.getRandomMemberLoginAlert());
+        } else {
+          resultMap.put(ALERT_MSG, "회원님을 위한 추천 카드가 준비되어 있습니다!");
+        }
+      }
 
       return ResponseEntity.ok().body(resultMap);
 
