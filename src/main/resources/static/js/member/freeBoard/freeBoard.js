@@ -163,15 +163,17 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         </div>
         ${commentList}
       </div>` : `
-      <div class="comment-add-container one-line">
-        <div class="input-container">
-          <textarea id="comment-textarea" class="comment-textarea"></textarea>
-        </div>   
-        <div id="member-addBtn-container" class="btn-container one-line text__center">
-          <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
-            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-            댓글 추가
-          </button>
+      <div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="comment-add-container one-line">
+          <div class="input-container">
+            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+          </div>   
+          <div id="member-addBtn-container" class="btn-container one-line text__center">
+            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+              댓글 추가
+            </button>
+          </div>
         </div>
       </div>
       `}
