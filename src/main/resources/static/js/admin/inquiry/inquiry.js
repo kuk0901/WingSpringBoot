@@ -42,6 +42,8 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
   const formattedInquiryDate = formatDate(data.INQUIRYDATE);
   const formattedAnswerDate = data.ANSWERDATE ? formatDate(data.ANSWERDATE) : '';
 
+  console.log(inquirySearch);
+
   const inquiryDetail = `
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
@@ -93,7 +95,8 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
             <input type="hidden" id="inquiryCommentNo" value="${data.INQUIRYCOMMENTNO}">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
             <div class="btn-container">
-              <button id="modReply" class="btn addReply btn__generate" data-cur-page=${data.curPage}" data-no="${data.INQUIRYNO}" data-inquiry-search="${data.inquirySearch}">
+              <button id="modReply" class="btn addReply btn__generate" data-cur-page="${curPage}" 
+              data-inquiry-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
               답변 수정
               </button>
             </div>
@@ -117,7 +120,8 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
           <div class="reply-container one-line">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
             <div class="btn-container">
-              <button id="addReply" class="btn addReply btn__generate" data-cur-page="${data.curPage}" data-no="${data.INQUIRYNO}">
+              <button id="addReply" class="btn addReply btn__generate" data-cur-page="${curPage}"
+               data-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
               답변 작성
               </button>
             </div>
@@ -133,13 +137,21 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
   $("#modReply").click(function(e) {
     e.preventDefault();
 
-    const no = $(this).data("no");
+    const inquiryNo = $(this).data("inquiry-no");
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/update/${no}`,
+      url: `/admin/cs/inquiry/update/${inquiryNo}`,
       type: 'GET',
+      data: {
+        curPage: curPage,
+        answerTermination: answerTermination,
+        inquirySearch: inquirySearch
+      },
       success: function(res) {
-        createUpdateView(res.inquiryVo);
+        createUpdateView(res.inquiryVo, curPage, answerTermination, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -150,13 +162,21 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
   $("#addReply").click(function (e) {
     e.preventDefault();
 
-    const no = $(this).data("no");
+    const inquiryNo = $(this).data("no");
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/add/${no}`,
+      url: `/admin/cs/inquiry/add/${inquiryNo}`,
       type: 'GET',
+      data: {
+        curPage: curPage,
+        answerTermination: answerTermination,
+        inquirySearch: inquirySearch
+      },
       success: function(res) {
-        createAddView(res.inquiryVo);
+        createAddView(res.inquiryVo, curPage, answerTermination, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -165,7 +185,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
   })
 }
 
-function createUpdateView(res) {
+function createUpdateView(res, curPage, inquirySearch, answerTermination) {
 
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
@@ -224,10 +244,16 @@ function createUpdateView(res) {
       </div>
     </div>
     
-    <!-- FIXME: 공지사항처럼 수정해 주세요. -->
     <div class="btn-container answer-btn-container one-line">
-        <button id="cancleUpdate" class="btn btn__generate listMove">돌아가기</button>
-        <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}">수정</button>
+        <button id="cancleUpdate" class="btn btn__generate listMove" data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" 
+        data-inquiry-serach="${inquirySearch}" data-answer-termination="${answerTermination}">
+          돌아가기
+        </button>
+        <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}" 
+        data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" 
+        data-answer-termination="${answerTermination}" data-inquiry-serach="${inquirySearch}">
+          수정
+        </button>
     </div>
   </main>
   `
@@ -235,18 +261,22 @@ function createUpdateView(res) {
   $("#content").html(inquiryCommentUpdate);
 
   $("#updateReply").click(function(e) {
-
     e.preventDefault();
 
+    const inquiryNo = $(this).data("inquiry-no");
     const inquiryCommentNo = $(this).data("mod");
     const content = $("#answerContent").val();
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination")
 
     $.ajax({
-      url: `/admin/api/cs/inquiry/update/${inquiryCommentNo}`,
+      url: `/admin/api/cs/inquiry/update/${inquiryCommentNo}?inquiryNo=${inquiryNo}&curPage=${curPage}&inquirySearch=${encodeURIComponent(inquirySearch)}&answerTermination=${answerTermination}`,
       type: 'PATCH',
       contentType: 'application/json',
       data: JSON.stringify({ content: content }),
       success: function(res) {
+        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
         showAlertMsg(res.alertMsg);
       },
       error: function(res) {
@@ -255,14 +285,34 @@ function createUpdateView(res) {
     });
   });
 
-  $("#cancleUpdate").on("click", function() {
-    // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
-    window.location.href = '/admin/cs/inquiry/list';
+  $("#cancleUpdate").click( function (e) {
+    e.preventDefault();
+
+    const inquiryNo = $(this).data("inquiry-no");
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination");
+
+    $.ajax({
+      url: `/admin/cs/inquiry/${inquiryNo}`,
+      type: 'GET',
+      data: {
+        curPage: curPage,
+        inquirySearch: inquirySearch,
+        answerTermination: answerTermination
+      },
+      success: function(res) {
+        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+      },
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
+      }
+    });
   });
 
 }
 
-function createAddView(res) {
+function createAddView(res, curPage, inquirySearch, answerTermination) {
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
 
@@ -321,8 +371,12 @@ function createAddView(res) {
     </div>
     
     <div class="btn-container answer-btn-container one-line">
-        <button id="cancleAdd" class="btn btn__generate listMove">돌아가기</button>
-        <button id="replyAdd" class="btn btn__generate listUpdate" data-add="${res.INQUIRYNO}">답변 추가</button>
+        <button id="cancleAdd" class="btn btn__generate listMove" data-inquiry-no="${res.INQUIRYNO}" 
+        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">돌아가기</button>
+        <button id="replyAdd" class="btn btn__generate listUpdate" data-add="${res.INQUIRYNO}" 
+        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
+          답변 추가
+        </button>
     </div>
   </main>
   
@@ -338,17 +392,25 @@ function createAddView(res) {
 
     const inquiryNo = $(this).data("add");
     const content = $("#answerContent").val();
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
       url: `/admin/api/cs/inquiry/add/${inquiryNo}`,
       type: 'PATCH',
       contentType: 'application/json',
-      data: JSON.stringify({ CONTENT: content }),
+      data: JSON.stringify({
+        CONTENT: content,
+        curPage: curPage,
+        inquirySearch: inquirySearch,
+        answerTermination: answerTermination
+      }),
       success: function(res) {
         const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
 
         // 성공 후 리스트 페이지로 이동하거나 현재 페이지를 새로고침
-        window.location.href = `/admin/cs/inquiry/list?message=${message}`;
+        window.location.href = `/admin/cs/inquiry/${inquiryNo}?message=${message}`;
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -356,8 +418,28 @@ function createAddView(res) {
     });
   });
 
-  $("#cancleAdd").on("click", function() {
-    // 취소 버튼 클릭 시 수행할 동작 (예: 이전 페이지로 돌아가기)
-    window.location.href = '/admin/cs/inquiry/list';
+  $("#cancleAdd").on("click", function(e) {
+    e.preventDefault();
+
+    const no = $(this).data("inquiry-no");
+    const curPage = $(this).data("cur-page");
+    const inquirySearch = $(this).data("inquiry-search");
+    const answerTermination = $(this).data("answer-termination");
+
+    $.ajax({
+      url: `/admin/cs/inquiry/${no}`,
+      type: 'GET',
+      data: {
+        curPage: curPage,
+        inquirySearch: inquirySearch,
+        answerTermination: answerTermination
+      },
+      success: function(res) {
+        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+      },
+      error: function(res) {
+        showAlertMsg(res.alertMsg);
+      }
+    });
   });
 }

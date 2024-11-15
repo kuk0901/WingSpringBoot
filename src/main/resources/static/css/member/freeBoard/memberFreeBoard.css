@@ -116,10 +116,14 @@ input, textarea {
   padding: 20px;
 }
 
+#content .main-container .freeBoard-container {
+  padding: 20px;
+}
+
 #content .main-container .freeBoard-container .freeBoard-title,
-#content .main-container .freeBoard-container .freeBoard-sub,
-#content .main-container .freeBoard-container .info-container {
-  margin-top: 10px;
+#content .main-container .freeBoard-container .freeBoard-sub {
+  width: 98%;
+  margin: 10px auto;
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .label-container,
@@ -147,8 +151,14 @@ input, textarea {
   border: 1px solid black;
 }
 
+#content .main-container .freeBoard-container .info-container .input-container.textarea-content {
+  width: 98%;
+  margin: 10px auto;
+}
+
 #content .main-container .freeBoard-container .info-container .label-container.reason--title {
-  margin-bottom: 10px;
+  width: 98%;
+  margin: 10px auto
 }
 
 #content .main-container .freeBoard-container .info-container .input-container.textarea-content .contentArea {

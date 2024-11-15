@@ -28,11 +28,14 @@ public class AdminApiInquiryController {
   private InquiryCommentService inquiryCommentService;
 
   @PatchMapping("/update/{inquiryCommentNo}")
-  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestBody Map<String, String> updateData) {
-    log.info(LOG_TITLE);
-    log.info("updateInquiryComment PATCH inquiryCommentNo: {}, content: {}", inquiryCommentNo, updateData.get("content"));
+  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestParam int inquiryNo, @RequestBody Map<String, String> updateData
+      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch, @RequestParam(defaultValue = "N") String answerTermination) {
 
-    Map<String, String> resultMap = new HashMap<>();
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+    resultMap.put("answerTermination", answerTermination);
 
     boolean updated = inquiryCommentService.updateInquiryComment(inquiryCommentNo, updateData.get("content"));
 
@@ -42,11 +45,14 @@ public class AdminApiInquiryController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
     resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
     resultMap.put("alertMsg", "답변이 수정되었습니다.");
+
     return ResponseEntity.ok().body(resultMap);
   }
-
 
   @PatchMapping("/add/{inquiryNo}")
   public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData, HttpSession session) {
