@@ -66,7 +66,7 @@ public class SellingCardServiceImpl implements SellingCardService {
   public boolean memberSellingCardExist(SellingCardVo sellingCardVo) {
     List<SellingCardVo> results = sellingCardDao.memberSellingCardExist(sellingCardVo);
 
-    return !results.isEmpty();
+    return results != null && !results.isEmpty();
   }
 
   @Override
