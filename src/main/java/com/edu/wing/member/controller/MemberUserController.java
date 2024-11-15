@@ -60,7 +60,7 @@ public class MemberUserController {
 
     Map<String, Object> recommendedCard = cardService.userRecommendCardSelect(memberNo);
 
-    if (!recommendedCard.isEmpty()) {
+    if (!"No Recommendation".equals(recommendedCard.get("cardName"))) {
       mav.addObject("recommendedCard", recommendedCard);
     }
 
