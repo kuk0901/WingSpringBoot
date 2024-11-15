@@ -48,7 +48,7 @@ public class AdminCategoryController {
     return mav;
   }
 
-  @GetMapping("/add")
+  @GetMapping("/list/add")
   public ModelAndView categoryAdd() {
     log.info("{} - Showing category add form", LOG_TITLE);
 

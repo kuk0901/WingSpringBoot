@@ -124,7 +124,7 @@ function createPlusUpdateView(plusCategories, plusCategoryVo) {
               <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
             </div>
             <div class="input-container info-item bg__white text__black box__l">
-              <input id="categoryName" name="categoryName" value="${plusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
+              <input id="categoryName" name="categoryName" maxlength="20" value="${plusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
             </div>
           </div>
           
@@ -144,7 +144,6 @@ function createPlusUpdateView(plusCategories, plusCategoryVo) {
         </div>
        
         <div class="btn-container">
-<!--       버튼 알아서~ 두개~ -->
           <button id="plusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin">수정</button>
           <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
         </div>
@@ -196,16 +195,15 @@ function createMinusUpdateView(minusCategories, minusCategoryVo) {
     
     <main class="main-container payment-method__change">
       <form class="categoryForm">
-        <div class="list-container one-line">
+        <div class="category one-line">
           <div class="label-container info-item bg__gray text__black box__l text__center">
             <label for="categoryName" class="info-item bg__gray text__black box__l text__center">카테고리 명</label>
           </div>
           <div class="input-container info-item bg__white text__black box__l">
-            <input id="categoryName" name="categoryName" value="${minusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
+            <input id="categoryName" name="categoryName" maxlength="20" value="${minusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
           </div>
-        </div>
-        
-        <div class="existing-categories bg">
+          
+          <div class="existing-categories bg">
             <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
             <div id="categoryList" class="category-container bg__white">
               <div id="categoryItems" class="text__center categoryItems one-line">
@@ -218,6 +216,7 @@ function createMinusUpdateView(minusCategories, minusCategoryVo) {
               </div>
             </div>
           </div>
+        </div>
        
         <div class="btn-container">
           <button id="minusCatergoryUpdate" class="btn btn__generate btn--margin">수정</button>

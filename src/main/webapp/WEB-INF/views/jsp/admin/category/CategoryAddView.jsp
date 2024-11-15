@@ -32,7 +32,7 @@
                 <label for="categoryName" class="text__semibold">카테고리 명</label>
               </div>
               <div class="input-container bg__white">
-                <input id="categoryName" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
+                <input id="categoryName" maxlength="20" type='text' name='categoryName' class="categoryName" placeholder="ex) 여행"><br>
               </div>
             </div>
 

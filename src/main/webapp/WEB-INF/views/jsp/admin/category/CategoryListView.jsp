@@ -23,7 +23,7 @@
     </div>
 
     <div class="btn-container text__right">
-      <a class="btn btn__generate btn__category" href="./add">
+      <a class="btn btn__generate btn__category" href="./list/add">
         카테고리 추가
       </a>
     </div>

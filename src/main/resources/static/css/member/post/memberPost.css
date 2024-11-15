@@ -316,3 +316,7 @@
 #content .main-container .btn-container.answer-btn-container {
   margin-top: 10px;
 }
+
+#postContent {
+  line-height: 1.5;
+}

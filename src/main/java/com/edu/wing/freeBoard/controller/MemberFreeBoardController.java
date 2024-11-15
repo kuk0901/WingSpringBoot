@@ -92,7 +92,7 @@ public class MemberFreeBoardController {
     return ResponseEntity.ok().body(resultMap);
   }
 
-  @GetMapping("/add")
+  @GetMapping("/list/add")
   public ModelAndView freeBoardAdd(@RequestParam(defaultValue = "") String freeBoardSearch
           , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession) {
 
