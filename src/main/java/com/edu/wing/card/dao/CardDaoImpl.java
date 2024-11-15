@@ -66,8 +66,8 @@ public class CardDaoImpl implements CardDao {
   }
 
   @Override
-  public List<Map<String, Object>> userRecommendCardSelect(int memberNo) {
-    return sqlSession.selectList(namespace + "userRecommendCardSelect", memberNo);
+  public Map<String, Object> userRecommendCardSelect(int memberNo) {
+    return sqlSession.selectOne(namespace + "userRecommendCardSelect", memberNo);
   }
 
 }

@@ -14,8 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -119,30 +120,7 @@ public class CardServiceImpl implements CardService {
 
   @Override
   public Map<String, Object> userRecommendCardSelect(int memberNo) {
-    List<Map<String, Object>> resultList = cardDao.userRecommendCardSelect(memberNo);
+    return cardDao.userRecommendCardSelect(memberNo);
 
-    // Iterator를 사용하여 "No Recommendation" 항목 제거
-    Iterator<Map<String, Object>> iterator = resultList.iterator();
-    while (iterator.hasNext()) {
-      Map<String, Object> item = iterator.next();
-      if ("No Recommendation".equals(item.get("CARDNAME"))) {
-        iterator.remove();
-      }
-    }
-
-    // 결과가 비어있지 않은 경우에만 처리
-    if (!resultList.isEmpty()) {
-      // 랜덤으로 하나의 항목 선택
-      Random random = new Random();
-      Map<String, Object> result = resultList.get(random.nextInt(resultList.size()));
-
-      int cardNo = ((BigDecimal) result.get("CARDNO")).intValue();
-      List<CardBenefitVo> cardBenefitList = cardBenefitDao.cardBenefitSelectListOne(cardNo);
-      result.put("cardBenefitList", cardBenefitList);
-      return result;
-    } else {
-      // 모든 항목이 제거된 경우 빈 맵 반환 또는 다른 적절한 처리
-      return new HashMap<>();
-    }
   }
 }

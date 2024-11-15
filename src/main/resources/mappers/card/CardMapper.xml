@@ -165,45 +165,72 @@
             FROM MEMBER
             WHERE MEMBER_NO = #{memberNo}
         ),
-             monthly_counts AS (
-                 SELECT TO_CHAR(TRUNC(CRE_DATE, 'MM'), 'YYYY-MM') AS month,
-                        MINUS_CATEGORY_NO,
-                        COUNT(*) AS category_count,
-                        ROW_NUMBER() OVER (PARTITION BY TRUNC(CRE_DATE, 'MM') ORDER BY COUNT(*) DESC) AS rn
+             category_ranks AS (
+                 SELECT MINUS_CATEGORY_NO,
+                        COUNT(*) AS usage_count,
+                        ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS rank
                  FROM ACCOUNT_BOOK
                  WHERE MEMBER_NO = #{memberNo}
                    AND CRE_DATE >= ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -3)
                    AND CRE_DATE < TRUNC(SYSDATE, 'MM')
-                 GROUP BY TRUNC(CRE_DATE, 'MM'), MINUS_CATEGORY_NO
+                 GROUP BY MINUS_CATEGORY_NO
              ),
-             top_categories AS (
-                 SELECT month, MINUS_CATEGORY_NO, category_count
-                 FROM monthly_counts
-                 WHERE rn = 1
+             top_two_categories AS (
+                 SELECT MINUS_CATEGORY_NO, rank
+                 FROM category_ranks
+                 WHERE rank <= 2
              ),
-             recommended_category AS (
-                 SELECT CASE
-                            WHEN COUNT(DISTINCT MINUS_CATEGORY_NO) = 1 AND COUNT(*) = 3 THEN MAX(MINUS_CATEGORY_NO)
-                            ELSE 0
-                            END AS recommended_category
-                 FROM top_categories
-             ),
-             recommended_card AS (
-                 SELECT C.CARD_NO, C.CARD_NAME, MC.CATEGORY_NAME
+             cards_for_top_category AS (
+                 SELECT C.CARD_NO, C.CARD_NAME, C.CATEGORY_NO, MC.CATEGORY_NAME,
+                        MAX(CB.CARD_PERCENTAGE) AS max_card_percentage,
+                        ROW_NUMBER() OVER (ORDER BY MAX(CB.CARD_PERCENTAGE) DESC) AS benefit_rank
                  FROM CARD C
-                          JOIN recommended_category RC ON C.CATEGORY_NO = RC.recommended_category
-                          CROSS JOIN member_check MCH
+                          JOIN top_two_categories TTC ON C.CATEGORY_NO = TTC.MINUS_CATEGORY_NO AND TTC.rank = 1
                           JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
-                 WHERE RC.recommended_category != 0
-                   AND MCH.is_eligible = 1
+                          JOIN CARD_BENEFIT CB ON C.CARD_NO = CB.CARD_NO
+                          CROSS JOIN member_check MCH
+                 WHERE MCH.is_eligible = 1
                    AND C.IS_DELETED = 'false'
+                   AND REPLACE(CB.CARD_BENEFIT_DIVISION, '할인', '') = MC.CATEGORY_NAME
+                 GROUP BY C.CARD_NO, C.CARD_NAME, C.CATEGORY_NO, MC.CATEGORY_NAME
+             ),
+             final_card AS (
+                 SELECT CFTC.*,
+                        (SELECT MINUS_CATEGORY_NO
+                         FROM top_two_categories
+                         WHERE rank = 2) AS second_category,
+                        (SELECT MAX(CB.CARD_PERCENTAGE)
+                         FROM CARD_BENEFIT CB
+                                  JOIN MINUS_CATEGORY MC ON REPLACE(CB.CARD_BENEFIT_DIVISION, '할인', '') = MC.CATEGORY_NAME
+                         WHERE CB.CARD_NO = CFTC.CARD_NO
+                           AND MC.CATEGORY_NO = (SELECT MINUS_CATEGORY_NO
+                                                 FROM top_two_categories
+                                                 WHERE rank = 2)) AS second_category_benefit
+                 FROM cards_for_top_category CFTC
+                 WHERE benefit_rank = 1
+             ),
+             ranked_final_card AS (
+                 SELECT
+                     FC.CATEGORY_NO AS categoryNo,
+                     FC.CARD_NO AS cardNo,
+                     FC.CARD_NAME AS cardName,
+                     FC.CATEGORY_NAME AS categoryName,
+                     FC.max_card_percentage AS topCategoryBenefit,
+                     FC.second_category AS secondCategoryNo,
+                     COALESCE(FC.second_category_benefit, 0) AS secondCategoryBenefit,
+                     ROW_NUMBER() OVER (ORDER BY FC.second_category_benefit DESC NULLS LAST) AS rn
+                 FROM final_card FC
              )
-        SELECT RC.recommended_category AS categoryNo,
-               COALESCE(RCARD.CARD_NO, 0) AS cardNo,
-               COALESCE(RCARD.CARD_NAME, 'No Recommendation') AS cardName,
-               COALESCE(RCARD.CATEGORY_NAME, 'Unknown Category') AS categoryName
-        FROM recommended_category RC
-                 LEFT JOIN recommended_card RCARD ON 1=1
+        SELECT
+            categoryNo,
+            cardNo,
+            cardName,
+            categoryName,
+            topCategoryBenefit,
+            secondCategoryNo,
+            secondCategoryBenefit
+        FROM ranked_final_card
+        WHERE rn = 1
         ]]>
     </select>
 </mapper>
