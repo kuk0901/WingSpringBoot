@@ -36,7 +36,7 @@ public class AdminPaymentMethodController {
     return mav;
   }
 
-  @GetMapping("/add")
+  @GetMapping("/list/add")
   public ModelAndView paymentMethodAdd() {
     log.info("{} - Retrieving @GetMapping paymentMethod add", LOG_TITLE);
 
