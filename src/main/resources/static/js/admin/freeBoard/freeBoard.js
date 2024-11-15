@@ -43,7 +43,10 @@ function createDetailView(data, freeBoardCommentVoList, curPage, freeBoardSearch
   const commentList = freeBoardCommentVoList.map(comment => `
     <div class="comment-container one-line">
       <div class="comment-email">${comment.email}</div>
-      <div class="comment-content"><input class="" value="${comment.content}" readonly /></div>
+      <div class="comment-content">
+        ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
+        <input value="${comment.content}" readonly />
+        </div>
       <div class="comment-date">${formatDate(comment.creDate)}</div>
       <div class="btn-container">
         <button class="btn btn__generate deleteCommentBtn text__center commentDelBtn" 

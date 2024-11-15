@@ -127,16 +127,4 @@ public class AdminApiPaymentMethodController {
     resultMap.put("alertMsg", "서버 오류로 인해 결제 수단 명이 변경되지 않았습니다. 잠시 후 다시 시도해 주세요.");
     return ResponseEntity.badRequest().body(resultMap);
   }
-
-  @PostMapping("/update/{paymentMethodNo}")
-  public ResponseEntity<?> updatePaymentMethod(@PathVariable int paymentMethodNo) {
-    log.info(LOG_TITLE);
-    log.info("updatePaymentMethod Get paymentMethodNo: {}", paymentMethodNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    PaymentMethodVo paymentMethodVo = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
-
-    return ResponseEntity.ok().body(paymentMethodVo);
-  }
 }

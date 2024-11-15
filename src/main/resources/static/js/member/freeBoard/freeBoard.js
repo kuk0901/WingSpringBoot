@@ -44,9 +44,15 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
     <div class="comment-container one-line">
       <div class="comment-email">${comment.email}</div>
       ${comment.memberNo === currentMemberNo ? `
-        <div class="comment-content"><input id="inputComment" value="${comment.content}" /></div>
+        <div class="comment-content">
+          ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
+          <input id="inputComment" value="${comment.content}" />
+        </div>
       ` : `
-        <div class="comment-content"><input value="${comment.content}" readonly /></div>
+        <div class="comment-content">
+          ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
+          <input value="${comment.content}" readonly />
+        </div>
       `}
       
       <div class="comment-date">${formatDate(comment.creDate)}</div>
@@ -128,7 +134,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
       </div>
       
       ${freeBoardVo.memberNo == currentMemberNo ? `
-        <div class="btn-container one-line">
+        <div class="btn-container one-line btn-marginTop">
           <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
             data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
             수정

@@ -141,5 +141,41 @@ public class AdminCategoryController {
 
     return ResponseEntity.ok().body(resultMap);
   }
+
+  @GetMapping("/updatePlus/{categoryNo}")
+  public ResponseEntity<?> updatePlusCategory(@PathVariable int categoryNo) {
+    log.info(LOG_TITLE);
+    log.info("updatePlusCategory Get categoryNo: {}", categoryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    PlusCategoryVo plusCategoryVo = plusCategoryService.plusCategorySelectOne(categoryNo);
+
+    List<String> plusCategories = plusCategoryService.getPlusCategoryNames();
+
+    resultMap.put("plusCategories", plusCategories);
+    resultMap.put("status", "success");
+    resultMap.put("plusCategoryVo", plusCategoryVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/updateMinus/{categoryNo}")
+  public ResponseEntity<?> updateMinusCategory(@PathVariable int categoryNo) {
+    log.info(LOG_TITLE);
+    log.info("updateMinusCategory Get categoryNo: {}", categoryNo);
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    MinusCategoryVo minusCategoryVo = minusCategoryService.minusCategorySelectOne(categoryNo);
+
+    List<String> minusCategories = minusCategoryService.getMinusCategoryNames();
+
+    resultMap.put("minusCategories", minusCategories);
+    resultMap.put("status", "success");
+    resultMap.put("minusCategoryVo", minusCategoryVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
 }
 

@@ -16,4 +16,6 @@ public class FreeBoardCommentVo {
   private Date creDate;
   private Date modDate;
   private String email;
+  private int isModified;
+  private Date compareDate;
 }

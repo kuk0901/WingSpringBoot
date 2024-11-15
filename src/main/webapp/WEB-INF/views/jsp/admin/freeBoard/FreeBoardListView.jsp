@@ -48,7 +48,12 @@
                 <div class="list-container list-content one-line " data-free-board-no="${freeBoardVo.freeBoardNo}">
                   <input type="hidden" id="noticeBoardNo" value="${freeBoardVo.noticeBoardNo}">
                   <div class="list--freeBoardNo text__center">${freeBoardVo.freeBoardNo}</div>
-                  <div class="list--title">${freeBoardVo.title}</div>
+                  <div class="list--title">
+                    <c:if test="${freeBoardVo.isModified == 1}">
+                      <span class="modified-indicator">[수정]</span>
+                    </c:if>
+                    ${freeBoardVo.title}
+                  </div>
                   <div class="list--email text__center">${freeBoardVo.email}</div>
                   <div class="list--date text__center">
                     <fmt:formatDate value="${freeBoardVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
