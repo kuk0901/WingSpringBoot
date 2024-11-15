@@ -145,10 +145,76 @@ public class AccountBookServiceImpl implements AccountBookService {
   public void deleteAccountBook(int accountBookNo) {
     accountBookDao.deleteAccountBook(accountBookNo);
   }
-
+ //수정
   @Override
   public int updateAccountBook(Map<String, Object> params) {
-    return accountBookDao.updateAccountBook(params);
+    int result =accountBookDao.updateAccountBook(params);
+    if (result > 0) {
+      // accountBookNo와 memberNo를 추출하여 PAYBACK 삽입
+      Map<String, Object> sellingCardCheckParams  = new HashMap<>();
+      sellingCardCheckParams.put("memberNo", params.get("memberNo"));
+
+      // SELLING_CARD가 존재할 때만 PAYBACK을 삽입하도록 조건 추가
+      boolean hasSellingCard = sellingCardDao.checkSellingCardExists(sellingCardCheckParams);
+      // 기본값 설정
+      int paybackNo = 0;//기본값
+      int minusCategoryNo =1;
+      int plusCategoryNo = 1; // 기본값
+      int paymentMethodNo = 1; // 기본값
+
+      // plusCategoryNo가 String 타입인 경우 int로 변환
+      if (params.get("plusCategoryNo") != null && params.get("plusCategoryNo") instanceof String) {
+        plusCategoryNo = Integer.parseInt((String) params.get("plusCategoryNo"));
+      }
+
+      // paymentMethodNo가 String 타입인 경우 int로 변환
+      Object paymentMethodNoObj = params.get("paymentMethodNo");
+      if (paymentMethodNoObj instanceof String) {
+        paymentMethodNo = Integer.parseInt((String) paymentMethodNoObj);
+      } else if (paymentMethodNoObj instanceof Integer) {
+        paymentMethodNo = (Integer) paymentMethodNoObj;
+      }
+      if (params.get("paybackNo") != null && params.get("paybackNo") instanceof String) {
+        paybackNo= Integer.parseInt((String) params.get("paybackNo"));
+      }
+
+        //payback아닌데 받는경우
+        if( paybackNo == 0) {
+          if (hasSellingCard && plusCategoryNo == 1 && paymentMethodNo == 2) {
+            Map<String, Object> paybackData = new HashMap<>();
+            paybackData.put("accountBookNo", params.get("accountBookNo"));
+            paybackData.put("memberNo", params.get("memberNo"));
+
+            // PAYBACK 삽입
+            return accountBookDao.insertPayback(paybackData);
+          }
+        }
+        //paybackNo존재하는경우
+        if(paybackNo>=1){
+          Map<String, Object> paybackData = new HashMap<>();
+          paybackData.put("accountBookNo", params.get("accountBookNo"));
+          paybackData.put("memberNo", params.get("memberNo"));
+          paybackData.put("paybackNo", paybackNo);
+          paybackData.put("paybackAmount", params.get("paymentAmount"));
+          //금액수정의 경우
+          if (hasSellingCard  && plusCategoryNo == 1 && paymentMethodNo== 2) {
+          return accountBookDao.updatePayback(paybackData);
+          }
+          //기존에서 안받는다고 수정하는 경우
+          else {
+            paybackData.put("paybackAmount", 0);
+            return accountBookDao.updatePayback(paybackData);
+          }
+        }
+
+      }
+      // payback 받는 경우인데 아닌 걸로 바꾸는 경우
+
+
+      //payback받는 경우인데 값을 수정하는 경우
+
+
+    return  result;
   }
 
   @Override

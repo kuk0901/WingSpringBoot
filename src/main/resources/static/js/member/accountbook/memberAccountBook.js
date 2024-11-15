@@ -508,10 +508,13 @@ function renderAccountBookDetail(accountBook) {
                     <label for="amountInput" class="detail-label" id="amountLabel">금액: </label>
                   </div>
                   <div class="input-container">
-                    <input class="detail-value" id="amountInput" value="${accountBook.paymentAmount ? formatPaymentAmountNumber(accountBook.paymentAmount) : 0}" />
+                    <input class="detail-value" id="amountInput" 
+                     value="${accountBook.paymentAmount ? formatPaymentAmountNumber(accountBook.paymentAmount) : 0}" />
                   </div>
                 </div>
             </div>
+             <input type="hidden" id="paybackNoHidden" value="${accountBook.paybackNo ? accountBook.paybackNo : 0}" />
+              <input type="hidden" id="sellingCardNoHidden" value="${accountBook.sellingCardNo}" />
             <div class="button-container-bottom ">
               <button id="deleteBtn" class="btn__generate bottom-btn" data-accountbook="${accountBook.accountBookNo}">삭제</button>
               <button id="editBtn" class="btn__generate bottom-btn" data-accountbook="${accountBook.accountBookNo}" 
@@ -660,76 +663,6 @@ function formatDate(dateString) {
 
   return `${year}-${month}-${day}`;
 }
-/*//가계부detail에서삭제
-function deleteAccountBook(accountBookNo) {
-  if (confirm("정말로 이 가계부 항목을 삭제하시겠습니까?")) {
-    $.ajax({
-      url: `/member/api/accountBook/${accountBookNo}`, // DELETE 요청을 보낼 URL
-      type: 'PATCH',
-      success: function() {
-        alert("가계부 항목이 삭제되었습니다.");
-        // 목록 페이지로 리다이렉트 또는 삭제 후 UI 업데이트
-        window.location.href = '/member/accountBook/list'; // 목록 페이지로 이동
-      },
-      error: function(error) {
-        console.error("가계부 항목 삭제 실패:", error);
-        alert('가계부 항목 삭제에 실패했습니다.');
-      }
-    });
-  }
-}*/
-//
-// //가계부detail에서수정
-// function editAccountBook(accountBookNo,memberNo) {
-//   // 필요한 입력 필드 값 가져오기
-//
-//   const paymentMethodNo = parseInt(document.getElementById('paymentMethodSelect').value, 10); // 결제 수단 형변환
-//
-//   const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 요소
-//   const amountValue = document.getElementById("amountInput").value;
-//   const contentValue = document.getElementById("contentInput").value;
-//   const dateValue = document.getElementById("dateInput").value;
-//   const formattedDate = new Date(dateValue).toISOString().split('T')[0]; // "YYYY-MM-DD" 형식으로 변환
-//
-//   // 카테고리 선택 값에 따라 plusCategoryNo와 minusCategoryNo 설정
-//   let plusCategoryNo = 1;
-//   let minusCategoryNo = 1;
-//   const selectedCategoryValue = parseInt(categorySelect.value, 10); // 카테고리 값 형변환
-//
-//   if (categorySelect.options[0].textContent === "수입 카테고리 선택") {
-//     plusCategoryNo = selectedCategoryValue;
-//   } else if (categorySelect.options[0].textContent === "지출 카테고리 선택") {
-//     minusCategoryNo = selectedCategoryValue;
-//   }
-//
-//   const updatedData = {
-//     memberNo: memberNo,
-//     creDate: formattedDate,
-//     accountBookNo: accountBookNo,
-//     plusCategoryNo: plusCategoryNo,
-//     minusCategoryNo: minusCategoryNo,
-//     content: contentValue,
-//     paymentMethodNo: paymentMethodNo,
-//     paymentAmount: unformatNumber(amountValue)
-//   };
-//   console.log(updatedData);
-//   console.log("함수 내 memberNo:", memberNo);
-//   // AJAX 요청 보내기
-//   $.ajax({
-//     url: `/member/api/accountBook/update`, // 수정 API 엔드포인트
-//     type: 'PUT', // 또는 'PATCH'
-//     contentType: 'application/json', // JSON 형식으로 요청
-//     data: JSON.stringify(updatedData), // 데이터 객체를 JSON으로 변환
-//     success: function(response) {
-//       showAlertMsg(response.alertmsg);
-//       goToDetail(accountBookNo, memberNo);
-//     },
-//     error: function(xhr, status, error) {
-//
-//       console.error('가계부 수정 실패:', error);
-//     }
-//   });
-// }
 
 function getStartAndEndDates(year, month) {
   // 시작 날짜 (YYYY-MM-DD 형식)
@@ -840,6 +773,8 @@ $(document).on("click", "#editBtn", function(e) {
   const amountValue = $("#amountInput").val();
   const contentValue = $("#contentInput").val();
   const dateValue = $("#dateInput").val();
+  const paybackNo = $("#paybackNoHidden").val();
+  const sellingCardNo =$("#sellingCardNoHidden").val();
  /* const formattedDate = new Date(dateValue).toLocaleDateString("en-CA").split('T')[0];*/
   const localDate = new Date(dateValue);  // Date 객체로 변환
   const formattedDate = localDate.toLocaleDateString("en-CA"); // 'YYYY-MM-DD' 형식으로 포맷
@@ -870,7 +805,9 @@ $(document).on("click", "#editBtn", function(e) {
     minusCategoryNo: minusCategoryNo,
     content: contentValue,
     paymentMethodNo: paymentMethodNo,
-    paymentAmount: unformatNumber(amountValue)
+    paymentAmount: unformatNumber(amountValue),
+    paybackNo:paybackNo,
+    sellingCardNo:sellingCardNo
   };
 
 
@@ -889,6 +826,11 @@ $(document).on("click", "#editBtn", function(e) {
     error: function(xhr, status, error) {
       console.error('가계부 수정 실패:', error);
     }
+
+
+
+
+
   });
 });
 
