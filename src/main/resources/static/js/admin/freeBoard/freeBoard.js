@@ -70,7 +70,7 @@ function createDetailView(data, freeBoardCommentVoList, curPage, freeBoardSearch
     </div>
     </div>
 
-    <main class="main-container bg__white">
+    <main class="main-container bg__white detail-container">
       <div class="freeBoard-container one-line">
         <div class="freeBoard-title one-line">
           <input type="hidden" id="freeBoardNo" value="${data.freeBoardNo}">
@@ -109,6 +109,7 @@ function createDetailView(data, freeBoardCommentVoList, curPage, freeBoardSearch
     
     ${freeBoardCommentVoList.length > 0 ?
       `<div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         ${commentList}
       </div>` : `<div class="hiddenDiv"></div>`}
   `;
