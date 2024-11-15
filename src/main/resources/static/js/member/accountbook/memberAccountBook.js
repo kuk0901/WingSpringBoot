@@ -463,33 +463,53 @@ function renderAccountBookDetail(accountBook) {
             <button onclick="window.location.href='/member/accountBook/list'"
             class="btn__generate rtBtn">돌아가기</button>
         </div>
-        <main class="main-container">
-            <div>
+        <main class="main-container accountbook-detail">
+            <div class="account-detail">
                 <div class="detail-container">
-                    <span class="detail-label">일자</span>
-                   <input type="date"  id="dateInput" class="detail-value" value="${formatDate(accountBook.creDate)}"/>
+                  <div class="label-container">
+                    <label for="dateInput" class="detail-label">일자</label>
+                  </div>
+                  <div class="input-container">
+                    <input type="date" id="dateInput" class="detail-value" value="${formatDate(accountBook.creDate)}"/>
+                  </div>
                 </div>
                 <div class="detail-container">
-                    <span class="detail-label">분류</span>
+                  <div class="label-container">
+                    <label for="categorySelect" class="detail-label">분류</label>
+                  </div>
+                  <div class="input-container">
                     <select id="categorySelect" class="select-value">
-                    <option value="">지출 카테고리 선택</option>
-                    <option value="1">급여</option>
-                    <option value="2">식비</option>
-                </select>
+                      <option value="">지출 카테고리 선택</option>
+                      <option value="1">급여</option>
+                      <option value="2">식비</option>
+                    </select>
+                  </div>
                 </div >
                 <div class="detail-container">
-                    <span class="detail-label">상세 내용:</span>
+                  <div class="label-container">
+                    <label for="contentInput" class="detail-label">상세 내용:</label>
+                  </div>
+                  <div class="input-container">
                     <input type="text"  id="contentInput" class="detail-value" value="${accountBook.content || '내용 없음'}" />
-                </div>
-                <div class="detail-container"> 
-                    <span class="detail-label">결제 수단:</span>
-                    <select id="paymentMethodSelect" class="select-value">
-                        <option value="">결제 수단 선택</option>
-                    </select>
+                  </div>
                 </div>
                 <div class="detail-container">
-                    <span class="detail-label" id="amountLabel">금액: </span>
+                  <div class="label-container">
+                    <label for="paymentMethodSelect" class="detail-label">결제 수단:</label>
+                  </div>
+                  <div class="input-container">
+                    <select id="paymentMethodSelect" class="select-value">
+                      <option value="">결제 수단 선택</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="detail-container">
+                  <div class="label-container">
+                    <label for="amountInput" class="detail-label" id="amountLabel">금액: </label>
+                  </div>
+                  <div class="input-container">
                     <input class="detail-value" id="amountInput" value="${accountBook.paymentAmount ? formatPaymentAmountNumber(accountBook.paymentAmount) : 0}" />
+                  </div>
                 </div>
             </div>
             <div class="button-container-bottom ">
