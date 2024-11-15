@@ -151,9 +151,11 @@ WING\_은 사용자의 소비 습관을 분석하고 개선하는 것을 목표�
 
 1. 프로젝트 클론:
 
+> 에디터에 따라 `애플리케이션 실행` 부분을 참고해 사용해 주세요.
+
 ```shell
-git clone https://github.com/your-repository/WING_.git
-cd WING_
+git clone https://github.com/kuk0901/WingSpringBoot.git
+cd WingSpringBoot
 ```
 
 2. 데이터베이스 설정:
@@ -326,6 +328,7 @@ WING\_ 애플리케이션은 Oracle 데이터베이스를 사용합니다. 다�
 - INSERT 문은 실행하지 마세요.
 
 주의:
+
 - 이 과정은 새로운 데이터베이스 환경을 설정합니다. 기존 데이터가 있다면 백업을 먼저 진행하세요.
 - 실제 운영 환경에서는 보안을 위해 더 복잡한 비밀번호를 사용해야 합니다.
 
