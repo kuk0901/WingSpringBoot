@@ -258,6 +258,10 @@ input, textarea {
   gap: 50px;
 }
 
+#content .btn-container.one-line.update-btn-container {
+  margin-top: 20px;
+}
+
 #content .title-container .btn-container .listMove {
   display: inline-block;
   width: 120px;
@@ -335,9 +339,16 @@ input, textarea {
 }
 
 #content .comment-list-container {
-  padding: 18px;
+  padding: 20px;
   margin: auto;
   width: 98%;
+}
+
+#content .comment-list-container .answer-title {
+  width: 70px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
 }
 
 #content .comment-list-container .comment-container {
@@ -394,7 +405,7 @@ input, textarea {
 #content .comment-add-container {
   justify-content: space-between;
   gap: 20px;
-  width: 98%;
+  width: 100%;
   margin: auto;
 }
 

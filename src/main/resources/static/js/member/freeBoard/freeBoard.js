@@ -150,6 +150,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
     
     ${freeBoardCommentList.length > 0 ? 
       `<div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
             <textarea id="comment-textarea" class="comment-textarea"></textarea>
@@ -164,6 +165,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         ${commentList}
       </div>` : `
       <div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
             <textarea id="comment-textarea" class="comment-textarea"></textarea>
@@ -377,7 +379,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
       </div>
 
         
-      <div class="btn-container one-line">
+      <div class="btn-container one-line update-btn-container">
         <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&noticeBoardNo=${noticeBoardNo}">
           돌아가기
         </a>
