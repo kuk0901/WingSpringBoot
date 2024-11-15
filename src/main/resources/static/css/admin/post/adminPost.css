@@ -110,6 +110,7 @@
 
 #content .main-container .post-container {
   margin: auto;
+  padding: 20px;
 }
 
 #content .main-container .post-container.post-detail-container {

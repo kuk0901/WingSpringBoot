@@ -23,14 +23,12 @@ import java.util.Map;
 @RequestMapping("/admin/cs/inquiry")
 public class AdminInquiryController {
 
-  private static final Logger log = LoggerFactory.getLogger(AdminInquiryController.class);
-  private static final String LOG_TITLE = "==AdminInquiryController==";
-
   @Autowired
   private InquiryService inquiryService;
 
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-  public ModelAndView inquiryList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String inquirySearch) {
+  public ModelAndView inquiryList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String inquirySearch,
+                                  @RequestParam(defaultValue = "N") String answerTermination) {
 
     int totalCount = inquiryService.inquirySelectTotalCount(inquirySearch);
 
@@ -49,16 +47,15 @@ public class AdminInquiryController {
 
     mav.addObject("inquiryList", inquiryList);
     mav.addObject("pagingMap", pagingMap);
+    mav.addObject("answerTermination", answerTermination);
     mav.addObject("inquirySearch", inquirySearch);
 
     return mav;
   }
 
   @GetMapping("/{inquiryNo}")
-  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch,
-    @RequestParam(defaultValue = "N") String answerTermination) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping inquiryDetail inquiryNo: {}, curPage: {}, inquirySearch: {}, answerTermination: {}", inquiryNo, curPage, inquirySearch, answerTermination);
+  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch, @RequestParam(defaultValue = "N") String answerTermination) {
 
     Map<String, Object> resultMap = new HashMap<>();
 
@@ -80,15 +77,19 @@ public class AdminInquiryController {
   }
 
   @GetMapping("/add/{inquiryNo}")
-  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session) {
-    log.info(LOG_TITLE);
-    log.info("getInquiryForReply GET inquiryNo: {}", inquiryNo);
+  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch, @RequestParam(defaultValue = "N") String answerTermination) {
 
     Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+    resultMap.put("answerTermination", answerTermination);
 
     MemberVo member = (MemberVo) session.getAttribute("member");
 
     Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
     if (resultMap == null) {
       resultMap.put("status", "failed");
       resultMap.put("alertMsg", "서버 오류로 인해 추가 페이지로 이동할 수 없습니다. 잠시 후 다시 시도해주세요.");
@@ -105,11 +106,14 @@ public class AdminInquiryController {
   }
 
   @GetMapping("/update/{inquiryNo}")
-  public ResponseEntity<?> getInquiryForUpdate(@PathVariable int inquiryNo) {
-    log.info(LOG_TITLE);
-    log.info("getInquiryForUpdate GET inquiryNo: {}", inquiryNo);
+  public ResponseEntity<?> getInquiryForUpdate(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch, @RequestParam(defaultValue = "N") String answerTermination) {
 
     Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+    resultMap.put("answerTermination", answerTermination);
 
     Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
 
