@@ -129,7 +129,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
       <div>
         <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
           data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
-          수정
+          공지 수정
         </button>
       </div>
     </div>
@@ -230,9 +230,9 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
 
     <div class="btn-container-patch-move one-line">
       <div class="btn-container">
-        <a id="moveList" class="btn btn__generate moveList" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
+        <button id="moveDetailBtn" class="btn btn__generate moveList" data-post-no="${res.POSTNO}" data-notice-board-no="${noticeBoardNo}" data-cur-page="${curPage}" data-post-search="${postSearch}">
           취소
-        </a>
+        </button>
       </div>
       <div class="btn-container">
         <button id="postUpdateBtn" class="btn btn__generate postUpdateBtn text__center text__bold" 
@@ -244,6 +244,31 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
   `
 
   $("#content").html(postUpdate);
+
+  $("#moveDetailBtn").click(function (e) {
+    e.preventDefault();
+
+    const postNo = $(this).data("post-no");
+    const curPage = $(this).data("cur-page");
+    const noticeBoardNo = $(this).data("notice-board-no");
+    const postSearch = $(this).data("post-search");
+
+    $.ajax({
+      url: `/admin/cs/post/list/${postNo}`,
+      type: 'GET',
+      data: {
+        curPage: curPage,
+        postSearch: postSearch,
+        noticeBoardNo: noticeBoardNo
+      },
+      success: function (res) {
+        createDetailView(res.postVo, curPage, postSearch, noticeBoardNo);
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
 
   $("#postUpdateBtn").click(function (e) {
     e.preventDefault();

@@ -150,6 +150,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
     
     ${freeBoardCommentList.length > 0 ? 
       `<div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
             <textarea id="comment-textarea" class="comment-textarea"></textarea>
@@ -163,15 +164,18 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         </div>
         ${commentList}
       </div>` : `
-      <div class="comment-add-container one-line">
-        <div class="input-container">
-          <textarea id="comment-textarea" class="comment-textarea"></textarea>
-        </div>   
-        <div id="member-addBtn-container" class="btn-container one-line text__center">
-          <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
-            data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
-            댓글 추가
-          </button>
+      <div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
+        <div class="comment-add-container one-line">
+          <div class="input-container">
+            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+          </div>   
+          <div id="member-addBtn-container" class="btn-container one-line text__center">
+            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+              댓글 추가
+            </button>
+          </div>
         </div>
       </div>
       `}
@@ -375,7 +379,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
       </div>
 
         
-      <div class="btn-container one-line">
+      <div class="btn-container one-line update-btn-container">
         <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&noticeBoardNo=${noticeBoardNo}">
           돌아가기
         </a>

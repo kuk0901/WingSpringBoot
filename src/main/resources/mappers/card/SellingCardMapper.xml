@@ -82,7 +82,6 @@
         FROM SELLING_CARD SC JOIN CARD C
           ON SC.CARD_NO = C.CARD_NO
         WHERE SC.MEMBER_NO = #{memberNo}
-        AND SC.CARD_NO = #{cardNo}
         AND SC.TERMINATION_DATE IS NULL
         AND SC.TERMINATION_REASON IS NULL
     </select>

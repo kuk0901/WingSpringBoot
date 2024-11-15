@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +26,89 @@ public class AdminApiInquiryController {
   @Autowired
   private InquiryCommentService inquiryCommentService;
 
-  @PatchMapping("/update/{inquiryCommentNo}")
-  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestBody Map<String, String> updateData) {
-    log.info(LOG_TITLE);
-    log.info("updateInquiryComment PATCH inquiryCommentNo: {}, content: {}", inquiryCommentNo, updateData.get("content"));
+  @GetMapping("/{inquiryNo}")
+  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch) {
 
-    Map<String, String> resultMap = new HashMap<>();
+    Map<String, Object> resultMap = new HashMap<>();
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
+    if (inquiryVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 해당 문의글을 불러 올 수 없습니다. 잠시 후 다시 시도해 주세요.");
+
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+    resultMap.put("inquiryVo", inquiryVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/add/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForReply(@PathVariable int inquiryNo, HttpSession session, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+
+    MemberVo member = (MemberVo) session.getAttribute("member");
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
+    if (inquiryVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 추가 페이지로 이동할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    inquiryVo.put("adminEmail", member.getEmail());
+
+    resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/update/{inquiryNo}")
+  public ResponseEntity<?> getInquiryForUpdate(@PathVariable int inquiryNo, @RequestParam(defaultValue = "1") int curPage
+      , @RequestParam(defaultValue = "") String inquirySearch) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
+
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
+    if (inquiryVo == null) {
+      resultMap.put("status", "failed");
+      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요."); // 실패 메시지
+
+      return ResponseEntity.badRequest().body(resultMap);
+    }
+
+    resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
+    resultMap.put("alertMsg", "정보 불러오기에 성공했습니다."); // 성공 메시지
+
+    return ResponseEntity.ok().body(resultMap);
+
+  }
+
+  @PatchMapping("/update/{inquiryCommentNo}")
+  public ResponseEntity<?> updateInquiryComment(@PathVariable int inquiryCommentNo, @RequestParam int inquiryNo, @RequestBody Map<String, String> updateData
+      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
 
     boolean updated = inquiryCommentService.updateInquiryComment(inquiryCommentNo, updateData.get("content"));
 
@@ -42,11 +118,14 @@ public class AdminApiInquiryController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
     resultMap.put("status", "success");
+    resultMap.put("inquiryVo", inquiryVo);
     resultMap.put("alertMsg", "답변이 수정되었습니다.");
+
     return ResponseEntity.ok().body(resultMap);
   }
-
 
   @PatchMapping("/add/{inquiryNo}")
   public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData, HttpSession session) {

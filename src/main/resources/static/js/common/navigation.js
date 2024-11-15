@@ -24,6 +24,7 @@ $csControlBtn.on("click", function() {
   $post.toggleClass("active");
 });
 
+
 // URL이 /admin/cs/로 시작하면 csControlBtn 활성화
 if (currentPageUrl.includes("/admin/cs/")) {
   $csControlBtn.addClass(activeClasses).attr("aria-current", "page");

@@ -27,7 +27,7 @@
     </div>
 
     <div class="btn-container text__right">
-      <a class="btn btn__generate btn__paymentMethod" href="./add">
+      <a class="btn btn__generate btn__paymentMethod" href="./list/add">
         결제 수단 추가
       </a>
     </div>

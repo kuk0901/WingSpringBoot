@@ -22,6 +22,10 @@ input, textarea {
   margin: 20px;
 }
 
+.main-container.detail-container {
+  padding: 20px;
+}
+
 .btn__freeBoard {
   padding: 13px 19px;
 }
@@ -364,4 +368,11 @@ input, textarea {
 
 #content .main-container .btn-container.answer-btn-container {
   margin-top: 10px;
+}
+
+#content .comment-list-container .answer-title {
+  width: 70px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
 }

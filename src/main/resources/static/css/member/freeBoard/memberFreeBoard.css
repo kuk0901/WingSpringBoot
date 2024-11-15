@@ -116,10 +116,14 @@ input, textarea {
   padding: 20px;
 }
 
+#content .main-container .freeBoard-container {
+  padding: 20px;
+}
+
 #content .main-container .freeBoard-container .freeBoard-title,
-#content .main-container .freeBoard-container .freeBoard-sub,
-#content .main-container .freeBoard-container .info-container {
-  margin-top: 10px;
+#content .main-container .freeBoard-container .freeBoard-sub {
+  width: 98%;
+  margin: 10px auto;
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .label-container,
@@ -147,8 +151,14 @@ input, textarea {
   border: 1px solid black;
 }
 
+#content .main-container .freeBoard-container .info-container .input-container.textarea-content {
+  width: 98%;
+  margin: 10px auto;
+}
+
 #content .main-container .freeBoard-container .info-container .label-container.reason--title {
-  margin-bottom: 10px;
+  width: 98%;
+  margin: 10px auto
 }
 
 #content .main-container .freeBoard-container .info-container .input-container.textarea-content .contentArea {
@@ -258,6 +268,10 @@ input, textarea {
   gap: 50px;
 }
 
+#content .btn-container.one-line.update-btn-container {
+  margin-top: 20px;
+}
+
 #content .title-container .btn-container .listMove {
   display: inline-block;
   width: 120px;
@@ -335,8 +349,16 @@ input, textarea {
 }
 
 #content .comment-list-container {
-  padding: 18px;
-  margin: 0 20px;
+  padding: 20px;
+  margin: auto;
+  width: 98%;
+}
+
+#content .comment-list-container .answer-title {
+  width: 70px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
 }
 
 #content .comment-list-container .comment-container {
@@ -393,22 +415,27 @@ input, textarea {
 #content .comment-add-container {
   justify-content: space-between;
   gap: 20px;
+  width: 100%;
+  margin: auto;
 }
 
 #content .comment-add-container .input-container {
-  padding: 10px;
-  border: 1px solid black;
   border-radius: 7px;
-  width: 85%;
+  width: 100%;
   height: 100px;
 }
 
 #content .comment-add-container .input-container .comment-textarea {
+  padding: 10px;
   width: 100%;
   height: 100%;
-  border: none;
   resize: none;
   font-size: 16px;
+  border: 1px solid black;
+}
+
+#content .comment-add-container .comment-container .comment-content {
+  border: 1px solid black;
 }
 
 #content .comment-add-container .btn-container {

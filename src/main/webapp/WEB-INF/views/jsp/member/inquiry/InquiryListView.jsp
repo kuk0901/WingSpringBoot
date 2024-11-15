@@ -34,7 +34,7 @@
 
       <main class="main-container inquiry__list">
         <div class="inquiry-container">
-          <div class="list-container list-container--title container-title one-line bg__white">
+          <div class="list-container-title list-container--title container-title one-line bg__white">
             <div class="list--supply text__semibold text__center">번호</div>
             <div class="list--title text__semibold text__center">제목</div>
             <div class="list--date text__semibold text__center">작성날짜</div>
@@ -59,9 +59,7 @@
               </div>
             </c:when>
             <c:otherwise>
-              <div class="list-container">
-                <div class="list--div list__empty bg text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
-              </div>
+              <div class="list--div list__empty bg text__semibold text__correct text__center">등록된 1대1 문의사항이 없습니다.</div>
             </c:otherwise>
           </c:choose>
         </div>
