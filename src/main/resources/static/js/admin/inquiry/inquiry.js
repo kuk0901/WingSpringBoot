@@ -22,15 +22,14 @@ $('.list-content').click(function() {
   const inquirySearch = $('#search').val();
 
   $.ajax({
-    url: `/admin/cs/inquiry/${inquiryNo}`,
+    url: `/admin/api/cs/inquiry/${inquiryNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
-      answerTermination: answerTermination,
       inquirySearch: inquirySearch
     },
     success: function(res) {
-      createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+      createDetailView(res.inquiryVo, curPage, inquirySearch);
     },
     error: function(res) {
       showAlertMsg(res.alertMsg);
@@ -38,7 +37,7 @@ $('.list-content').click(function() {
   });
 });
 
-function createDetailView(data, curPage, answerTermination, inquirySearch) {
+function createDetailView(data, curPage, inquirySearch) {
   const formattedInquiryDate = formatDate(data.INQUIRYDATE);
   const formattedAnswerDate = data.ANSWERDATE ? formatDate(data.ANSWERDATE) : '';
 
@@ -50,7 +49,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
         1대1 문의사항 상세
       </div>
       <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/inquiry/list?curPage=${curPage}&answerTermination=${answerTermination}&inquirySearch=${inquirySearch}">
+        <a id="listMove" class="btn btn__generate listMove text__center" href="/admin/cs/inquiry/list?curPage=${curPage}&inquirySearch=${inquirySearch}">
           돌아가기
         </a>
     </div>
@@ -67,7 +66,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
 
           <div class="one-line">
             <div class="info-title bg__gray text__black box__l text__center">분류</div>
-            <div class="info-dv-item bg__white text__black box__l">${data.DIVISION}</div>
+            <div class="info-dv-item bg__white text__black box__l">${data.DIVISION ? data.DIVISION : "X"}</div>
           </div>
         </div>
         
@@ -94,9 +93,9 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
           <div class="reply-container one-line">
             <input type="hidden" id="inquiryCommentNo" value="${data.INQUIRYCOMMENTNO}">
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
-            <div class="btn-container">
+            <div class="btn-container non-m-container">
               <button id="modReply" class="btn addReply btn__generate" data-cur-page="${curPage}" 
-              data-inquiry-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
+              data-inquiry-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}">
               답변 수정
               </button>
             </div>
@@ -121,7 +120,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
             <div class="info-comment reason--title bg__gray text__black box__xl text__center">답변</div>
             <div class="btn-container">
               <button id="addReply" class="btn addReply btn__generate" data-cur-page="${curPage}"
-               data-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
+               data-no="${data.INQUIRYNO}" data-inquiry-search="${inquirySearch}">
               답변 작성
               </button>
             </div>
@@ -140,18 +139,17 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
     const inquiryNo = $(this).data("inquiry-no");
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/update/${inquiryNo}`,
+      url: `/admin/api/cs/inquiry/update/${inquiryNo}`,
       type: 'GET',
       data: {
+        inquiryNo: inquiryNo,
         curPage: curPage,
-        answerTermination: answerTermination,
         inquirySearch: inquirySearch
       },
       success: function(res) {
-        createUpdateView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+        createUpdateView(res.inquiryVo, curPage, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -165,18 +163,17 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
     const inquiryNo = $(this).data("no");
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/add/${inquiryNo}`,
+      url: `/admin/api/cs/inquiry/add/${inquiryNo}`,
       type: 'GET',
       data: {
+        inquiryNo: inquiryNo,
         curPage: curPage,
-        answerTermination: answerTermination,
         inquirySearch: inquirySearch
       },
       success: function(res) {
-        createAddView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+        createAddView(res.inquiryVo, curPage, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -185,7 +182,7 @@ function createDetailView(data, curPage, answerTermination, inquirySearch) {
   })
 }
 
-function createUpdateView(res, curPage, inquirySearch, answerTermination) {
+function createUpdateView(res, curPage, inquirySearch) {
 
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
@@ -198,14 +195,14 @@ function createUpdateView(res, curPage, inquirySearch, answerTermination) {
     </div>
   </div>
 
-  <main class="main-container bg__white">
+  <main class="main-container bg__white main-p-container">
     <div class="inquiry-container">
       <div class="inquiry-title one-line">
         <input type="hidden" id="inquiryNo" value="${res.INQUIRYNO}">  
         <div class="info-title bg__gray text__black box__l text__center">제목</div>
         <div class="info-item bg__white text__black box__l">${res.TITLE}</div>
         <div class="info-title bg__gray text__black box__l text__center">분류</div>
-        <div class="info-dv-item bg__white text__black box__l">${res.DIVISION}</div>
+        <div class="info-dv-item bg__white text__black box__l">${res.DIVISION ? res.DIVISION : "X"}</div>
       </div>
       
       <div class="inquiry-sub one-line"> 
@@ -245,15 +242,14 @@ function createUpdateView(res, curPage, inquirySearch, answerTermination) {
     </div>
     
     <div class="btn-container answer-btn-container one-line">
-        <button id="cancleUpdate" class="btn btn__generate listMove" data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" 
-        data-inquiry-serach="${inquirySearch}" data-answer-termination="${answerTermination}">
-          돌아가기
-        </button>
         <button id="updateReply" class="btn btn__generate listUpdate" data-mod="${res.INQUIRYCOMMENTNO}" 
-        data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" 
-        data-answer-termination="${answerTermination}" data-inquiry-serach="${inquirySearch}">
+          data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}">
           수정
         </button>
+        <button id="cancleUpdate" class="btn btn__generate listMove" data-inquiry-no="${res.INQUIRYNO}" data-cur-page="${curPage}" 
+          data-inquiry-search="${inquirySearch}">
+          돌아가기
+        </button> 
     </div>
   </main>
   `
@@ -268,15 +264,18 @@ function createUpdateView(res, curPage, inquirySearch, answerTermination) {
     const content = $("#answerContent").val();
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination")
 
     $.ajax({
-      url: `/admin/api/cs/inquiry/update/${inquiryCommentNo}?inquiryNo=${inquiryNo}&curPage=${curPage}&inquirySearch=${encodeURIComponent(inquirySearch)}&answerTermination=${answerTermination}`,
+      url: `/admin/api/cs/inquiry/update/${inquiryCommentNo}?inquiryNo=${inquiryNo}&curPage=${curPage}&inquirySearch=${encodeURIComponent(inquirySearch)}`,
       type: 'PATCH',
       contentType: 'application/json',
-      data: JSON.stringify({ content: content }),
+      data: JSON.stringify({
+        content: content,
+        curPage: curPage,
+        inquirySearch: inquirySearch
+      }),
       success: function(res) {
-        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+        createDetailView(res.inquiryVo, curPage, inquirySearch);
         showAlertMsg(res.alertMsg);
       },
       error: function(res) {
@@ -291,18 +290,16 @@ function createUpdateView(res, curPage, inquirySearch, answerTermination) {
     const inquiryNo = $(this).data("inquiry-no");
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/${inquiryNo}`,
+      url: `/admin/api/cs/inquiry/${inquiryNo}`,
       type: 'GET',
       data: {
         curPage: curPage,
         inquirySearch: inquirySearch,
-        answerTermination: answerTermination
       },
       success: function(res) {
-        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+        createDetailView(res.inquiryVo, curPage, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
@@ -312,7 +309,7 @@ function createUpdateView(res, curPage, inquirySearch, answerTermination) {
 
 }
 
-function createAddView(res, curPage, inquirySearch, answerTermination) {
+function createAddView(res, curPage, inquirySearch) {
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
 
@@ -372,9 +369,9 @@ function createAddView(res, curPage, inquirySearch, answerTermination) {
     
     <div class="btn-container answer-btn-container one-line">
         <button id="cancleAdd" class="btn btn__generate listMove" data-inquiry-no="${res.INQUIRYNO}" 
-        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">돌아가기</button>
+        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}">돌아가기</button>
         <button id="replyAdd" class="btn btn__generate listUpdate" data-add="${res.INQUIRYNO}" 
-        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}" data-answer-termination="${answerTermination}">
+        data-cur-page="${curPage}" data-inquiry-search="${inquirySearch}">
           답변 추가
         </button>
     </div>
@@ -394,7 +391,6 @@ function createAddView(res, curPage, inquirySearch, answerTermination) {
     const content = $("#answerContent").val();
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
       url: `/admin/api/cs/inquiry/add/${inquiryNo}`,
@@ -404,7 +400,6 @@ function createAddView(res, curPage, inquirySearch, answerTermination) {
         CONTENT: content,
         curPage: curPage,
         inquirySearch: inquirySearch,
-        answerTermination: answerTermination
       }),
       success: function(res) {
         const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
@@ -424,18 +419,16 @@ function createAddView(res, curPage, inquirySearch, answerTermination) {
     const no = $(this).data("inquiry-no");
     const curPage = $(this).data("cur-page");
     const inquirySearch = $(this).data("inquiry-search");
-    const answerTermination = $(this).data("answer-termination");
 
     $.ajax({
-      url: `/admin/cs/inquiry/${no}`,
+      url: `/admin/api/cs/inquiry/${no}`,
       type: 'GET',
       data: {
         curPage: curPage,
         inquirySearch: inquirySearch,
-        answerTermination: answerTermination
       },
       success: function(res) {
-        createDetailView(res.inquiryVo, curPage, answerTermination, inquirySearch);
+        createDetailView(res.inquiryVo, curPage, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);

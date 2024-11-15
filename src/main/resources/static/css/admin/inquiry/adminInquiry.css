@@ -16,6 +16,10 @@
   margin: 20px;
 }
 
+.main-container.main-p-container {
+  padding-bottom: 20px;
+}
+
 .btn__inquiry {
   padding: 13px 19px;
 }
@@ -189,6 +193,10 @@
   gap: 20px;
 }
 
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container.one-line {
+  justify-content: space-between;
+}
+
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container.answer-update {
   margin: 10px auto;
   width: 90%;
@@ -240,7 +248,7 @@
 
 #content .main-container .btn-container.answer-btn-container {
   width: 90%;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
   margin: auto;
 }
@@ -265,4 +273,8 @@
 
 #content .main-container .btn-container.answer-btn-container {
   margin-top: 10px;
+}
+
+#content .btn-container.non-m-container {
+  margin: 0;
 }
