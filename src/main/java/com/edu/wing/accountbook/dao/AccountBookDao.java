@@ -57,4 +57,5 @@ public interface AccountBookDao {
     int softAllDeleteAccountBook(int accountBookNo);
 
     int deleteAllPayBack(int memberNo);
+    int updatePayback(Map<String, Object> params);
 }

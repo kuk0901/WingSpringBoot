@@ -166,5 +166,10 @@ public class AccountBookDaoImpl implements AccountBookDao {
         return sqlSession.delete("com.edu.wing.payback.deleteAllPayBack", memberNo);
     }
 
+    @Override
+    public int updatePayback(Map<String, Object> params) {
+        return sqlSession.update(NAMESPACE + "updatePayback", params);
+    }
+
 
 }

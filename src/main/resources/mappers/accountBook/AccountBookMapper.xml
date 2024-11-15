@@ -204,11 +204,17 @@
                  ab.PAYMENT_AMOUNT,
                   mc.CATEGORY_NAME AS minusCategoryName, -- NULL인 경우 기본값
                  pc.CATEGORY_NAME AS plusCategoryName,  -- NULL인 경우 기본값
-                 pm.PAYMENT_METHOD_NAME AS paymentMethodName
+                 pm.PAYMENT_METHOD_NAME AS paymentMethodName,
+                 pb.PAYBACK_NO as paybackNo,
+                 sc.SELLING_CARD_NO as sellingCardNo
           FROM ACCOUNT_BOOK ab
                    LEFT JOIN MINUS_CATEGORY mc ON ab.MINUS_CATEGORY_NO = mc.CATEGORY_NO
                    LEFT JOIN PLUS_CATEGORY pc ON ab.PLUS_CATEGORY_NO = pc.CATEGORY_NO
                    LEFT JOIN PAYMENT_METHOD pm ON ab.PAYMENT_METHOD_NO = pm.PAYMENT_METHOD_NO
+                   LEFT JOIN PAYBACK pb ON ab.MEMBER_NO =pb. MEMBER_NO
+                        AND pb.ACCOUNT_BOOK_NO = ab.ACCOUNT_BOOK_NO
+                   LEFT JOIN SELLING_CARD SC ON   pb.SELLING_CARD_NO = SC.SELLING_CARD_NO
+
           WHERE ab.ACCOUNT_BOOK_NO = #{accountBookNo}
             AND ab.MEMBER_NO = #{memberNo}
           ]]>
@@ -356,4 +362,24 @@
         </where>
         ORDER BY AB.CRE_DATE DESC
     </select>
+
+    <update id="updatePayback" parameterType="map">
+        UPDATE PAYBACK
+        SET PAYBACK_AMOUNT = (
+            SELECT  #{paybackAmount} * (CB.CARD_PERCENTAGE / 100)
+            FROM ACCOUNT_BOOK AB
+            LEFT JOIN SELLING_CARD SC ON AB.MEMBER_NO = SC.MEMBER_NO
+            JOIN CARD_BENEFIT CB ON SC.CARD_NO = CB.CARD_NO
+            JOIN MINUS_CATEGORY MC ON AB.MINUS_CATEGORY_NO = MC.CATEGORY_NO
+            WHERE AB.ACCOUNT_BOOK_NO = #{accountBookNo}
+            AND AB.MEMBER_NO = #{memberNo}
+              AND AB.PAYMENT_METHOD_NO=2
+              AND REPLACE(CB.CARD_BENEFIT_DIVISION, '할인', '') = MC.CATEGORY_NAME
+            )
+        WHERE MEMBER_NO= #{memberNo}
+        AND PAYBACK_NO= #{paybackNo}
+        AND ACCOUNT_BOOK_NO= #{accountBookNo}
+    </update>
+
+
 </mapper>
