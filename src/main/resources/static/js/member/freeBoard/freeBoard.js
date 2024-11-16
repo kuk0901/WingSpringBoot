@@ -22,7 +22,7 @@ const validateForm = () => {
     const $field = $(`#${fieldId}`);
 
     if (!$field.val().trim()) {
-      alert(`필수 입력란을 작성하지 않았습니다.`);
+      showAlertMsg(`필수 입력란을 작성하지 않았습니다.`);
       $field.focus();
       return false;
     }

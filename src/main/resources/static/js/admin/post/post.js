@@ -22,7 +22,7 @@ const validateForm = () => {
     const $field = $(`#${fieldId}`);
 
     if (!$field.val().trim()) {
-      alert(`필수 입력란을 작성하지 않았습니다.`);
+      showAlertMsg(`필수 입력란을 작성하지 않았습니다.`);
       $field.focus();
       return false;
     }
@@ -133,20 +133,18 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
             
     </main>
     
-    <div class="btn-container btn one-line">
-      <div>
-        <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
-          data-post-no="${data.POSTNO}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
-          삭제
-        </button>
-      </div>
-      <div>
-        <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
-          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
-          공지 수정
-        </button>
-      </div>
+    <div class="btn-container  one-line">
+      <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+        data-post-no="${data.POSTNO}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+        삭제
+      </button>
+      <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
+        data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+        공지 수정
+      </button>
     </div>
+    
+    <div class="hidden-ui"></div>
   `;
 
   $("#content").html(postDetail);
@@ -255,6 +253,8 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         </button>
       </div>
     </div>
+    
+    <div class="hidden-ui"></div>
   `
 
   $("#content").html(postUpdate);

@@ -78,6 +78,8 @@
       </button>
     </div>
 
+    <div class="hidden-ui"></div>
+
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />
