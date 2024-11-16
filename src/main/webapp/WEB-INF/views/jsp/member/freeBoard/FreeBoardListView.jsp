@@ -20,7 +20,7 @@
 
       <div class="title-container">
         <div class="title btn__yellow text__white">
-          자유게시판 목록
+          게시판
         </div>
       </div>
 

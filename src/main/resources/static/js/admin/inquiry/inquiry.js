@@ -402,10 +402,7 @@ function createAddView(res, curPage, inquirySearch) {
         inquirySearch: inquirySearch,
       }),
       success: function(res) {
-        const message = encodeURIComponent(res.alertMsg || "답변 추가에 성공했습니다");
-
-        // 성공 후 리스트 페이지로 이동하거나 현재 페이지를 새로고침
-        window.location.href = `/admin/cs/inquiry/${inquiryNo}?message=${message}`;
+        createDetailView(res.inquiryVo, curPage, inquirySearch);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
