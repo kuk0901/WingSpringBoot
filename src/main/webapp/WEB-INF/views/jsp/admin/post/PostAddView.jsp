@@ -48,18 +48,18 @@
       </div>
     </main>
 
-    <div class="btn-container-all one-line">
-      <div class="btn-container">
-        <a id="listMove" class="btn btn__generate listMove" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
-          취소
-        </a>
-      </div>
-      <div class="btn-container">
-        <button id="addPost" class="btn btn__generate listMove text__center text__bold">
-          문의 등록
-        </button>
-      </div>
+
+    <div class="btn-container one-line">
+      <a id="listMove" class="btn btn__generate listMove" href="/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}">
+        취소
+      </a>
+      <button id="addPost" class="btn btn__generate listMove text__center text__bold">
+        공지사항 등록
+      </button>
     </div>
+
+    <div class="hidden-ui"></div>
+
 
     <form id="pagingForm" action="./list" method="post">
       <input type="hidden" id="curPage" name="curPage" value="${pagingMap.pagingVo.curPage}" />

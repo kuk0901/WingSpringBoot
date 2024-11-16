@@ -62,36 +62,6 @@ public class MemberFreeBoardController {
 
   }
 
-  @GetMapping("/list/{freeBoardNo}")
-  public ResponseEntity<Map<String, Object>> freeBoardDetail(@PathVariable int freeBoardNo
-      , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String freeBoardSearch
-      , @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession){
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    MemberVo member = (MemberVo) httpSession.getAttribute("member");
-
-    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
-
-    List<FreeBoardCommentVo> freeBoardCommentList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
-
-    if(freeBoardVo == null){
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.");
-
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("curPage", curPage);
-    resultMap.put("freeBoardSearch", freeBoardSearch);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-    resultMap.put("freeBoardVo", freeBoardVo);
-    resultMap.put("freeBoardCommentList", freeBoardCommentList);
-    resultMap.put("currentMemberNo", member.getMemberNo());
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
   @GetMapping("/list/add")
   public ModelAndView freeBoardAdd(@RequestParam(defaultValue = "") String freeBoardSearch
           , @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "3") int noticeBoardNo, HttpSession httpSession) {
@@ -111,63 +81,6 @@ public class MemberFreeBoardController {
     mav.addObject("noticeBoardNo", noticeBoardNo);
 
     return mav;
-
-  }
-
-  @GetMapping("/list/{freeBoardNo}/update")
-  public ResponseEntity<?> updateFreeBoard(@PathVariable int freeBoardNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
-                                           @RequestParam(defaultValue = "3") int noticeBoardNo) {
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    resultMap.put("curPage", curPage);
-    resultMap.put("freeBoardSearch", freeBoardSearch);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-
-    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
-
-    if(freeBoardVo == null){
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요");
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("status", "success");
-    resultMap.put("freeBoardVo", freeBoardVo);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/list/{freeBoardCommentNo}/updateComment")
-  public ResponseEntity<?> updateComment(@PathVariable int freeBoardCommentNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String freeBoardSearch,
-                                         @RequestParam(defaultValue = "3") int noticeBoardNo, @RequestParam int freeBoardNo, HttpSession httpSession) {
-    Map<String, Object> resultMap = new HashMap<>();
-
-    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
-
-    List<FreeBoardCommentVo> freeBoardCommentVo = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
-
-    if (freeBoardVo == null){
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    if (freeBoardCommentVo == null){
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("curPage", curPage);
-    resultMap.put("freeBoardCommentNo", freeBoardCommentNo);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-    resultMap.put("freeBoardNo", freeBoardNo);
-    resultMap.put("freeBoardVo", freeBoardVo);
-    resultMap.put("freeBoardCommentVo", freeBoardCommentVo);
-
-    return ResponseEntity.ok().body(resultMap);
-
 
   }
 

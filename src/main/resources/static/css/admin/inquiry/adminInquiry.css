@@ -253,6 +253,13 @@
   margin: auto;
 }
 
+#content .main-container .btn-container.answer-btn-container .listMove, .listUpdate {
+  display: inline-block;
+  width: 150px;
+  font-size: 16px;
+  padding: 11.5px;
+}
+
 #content .main-container .list-container .list--div {
   margin-top: 20px;
 }

@@ -18,12 +18,12 @@
 
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
-        자유게시판 게시글 추가
+        게시글 추가
       </div>
     </div>
 
     <main class="main-container bg__white">
-      <div class="freeBoard-container">
+      <div class="freeBoard-container freeBoard-container-css">
         <div class="freeBoard-title one-line">
           <input type="hidden" id="memberNo"  value="${member.memberNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
@@ -77,6 +77,8 @@
         게시글 등록
       </button>
     </div>
+
+    <div class="hidden-ui"></div>
 
 
     <form id="pagingForm" action="./list" method="post">

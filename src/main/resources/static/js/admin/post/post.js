@@ -15,8 +15,28 @@ function formatDate(dateString) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+const validateForm = () => {
+  const requiredFields = ['titleVal', 'contentVal'];
+
+  for(const fieldId of requiredFields) {
+    const $field = $(`#${fieldId}`);
+
+    if (!$field.val().trim()) {
+      showAlertMsg(`필수 입력란을 작성하지 않았습니다.`);
+      $field.focus();
+      return false;
+    }
+  }
+
+  return true;
+};
+
 $("#addPost").click(function (e) {
   e.preventDefault();
+
+  if (!validateForm()) {
+    return;
+  }
 
   const memberNo = $("#memberNo").val();
   const title = $("#titleVal").val();
@@ -24,12 +44,6 @@ $("#addPost").click(function (e) {
   const email = $("#emailVal").val();
   const noticeBoardNo = $("#noticeBoardNo").val();
   const curPage = $("#curPage").val();
-
-  // 간단한 유효성 검사
-  if (!title.trim() || !content.trim()) {
-    alert("제목과 내용을 모두 입력해주세요.");
-    return;
-  }
 
   const postData = {
     memberNo: memberNo,
@@ -119,20 +133,18 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
             
     </main>
     
-    <div class="btn-container btn one-line">
-      <div>
-        <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
-          data-post-no="${data.POSTNO}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
-          삭제
-        </button>
-      </div>
-      <div>
-        <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
-          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
-          공지 수정
-        </button>
-      </div>
+    <div class="btn-container  one-line">
+      <button id="deleteBtn" class="btn btn__generate deleteBtn text__center" 
+        data-post-no="${data.POSTNO}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+        삭제
+      </button>
+      <button id="updateMoveBtn" class="btn btn__generate updateMoveBtn text__center" data-post-no="${data.POSTNO}" 
+        data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-post-search="${postSearch}">
+        공지 수정
+      </button>
     </div>
+    
+    <div class="hidden-ui"></div>
   `;
 
   $("#content").html(postDetail);
@@ -241,6 +253,8 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         </button>
       </div>
     </div>
+    
+    <div class="hidden-ui"></div>
   `
 
   $("#content").html(postUpdate);
@@ -295,8 +309,8 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         email: email
       }),
       success: function(res) {
-        const message = encodeURIComponent(res.alertMsg || "공지사항이 수정되었습니다");
-        window.location.href = `/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}&message=${message}`;
+        createDetailView(res.postVo, curPage, postSearch, noticeBoardNo);
+        showAlertMsg(res.alertMsg);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);

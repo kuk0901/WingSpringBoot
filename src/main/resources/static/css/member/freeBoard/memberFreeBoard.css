@@ -116,7 +116,7 @@ input, textarea {
   padding: 20px;
 }
 
-#content .main-container .freeBoard-container {
+#content .main-container .freeBoard-container.freeBoard-container-css {
   padding: 20px;
 }
 

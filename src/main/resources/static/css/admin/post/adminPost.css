@@ -1,3 +1,7 @@
+input, textarea {
+  outline: none;
+}
+
 #content .title-container {
   width: 100%;
   margin-top: 20px;
@@ -13,7 +17,8 @@
 }
 
 .main-container {
-  margin: 20px;
+  width: 98%;
+  margin: 30px auto;
 }
 
 .btn__post {
@@ -32,20 +37,32 @@
   justify-content: space-between;
 }
 
-#content .btn-container-all .btn-container #listMove,
-#content .btn-container-all .btn-container #addPost {
+#content .btn-container.one-line {
+  width: 98%;
+  margin: auto;
+  justify-content: space-around;
+  gap: 50px;
+}
+
+#content .btn-container #listMove,
+#content .btn-container #addPost {
   display: inline-block;
-  margin-left: 400px;
   width: 150px;
 }
 
-#content .btn-container-all .btn-container #listMove {
+#content  .btn-container #listMove {
   padding: 14px;
 }
 
-#content .btn-container-all .btn-container #addPost {
+#content .btn-container #addPost {
   font-size: 16px;
   padding: 11.5px;
+}
+
+#content .search-container.one-line {
+  width: 98%;
+  margin: auto;
+  justify-content: space-between;
 }
 
 #content .search-container .input-container #searchForm {
@@ -63,6 +80,10 @@
 
 #content .search-container .input-container .searchPost {
   line-height: normal;
+}
+
+#content .main-container .post-container {
+  padding-bottom: 20px;
 }
 
 #content .main-container .post-container .list-container .list--supply {
@@ -91,6 +112,10 @@
   height: 45px;
 }
 
+#content .search-container.one-line .input-container {
+  margin: 0;
+}
+
 #content .search-container .input-container .info-item {
   border: none;
   outline: none;
@@ -100,16 +125,8 @@
   font-size: 17px;
 }
 
-#content .search-container .addBtn-container {
-  margin-left: 893px;
-}
-
 #content .search-container .addBtn-container .addMove {
   padding: 13px 19px;
-}
-
-#content .main-container .post-container {
-  margin: auto;
 }
 
 #content .main-container .post-container.post-detail-container {
@@ -250,11 +267,6 @@
 
 #content .main-container .list-container .list--div {
   margin-top: 20px;
-}
-
-#content .btn-container.one-line {
-  justify-content: space-around;
-  gap: 50px;
 }
 
 #content .title-container .btn-container .listMove {
