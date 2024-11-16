@@ -15,6 +15,22 @@ function formatDate(dateString) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+const validateForm = () => {
+  const requiredFields = ['titleVal', 'contentVal'];
+
+  for(const fieldId of requiredFields) {
+    const $field = $(`#${fieldId}`);
+
+    if (!$field.val().trim()) {
+      alert(`필수 입력란을 작성하지 않았습니다.`);
+      $field.focus();
+      return false;
+    }
+  }
+
+  return true;
+};
+
 $('.list-content').click(function () {
   const freeBoardNo = $(this).data('free-board-no');
   const curPage = $('#curPage').val() || '1';
@@ -22,7 +38,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/member/freeBoard/list/${freeBoardNo}`,
+    url: `/member/api/freeBoard/list/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -194,7 +210,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
     const freeBoardSearch = $(this).data("free-board-search");
 
     $.ajax({
-      url: `/member/freeBoard/list/${freeBoardNo}/update`,
+      url: `/member/api/freeBoard/list/${freeBoardNo}/update`,
       type: 'GET',
       data: {
         noticeBoardNo: noticeBoardNo,
@@ -380,9 +396,10 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
 
         
       <div class="btn-container one-line update-btn-container">
-        <a id="listMove" class="btn btn__generate listMove text__center" href="/member/freeBoard/list?curPage=${curPage}&freeBoardSearch=${freeBoardSearch}&noticeBoardNo=${noticeBoardNo}">
+        <button id="listMove" class="btn btn__generate listMove text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
+          data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
           돌아가기
-        </a>
+        </button>
         <button id="updateBtn" class="btn btn__generate updateMoveBtn text__center" data-free-board-no="${freeBoardVo.freeBoardNo}" 
           data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
           수정
@@ -394,6 +411,31 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
   `;
 
   $("#content").html(freeBoardUpdate);
+
+  $("#listMove").click(function (e) {
+    e.preventDefault();
+
+    const freeBoardNo = $(this).data("freeBoardNo");
+    const curPage = $(this).data("cur-page");
+    const noticeBoardNo = $(this).data("notice-board-no") || 3;
+    const freeBoardSearch = $(this).data("free-board-search");
+
+    $.ajax({
+      url: `/member/api/freeBoard/list/${freeBoardNo}`,
+      type: 'GET',
+      data: {
+        curPage: curPage,
+        freeBoardSearch: freeBoardSearch,
+        noticeBoardNo: noticeBoardNo
+      },
+      success: function (res) {
+        createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
+      },
+      error: function (res) {
+        showAlertMsg(res.alertMsg);
+      }
+    })
+  })
 
   $("#updateBtn").click(function (e) {
     e.preventDefault();
@@ -429,6 +471,10 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
 
 $("#addFreeBoard").click(function (e) {
   e.preventDefault();
+
+  if (!validateForm()) {
+    return;
+  }
 
   const memberNo = $("#memberNo").val();
   const title = $("#titleVal").val();

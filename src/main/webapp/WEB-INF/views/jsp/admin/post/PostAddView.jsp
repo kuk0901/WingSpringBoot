@@ -56,7 +56,7 @@
       </div>
       <div class="btn-container">
         <button id="addPost" class="btn btn__generate listMove text__center text__bold">
-          문의 등록
+          공지사항 등록
         </button>
       </div>
     </div>

@@ -3,6 +3,22 @@ checkAndShowStoredMessage();
 
 const $abc = $("#abc").value;
 
+const validateForm = () => {
+  const requiredFields = ['titleVal', 'divisionVal', 'contentVal'];
+
+  for(const fieldId of requiredFields) {
+    const $field = $(`#${fieldId}`);
+
+    if (!$field.val().trim()) {
+      alert(`필수 입력란을 작성하지 않았습니다.`);
+      $field.focus();
+      return false;
+    }
+  }
+
+  return true;
+};
+
 $("#listMove").click(function () {
   const curPage = $(this).data('cur-page') || '1';
   window.location.href = `/member/cs/inquiry/list?curPage=${curPage}`;
@@ -11,11 +27,16 @@ $("#listMove").click(function () {
 $("#addInquiry").click(function (e) {
   e.preventDefault();
 
+  if (!validateForm()) {
+    return;
+  }
+
   const memberNo = $("#memberNo").val();
   const title = $("#titleVal").val();
   const division = $("#divisionVal").val();
   const creDate = $("#writeDate").val();
   const content = $("#contentVal").val();
+
 
   const inquiryData = {
     memberNo: memberNo,

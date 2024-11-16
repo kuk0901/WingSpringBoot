@@ -128,11 +128,15 @@ public class AdminApiInquiryController {
   }
 
   @PatchMapping("/add/{inquiryNo}")
-  public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData, HttpSession session) {
+  public ResponseEntity<?> addInquiryReply(@PathVariable int inquiryNo, @RequestBody Map<String, String> replyData
+      , HttpSession session, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String inquirySearch) {
     log.info(LOG_TITLE);
     log.info("addInquiryReply PATCH inquiryNo: {}, content: {}", inquiryNo, replyData.get("CONTENT"));
 
     Map<String, Object> resultMap = new HashMap<>();
+
+    resultMap.put("curPage", curPage);
+    resultMap.put("inquirySearch", inquirySearch);
 
     MemberVo member = (MemberVo) session.getAttribute("member");
 
@@ -150,8 +154,11 @@ public class AdminApiInquiryController {
       return ResponseEntity.badRequest().body(resultMap);
     }
 
+    Map<String, Object> inquiryVo = inquiryService.inquirySelectOne(inquiryNo);
+
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "답변 추가에 성공했습니다");
+    resultMap.put("inquiryVo", inquiryVo);
     return ResponseEntity.ok().body(resultMap);
   }
 
