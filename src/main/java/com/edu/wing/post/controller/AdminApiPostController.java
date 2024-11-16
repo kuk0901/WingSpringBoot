@@ -73,8 +73,11 @@ public class AdminApiPostController {
       return ResponseEntity.internalServerError().body(resultMap);
     }
 
+    Map<String, Object> postVo = postService.postSelectOne(postNo);
+
     resultMap.put("status", "success");
     resultMap.put("alertMsg", "공지사항이 수정되었습니다.");
+    resultMap.put("postVo", postVo);
     return ResponseEntity.ok().body(resultMap);
   }
 

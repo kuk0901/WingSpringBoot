@@ -309,8 +309,8 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         email: email
       }),
       success: function(res) {
-        const message = encodeURIComponent(res.alertMsg || "공지사항이 수정되었습니다");
-        window.location.href = `/admin/cs/post/list?curPage=${curPage}&noticeBoardNo=${noticeBoardNo}&postSearch=${postSearch}&message=${message}`;
+        createDetailView(res.postVo, curPage, postSearch, noticeBoardNo);
+        showAlertMsg(res.alertMsg);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);
