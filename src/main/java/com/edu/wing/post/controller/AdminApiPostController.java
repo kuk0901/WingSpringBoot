@@ -70,7 +70,7 @@ public class AdminApiPostController {
     if (!updatePost) {
       resultMap.put("status", "failed");
       resultMap.put("alertMsg", "서버 오류로 인해 공지사항이 수정되지 않았습니다. 잠시 후 다시 시도해 주세요.");
-      return ResponseEntity.internalServerError().body(resultMap);
+      return ResponseEntity.badRequest().body(resultMap);
     }
 
     Map<String, Object> postVo = postService.postSelectOne(postNo);
