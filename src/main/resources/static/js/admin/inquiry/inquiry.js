@@ -233,7 +233,7 @@ function createUpdateView(res, curPage, inquirySearch) {
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
-          <textarea id="answerContent" class="answerContent">${res.ANSWERCONTENT}</textarea>
+          <textarea id="answerContent" class="answerContent" maxlength="300">${res.ANSWERCONTENT}</textarea>
         </div>
       </div>
     </div>
@@ -358,7 +358,7 @@ function createAddView(res, curPage, inquirySearch) {
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
-          <textarea id="answerContent" class="answerContent"></textarea>
+          <textarea id="answerContent" class="answerContent" maxlength="300"></textarea>
         </div>
       </div>
     </div>

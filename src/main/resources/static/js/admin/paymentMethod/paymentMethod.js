@@ -145,7 +145,8 @@ function createUpdateView(paymentMethodList, paymentMethodVo) {
             <label for="paymentMethodName" class="text__black text__center label-size">결제수단 명</label>
           </div>
           <div class="input-container bg__white text__black label-size">
-            <input id="paymentMethodName" name="paymentMethodName" value="${paymentMethodVo.paymentMethodName}" class="info-item bg__white text__black box__l label-size"/>
+            <input id="paymentMethodName" name="paymentMethodName" value="${paymentMethodVo.paymentMethodName}"
+             class="info-item bg__white text__black box__l label-size" maxlength="30"/>
           </div>
           
           <div class="existing-payments bg">

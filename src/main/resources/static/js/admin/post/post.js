@@ -221,7 +221,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
           <input type="hidden" id="postSearch" value="${postSearch}">
 
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <input id="postTitle" class="info-item bg__white text__black box__l" value="${res.TITLE}">
+          <input id="postTitle" maxlength="30" class="info-item bg__white text__black box__l" value="${res.TITLE}">
         </div>
 
         <div class="post-sub one-line">
@@ -235,7 +235,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea id="postContent" class="contentArea">${res.CONTENT}</textarea>
+          <textarea id="postContent" class="contentArea" maxlength="300">${res.CONTENT}</textarea>
         </div>
       </div>
     </main>
