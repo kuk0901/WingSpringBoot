@@ -7,6 +7,12 @@ export function formatNumber(input) {
   // 숫자를 제외한 모든 문자 제거 (콤마와 하이픈 포함)
   const numbers = input.value.replace(/\D/g, "");
 
+  // "0"인 경우 바로 처리
+  if (numbers === "0") {
+    input.value = "0"; // 입력이 "0"일 경우 그대로 설정
+    return;
+  }
+
   const regex = /^[1-9]\d*$/;
 
   // 패턴에 맞는지 확인 (1-9로 시작하는 숫자)

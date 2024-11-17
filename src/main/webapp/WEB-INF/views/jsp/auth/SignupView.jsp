@@ -122,7 +122,7 @@
               id="salary"
               name="yearlySalary"
               required
-              pattern="^[1-9]\d{0,3}(,\d{3})*$"
+              pattern="^(0|[1-9]\d{0,3})(,\d{3})*$"
               placeholder="ex) 4,500"
               class="input__s"
             />
@@ -144,7 +144,7 @@
               id="pay"
               name="monthlySalary"
               required
-              pattern="^[1-9]\d{0,3}(,\d{3})*$"
+              pattern="^(0|[1-9]\d{0,3})(,\d{3})*$"
               placeholder="ex) 375"
               class="input__s"
             />

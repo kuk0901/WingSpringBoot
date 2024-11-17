@@ -170,7 +170,7 @@ function createDetailView(data) {
                 <label for="address">주소</label>
               </div>
               <div class="input-container bg__gray">
-                <input id="address" name="address" class="bg__gray" required placeholder="도로명 주소를 기입해 주세요."/>
+                <input id="address" name="address" class="bg__gray" required placeholder="도로명 주소를 기입해 주세요." maxlength="100" />
               </div>
             </div>
       
@@ -180,7 +180,7 @@ function createDetailView(data) {
               </div>
               <div class="one-line">
                 <div class="input-container bg__gray">
-                  <input id="accountNumber" name="accountNumber" class="bg__gray" required placeholder="-을 포함해 입력해 주세요."/>
+                  <input id="accountNumber" name="accountNumber" class="bg__gray" required placeholder="-을 포함해 입력해 주세요." pattern="[\d-]+" maxlength="14" />
                 </div>
                 <div class="select-container">
                   <select class="select-bank" name="backName">
@@ -211,6 +211,25 @@ function createDetailView(data) {
   $("body").append(purchaseEls);
 
   $("#content").html(cardDetail).addClass("bg__white");
+
+  $("#address").on("input", function (e) {
+    requestAnimationFrame(() => {
+      let val = $(this).val();
+      let newVal = val.replace(/[^가-힣0-9\s-]/g, "");
+      if (val !== newVal) {
+        $(this).val(newVal);
+      }
+    });
+  });
+
+  $("#accountNumber").on("input", function (e) {
+    let val = $(this).val();
+    let newVal = val.replace(/[^\d-]/g, "");
+
+    if (val !== newVal) {
+      $(this).val(newVal);
+    }
+  });
 
   $("#cardApplicationWindowBtn").click(function(e) {
     e.preventDefault();

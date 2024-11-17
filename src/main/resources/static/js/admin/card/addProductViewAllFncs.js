@@ -34,17 +34,17 @@ const addProductClickEvent = (e) => {
   const $cardPercentageVal = $cardPercentage.val();
 
   if ($cardBenefitDivisionVal === "" || $cardBenefitDivisionVal === undefined) {
-    alert("구분 내용을 입력해야 합니다.");
+    showAlertMsg("주요 혜택 구분 내용을 입력해야 합니다.");
     return;
   }
 
   if ($cardBenefitDetailVal === "" || $cardBenefitDetailVal === undefined) {
-    alert("세부 내용을 입력해야 합니다.");
+    showAlertMsg("주요 혜택 세부 내용을 입력해야 합니다.");
     return;
   }
 
   if ($cardPercentageVal === "" || $cardPercentageVal === undefined) {
-    alert("할인율을 입력해야 합니다.");
+    showAlertMsg("주요 혜택 할인율을 입력해야 합니다.");
     return;
   }
 
@@ -54,7 +54,7 @@ const addProductClickEvent = (e) => {
     <div class="service-content one-line service-content-${currentId}" data-cardBenefitNo="${currentId}">
       <input value="${$cardBenefitDivisionVal}" class="box-m" name="cardBenefitDivision-${currentId}" required />
       <input value="${$cardBenefitDetailVal}" class="box-l" name="cardBenefitDetail-${currentId}" required />
-      <input value="${$cardPercentageVal}" class="box-m" name="cardPercentage-${currentId}" required />
+      <input type="number" max="100" min="0" value="${$cardPercentageVal}" class="box-m" name="cardPercentage-${currentId}" required />
       <button class="btn btn--remove removeBtn-${currentId} box-s">삭제</button>
     </div>
   `;
@@ -220,3 +220,41 @@ const fetchCardDetails = (cardNo, message) => {
     }
   });
 };
+
+let lastAlertTime = 0;
+const ALERT_COOLDOWN = 3000; // 3초 간격으로 제한
+
+function handleNumberInput() {
+  const max = parseInt($(this).attr('max'));
+  const min = parseInt($(this).attr('min'));
+  let value = parseInt($(this).val());
+
+  if (isNaN(value)) {
+    $(this).val('');
+  } else {
+    const currentTime = new Date().getTime();
+    if (value > max) {
+      $(this).val(max);
+      if (currentTime - lastAlertTime > ALERT_COOLDOWN) {
+        showAlertMsg(`입력 가능한 최대값은 ${max}입니다.`);
+        lastAlertTime = currentTime;
+      }
+    } else if (value < min) {
+      $(this).val(min);
+      if (currentTime - lastAlertTime > ALERT_COOLDOWN) {
+        showAlertMsg(`입력 가능한 최소값은 ${min}입니다.`);
+        lastAlertTime = currentTime;
+      }
+    }
+  }
+}
+
+// 페이지 로드 시 실행
+function setupNumberInputs() {
+  $('input[type="number"]').on('input', handleNumberInput);
+}
+
+$(document).ready(setupNumberInputs);
+
+// 동적으로 추가되는 요소에 대한 처리
+$(document).on('input', 'input[type="number"]', handleNumberInput);
