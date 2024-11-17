@@ -13,8 +13,8 @@ export function encodeCustom(input) {
 export function decodeCustom(input) {
   let result = "";
   for (let i = 0; i < input.length; i += 2) {
-    let char1Index = CUSTOM_CHARS.indexOf(input[i]); // 첫 번째 문자 인덱스 찾기
-    let char2Index = CUSTOM_CHARS.indexOf(input[i + 1]); // 두 번째 문자 인덱스 찾기
+    let char1Index = CUSTOM_CHARS.indexOf(input[i]); // 첫 번째 문자 인덱스 찾기(나머지)
+    let char2Index = CUSTOM_CHARS.indexOf(input[i + 1]); // 두 번째 문자 인덱스 찾기(몫)
     let charCode = char1Index + char2Index * 62; // 원래의 ASCII 값 복원
     result += String.fromCharCode(charCode); // ASCII 값을 문자로 변환하여 결과에 추가
   }

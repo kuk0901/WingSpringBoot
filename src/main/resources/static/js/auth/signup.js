@@ -61,14 +61,18 @@ function validatePassword() {
   return { isPwdValid, isMatching };
 }
 
-
 function updateSubmitButtonState() {
   const isEmailValid = validateEmail($email.val()).isValid;
   const { isPwdValid, isMatching } = validatePassword();
   const isUserNameValid = validateInput($userName.val(), userNameRegex, "").isValid;
   const isPhoneValid = validateInput($phoneInput.val(), phoneRegex, "").isValid;
-  const isSalaryValid = validateInput($salaryInput.val(), salaryRegex, "").isValid;
-  const isPayValid = validateInput($payInput.val(), salaryRegex, "").isValid;
+
+  // #salaryInput와 #payInput의 값이 0일 때도 유효하다고 판단
+  const salaryValue = $salaryInput.val();
+  const payValue = $payInput.val();
+
+  const isSalaryValid = (salaryValue === "0" || validateInput(salaryValue, salaryRegex, "", true).isValid);
+  const isPayValid = (payValue === "0" || validateInput(payValue, salaryRegex, "", true).isValid);
 
   $submitBtn.prop("disabled", !(isEmailValid && isPwdValid && isMatching && isUserNameValid && isPhoneValid && isSalaryValid && isPayValid));
 }
@@ -120,13 +124,13 @@ $phoneInput.on("blur", function() {
 
 $salaryInput.on("blur", function() {
   formatNumber(this);
-  updateUI($salaryInput, $salaryError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요. (예: 4,500 또는 6,000)"));
+  updateUI($salaryInput, $salaryError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요.", true)); // true 추가
   updateSubmitButtonState();
 });
 
 $payInput.on("blur", function() {
   formatNumber(this);
-  updateUI($payInput, $payError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요. (예: 300 또는 500)"));
+  updateUI($payInput, $payError, validateInput($(this).val(), salaryRegex, "올바른 형식으로 입력해주세요.", true)); // true 추가
   updateSubmitButtonState();
 });
 
