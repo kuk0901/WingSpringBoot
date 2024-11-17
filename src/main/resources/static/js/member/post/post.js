@@ -22,7 +22,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/member/cs/post/list/${postNo}`,
+    url: `/member/api/cs/post/list/${postNo}`,
     type: 'GET',
     data: {
       curPage: curPage,

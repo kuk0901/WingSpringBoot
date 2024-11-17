@@ -38,7 +38,7 @@ $(".remove-pm-btn").click(function(e) {
   }
 
   $.ajax({
-    url: `/admin/paymentMethod/delete/${no}`,
+    url: `/admin/api/paymentMethod/delete/${no}`,
     type: 'GET',
     success: function (res) {
       if (res.totalCount > 0) {
@@ -97,7 +97,7 @@ $(".update-pm-btn").click(function(e) {
   const no = $(this).data("pmn");
 
   $.ajax({
-    url: `/admin/paymentMethod/countPaymentMethod/${no}`,
+    url: `/admin/api/paymentMethod/countPaymentMethod/${no}`,
     type: 'GET',
     success: function (res) {
 
@@ -110,7 +110,7 @@ $(".update-pm-btn").click(function(e) {
       }
 
       $.ajax( {
-        url: `/admin/paymentMethod/update/${no}`,
+        url: `/admin/api/paymentMethod/update/${no}`,
         type: 'GET',
         success: function(res) {
           createUpdateView(res.paymentMethodList, res.paymentMethodVo);
@@ -163,7 +163,7 @@ function createUpdateView(paymentMethodList, paymentMethodVo) {
         </div>
          
         <div class="btn-container one-line">
-          <button id="paymentMethodAdd" class="btn btn__generate btn--margin">수정</button>
+          <button id="paymentMethodAdd" class="btn btn__generate btn--margin" data-payment-method-no="${paymentMethodVo.paymentMethodNo}">수정</button>
           <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
@@ -176,10 +176,11 @@ function createUpdateView(paymentMethodList, paymentMethodVo) {
   $("#paymentMethodAdd").on("click", function(e) {
     e.preventDefault();
 
+    const paymentMethodNo = $(this).data("payment-method-no");
     const updatedName = $("#paymentMethodName").val();
 
     $.ajax({
-      url: `/admin/api/paymentMethod/update/${res.paymentMethodNo}`,
+      url: `/admin/api/paymentMethod/update/${paymentMethodNo}`,
       type: 'PATCH',
       data: { paymentMethodName: updatedName },
       success: function(res) {

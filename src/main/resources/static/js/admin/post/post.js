@@ -76,7 +76,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/admin/cs/post/list/${postNo}`,
+    url: `/admin/api/cs/post/list/${postNo}`,
     type: 'GET',
     data: {
       curPage: curPage,
@@ -158,7 +158,7 @@ function createDetailView(data, curPage, postSearch, noticeBoardNo) {
     const postSearch = $(this).data("post-search");
 
     $.ajax( {
-      url: `/admin/cs/post/list/${postNo}/update`,
+      url: `/admin/api/cs/post/list/${postNo}/update`,
       type: 'GET',
       data: {
         curPage: curPage,

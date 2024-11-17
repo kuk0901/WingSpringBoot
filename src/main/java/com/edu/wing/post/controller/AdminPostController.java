@@ -23,29 +23,20 @@ import java.util.Map;
 @RequestMapping("/admin/cs/post")
 public class AdminPostController {
 
-  private static final Logger log = LoggerFactory.getLogger(AdminPostController.class);
-  private static final String LOG_TITLE = "==AdminPostController==";
-
   @Autowired
   private PostService postService;
 
   @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
   public ModelAndView postList(@RequestParam(defaultValue = "1") String curPage, @RequestParam(defaultValue = "") String postSearch,
                                @RequestParam(defaultValue = "2") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping postList curPage: {}, noticeBoardNo: {}, postSearch: {}", curPage, noticeBoardNo, postSearch);
 
     int totalCount = postService.postSelectTotalCount(noticeBoardNo, postSearch);
-
-    log.info("totalCount: {}", totalCount);
 
     Paging pagingVo = new Paging(totalCount, Integer.parseInt(curPage));
     int start = pagingVo.getPageBegin();
     int end = pagingVo.getPageEnd();
 
     List<PostVo> postList = postService.postSelectList(start, end, postSearch, noticeBoardNo);
-
-    log.info("postList: {}", postList);
 
     Map<String, Object> pagingMap = new HashMap<>();
     pagingMap.put("totalCount", totalCount);
@@ -65,8 +56,6 @@ public class AdminPostController {
   @GetMapping("/list/add")
   public ModelAndView postAdd(@RequestParam(defaultValue = "2") int noticeBoardNo
           , @RequestParam String curPage, @RequestParam String postSearch, HttpSession httpSession) {
-    log.info("{} - Retrieving @GetMapping postAdd", LOG_TITLE);
-    log.info("@RequestMapping postAdd curPage: {}, postSearch: {}", curPage, postSearch);
 
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -82,58 +71,6 @@ public class AdminPostController {
     mav.addObject("postSearch", postSearch);
 
     return mav;
-  }
-
-  @GetMapping("/list/{postNo}")
-  public ResponseEntity<Map<String, Object>> postDetail(@PathVariable int postNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "") String postSearch,
-                                                        @RequestParam(defaultValue = "2") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("@RequestMapping postDetail postNo: {}, curPage: {}, postSearch: {}, noticeBoardNo: {}", postNo, curPage, postSearch, noticeBoardNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    Map<String, Object> postVo = postService.postSelectOne(postNo);
-
-    if (postVo == null) {
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.");
-
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("curPage", curPage);
-    resultMap.put("postSearch", postSearch);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-    resultMap.put("postVo", postVo);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/list/{postNo}/update")
-  public ResponseEntity<?> updatePost(@PathVariable int postNo, @RequestParam String curPage, @RequestParam(defaultValue = "") String postSearch,
-                                      @RequestParam(defaultValue = "2") int noticeBoardNo) {
-    log.info(LOG_TITLE);
-    log.info("getGetForUpdate GET postNo: {}, curPage: {}, postSearch: {}", postNo, curPage, noticeBoardNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    resultMap.put("curPage", curPage);
-    resultMap.put("postSearch", postSearch);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-
-    Map<String, Object> postVo = postService.postSelectOne(postNo);
-
-    if (postVo == null) {
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류가 발생하여 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요."); // 수정 실패에 대한 안내 메시지
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("status", "success");
-    resultMap.put("postVo", postVo); // 수정 성공에 대한 안내 메시지
-
-    return ResponseEntity.ok().body(resultMap);
-
   }
 
 }

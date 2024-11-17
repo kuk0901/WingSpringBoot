@@ -56,29 +56,4 @@ public class AdminFreeBoardController {
     return mav;
   }
 
-  @GetMapping("/list/{freeBoardNo}")
-  public ResponseEntity<Map<String, Object>> freeBoardDetail(@PathVariable int freeBoardNo, @RequestParam(defaultValue = "1") int curPage
-      , @RequestParam(defaultValue = "") String freeBoardSearch, @RequestParam(defaultValue = "2") int noticeBoardNo){
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    FreeBoardVo freeBoardVo = freeBoardService.freeBoardSelectOne(freeBoardNo);
-
-    List<FreeBoardCommentVo> freeBoardCommentVoList = freeBoardCommentService.freeBoardCommentSelectList(freeBoardNo);
-
-    if(freeBoardVo == null){
-      resultMap.put("success", false);
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.");
-
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("freeBoardVo", freeBoardVo);
-    resultMap.put("freeBoardCommentVoList", freeBoardCommentVoList);
-    resultMap.put("curPage", curPage);
-    resultMap.put("freeBoardSearch", freeBoardSearch);
-    resultMap.put("noticeBoardNo", noticeBoardNo);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
 }
