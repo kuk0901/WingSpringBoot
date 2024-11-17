@@ -41,8 +41,6 @@ function createDetailView(data, curPage, inquirySearch) {
   const formattedInquiryDate = formatDate(data.INQUIRYDATE);
   const formattedAnswerDate = data.ANSWERDATE ? formatDate(data.ANSWERDATE) : '';
 
-  console.log(inquirySearch);
-
   const inquiryDetail = `
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">
@@ -187,7 +185,6 @@ function createUpdateView(res, curPage, inquirySearch) {
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
 
-  console.log(res)
   const inquiryCommentUpdate = `
   <div class="title-container">
     <div id="title" class="title btn__yellow text__white">
@@ -236,7 +233,7 @@ function createUpdateView(res, curPage, inquirySearch) {
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
-          <textarea id="answerContent" class="answerContent">${res.ANSWERCONTENT}</textarea>
+          <textarea id="answerContent" class="answerContent" maxlength="300">${res.ANSWERCONTENT}</textarea>
         </div>
       </div>
     </div>
@@ -313,7 +310,6 @@ function createAddView(res, curPage, inquirySearch) {
   const formattedInquiryDate = formatDate(res.INQUIRYDATE);
   const formattedAnswerDate = res.ANSWERDATE ? formatDate(res.ANSWERDATE) : '';
 
-  console.log(res)
   const inquiryCommentAdd = `
   <div class="title-container">
     <div id="title" class="title btn__yellow text__white">
@@ -362,7 +358,7 @@ function createAddView(res, curPage, inquirySearch) {
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
-          <textarea id="answerContent" class="answerContent"></textarea>
+          <textarea id="answerContent" class="answerContent" maxlength="300"></textarea>
         </div>
       </div>
     </div>

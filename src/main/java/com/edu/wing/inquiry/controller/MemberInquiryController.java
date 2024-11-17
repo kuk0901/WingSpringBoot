@@ -70,20 +70,4 @@ public class MemberInquiryController {
     return mav;
   }
 
-  @GetMapping("/list/{inquiryNo}")
-  public ResponseEntity<Map<String, Object>> inquiryDetail(@PathVariable int inquiryNo, @RequestParam int curPage) {
-
-    Map<String, Object> resultMap = inquiryService.memberInquirySelectOne(inquiryNo);
-
-    if (resultMap == null) {
-      resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 정보를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.");
-      return ResponseEntity.badRequest().body(resultMap);
-    }
-
-    resultMap.put("curPage", curPage);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
 }

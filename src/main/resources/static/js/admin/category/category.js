@@ -57,7 +57,7 @@ $(".moveModFunc").click(function (e) {
 
   if(categoryType == "plus") {
     $.ajax({
-      url: `/admin/category/countPlusCategory/${no}`,
+      url: `/admin/api/category/countPlusCategory/${no}`,
       type: 'GET',
       success: function (res) {
         if (res.totalCount > 0) {
@@ -66,7 +66,7 @@ $(".moveModFunc").click(function (e) {
         }
 
         $.ajax({
-          url: `/admin/category/updatePlus/${no}`,
+          url: `/admin/api/category/updatePlus/${no}`,
           type: 'GET',
           success: function (res) {
             createPlusUpdateView(res.plusCategories, res.plusCategoryVo);
@@ -79,7 +79,7 @@ $(".moveModFunc").click(function (e) {
     })
   }else if(categoryType == "minus"){
     $.ajax({
-      url: `/admin/category/countMinusCategory/${no}`,
+      url: `/admin/api/category/countMinusCategory/${no}`,
       type: 'GET',
       success: function (res) {
         if (res.totalCount > 0) {
@@ -88,7 +88,7 @@ $(".moveModFunc").click(function (e) {
         }
 
         $.ajax({
-          url: `/admin/category/updateMinus/${no}`,
+          url: `/admin/api/category/updateMinus/${no}`,
           type: 'GET',
           success: function (res) {
             createMinusUpdateView(res.minusCategories, res.minusCategoryVo);
@@ -144,7 +144,7 @@ function createPlusUpdateView(plusCategories, plusCategoryVo) {
         </div>
        
         <div class="btn-container">
-          <button id="plusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin">수정</button>
+          <button id="plusCatergoryUpdate" type="submit" class="btn btn__generate btn--margin" data-category-no="${plusCategoryVo.categoryNo}">수정</button>
           <button id="cancelAdd" type="button" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
@@ -154,8 +154,12 @@ function createPlusUpdateView(plusCategories, plusCategoryVo) {
   $("#content").html(plusCategoryUpdate);
 
   // 버튼에 이벤트 리스너 추가
-  $("#plusCatergoryUpdate").on("click", function() {
-    updatePlusCategory(res.categoryNo);
+  $("#plusCatergoryUpdate").on("click", function(e) {
+    e.preventDefault();
+
+    const categoryNo = $(this).data("category-no")
+
+    updatePlusCategory(categoryNo);
   });
 
   $("#cancelAdd").on("click", function() {
@@ -219,7 +223,7 @@ function createMinusUpdateView(minusCategories, minusCategoryVo) {
         </div>
        
         <div class="btn-container">
-          <button id="minusCatergoryUpdate" class="btn btn__generate btn--margin">수정</button>
+          <button id="minusCatergoryUpdate" class="btn btn__generate btn--margin" data-category-no="${minusCategoryVo.categoryNo}">수정</button>
           <button id="cancelAdd" class="btn btn__generate btn--margin">취소</button>
         </div>
       </form>
@@ -229,8 +233,12 @@ function createMinusUpdateView(minusCategories, minusCategoryVo) {
   $("#content").html(minusCategoryUpdate);
 
   // 버튼에 이벤트 리스너 추가
-  $("#minusCatergoryUpdate").on("click", function() {
-    updateMinusCategory(res.categoryNo);
+  $("#minusCatergoryUpdate").on("click", function(e) {
+    e.preventDefault();
+
+    const categoryNo = $(this).data("category-no")
+
+    updateMinusCategory(categoryNo);
   });
 
   $("#cancelAdd").click(function(e) {
@@ -266,7 +274,7 @@ $(".moveDelFunc").click(function (e) {
 
   if(categoryType == "plus") {
     $.ajax({
-      url: `/admin/category/deletePlusCategory/${no}`,
+      url: `/admin/api/category/deletePlusCategory/${no}`,
       type: 'GET',
       success: function (res) {
         if (res.totalCount > 0) {
@@ -280,7 +288,7 @@ $(".moveDelFunc").click(function (e) {
     })
   }else if(categoryType == "minus"){
     $.ajax({
-      url: `/admin/category/deleteMinusCategory/${no}`,
+      url: `/admin/api/category/deleteMinusCategory/${no}`,
       type: 'GET',
       success: function (res) {
         if (res.totalCount > 0) {

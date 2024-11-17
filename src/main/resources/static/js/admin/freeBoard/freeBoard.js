@@ -22,7 +22,7 @@ $('.list-content').click(function () {
   const noticeBoardNo = $('#noticeBoardNo').val();
 
   $.ajax({
-    url: `/admin/freeBoard/list/${freeBoardNo}`,
+    url: `/admin/api/freeBoard/list/${freeBoardNo}`,
     type: 'GET',
     data: {
       curPage: curPage,

@@ -169,7 +169,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
-            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+            <textarea id="comment-textarea" class="comment-textarea" maxlength="300"></textarea>
           </div>   
           <div id="member-addBtn-container" class="btn-container one-line text__center">
             <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
@@ -359,7 +359,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
               <label for="freeBoardTitle" class="info-title">제목</label>
             </div>
             <div class="input-container bg__white text__black">
-              <input id="freeBoardTitle" class="info-item" value="${freeBoardVo.title}">
+              <input id="freeBoardTitle" class="info-item" maxlength="30" value="${freeBoardVo.title}">
             </div>
           </div>
         </div>
@@ -389,7 +389,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
           </div>
       
           <div class="input-container textarea-content bg__white text__black">
-            <textarea id="freeBoardContent" class="contentArea">${freeBoardVo.content}</textarea>
+            <textarea id="freeBoardContent" class="contentArea" maxlength="300">${freeBoardVo.content}</textarea>
           </div>    
         </div>  
       </div>

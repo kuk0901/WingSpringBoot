@@ -30,7 +30,7 @@
             <label for="paymentMethodName" class="info-item text__black">결제수단 명</label>
           </div>
           <div class="input-container bg__white text__black">
-            <input type="text" id="paymentMethodName" name="paymentMethodName" class="info-item" placeholder="ex) 계좌이체" required>
+            <input type="text" id="paymentMethodName" name="paymentMethodName" maxlength="30" class="info-item" placeholder="ex) 계좌이체" required>
           </div>
 
           <div class="existing-payments bg">
