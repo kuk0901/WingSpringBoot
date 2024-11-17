@@ -7,6 +7,7 @@
 - `ERD.png`: 데이터베이스의 전체 ERD (Entity-Relationship Diagram) 이미지 파일입니다.
 - `summary_presentation.pptx`: 프로젝트의 주요 내용을 요약한 프레젠테이션입니다.
 - `full_presentation.pptx`: 프로젝트의 모든 세부 사항을 포함한 전체 프레젠테이션입니다.
+- `WING_ UI(figma)`: 프로젝트의 UI를 figma를 사용해 만든 PDF 파일입니다.
 
 ## 사용 방법
 
