@@ -24,6 +24,7 @@
         <result column="CARD_NAME" property="cardName" />
         <result column="TERMINATION_REASON" property="terminationReason" />
         <result column="ACCOUNT_BOOK_COUNT" property="accountBookCount" />
+        <result column="FREE_BOARD_COUNT" property="freeBoardCount" />
         <result column="POST_COUNT" property="postCount" />
         <result column="MEMBER_CARD_NO" property="memberCardNo" />
     </resultMap>
@@ -90,6 +91,7 @@
             M.MONTH_SALARY,
             M.PRODUCT_PURCHASE,
             (SELECT COUNT(*) FROM ACCOUNT_BOOK AB WHERE AB.MEMBER_NO = M.MEMBER_NO) AS ACCOUNT_BOOK_COUNT,
+            (SELECT COUNT(*) FROM FREE_BOARD FB WHERE FB.MEMBER_NO = M.MEMBER_NO) AS FREE_BOARD_COUNT,
             C.CARD_NAME,
             SC.SELLING_DATE,
             SC.TERMINATION_DATE,
@@ -98,6 +100,7 @@
         FROM MEMBER M
                 LEFT JOIN SELLING_CARD SC ON M.MEMBER_NO = SC.MEMBER_NO
                 LEFT JOIN CARD C ON SC.CARD_NO = C.CARD_NO
+                LEFT JOIN FREE_BOARD FB ON M.MEMBER_NO = FB.MEMBER_NO
         WHERE M.MEMBER_NO = #{memberNo}
     </select>
 

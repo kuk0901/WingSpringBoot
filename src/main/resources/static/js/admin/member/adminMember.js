@@ -71,7 +71,7 @@ function restRequestMemberDetail(tdElement) {
                 <div class="value">${memberDetail.accountBookCount}</div>
                 
                 <div class="label">게시글 작성수</div>
-                <div class="value">추후 잊지말고 넣을것</div>
+                <div class="value">${memberDetail.accountBookCount}</div>
               </div>
               <div class="one-line">
                 <div class="label">보유카드 이름</div>
