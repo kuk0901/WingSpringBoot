@@ -43,7 +43,7 @@
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">공지사항 내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea id="contentVal" maxlength="300" class="contentArea" placeholder="공지사항 내용을 입력하세요"></textarea>
+          <textarea id="contentVal" maxlength="1000" class="contentArea" placeholder="공지사항 내용을 입력하세요"></textarea>
         </div>
       </div>
     </main>

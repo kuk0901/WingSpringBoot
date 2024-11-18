@@ -18,7 +18,7 @@
 
     <div class="title-container">
       <div class="title btn__yellow text__white">
-        공지사항 목록
+        공지사항
       </div>
     </div>
 
@@ -51,10 +51,10 @@
           <c:when test="${not empty postList}">
             <div class="bg__white">
               <c:forEach items="${postList}" var="postVo" >
-                <div class="list-container list-content one-line " data-post-no="${postVo.postNo}">
+                <div class="list-container list-container-items list-content one-line " data-post-no="${postVo.postNo}">
                   <input type="hidden" id="noticeBoardNo" value="${postVo.noticeBoardNo}">
                   <div class="list--supply text__center">${postVo.postNo}</div>
-                  <div class="list--title text__center">${postVo.title}</div>
+                  <div class="list--title">${postVo.title}</div>
                   <div class="list--date text__center">
                     <fmt:formatDate value="${postVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                   </div>

@@ -68,10 +68,15 @@
   margin: 10px;
 }
 
+#content .main-container .inquiry-container .list-container.list-container--title,
+#content .main-container .inquiry-container .list-container.list-container-items {
+  justify-content: space-around;
+}
+
 #content .main-container .inquiry-container .list-container .list--supply {
   font-size: 17px;
   padding: 17px 13px;
-  width: 300px;
+  width: 75px;
 }
 
 #content .main-container .inquiry-container .list-container .list--date {

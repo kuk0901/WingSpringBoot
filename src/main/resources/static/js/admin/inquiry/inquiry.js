@@ -358,7 +358,7 @@ function createAddView(res, curPage, inquirySearch) {
       
       <div class="answer-content">
         <div class="reason--content bg__white text__black">
-          <textarea id="answerContent" class="answerContent" maxlength="300"></textarea>
+          <textarea id="answerContent" class="answerContent" maxlength="1000"></textarea>
         </div>
       </div>
     </div>

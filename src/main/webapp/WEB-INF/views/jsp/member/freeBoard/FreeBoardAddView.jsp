@@ -62,7 +62,7 @@
             <label for="contentVal">내용</label>
           </div>
           <div class="input-container textarea-content">
-            <textarea id="contentVal" class="contentArea" maxlength="300" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="contentVal" class="contentArea" maxlength="1000" placeholder="내용을 입력하세요"></textarea>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ input, textarea {
 
 .main-container {
   width: 98%;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 .btn__post {
@@ -82,14 +82,15 @@ input, textarea {
   line-height: normal;
 }
 
-#content .main-container .post-container {
-  padding-bottom: 20px;
+#content .main-container .post-container .list-container.list-container--title,
+#content .main-container .post-container .list-container.list-container-items {
+  justify-content: space-around;
 }
 
 #content .main-container .post-container .list-container .list--supply {
   font-size: 17px;
   padding: 17px 13px;
-  width: 300px;
+  width: 75px;
 }
 
 #content .main-container .post-container .list-container .list--date {

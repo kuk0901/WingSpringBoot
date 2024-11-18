@@ -169,7 +169,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
-            <textarea id="comment-textarea" class="comment-textarea" maxlength="300"></textarea>
+            <textarea id="comment-textarea" class="comment-textarea" maxlength="600"></textarea>
           </div>   
           <div id="member-addBtn-container" class="btn-container one-line text__center">
             <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
@@ -184,7 +184,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         <div class="bg__gray answer-title text__center text__semibold">댓글</div>
         <div class="comment-add-container one-line">
           <div class="input-container">
-            <textarea id="comment-textarea" class="comment-textarea"></textarea>
+            <textarea id="comment-textarea" class="comment-textarea" maxlength="600"></textarea>
           </div>   
           <div id="member-addBtn-container" class="btn-container one-line text__center">
             <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
@@ -389,7 +389,7 @@ function createUpdateView(freeBoardVo, curPage, noticeBoardNo, freeBoardSearch) 
           </div>
       
           <div class="input-container textarea-content bg__white text__black">
-            <textarea id="freeBoardContent" class="contentArea" maxlength="300">${freeBoardVo.content}</textarea>
+            <textarea id="freeBoardContent" class="contentArea" maxlength="1000">${freeBoardVo.content}</textarea>
           </div>    
         </div>  
       </div>

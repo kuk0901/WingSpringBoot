@@ -235,7 +235,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
         <div class="info-content-div reason--title bg__gray text__black box__xl text__center">내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea id="postContent" class="contentArea" maxlength="300">${res.CONTENT}</textarea>
+          <textarea id="postContent" class="contentArea" maxlength="1000">${res.CONTENT}</textarea>
         </div>
       </div>
     </main>
