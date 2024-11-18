@@ -268,7 +268,7 @@ function createUpdateView(res, curPage, noticeBoardNo, postSearch) {
     const postSearch = $(this).data("post-search");
 
     $.ajax({
-      url: `/admin/cs/post/list/${postNo}`,
+      url: `/admin/api/cs/post/list/${postNo}`,
       type: 'GET',
       data: {
         curPage: curPage,

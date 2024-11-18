@@ -21,8 +21,10 @@ $("#categoryAdd").click(function(e) {
         const message = encodeURIComponent(res.alertMsg || "카테고리 추가에 성공했습니다");
         window.location.href = `/admin/category/list?message=${message}`; // 카테고리 목록 페이지로 이동
       },
-      error: function (res) {
-        showAlertMsg(res.alertMsg);
+      error: function (xhr, status, error) {
+        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+        showAlertMsg(msg);
       }
     });
   }
@@ -36,8 +38,10 @@ $("#categoryAdd").click(function(e) {
         const message = encodeURIComponent(res.alertMsg || "카테고리 추가에 성공했습니다");
         window.location.href = `/admin/category/list?message=${message}`; // 카테고리 목록 페이지로 이동
       },
-      error: function (res) {
-        showAlertMsg(res.alertMsg);
+      error: function (xhr, status, error) {
+        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+        showAlertMsg(msg);
       }
     });
   }
@@ -178,8 +182,10 @@ function updatePlusCategory(categoryNo) {
       const message = encodeURIComponent(res.alertMsg || "카테고리 수정에 성공했습니다");
       window.location.href = `/admin/category/list?message=${message}`;
     },
-    error: function(res) {
-      showAlertMsg(res.alertMsg);
+    error: function (xhr, status, error) {
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+      showAlertMsg(msg);
     }
   });
 }
@@ -259,8 +265,10 @@ function updateMinusCategory(categoryNo) {
       const message = encodeURIComponent(res.alertMsg || "카테고리 수정에 성공했습니다");
       window.location.href = `/admin/category/list?message=${message}`;
     },
-    error: function(res) {
-      showAlertMsg(res.alertMsg);
+    error: function (xhr, status, error) {
+      const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+      showAlertMsg(msg);
     }
   });
 }
