@@ -91,6 +91,12 @@
   width: 600px;
 }
 
+#content .main-container .inquiry-container .list-container .list--termination {
+  font-size: 17px;
+  padding: 17px 13px;
+  width: 150px;
+}
+
 #content .search-container .input-container{
   margin: 0 20px;
 }

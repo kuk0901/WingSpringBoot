@@ -23,7 +23,7 @@
     </div>
 
     <main class="main-container bg__white">
-      <div class="post-container">
+      <div class="post-container post-add-container">
         <div class="post-title one-line">
           <input type="hidden" id="memberNo"  value="${member.memberNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">

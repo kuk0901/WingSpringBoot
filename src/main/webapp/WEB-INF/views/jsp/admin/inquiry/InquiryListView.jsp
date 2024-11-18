@@ -38,8 +38,8 @@
           <div class="list--supply text__semibold text__center">번호</div>
           <div class="list--title text__semibold text__center">제목</div>
           <div class="list--date text__semibold text__center">작성날짜</div>
-          <div class="list--supply text__semibold text__center">분류</div>
-          <div class="list--supply text__semibold text__center">관리자답변</div>
+          <div class="list--date text__semibold text__center">분류</div>
+          <div class="list--termination text__semibold text__center">관리자답변</div>
         </div>
 
         <c:choose>
@@ -52,8 +52,8 @@
                   <div class="list--date text__center">
                     <fmt:formatDate value="${inquiryVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                   </div>
-                  <div class="list--supply text__center">${inquiryVo.division}</div>
-                  <div class="list--supply text__center">${inquiryVo.answerTermination}</div>
+                  <div class="list--date text__center">${inquiryVo.division}</div>
+                  <div class="list--termination text__center">${inquiryVo.answerTermination}</div>
                 </div>
               </c:forEach>
             </div>
