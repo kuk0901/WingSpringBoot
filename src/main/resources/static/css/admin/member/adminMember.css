@@ -145,4 +145,8 @@
   width: 120px;
 }
 
-
+@media (max-width: 1500px) {
+  .table_container .list-container.one-line .list-item {
+    padding: 5px 10px;
+  }
+}

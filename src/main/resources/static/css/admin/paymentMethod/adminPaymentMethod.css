@@ -1,165 +1,173 @@
 #content .title-container {
-    width: 100%;
-    margin-top: 20px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* 삭제 예정 */
 .text__right {
-    text-align: right;
+  text-align: right;
 }
 
 /*삭제예정*/
 #content .title-container .title {
-    width: 250px;
-    height: 50px;
-    line-height: 50px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    font-size: 20px;
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+  font-size: 20px;
 }
 
 .main-container.payment-method__list {
-    margin: 20px;
-    min-height: 600px;
+  width: 98%;
+  margin: auto;
+  min-height: 600px;
 }
 
 .main-container.payment-method__change{
-    margin: 145px 20px;
-    height: 600px;
+  margin: 145px 20px;
+  height: 600px;
 }
 
 .btn__paymentMethod {
-    padding: 13px 19px;
+  padding: 13px 19px;
 }
 
 #content .main-container .paymentMethod-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form {
-    margin: 100px auto 200px;
+  margin: 100px auto 200px;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form .one-line {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form .label-container {
-    margin: 10px;
-    padding: 10px 20px;
-    width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+  width: 300px;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form .input-container {
-    margin: 10px;
-    padding: 10px 20px;
-    width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+  width: 300px;
 }
 
 #content .main-container .addPaymentMethodForm .paymentMethod-form .input-container .info-item {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 .one-line .btn-container {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 /*#content .ma*/
 
 .list--title {
-    font-size: 17px;
-    padding: 17px 13px;
+  font-size: 17px;
+  padding: 17px 13px;
 }
 
 #content .main-container .list-container .list--div {
-    width: 450px;
+  width: 450px;
 }
 
 #content .main-container .list-container .list--note {
-    padding: 20px;
+  padding: 20px;
 }
 
 #content .main-container .addPaymentMethodForm .btn-container.one-line {
-    justify-content: space-around;
+  justify-content: space-around;
 }
 
 #content .main-container .addPaymentMethodForm .btn-container .btn {
-    padding: 13px 19px;
-    width: 150px;
+  padding: 13px 19px;
+  width: 150px;
 }
 
 #content .main-container .list-container .btn-container .btn--margin {
-    margin: auto 100px auto 400px;
-    padding: 13px 19px;
-    width: 150px;
+  margin: auto 100px auto 400px;
+  padding: 13px 19px;
+  width: 150px;
 }
 
 .container-title{
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .list-content {
-    margin: 5px 0 20px 20px;
+  margin: 5px 0 20px 20px;
 }
 
 .content_margin {
-    margin-left: 50px;
+  margin-left: 50px;
 }
 
 .box__l {
-    width: 200px;
+  width: 200px;
 }
 
 #content .btn-container {
-    margin-right: 20px;
+  width: 98%;
+  margin: 0 auto 20px;
 }
 
 #content .main-container .existing-payments {
-    width: 40%;
-    margin: auto;
+  width: 40%;
+  margin: auto;
 }
 
 #content .main-container .existing-payments .paymentMethodItems {
-    height: auto;
-    align-items: baseline;
+  height: auto;
+  align-items: baseline;
 }
 
 #content .main-container .existing-payments .paymentMethodItems .paymentMethod-container {
-    width: 50%;
-    flex-direction: column;
+  width: 50%;
+  flex-direction: column;
 }
 
 #content .main-container .existing-payments .paymentMethodItems .paymentMethod-container .paymentMethod-flex {
-    flex-direction: column;
-    justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #content .main-container .existing-payments .paymentMethodItems .paymentMethod-container .paymentMethod-flex .paymentMethod-item {
-    padding: 5px;
+  padding: 5px;
 }
 
 #content .main-container .existing-payments .check-container {
-    padding: 10px;
+  padding: 10px;
 }
 
 #content .main-container .existing-payments .category-container .categoryItems.one-line {
-    justify-content: space-around;
+  justify-content: space-around;
 }
 
 #content .main-container .existing-payments .category-container .paymentMethod-container .paymentMethod-flex.one-line {
-    padding: 10px;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 #content .main-container .existing-payments .category-container .paymentMethod-container .paymentMethod-flex .paymentMethod-item {
-    width: 170px;
-    height: 30px;
-    line-height: 30px;
+  width: 170px;
+  height: 30px;
+  line-height: 30px;
+}
+
+@media (max-width: 1500px) {
+  #content .main-container .list-container .list--div {
+    width: 350px;
+  }
 }

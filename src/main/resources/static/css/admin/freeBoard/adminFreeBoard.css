@@ -35,7 +35,6 @@ input, textarea {
 }
 
 #content .btn-container {
-  margin-right: 20px;
 }
 
 #content .title-container {
@@ -287,7 +286,7 @@ input, textarea {
 }
 
 #content .main-container .btn-container {
-  margin-left: 150px;
+
   justify-content: space-between;
 }
 
@@ -308,6 +307,7 @@ input, textarea {
   display: inline-block;
   width: 120px;
   padding: 14px;
+  margin-right: 20px;
 }
 
 #content .btn-container .deleteBtn,
@@ -413,5 +413,10 @@ input, textarea {
 @media (max-width: 1500px) {
   #content .main-container .freeBoard-container .freeBoard-sub .info-date {
     width: 175px;
+  }
+
+  #content .comment-list-container .comment-container .comment-content {
+    min-width: 650px;
+    max-width: 665px;
   }
 }

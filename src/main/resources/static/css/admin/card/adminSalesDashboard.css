@@ -209,3 +209,11 @@
 .h__m {
   height: 160px;
 }
+
+@media (max-width: 1500px) {
+  .main-container .list-container {
+    height: 50px;
+  }
+
+
+}
