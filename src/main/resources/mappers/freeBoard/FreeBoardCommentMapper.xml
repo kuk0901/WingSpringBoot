@@ -15,8 +15,8 @@
     </resultMap>
 
     <select id="freeBoardCommentSelectList" parameterType="map" resultMap="freeBoardCommentResultMap">
-        SELECT FBC.FREE_BOARD_COMMENT_NO,
-        FBC.FREE_BOARD_NO, FBC.CONTENT as content, FBC.CRE_DATE, FBC.MOD_DATE, FBC.MEMBER_NO, M.EMAIL,
+        SELECT FBC.FREE_BOARD_COMMENT_NO ,
+        FBC.FREE_BOARD_NO, FBC.CONTENT, FBC.CRE_DATE, FBC.MOD_DATE, FBC.MEMBER_NO, M.EMAIL,
         CASE
             WHEN FBC.MOD_DATE > FBC.CRE_DATE THEN 1
             ELSE 0

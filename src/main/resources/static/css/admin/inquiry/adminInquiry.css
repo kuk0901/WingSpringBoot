@@ -208,6 +208,11 @@
   justify-content: space-between;
 }
 
+#content .main-container .inquiry-comment-container .answer-info .info-comment-container.one-line.admin-answer {
+  justify-content: flex-start;
+  gap: 0;
+}
+
 #content .main-container .inquiry-comment-container .answer-info .info-comment-container.answer-update {
   margin: 10px auto;
   width: 90%;

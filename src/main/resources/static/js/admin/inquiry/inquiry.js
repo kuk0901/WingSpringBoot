@@ -322,10 +322,14 @@ function createAddView(res, curPage, inquirySearch) {
       <div class="inquiry-title one-line">
         <input type="hidden" id="inquiryNo" value="${res.INQUIRYNO}">
         <input type="hidden" id="answerTermination" value="${res.ANSWERTERMINATION}">
-        <div class="info-title bg__gray text__black box__l text__center">제목</div>
-        <div class="info-item bg__white text__black box__l">${res.TITLE}</div>
-        <div class="info-title bg__gray text__black box__l text__center">분류</div>
-        <div class="info-dv-item bg__white text__black box__l">${res.DIVISION}</div>
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">제목</div>
+          <div class="info-item bg__white text__black box__l">${res.TITLE}</div>
+        </div>
+        <div class="one-line">
+          <div class="info-title bg__gray text__black box__l text__center">분류</div>
+          <div class="info-dv-item bg__white text__black box__l">${res.DIVISION}</div>
+        </div>
       </div>
       
       <div class="inquiry-sub one-line">
@@ -346,7 +350,7 @@ function createAddView(res, curPage, inquirySearch) {
     <div class="inquiry-comment-container answer-container">
       
       <div class="answer-info">
-        <div class="info-comment-container one-line">
+        <div class="info-comment-container admin-answer one-line">
           <div class="info-item bg__gray text__black box__l text__center">관리자</div>
           <div class="info-detail bg__white text__black box__l">${res.adminEmail}</div>
         </div>

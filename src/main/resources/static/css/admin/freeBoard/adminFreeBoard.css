@@ -204,6 +204,36 @@ input, textarea {
   resize: none;
 }
 
+#content .comment-add-container {
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  margin: auto;
+}
+
+#content .comment-add-container .input-container {
+  border-radius: 7px;
+  width: 100%;
+  height: 100px;
+}
+
+#content .comment-add-container .input-container .comment-textarea {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  resize: none;
+  font-size: 16px;
+  border: 1px solid black;
+}
+
+#content .comment-add-container .comment-container .comment-content {
+  border: 1px solid black;
+}
+
+#content .comment-add-container .btn-container {
+  width: 20%;
+}
+
 #content .main-container .freeBoard-comment-container .reply-container {
   justify-content: space-between;
 }
