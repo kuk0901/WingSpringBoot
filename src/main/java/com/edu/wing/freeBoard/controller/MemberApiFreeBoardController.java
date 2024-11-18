@@ -263,7 +263,6 @@ public class MemberApiFreeBoardController {
 
     return ResponseEntity.ok().body(resultMap);
 
-
   }
 
   @PatchMapping("/list/{freeBoardCommentNo}/updateComment")

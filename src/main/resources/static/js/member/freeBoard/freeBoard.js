@@ -56,16 +56,18 @@ $('.list-content').click(function () {
 
 function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, currentMemberNo) {
 
+  console.log(freeBoardCommentList);
+
   const commentList = freeBoardCommentList.map(comment => `
     <div class="comment-container one-line">
       <div class="comment-email">${comment.email}</div>
       ${comment.memberNo === currentMemberNo ? `
-        <div class="comment-content">
+        <div class="comment-content one-line">
           ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
-          <input id="inputComment" value="${comment.content}" />
+          <input class="inputComment" value="${comment.content}" data-free-board-comment-no="${comment.freeBoardCommentNo}"/>
         </div>
       ` : `
-        <div class="comment-content">
+        <div class="comment-content one-line">
           ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
           <input value="${comment.content}" readonly />
         </div>
@@ -76,7 +78,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         ${comment.memberNo == currentMemberNo ? `
           <button class="btn btn__generate updateCommentBtn text__center commentModBtn" 
             data-free-board-comment-no="${comment.freeBoardCommentNo}" data-free-board-no="${freeBoardVo.freeBoardNo}" 
-            data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}"">
+            data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
             수정
           </button>
           <button class="btn btn__generate deleteCommentBtn text__center commentDelBtn" 
@@ -311,12 +313,13 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
   $(".commentModBtn").click(function (e) {
     e.preventDefault();
 
+    const $commentContainer = $(this).closest('.comment-container');
     const freeBoardCommentNo = $(this).data("free-board-comment-no");
     const curPage = $(this).data("cur-page");
     const freeBoardSearch = $(this).data("free-board-search");
     const freeBoardNo = $(this).data("free-board-no");
     const noticeBoardNo = $(this).data("notice-board-no");
-    const freeBoardCommentContent = $("#inputComment").val();
+    const freeBoardCommentVal = $commentContainer.find('.inputComment').val();
 
     $.ajax({
       url: `/member/api/freeBoard/list/${freeBoardCommentNo}/updateComment?freeBoardNo=${freeBoardNo}`,
@@ -325,7 +328,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
         curPage: curPage,
         noticeBoardNo: noticeBoardNo,
         freeBoardSearch: freeBoardSearch,
-        freeBoardCommentContent: freeBoardCommentContent
+        freeBoardCommentContent: freeBoardCommentVal
       },
       success: function (res) {
         createDetailView(res.freeBoardVo, res.freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, res.currentMemberNo);
