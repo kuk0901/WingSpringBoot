@@ -490,7 +490,7 @@ function renderAccountBookDetail(accountBook) {
                     <label for="contentInput" class="detail-label">상세 내용:</label>
                   </div>
                   <div class="input-container">
-                    <input type="text"  id="contentInput" class="detail-value" value="${accountBook.content || '내용 없음'}" />
+                    <input type="text"  id="contentInput" class="detail-value" maxlength="30" value="${accountBook.content || '내용 없음'}" />
                   </div>
                 </div>
                 <div class="detail-container">
@@ -508,7 +508,7 @@ function renderAccountBookDetail(accountBook) {
                     <label for="amountInput" class="detail-label" id="amountLabel">금액: </label>
                   </div>
                   <div class="input-container">
-                    <input class="detail-value" id="amountInput" 
+                    <input class="detail-value" id="amountInput"  min="100" max="9999999999999"
                      value="${accountBook.paymentAmount ? formatPaymentAmountNumber(accountBook.paymentAmount) : 0}" />
                   </div>
                 </div>
