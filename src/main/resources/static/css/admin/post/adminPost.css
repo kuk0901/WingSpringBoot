@@ -200,6 +200,10 @@ input, textarea {
   padding: 10px;
 }
 
+#content .main-container .post-container .info-content #postContent {
+  line-height: 1.5;
+}
+
 #content .main-container .post-container .info-content .contentArea {
   width: 100%;
   min-height: 398px;
