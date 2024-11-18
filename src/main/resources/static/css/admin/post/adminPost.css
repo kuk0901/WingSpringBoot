@@ -82,6 +82,10 @@ input, textarea {
   line-height: normal;
 }
 
+#content .main-container .post-container.post-add-container {
+  padding: 20px;
+}
+
 #content .main-container .post-container .list-container.list-container--title,
 #content .main-container .post-container .list-container.list-container-items {
   justify-content: space-around;

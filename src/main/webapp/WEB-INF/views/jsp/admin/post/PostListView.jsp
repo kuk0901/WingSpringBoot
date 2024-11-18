@@ -44,7 +44,7 @@
           <div class="list--supply text__semibold text__center">번호</div>
           <div class="list--title text__semibold text__center">제목</div>
           <div class="list--date text__semibold text__center">작성날짜</div>
-          <div class="list--supply text__semibold text__center">작성자</div>
+          <div class="list--date text__semibold text__center">작성자</div>
         </div>
 
         <c:choose>
@@ -58,7 +58,7 @@
                   <div class="list--date text__center">
                     <fmt:formatDate value="${postVo.creDate}" pattern="yyyy-MM-dd HH:mm:ss" />
                   </div>
-                  <div class="list--supply text__center">${postVo.email}</div>
+                  <div class="list--date text__center">${postVo.email}</div>
                 </div>
               </c:forEach>
             </div>
