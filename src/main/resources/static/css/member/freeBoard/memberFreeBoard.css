@@ -459,3 +459,13 @@ input, textarea {
   width: 40%;
 }
 
+@media (max-width: 1500px) {
+  #content .main-container .freeBoard-container .freeBoard-sub .info-date {
+    width: 175px;
+  }
+
+  #content .comment-list-container .comment-container .comment-content {
+    min-width: 650px;
+    max-width: 665px;
+  }
+}
