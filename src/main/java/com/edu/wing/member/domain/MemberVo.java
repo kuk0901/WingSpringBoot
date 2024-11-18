@@ -34,4 +34,5 @@ public class MemberVo implements Serializable {
   private int accountBookCount;   // 가계부 작성 수
   private int postCount;          // 게시글 작성 수
   private String memberCardNo;      //보유 카드번호
+  private  int freeBoardCount;
 }
