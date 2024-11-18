@@ -399,6 +399,7 @@ function createAddView(res, curPage, inquirySearch) {
       }),
       success: function(res) {
         createDetailView(res.inquiryVo, curPage, inquirySearch);
+        showAlertMsg(res.alertMsg);
       },
       error: function(res) {
         showAlertMsg(res.alertMsg);

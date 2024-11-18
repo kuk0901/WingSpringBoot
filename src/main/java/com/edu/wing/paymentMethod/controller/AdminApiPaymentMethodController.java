@@ -118,13 +118,19 @@ public class AdminApiPaymentMethodController {
 
   @PatchMapping("/update/{paymentMethodNo}")
   public ResponseEntity<?> paymentMethodUpdateOne(@PathVariable int paymentMethodNo,
-    @RequestParam Map<String, String> paymentMethodMap) {
+    @RequestParam Map<String, String> paymentMethodMap, @RequestParam String paymentMethodName) {
 
     Map<String, Object> resultMap = new HashMap<>();
 
     PaymentMethodVo paymentMethodVo = new PaymentMethodVo();
     paymentMethodVo.setPaymentMethodNo(paymentMethodNo);
     paymentMethodVo.setPaymentMethodName(paymentMethodMap.get("paymentMethodName"));
+
+    if (paymentMethodService.paymentMethodExist(paymentMethodName)) {
+      resultMap.put("status", "fail");
+      resultMap.put("alertMsg", "이미 존재하는 결제 수단 이름입니다.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
 
     paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
 

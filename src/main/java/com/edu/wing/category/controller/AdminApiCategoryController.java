@@ -34,7 +34,7 @@ public class AdminApiCategoryController {
     Map<String, String> resultMap = new HashMap<>();
 
     if (plusCategoryService.plusCategoryExists(categoryName)) {
-      resultMap.put("status", "fail");
+      resultMap.put("status", "error");
       resultMap.put("alertMsg", "이미 존재하는 카테고리입니다.");
       return ResponseEntity.badRequest().body(resultMap);
     }
@@ -42,7 +42,7 @@ public class AdminApiCategoryController {
     // 새로운 결제 방법 추가
     boolean isAdded = plusCategoryService.plusCategoryInsertOne(categoryName);
     if (!isAdded) {
-      resultMap.put("status", "fail");
+      resultMap.put("status", "error");
       resultMap.put("alertMsg", "카테고리 추가에 실패했습니다.");
       return ResponseEntity.badRequest().body(resultMap);
     }
@@ -58,7 +58,7 @@ public class AdminApiCategoryController {
     Map<String, String> resultMap = new HashMap<>();
 
     if (minusCategoryService.minusCategoryExists(categoryName)) {
-      resultMap.put("status", "fail");
+      resultMap.put("status", "error");
       resultMap.put("alertMsg", "이미 존재하는 카테고리명 입니다.");
       return ResponseEntity.badRequest().body(resultMap);
     }
@@ -66,7 +66,7 @@ public class AdminApiCategoryController {
     // 새로운 결제 방법 추가
     boolean isAdded = minusCategoryService.minusCategoryInsertOne(categoryName);
     if (!isAdded) {
-      resultMap.put("status", "fail");
+      resultMap.put("status", "error");
       resultMap.put("alertMsg", "카테고리 추가에 실패했습니다.");
       return ResponseEntity.badRequest().body(resultMap);
     }
@@ -146,13 +146,19 @@ public class AdminApiCategoryController {
   }
 
   @PatchMapping("/updatePlus/{categoryNo}")
-  public ResponseEntity<?> plusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> plusCategoryMap) {
+  public ResponseEntity<?> plusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> plusCategoryMap, @RequestParam String categoryName) {
 
     PlusCategoryVo plusCategoryVo = new PlusCategoryVo();
     plusCategoryVo.setCategoryNo(categoryNo);
     plusCategoryVo.setCategoryName(plusCategoryMap.get("categoryName"));
 
     Map<String, Object> resultMap = new HashMap<>();
+
+    if (plusCategoryService.plusCategoryExists(categoryName)) {
+      resultMap.put("status", "error");
+      resultMap.put("alertMsg", "이미 존재하는 카테고리입니다.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
 
     boolean plusCategoryUpdate = plusCategoryService.plusCategoryUpdateOne(plusCategoryVo);
 
@@ -167,7 +173,7 @@ public class AdminApiCategoryController {
   }
 
   @PatchMapping("/updateMinus/{categoryNo}")
-  public ResponseEntity<?> minusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> minusCategoryMap) {
+  public ResponseEntity<?> minusCategoryUpdateOne(@PathVariable int categoryNo, @RequestParam Map<String, String> minusCategoryMap, @RequestParam String categoryName) {
 
     Map<String, Object> resultMap = new HashMap<>();
 
@@ -175,6 +181,12 @@ public class AdminApiCategoryController {
 
     minusCategoryVo.setCategoryNo(categoryNo);
     minusCategoryVo.setCategoryName(minusCategoryMap.get("categoryName"));
+
+    if (minusCategoryService.minusCategoryExists(categoryName)) {
+      resultMap.put("status", "error");
+      resultMap.put("alertMsg", "이미 존재하는 카테고리입니다.");
+      return ResponseEntity.badRequest().body(resultMap);
+    }
 
     boolean minusCategoryUpdate = minusCategoryService.minusCategoryUpdateOne(minusCategoryVo);
 

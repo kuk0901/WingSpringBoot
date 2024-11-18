@@ -123,7 +123,6 @@ $(".update-pm-btn").click(function(e) {
   })
 });
 
-
 // update view 화면을 구현함
 function createUpdateView(paymentMethodList, paymentMethodVo) {
 
@@ -190,8 +189,10 @@ function createUpdateView(paymentMethodList, paymentMethodVo) {
         // 성공 후 리스트 페이지로 이동하거나 현재 페이지를 새로고침
         window.location.href = `/admin/paymentMethod/list?message=${message}`;
       },
-      error: function(res) {
-        showAlertMsg(res.alertMsg);
+      error: function (xhr, status, error) {
+        const msg = xhr.responseJSON ? xhr.responseJSON.alertMsg : "알 수 없는 오류가 발생했습니다.";
+
+        showAlertMsg(msg);
       }
     });
   });
