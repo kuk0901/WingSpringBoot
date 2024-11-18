@@ -15,7 +15,7 @@
 .main-container {
     background-color: white;
     height: 700px;
-    width: 1300px;
+    width: 98%;
     margin: auto;
 }
 .btn_red{
@@ -76,4 +76,10 @@
 
 .submit-btn:hover {
     background-color: #0056b3; /* 버튼 hover 색상 */
+}
+
+@media (max-width: 1500px) {
+    .main-container {
+        height: 600px;
+    }
 }

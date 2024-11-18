@@ -34,9 +34,9 @@
           <div class="sub-title text__center text__semibold">마이너스 카테고리</div>
         </div>
 
-        <div class="list-container list-container--title">
+        <div class="list-container list-container--title one-line">
           <div class="list--title list--div text__center text__semibold box__s">카테고리명</div>
-          <div class="list--title list--div text__center text__semibold box__l">+/- 설정</div>
+          <div class="list--title list--div text__center text__semibold box__m">+/- 설정</div>
           <div class="list--title list--div text__center text__semibold box__s">비고</div>
         </div>
 
@@ -45,7 +45,7 @@
             <c:forEach var="categoryVo" items="${minusCategoryList}">
               <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}">
                 <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
-                <div id="minusValue" class="list--div text__center box__s">지출</div>
+                <div id="minusValue" class="list--div text__center box__m">지출</div>
                 <div class="list--div box__l text__center bg__white">
                   <button class="categoryBtn btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">수정</button>
                   <button class="categoryBtn btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="minus">삭제</button>
@@ -68,7 +68,7 @@
 
         <div class="list-container list-container--title">
           <div class="list--title list--div text__center text__semibold box__s">카테고리명</div>
-          <div class="list--title list--div text__center text__semibold box__l">+/- 설정</div>
+          <div class="list--title list--div text__center text__semibold box__m">+/- 설정</div>
           <div class="list--title list--div text__center text__semibold box__s">비고</div>
         </div>
 
@@ -77,7 +77,7 @@
             <c:forEach var="categoryVo" items="${plusCategoryList}">
                 <div class="list-container list-content bg__gray" data-category-no="${categoryVo.categoryNo}">
                   <div class="list--div text__center box__s">${categoryVo.categoryName != '' ? categoryVo.categoryName : '없음'}</div>
-                  <div id="plusValue" class="list--div text__center box__s">수입</div>
+                  <div id="plusValue" class="list--div text__center box__m">수입</div>
                   <div class="list--div box__l text__center bg__white">
                     <button class="categoryBtn btn btn__generate moveModFunc btn__blue" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">수정</button>
                     <button class="categoryBtn btn btn__generate moveDelFunc btn__red" data-category-no="${categoryVo.categoryNo}" data-category-type="plus">삭제</button>
