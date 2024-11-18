@@ -56,8 +56,6 @@ $('.list-content').click(function () {
 
 function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardSearch, noticeBoardNo, currentMemberNo) {
 
-  console.log(freeBoardCommentList);
-
   const commentList = freeBoardCommentList.map(comment => `
     <div class="comment-container one-line">
       <div class="comment-email">${comment.email}</div>
@@ -69,7 +67,7 @@ function createDetailView(freeBoardVo, freeBoardCommentList, curPage, freeBoardS
       ` : `
         <div class="comment-content one-line">
           ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
-          <input value="${comment.content}" readonly />
+          <div>${comment.content}</div>
         </div>
       `}
       
