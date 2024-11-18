@@ -165,6 +165,7 @@ input, textarea {
   width: 100%;
   min-height: 450px;
   font-size: 16px;
+  line-height: 1.5;
 }
 
 #content .main-container .freeBoard-container .freeBoard-title .info-dv-item {

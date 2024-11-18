@@ -193,6 +193,10 @@ input, textarea {
   padding: 10px;
 }
 
+#content .main-container .freeBoard-container .info-content #freeBoardContent {
+  line-height: 1.5;
+}
+
 #content .main-container .freeBoard-container .info-content .contentArea {
   width: 90%;
   height: 398px;
