@@ -100,7 +100,7 @@ public class AdminApiFreeBoardController {
 
     if (!added) {
       resultMap.put("status", "failed");
-      resultMap.put("alertMsg", "서버 오류로 인해 답글을 추가할 수 없습니다. 잠시 후 다시 시도해주세요.");
+      resultMap.put("alertMsg", "서버 오류로 인해 댓글을 추가할 수 없습니다. 잠시 후 다시 시도해주세요.");
       return ResponseEntity.badRequest().body(resultMap);
     }
 
@@ -112,7 +112,7 @@ public class AdminApiFreeBoardController {
     resultMap.put("freeBoardVo", freeBoardVo);
     resultMap.put("currentMemberNo", member.getMemberNo());
     resultMap.put("status", "success");
-    resultMap.put("alertMsg", "답글 추가에 성공했습니다");
+    resultMap.put("alertMsg", "댓글 추가에 성공했습니다");
     return ResponseEntity.ok().body(resultMap);
   }
 
