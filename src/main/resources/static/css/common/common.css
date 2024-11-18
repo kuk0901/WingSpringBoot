@@ -508,16 +508,22 @@ footer .cs:hover {
   font-size: 17px;
 }
 
+.paging .paging--list .paging--item .btn__paging.paging__active {
+  color: var(--btn-coral);
+  font-weight: 900;
+  text-decoration: underline;
+}
+
 .paging .paging--list .paging--item .btn__paging:hover {
   color: var(--color-white);
   background-color: #5D5D5D;
-  font-weight: bold;
+  font-weight: 900;
 }
 
-.paging .paging--list .paging--item .btn__paging.paging__active {
+.paging .paging--list .paging--item .btn__paging.paging__active:hover {
   color: var(--color-correct);
-  font-weight: bold;
 }
+
 
 .paging .paging--list .paging--item .btn__paging.left-arrow,
 .paging .paging--list .paging--item .btn__paging.right-arrow {
