@@ -24,10 +24,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/category")
 public class AdminCategoryController {
-
-  private static final Logger log = LoggerFactory.getLogger(AdminCategoryController.class);
-  private static final String LOG_TITLE = "==AdminCategoryController==";
-
   @Autowired
   private MinusCategoryService minusCategoryService;
 
@@ -36,7 +32,6 @@ public class AdminCategoryController {
 
   @GetMapping(value = "/list")
   public ModelAndView categoryList() {
-    log.info("{} - Retrieving all categories", LOG_TITLE);
 
     List<MinusCategoryVo> minusCategoryList = minusCategoryService.minusCategorySelectList();
     List<PlusCategoryVo> plusCategoryList = plusCategoryService.plusCategorySelectList();
@@ -50,7 +45,6 @@ public class AdminCategoryController {
 
   @GetMapping("/list/add")
   public ModelAndView categoryAdd() {
-    log.info("{} - Showing category add form", LOG_TITLE);
 
     List<String> minusCategories = minusCategoryService.getMinusCategoryNames();
     List<String> plusCategories = plusCategoryService.getPlusCategoryNames();
@@ -62,120 +56,5 @@ public class AdminCategoryController {
     return mav;
   }
 
-  @GetMapping("/countPlusCategory/{categoryNo}")
-  public ResponseEntity<?> getPlusCategoryCount(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("getPlusCategoryTotalCount categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    int count = plusCategoryService.plusCategoryTotalCount(categoryNo);
-
-    if (count > 0) {
-      resultMap.put("status", "success");
-      resultMap.put("totalCount", count);
-      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
-
-      return ResponseEntity.ok().body(resultMap);
-    }
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/countMinusCategory/{categoryNo}")
-  public ResponseEntity<?> getMinusCategoryCount(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("getMinusCategoryTotalCount categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    int count = minusCategoryService.minusCategoryTotalCount(categoryNo);
-
-    if (count > 0) {
-      resultMap.put("status", "success");
-      resultMap.put("totalCount", count);
-      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 수정할 수 없습니다.");
-
-      return ResponseEntity.ok().body(resultMap);
-    }
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/deletePlusCategory/{categoryNo}")
-  public ResponseEntity<?> getPlusCategoryTotalCount(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("getPlusCategoryTotalCount categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    int count = plusCategoryService.plusCategoryTotalCount(categoryNo);
-
-    if (count > 0) {
-      resultMap.put("status", "success");
-      resultMap.put("totalCount", count);
-      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
-
-      return ResponseEntity.ok().body(resultMap);
-    }
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/deleteMinusCategory/{categoryNo}")
-  public ResponseEntity<?> getMinusCategoryTotalCount(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("getMinusCategoryTotalCount categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    int count = minusCategoryService.minusCategoryTotalCount(categoryNo);
-
-    if (count > 0) {
-      resultMap.put("status", "success");
-      resultMap.put("totalCount", count);
-      resultMap.put("alertMsg", "해당 카테고리로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 카테고리를 삭제할 수 없습니다.");
-
-      return ResponseEntity.ok().body(resultMap);
-    }
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/updatePlus/{categoryNo}")
-  public ResponseEntity<?> updatePlusCategory(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("updatePlusCategory Get categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    PlusCategoryVo plusCategoryVo = plusCategoryService.plusCategorySelectOne(categoryNo);
-
-    List<String> plusCategories = plusCategoryService.getPlusCategoryNames();
-
-    resultMap.put("plusCategories", plusCategories);
-    resultMap.put("status", "success");
-    resultMap.put("plusCategoryVo", plusCategoryVo);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
-
-  @GetMapping("/updateMinus/{categoryNo}")
-  public ResponseEntity<?> updateMinusCategory(@PathVariable int categoryNo) {
-    log.info(LOG_TITLE);
-    log.info("updateMinusCategory Get categoryNo: {}", categoryNo);
-
-    Map<String, Object> resultMap = new HashMap<>();
-
-    MinusCategoryVo minusCategoryVo = minusCategoryService.minusCategorySelectOne(categoryNo);
-
-    List<String> minusCategories = minusCategoryService.getMinusCategoryNames();
-
-    resultMap.put("minusCategories", minusCategories);
-    resultMap.put("status", "success");
-    resultMap.put("minusCategoryVo", minusCategoryVo);
-
-    return ResponseEntity.ok().body(resultMap);
-  }
 }
 

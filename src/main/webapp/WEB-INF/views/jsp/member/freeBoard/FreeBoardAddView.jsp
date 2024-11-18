@@ -33,7 +33,7 @@
               <label for="titleVal">제목</label>
             </div>
             <div class="input-container">
-              <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+              <input id="titleVal" maxlength="30" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
             <label for="contentVal">내용</label>
           </div>
           <div class="input-container textarea-content">
-            <textarea id="contentVal" class="contentArea" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="contentVal" class="contentArea" maxlength="1000" placeholder="내용을 입력하세요"></textarea>
           </div>
         </div>
       </div>

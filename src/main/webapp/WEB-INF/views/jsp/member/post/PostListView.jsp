@@ -19,7 +19,7 @@
 
       <div class="title-container">
         <div class="title btn__yellow text__white">
-          공지사항 목록
+          공지사항
         </div>
       </div>
 

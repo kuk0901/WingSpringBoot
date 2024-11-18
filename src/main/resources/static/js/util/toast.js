@@ -36,6 +36,16 @@ export function showAlertMsg(message) {
 
   // 클릭 이벤트 바인딩
   bindToastCloseEvent();
+
+  // 3초 후에 자동으로 알림 닫기
+  setTimeout(() => {
+    const parent = $('#toast');
+    if (parent.length) {
+      parent.fadeOut(100, function () {
+        $(this).remove();
+      });
+    }
+  }, 3000); // 3000ms = 3초
 }
 
 // toastClose 이벤트 함수로 분리

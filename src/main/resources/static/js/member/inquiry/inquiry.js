@@ -46,8 +46,6 @@ $("#addInquiry").click(function (e) {
     content: content
   };
 
-  console.log(inquiryData);
-
   $.ajax({
     url: '/member/api/cs/inquiry/list/add',
     type: 'POST',
@@ -68,7 +66,7 @@ $('.list-container').click(function () {
   const curPage = $('#curPage').val() || '1';
 
   $.ajax({
-    url: `/member/cs/inquiry/list/${inquiryNo}`,
+    url: `/member/api/cs/inquiry/list/${inquiryNo}`,
     type: 'GET',
     data: {curPage: curPage},
     success: function (res) {
@@ -96,7 +94,6 @@ function createDetailView(data, answerTermination) {
   const formattedInquiryDate = formatDate(data.INQUIRYDATE);
   const formattedAnswerDate = data.ANSWERDATE ? formatDate(data.ANSWERDATE) : '';
 
-  console.log("Data received in createDetailView:", data);
   const inquiryDetail = `
     <div class="title-container one-line">
       <div id="title" class="title btn__yellow text__white">

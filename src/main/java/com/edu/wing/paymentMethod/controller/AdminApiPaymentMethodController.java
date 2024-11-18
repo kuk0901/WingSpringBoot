@@ -12,21 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("admin/api/paymentMethod")
 public class AdminApiPaymentMethodController {
-  private static final Logger log = LoggerFactory.getLogger(AdminCategoryController.class);
-  private static final String LOG_TITLE = "==PaymentMethodController==";
 
   @Autowired
   private PaymentMethodService paymentMethodService;
 
   @PostMapping("/add")
   public ResponseEntity<?> addPaymentMethod(@RequestParam String paymentMethodName) {
-    log.info(LOG_TITLE);
-    log.info("paymentMethodAdd paymentMethodName: {}", paymentMethodName);
 
     Map<String, String> resultMap = new HashMap<>();
 
@@ -51,17 +48,32 @@ public class AdminApiPaymentMethodController {
       return ResponseEntity.internalServerError().body(resultMap);
 
     } catch (Exception e) {
-      log.error("결제 수단 추가 중 오류 발생", e);
       resultMap.put("status", "error");
       resultMap.put("alertMsg", "서버 오류가 발생했습니다.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
   }
 
+  @GetMapping("/delete/{paymentMethodNo}")
+  public ResponseEntity<?> getPaymentMethodTotalCount(@PathVariable int paymentMethodNo) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    int count = paymentMethodService.pmTotalCount(paymentMethodNo);
+
+    if (count > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", count);
+      resultMap.put("msg", "해당 결제수단으로 작성된 가계부의 게시글이 " + count + "개입니다. 해당 결제수단을 삭제할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
   @DeleteMapping("/delete/{paymentMethodNo}")
   public ResponseEntity<?> deletePaymentMethod(@PathVariable int paymentMethodNo) {
-    log.info(LOG_TITLE);
-    log.info("deletePaymentMethod paymentMethodNo: {}", paymentMethodNo);
 
     Map<String, Object> resultMap = new HashMap<>();
     PaymentMethodVo paymentMethod = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
@@ -80,9 +92,9 @@ public class AdminApiPaymentMethodController {
 
   @DeleteMapping("/finalDelete/{paymentMethodNo}")
   public ResponseEntity<?> finalDeletePaymentMethod(@PathVariable int paymentMethodNo) {
-    log.info("{} - Final deletion for paymentMethodNo: {}", LOG_TITLE, paymentMethodNo);
 
     Map<String, Object> resultMap = new HashMap<>();
+
     PaymentMethodVo paymentMethod = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
 
     if (paymentMethod == null) {
@@ -114,7 +126,6 @@ public class AdminApiPaymentMethodController {
     paymentMethodVo.setPaymentMethodNo(paymentMethodNo);
     paymentMethodVo.setPaymentMethodName(paymentMethodMap.get("paymentMethodName"));
 
-
     paymentMethodService.paymentMethodUpdateOne(paymentMethodVo);
 
     if (paymentMethodService.paymentMethodSelectOne(paymentMethodNo) != null) {
@@ -126,5 +137,46 @@ public class AdminApiPaymentMethodController {
     resultMap.put("status", "failed");
     resultMap.put("alertMsg", "서버 오류로 인해 결제 수단 명이 변경되지 않았습니다. 잠시 후 다시 시도해 주세요.");
     return ResponseEntity.badRequest().body(resultMap);
+  }
+
+  @GetMapping("/countPaymentMethod/{paymentMethodNo}")
+  public ResponseEntity<?> getPaymentMethodCount(@PathVariable int paymentMethodNo) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    if (paymentMethodNo == 3) {
+      resultMap.put("status", "success");
+      resultMap.put("msg", "해당 결제 수단은 수정이 불가능합니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    int totalCount = paymentMethodService.pmTotalCount(paymentMethodNo);
+
+    if (totalCount > 0) {
+      resultMap.put("status", "success");
+      resultMap.put("totalCount", totalCount);
+      resultMap.put("msg", "해당 결제 수단으로 작성된 가계부의 게시글이 " + totalCount + "개입니다. 해당 결제 수단을 수정할 수 없습니다.");
+
+      return ResponseEntity.ok().body(resultMap);
+    }
+
+    return ResponseEntity.ok().body(resultMap);
+  }
+
+  @GetMapping("/update/{paymentMethodNo}")
+  public ResponseEntity<?> updatePaymentMethod(@PathVariable int paymentMethodNo) {
+
+    Map<String, Object> resultMap = new HashMap<>();
+
+    PaymentMethodVo paymentMethodVo = paymentMethodService.paymentMethodSelectOne(paymentMethodNo);
+
+    List<String> paymentMethodList = paymentMethodService.getPaymentMethodName();
+
+    resultMap.put("status", "success");
+    resultMap.put("paymentMethodList", paymentMethodList);
+    resultMap.put("paymentMethodVo", paymentMethodVo);
+
+    return ResponseEntity.ok().body(resultMap);
   }
 }

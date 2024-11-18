@@ -34,13 +34,13 @@
             <label for="cardName" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 카드 명</label>
           </div>
           <div class="input-container">
-            <input id="cardName" name="cardName" required class="box-xl" placeholder="ex) WING_Traffic"/>
+            <input id="cardName" name="cardName" required class="box-xl" placeholder="ex) WING_Traffic" maxlength="30" />
           </div>
           <div class="label-container">
             <label for="cardCompany" class="bg__gray text__semibold text__center box-s"><span class="text__red">*</span> 카드사</label>
           </div>
           <div class="input-container">
-            <input id="cardCompany" name="cardCompany" required class="box-l" placeholder="ex) WING_Card"/>
+            <input id="cardCompany" name="cardCompany" required class="box-l" placeholder="ex) WING_Card" maxlength="30" />
           </div>
         </div>
 
@@ -75,7 +75,7 @@
         <div class="product-container one-line preview-container">
           <div class="bg__gray exam-title text__semibold text__center box-m">카드 이미지 미리보기</div>
           <div class="img-container">
-            <img id="imagePreview" src="#" alt="Image Preview" class="exam-img"/>
+            <img id="imagePreview" src="#" alt="preview" class="exam-img"/>
           </div>
         </div>
 
@@ -99,11 +99,11 @@
             </div>
             <div class="card-insert one-line">
               <div class="input-container">
-                <input id="cardBenefitDivision" name="cardBenefitDivision" type="text" class="box-m" placeholder="교통할인" />
+                <input id="cardBenefitDivision" name="cardBenefitDivision" type="text" class="box-m" placeholder="교통할인" maxlength="30" />
               </div>
 
               <div class="input-container">
-                <input id="cardBenefitDetail" name="cardBenefitDetail" type="text" class="box-l" placeholder="항공사, 기차, 고속버스, 대중교통" />
+                <input id="cardBenefitDetail" name="cardBenefitDetail" type="text" class="box-l" placeholder="항공사, 기차, 고속버스, 대중교통" maxlength="160" />
               </div>
 
               <div class="input-container">
@@ -113,6 +113,8 @@
                   type="number"
                   class="box-m"
                   placeholder="10"
+                  min="0"
+                  max="100"
                 />
               </div>
             </div>

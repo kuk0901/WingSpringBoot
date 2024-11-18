@@ -5,10 +5,16 @@ export const phoneRegex = /^01[016789]-?[0-9]{3,4}-?[0-9]{4}$/;
 export const forbiddenPatterns = ['null', 'undefined', 'admin'];
 export const salaryRegex = /^[1-9]\d{0,3}(,\d{3})*$/;
 
-export function validateInput(value, regex, errorMessage) {
+export function validateInput(value, regex, errorMessage, allowZero = false) {
   if (value == null || value === "") {
     return { isValid: false, message: "필수 입력 항목입니다." };
   }
+
+  // 0을 허용하는 경우
+  if (allowZero && value === "0") {
+    return { isValid: true, message: "" }; // 0은 유효한 값으로 처리
+  }
+
   if (!regex.test(value)) {
     return { isValid: false, message: errorMessage };
   }

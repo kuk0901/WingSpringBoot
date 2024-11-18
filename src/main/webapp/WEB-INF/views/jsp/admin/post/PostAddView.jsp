@@ -23,13 +23,13 @@
     </div>
 
     <main class="main-container bg__white">
-      <div class="post-container">
+      <div class="post-container post-add-container">
         <div class="post-title one-line">
           <input type="hidden" id="memberNo"  value="${member.memberNo}">
           <input type="hidden" id="noticeBoardNo" value="${noticeBoardNo}">
 
           <div class="info-title bg__gray text__black box__l text__center">제목</div>
-          <input id="titleVal" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+          <input id="titleVal" type="text" maxlength="30" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
         </div>
 
         <div class="post-sub one-line">
@@ -40,10 +40,10 @@
           <input type="text" id="writeDate" class="info-date bg__white text__black box__l" value="${currentDate}" readonly>
         </div>
 
-        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
+        <div class="info-content-div reason--title bg__gray text__black box__xl text__center">공지사항 내용</div>
 
         <div class="info-content bg__white text__black box__l">
-          <textarea id="contentVal" class="contentArea" placeholder="문의 내용을 입력하세요"></textarea>
+          <textarea id="contentVal" maxlength="1000" class="contentArea" placeholder="공지사항 내용을 입력하세요"></textarea>
         </div>
       </div>
     </main>

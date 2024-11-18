@@ -30,11 +30,11 @@
 
             <div class="one-line">
               <div class="info-title bg__gray text__black box__l text__center">제목</div>
-              <input id="titleVal" max="25" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
+              <input id="titleVal" maxlength="25" type="text" class="info-item bg__white text__black box__l" placeholder="제목을 입력하세요">
             </div>
             <div class="one-line">
               <div class="info-title bg__gray text__black box__l text__center">분류</div>
-              <input id="divisionVal" type="text" class="info-dv-item bg__white text__black box__l" placeholder="분류를 입력하세요">
+              <input id="divisionVal" maxlength="15" type="text" class="info-dv-item bg__white text__black box__l" placeholder="분류를 입력하세요">
             </div>
             </div>
 
@@ -53,7 +53,7 @@
           <div class="info-content-div reason--title bg__gray text__black box__xl text__center">문의 내용</div>
 
           <div class="info-content bg__white text__black box__l">
-            <textarea id="contentVal" class="contentArea" placeholder="문의 내용을 입력하세요"></textarea>
+            <textarea id="contentVal" class="contentArea" maxlength="1000" placeholder="문의 내용을 입력하세요"></textarea>
           </div>
         </div>
       </main>
