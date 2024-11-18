@@ -330,7 +330,8 @@ function terminationPageHtml(data) {
       <div class="card-delete-container">
         <div class="card-title text__center text__semibold">카드 해지 사유</div>
         <div id="terminationReasonForm"  class="termination-input" >
-          <textarea id="terminationReason" class="input__text" placeholder="해지 신청 사유를 작성한 후 해지 신청의 해지 버튼을 클릭해주세요"></textarea>
+          <textarea id="terminationReason" class="input__text" placeholder="해지 신청 사유를 작성한 후 해지 신청의 해지 버튼을 클릭해주세요"
+          maxlength="1000 "></textarea>
         </div>
       </div>
       <div class="benefit-container">

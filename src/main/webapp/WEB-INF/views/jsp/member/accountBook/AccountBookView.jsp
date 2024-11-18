@@ -84,7 +84,7 @@
 
             <div class="entry-container box__m">
               <div class="input-container text__center">
-                <input type="number" id="amount" placeholder="결제 금액" max="9999999999999" />
+                <input type="number" id="amount" placeholder="결제 금액" min="100" max="9999999999999" />
               </div>
             </div>
 
