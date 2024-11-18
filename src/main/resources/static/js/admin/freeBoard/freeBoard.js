@@ -48,7 +48,7 @@ function createDetailView(freeBoardVo, freeBoardCommentVoList, curPage, freeBoar
       ` : `
         <div class="comment-content one-line">
           ${comment.isModified === 1 ? '<span class="modified-indicator">[수정]</span>' : ''}
-          <input value="${comment.content}" readonly />
+          <div>${comment.content}</div>
         </div>
       `}
       <div class="comment-date">${formatDate(comment.creDate)}</div>
@@ -142,7 +142,23 @@ function createDetailView(freeBoardVo, freeBoardCommentVoList, curPage, freeBoar
           </div>
         </div>
         ${commentList}
-      </div>` : `<div class="hiddenDiv"></div>`}
+      </div>` : `
+      <div id="comment-list-container" class="comment-list-container bg__white">
+        <div class="bg__gray answer-title text__center text__semibold">댓글</div>
+        <div class="comment-add-container one-line">
+          <div class="input-container">
+            <textarea id="comment-textarea" class="comment-textarea" maxlength="600"></textarea>
+          </div>   
+          <div id="member-addBtn-container" class="btn-container one-line text__center">
+            <button id="addCommentBtn" class="btn btn__generate addCommentBtn text__center" 
+              data-free-board-no="${freeBoardVo.freeBoardNo}" data-cur-page="${curPage}" data-notice-board-no="${noticeBoardNo}" data-free-board-search="${freeBoardSearch}">
+              댓글 추가
+            </button>
+          </div>
+        </div>
+      </div>
+    `}
+    <div class="hiddenDiv"></div>
   `;
 
   $("#content").html(freeBoardDetail);
