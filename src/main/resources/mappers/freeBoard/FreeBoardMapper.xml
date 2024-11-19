@@ -50,7 +50,7 @@
                 </where>
                 <![CDATA[
                 ORDER BY
-                    FB.FREE_BOARD_NO DESC
+                    FB.CRE_DATE DESC
             ) I
             WHERE ROWNUM <= #{end}
         )
