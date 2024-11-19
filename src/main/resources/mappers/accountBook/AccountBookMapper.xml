@@ -343,6 +343,7 @@
           AND ab.MEMBER_NO = #{memberNo}
           AND ab.IS_DELETED = 'false'
         ]]>
+
     </select>
 
     <select id="getCardDetailForMypage" parameterType="map"  resultType="AccountBookVo">
@@ -353,6 +354,7 @@
                 JOIN SELLING_CARD SC ON  PB.SELLING_CARD_NO = SC.SELLING_CARD_NO
         <where> SC.MEMBER_NO = #{memberNo}
             AND AB.IS_DELETED = 'false'
+            AND PB.PAYBACK_AMOUNT >0
         <if test="categoryNo != null">
             AND AB.MINUS_CATEGORY_NO = #{categoryNo}
         </if>
