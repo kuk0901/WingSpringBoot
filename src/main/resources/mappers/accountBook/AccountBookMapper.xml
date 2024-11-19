@@ -343,6 +343,7 @@
           AND ab.MEMBER_NO = #{memberNo}
           AND ab.IS_DELETED = 'false'
         ]]>
+
     </select>
 
     <select id="getCardDetailForMypage" parameterType="map"  resultType="AccountBookVo">
