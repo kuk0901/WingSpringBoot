@@ -132,11 +132,11 @@ function createPlusUpdateView(plusCategories, plusCategoryVo) {
             </div>
           </div>
           
-          <div class="existing-categories bg">
+          <div class="existing-plusCategories bg">
             <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
             <div id="categoryList" class="category-container bg__white">
               <div id="categoryItems" class="text__center categoryItems one-line">
-                <div class="plus-category-container one-line">
+                <div class="category-container one-line">
                   <div class="category--title">플러스</div>
                   <div class="category-flex one-line">
                     ${plusCategoryNames}
@@ -213,7 +213,7 @@ function createMinusUpdateView(minusCategories, minusCategoryVo) {
             <input id="categoryName" name="categoryName" maxlength="20" value="${minusCategoryVo.categoryName}" class="info-item bg__white text__black box__l"/>
           </div>
           
-          <div class="existing-categories bg">
+          <div class="existing-minusCategories bg">
             <div class="bg__gray text__center text__semibold check-container">기존 카테고리</div>
             <div id="categoryList" class="category-container bg__white">
               <div id="categoryItems" class="text__center categoryItems one-line">
