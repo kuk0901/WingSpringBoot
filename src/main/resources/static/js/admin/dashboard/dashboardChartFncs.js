@@ -100,14 +100,14 @@ new Chart($totalCards, {
       },
       y: {
         min: 0,
-        max: 500,
+        max: 500, // 그래프 확인용 100
         ticks: {
           color: "#ffffff",
           font: {
             size: 16,
             weight: 700
           },
-          stepSize: 100,
+          stepSize: 100, // 그래프 확인용 25
           callback: function(value) {
             return value.toLocaleString();
           }
