@@ -633,6 +633,10 @@ footer .cs:hover {
   height: 70px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* nav site-title animation */
 nav .site-title-container .site-title {
   background: linear-gradient(to right, #ffffff 40%, #3c99f6 40%, #ffffff 60%);

@@ -109,6 +109,19 @@
   object-fit: contain;
 }
 
+.main-container .list-container.list-content.card-content.card_deactivate {
+  background-color: #f5f5f5;
+  opacity: 0.7;
+}
+
+.main-container .list-container.list-content.card-content.card_deactivate .card--img {
+  filter: grayscale(100%);
+}
+
+.main-container .list-container.list-content.card-content.card_deactivate .list--simple .btn-container .btn.btn__generate {
+  background-color: var(--color-white);
+}
+
 .main-container .list-container .list--simple {
   text-align: center;
   padding: 10px;
@@ -328,6 +341,13 @@
   margin-left: 23px;
 }
 
+.btn.btn__generate.open-card-btn[disabled],
+.btn.btn__generate.remove-card-btn[disabled]{
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+}
 
 /* flex-item size */
 .box__s {

@@ -17,7 +17,6 @@
     </resultMap>
 
     <sql id="search">
-        C.IS_DELETED = 'false'
         <if test="categoryName != null and categoryName != 'all'">
             AND CASE MC.CATEGORY_NAME
             WHEN '교통' THEN 'Traffic'
@@ -45,14 +44,15 @@
 
     <select id="cardSelectList" parameterType="map" resultMap="cardResultMap">
         SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
-            , REGISTER_DATE, CATEGORY_NAME
+            , REGISTER_DATE, IS_DELETED, CATEGORY_NAME
         FROM (
             SELECT CARD_NO, CARD_NAME, STORED_FILE_NAME, ORIGINAL_FILE_NAME
-            , REGISTER_DATE, CATEGORY_NAME
+            , REGISTER_DATE, IS_DELETED, CATEGORY_NAME
             , ROW_NUMBER() OVER (ORDER BY REGISTER_DATE DESC, CARD_NO DESC) AS RNUM
             FROM (
                 SELECT C.CARD_NO, C.CARD_NAME, C.STORED_FILE_NAME, C.ORIGINAL_FILE_NAME
                 , C.REGISTER_DATE
+                , C.IS_DELETED
                 , CASE MC.CATEGORY_NAME
                     WHEN '교통' THEN 'Traffic'
                     WHEN '쇼핑' THEN 'Shopping'
@@ -93,7 +93,12 @@
         FROM CARD C
                  JOIN MINUS_CATEGORY MC ON C.CATEGORY_NO = MC.CATEGORY_NO
         WHERE C.CARD_NO = #{cardNo}
-        AND IS_DELETED = 'false'
+    </select>
+
+    <select id="getCardById" parameterType="int" resultMap="cardResultMap">
+        SELECT CARD_NO, CARD_NAME, IS_DELETED
+        FROM CARD
+        WHERE CARD_NO = #{cardNo}
     </select>
 
     <select id="cardExist" parameterType="String" resultMap="cardResultMap">
@@ -108,16 +113,32 @@
         VALUES (CARD_NO_SEQ.NEXTVAL, #{cardName}, #{cardCompany}, #{categoryNo}, #{storedFileName}, #{originalFileName}, #{registerDate}, 'false')
     </insert>
 
-    <update id="markCardAsDeleted" parameterType="int">
+    <!-- 카드 비활성화  -->
+    <update id="markCardAsInactive" parameterType="int">
         UPDATE CARD
         SET IS_DELETED = 'true'
         WHERE CARD_NO = #{cardNo}
     </update>
 
-    <select id="checkCardDeletedStatus" parameterType="int" resultMap="cardResultMap">
+    <!-- 카드 활성화  -->
+    <update id="markCardAsActive" parameterType="int">
+        UPDATE CARD
+        SET IS_DELETED = 'false'
+        WHERE CARD_NO = #{cardNo}
+    </update>
+
+    <select id="checkCardDeletedStatus" parameterType="map" resultMap="cardResultMap">
         SELECT CARD_NO, CARD_NAME, CARD_COMPANY, IS_DELETED
         FROM CARD
-        WHERE CARD_NO = #{cardNo} AND IS_DELETED = 'true'
+        WHERE CARD_NO = #{cardNo}
+        <choose>
+            <when test="checkDeleted == Y">
+                AND IS_DELETED = 'true'
+            </when>
+            <when test="checkDeleted == N">
+                AND IS_DELETED = 'false'
+            </when>
+        </choose>
     </select>
 
     <select id="userShowCardSelectList" parameterType="map" resultMap="cardResultMap">

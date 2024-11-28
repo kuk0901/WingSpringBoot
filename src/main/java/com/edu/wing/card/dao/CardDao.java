@@ -9,10 +9,11 @@ public interface CardDao {
   List<CardVo> cardSelectList(Map<String, String> map);
   int cardSelectTotalCount(String categoryName);
   CardVo cardSelectOne(int cardNo);
+  CardVo getCardById(int cardNo);
   CardVo cardExist(String cardName);
   void cardInsert(Map<String, String> map);
-  void markCardAsDeleted(int cardNo);
-  CardVo checkCardDeletedStatus(int cardNo);
+  void markCardAsInactive(int cardNo);
+  void markCardAsActive(int cardNo);
   List<CardVo> userShowCardSelectList(Map<String, String> map);
   int userShowCardSelectTotalCount(String categoryName);
   CardVo getCardByName(String cardName);
