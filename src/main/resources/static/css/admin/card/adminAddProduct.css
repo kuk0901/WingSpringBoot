@@ -45,14 +45,31 @@ label {
 }
 
 #content .main-container .productAddForm .product-container.preview-container {
-  margin-bottom: 60px;
   align-items: flex-start;
 }
 
-#content .main-container .productAddForm .product-container.preview-container .img-container .exam-img {
-  display: block;
+#content .main-container .productAddForm .product-container.preview-container .img-container {
   width: 330px;
   height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #ccc;
+}
+
+#content .main-container .productAddForm .product-container.preview-container .img-container .exam-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#content .main-container .productAddForm .product-container.preview-container .img-container .exam-img.hidden {
+  display: none;
+}
+
+.preview-placeholder {
+  text-align: center;
+  color: #888;
 }
 
 #content .main-container .btn-container.one-line {

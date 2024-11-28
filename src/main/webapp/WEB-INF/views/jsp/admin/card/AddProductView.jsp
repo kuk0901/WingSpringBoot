@@ -74,8 +74,9 @@
 
         <div class="product-container one-line preview-container">
           <div class="bg__gray exam-title text__semibold text__center box-m">카드 이미지 미리보기</div>
-          <div class="img-container">
-            <img id="imagePreview" src="#" alt="preview" class="exam-img"/>
+          <div id="imgContainer" class="img-container">
+            <p id="previewPlaceholder" class="preview-placeholder">이미지를 선택하면 여기에 미리보기가 표시됩니다.</p>
+            <img id="imagePreview" src="#" alt="preview" class="exam-img hidden"/>
           </div>
         </div>
 

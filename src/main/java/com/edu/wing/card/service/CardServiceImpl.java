@@ -4,6 +4,7 @@ import com.edu.wing.card.dao.CardDao;
 import com.edu.wing.card.domain.CardVo;
 import com.edu.wing.cardBenefit.dao.CardBenefitDao;
 import com.edu.wing.cardBenefit.domain.CardBenefitVo;
+import com.edu.wing.util.CustomException;
 import com.edu.wing.util.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -90,12 +91,48 @@ public class CardServiceImpl implements CardService {
   }
 
   @Override
-  public boolean softDeleteCardAndVerify(int cardNo) {
-    cardDao.markCardAsDeleted(cardNo);
+  @Transactional
+  // 카드 비활성화
+  public boolean deactivateCard(int cardNo) throws CustomException {
+    CardVo cardToActivate = cardDao.getCardById(cardNo);
 
-    CardVo cardVo = cardDao.checkCardDeletedStatus(cardNo);
+    if (cardToActivate == null) {
+      throw new CustomException("카드를 찾을 수 없습니다.");
+    }
 
-    return cardVo != null;
+    cardDao.markCardAsInactive(cardNo);
+
+    return verifyCardStatus(cardNo, "true");
+  }
+
+  @Override
+  @Transactional
+  public boolean activateCard(int cardNo) throws CustomException {
+    CardVo cardToActivate = cardDao.getCardById(cardNo);
+    if (cardToActivate == null) {
+      throw new CustomException("카드를 찾을 수 없습니다.");
+    }
+
+    CardVo existingCard = cardDao.cardExist(cardToActivate.getCardName());
+    if (existingCard != null && existingCard.getCardNo() != cardNo) {
+      throw new CustomException("동일한 이름의 카드가 이미 활성화되어 있습니다.");
+    }
+
+    cardDao.markCardAsActive(cardNo);
+    return verifyCardStatus(cardNo, "false");
+  }
+
+  private boolean verifyCardStatus(int cardNo, String expectedStatus) {
+    CardVo cardVo = cardDao.getCardById(cardNo);
+    if (cardVo == null) {
+      throw new CustomException("카드를 찾을 수 없습니다.");
+    }
+
+    String actualStatus = cardVo.getIsDeleted();
+    if (actualStatus == null) {
+      throw new IllegalStateException("카드 상태를 확인할 수 없습니다.");
+    }
+    return expectedStatus.equalsIgnoreCase(actualStatus);
   }
 
   @Override
