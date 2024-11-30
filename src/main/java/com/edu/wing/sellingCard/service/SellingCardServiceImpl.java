@@ -6,6 +6,7 @@ import com.edu.wing.member.dao.MemberDao;
 import com.edu.wing.member.domain.MemberVo;
 import com.edu.wing.sellingCard.dao.SellingCardDao;
 import com.edu.wing.sellingCard.domain.SellingCardVo;
+import com.edu.wing.util.CardNumberGenerator;
 import com.edu.wing.util.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class SellingCardServiceImpl implements SellingCardService {
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put(STATUS, STATUS_FAIL);
 
+    sellingCardVo.setMemberCardNo(CardNumberGenerator.generateCardNumber());
     sellingCardDao.memberPurchaseCard(sellingCardVo);
 
     SellingCardVo checkSellingCardVo = sellingCardDao.memberPurchaseCardCheck(sellingCardVo);
@@ -154,6 +156,7 @@ public class SellingCardServiceImpl implements SellingCardService {
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put(STATUS, STATUS_FAIL);
 
+    sellingCardVo.setMemberCardNo(CardNumberGenerator.generateCardNumber());
 
     sellingCardDao.memberPurchaseRecommendedCard(sellingCardVo);
 

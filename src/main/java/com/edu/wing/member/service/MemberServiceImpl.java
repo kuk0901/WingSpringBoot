@@ -30,16 +30,18 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public MemberVo memberExist(String email, String pwd) {
 
-    String decodedPassword = CustomEncoding.decode(pwd);
+    String encodedPassword = CustomEncoding.encode(pwd);
+    log.info("member pwd: {}", pwd);
+    log.info("member encodedPassword: {}", encodedPassword);
 
-    return memberDao.memberExist(email, decodedPassword);
+    return memberDao.memberExist(email, encodedPassword);
   }
 
   @Override
   public boolean memberInsertOne(MemberVo memberVo) {
-    // 비밀번호 디코딩
-    String decodedPassword = CustomEncoding.decode(memberVo.getPwd());
-    memberVo.setPwd(decodedPassword); // 디코딩된 비밀번호를 설정
+    // 비밀번호 인코딩
+    String encodedPassword = CustomEncoding.encode(memberVo.getPwd());
+    memberVo.setPwd(encodedPassword); // 인코딩된 비밀번호를 설정
 
     memberDao.memberInsertOne(memberVo);
     MemberVo result = memberDao.memberSelectOne(memberVo.getEmail());
@@ -69,6 +71,9 @@ public class MemberServiceImpl implements MemberService {
 
     MemberVo memberVo
             =memberDao.selectMemberDetailForAdmin(memberNo);
+
+    memberVo.setPwd(CustomEncoding.decode(memberVo.getPwd()));
+
     resultMap.put("memberVo", memberVo);
 
     return resultMap;
@@ -81,12 +86,19 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public MemberVo getAdminMypageInfo(int memberNo) {
-    return memberDao.selectAdminMypageInfo(memberNo);
+    MemberVo memberVo = memberDao.selectAdminMypageInfo(memberNo);
+
+    memberVo.setPwd(CustomEncoding.decode(memberVo.getPwd()));
+
+    return memberVo;
   }
 
   @Override
   @Transactional
   public MemberVo updateMember(MemberVo memberVo) {
+    // 비밀번호 인코딩
+    memberVo.setPwd(CustomEncoding.encode(memberVo.getPwd()));
+
     // 업데이트
     memberDao.updateMember(memberVo);
 
@@ -103,13 +115,19 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public MemberVo getMyPageInfo(int memberNo) {
-    return memberDao.selectMyPageInfo(memberNo);
+    MemberVo memberVo = memberDao.selectMyPageInfo(memberNo);
+
+    memberVo.setPwd(CustomEncoding.decode(memberVo.getPwd()));
+
+    return memberVo;
   }
 
   @Override
   public MemberVo updateMemberInfo(MemberVo memberVo) {
     // 업데이트 전 회원 정보 조회
     MemberVo originalMemberVo = memberDao.selectUpdatedMemberInfo(memberVo.getMemberNo());
+    // 비밀번호 인코딩
+    memberVo.setPwd(CustomEncoding.encode(memberVo.getPwd()));
     // 업데이트
     memberDao.updateMemberInfo(memberVo);
     // 업데이트 후 회원 정보 조회
@@ -138,8 +156,8 @@ public class MemberServiceImpl implements MemberService {
 
   @Override
   public MemberVo findMemberAccount(Map<String, String> map) {
-    String decodedPassword = CustomEncoding.decode(map.get("pwd"));
-    map.put("pwd", decodedPassword); // 디코딩된 비밀번호를 설정
+    String encodedPassword = CustomEncoding.encode(map.get("pwd"));
+    map.put("pwd", encodedPassword); // 인코딩된 비밀번호를 설정
 
     return memberDao.findMemberAccount(map);
   }
@@ -152,8 +170,8 @@ public class MemberServiceImpl implements MemberService {
   @Override
   @Transactional
   public boolean changeMemberPasswordAndValidate(Map<String, String> map) {
-    String decodedPassword = CustomEncoding.decode(map.get("pwd"));
-    map.put("pwd", decodedPassword); // 디코딩된 비밀번호를 설정
+    String encodedPassword = CustomEncoding.encode(map.get("pwd"));
+    map.put("pwd", encodedPassword); // 인코딩된 비밀번호를 설정
 
     memberDao.updateMemberPassword(map);
 
