@@ -10,6 +10,8 @@
   <title>마이페이지 </title>
   <link rel="stylesheet" href="/css/member/card/memberProduct.css">
   <link rel="stylesheet" href="/css/member/user/userMyPage.css">
+
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script defer type="module" src="/js/member/user/userMyPage.js"></script>
   <script defer type="module" src="/js/member/card/AjaxRecommendedCardDetail.js"></script>
 </head>

@@ -4,7 +4,6 @@ import {
 } from '../util/validation.js';
 import { formatNumber, formatPhoneNumber, unformatNumber } from "../util/format.js";
 import { showAlertMsg } from "../util/toast.js";
-import { encodeCustom } from "../util/base62.js"
 
 const $form = $("#signupForm");
 const $email = $("#email");
@@ -148,9 +147,6 @@ $form.on("submit", function(e) {
       case "yearlySalary":
       case "monthlySalary":
         formData[item.name] = unformatNumber(item.value);
-        break;
-      case "pwd":
-        formData[item.name] = encodeCustom(item.value);
         break;
       default:
         formData[item.name] = item.value;

@@ -122,8 +122,9 @@
       </main>
     </div>
 
+    <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
   </section>
-  <jsp:include page="/WEB-INF/views/jsp/components/Footer.jsp"/>
+
 
   <input type="hidden" id="memberNo" value="${sessionScope.member.memberNo}" />
 </section>

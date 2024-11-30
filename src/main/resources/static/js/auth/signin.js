@@ -1,6 +1,5 @@
 import { checkAndShowStoredMessage, showAlertMsg } from "../util/toast.js";
 import { deleteCookie } from "../util/cookie.js";
-import { encodeCustom } from "../util/base62.js";
 
 const email = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)userEmail\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
 const alertMsg = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)alertMsg\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
@@ -48,13 +47,8 @@ $form.on("submit", function(e) {
 
   const formData = {};
   $(this).serializeArray().forEach(function(item) {
-    switch(item.name) {
-      case "pwd":
-        formData[item.name] = encodeCustom(item.value);
-        break;
-      default:
-        formData[item.name] = item.value;
-    }
+    formData[item.name] = item.value;
+
   });
 
   $.ajax({

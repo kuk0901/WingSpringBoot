@@ -73,7 +73,6 @@ public class AdminMemberApiController {
       MemberVo currentMember = (MemberVo) session.getAttribute("member");
 
       //이메일 검증로직 중복시응답
-
       if (!memberVo.getEmail().equals(currentMember.getEmail()) &&
           memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
 
@@ -83,18 +82,6 @@ public class AdminMemberApiController {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap); // 이메일 중복 응답
       }
-
-      //이메일 검증로직 중복시응답
-//      if (!memberVo.getEmail().equals(currentMember.getEmail())) {
-//        if (memberService.isEmailAlreadyRegistered(memberVo.getEmail())) {
-//
-//          resultMap.put("status", "failed");
-//          resultMap.put("email", memberVo.getEmail());
-//          resultMap.put(ALERT_MSG, "이미 존재하는 이메일입니다.");
-//
-//          return ResponseEntity.status(HttpStatus.CONFLICT).body(resultMap); // 이메일 중복 응답
-//        }
-//      }
 
       MemberVo updatedMemberVo = memberService.updateMember(memberVo);
 

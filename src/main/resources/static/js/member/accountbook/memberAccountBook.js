@@ -1,18 +1,20 @@
 import { formatPaymentAmountNumber, formatNumber, unformatNumber } from "../../util/format.js";
 import {checkAndShowStoredMessage, showAlertMsg} from "../../util/toast.js";
+
 checkAndShowStoredMessage();
+
 // accountBook.jsp의 js파일 유저용
 let memberNo;
 const today = new Date();
 let currentYear = today.getFullYear(); // 현재 연도
 let currentMonth = today.getMonth() + 1; // 현재 월
 let currentLimit = 5;
+
 $(document).ready(function() {
   memberNo = $('#memberNo').val(); // hidden input에서 memberNo 가져오기
   currentLimit = 5;
   // 초기 설정
   // 현재 날짜를 기준으로 연도와 월 설정
-
 
   // 가계부 목록을 가져오는 함수 호출+월간내역+
   const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
@@ -24,7 +26,7 @@ $(document).ready(function() {
   updateCurrentMonthDisplay(currentYear,currentMonth);
   loadCategories(); // 초기 카테고리 목록 로드
   loadPaymentMethods()//결제수단 목록 로드
-  fetchMonthlyPayback( startDate, endDate,memberNo)
+  fetchMonthlyPayback(startDate, endDate,memberNo)
 
   //가계부추가함수
   $('#accountBookForm').on('submit', function(event) {
@@ -37,7 +39,6 @@ $(document).ready(function() {
     const contents = $('#contents').val();
     const paymentMethod = $('#paymentMethodSelect').val();
     const amount = $('#amount').val();
-
 
     // 카테고리 번호에 따른 plusCategoryNo와 minusCategoryNo 설정
     let plusCategoryNo;
@@ -80,7 +81,6 @@ $(document).ready(function() {
       return; // AJAX 요청 중단
     }
 
-
     // AJAX 요청
     $.ajax({
       url: '/member/api/accountBook/add',
@@ -100,7 +100,7 @@ $(document).ready(function() {
         showAlertMsg(response.alertMsg)
         $('#accountBookForm')[0].reset(); // 폼 초기화
         const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
-        console.log(startDate, endDate);
+
         fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
         // 월 표시 업데이트 및 데이터 재로드
         updateCurrentMonthDisplay(currentYear, currentMonth);
@@ -124,7 +124,6 @@ function getCategoryNo(incomeExpense) {
 }
 
 // 초반디폴트  항목 수
-
 // 현재 연도와 월 표시를 업데이트하는 함수
 function updateCurrentMonthDisplay(year, month) {
   const monthDisplay = document.getElementById("currentMonth");
@@ -149,8 +148,7 @@ function getMonthlyAccountBooks(year, month, memberNo) {
 
     },
     error: function(err) {
-      console.error('Error fetching monthly count:', err);
-      console.log('Request Data:', { memberNo: memberNo, startDate: startDate, endDate: endDate }); // 요청 데이터 출력
+      showAlertMsg("가계부 내역을 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -181,8 +179,8 @@ function fetchAccountBooks(memberNo, startDate, endDate,currentLimit) {
       // 총합 계산 함수 호출
       calculateMonthlyTotal(memberNo, startDate, endDate); // 월 총합 계산
     },
-    error: function(error) {
-      console.error('Error fetching account books:', error);
+    error: function(xhr, status, error) {
+      showAlertMsg("가계부 내역을 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     },
 
   });
@@ -200,7 +198,7 @@ function changeMonth(offset) {
   }
 
   const { startDate, endDate } = getStartAndEndDates(currentYear, currentMonth);
-  console.log(startDate, endDate);
+
   fetchAccountBooks(memberNo, startDate, endDate,currentLimit); // 월별 가계부 내역 및 총합 계산 호출
   // 월 표시 업데이트 및 데이터 재로드
   updateCurrentMonthDisplay(currentYear, currentMonth);
@@ -276,7 +274,7 @@ function loadCategories() {
           // 지출 카테고리 저장
         },
         error: function(xhr, status, error) {
-          console.error("지출 카테고리 가져오기 실패:", error);
+          showAlertMsg("지출 카테고리를 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
         }
       }),
       $.ajax({
@@ -287,7 +285,7 @@ function loadCategories() {
           // 수입 카테고리 저장
         },
         error: function(xhr, status, error) {
-          console.error("수입 카테고리 가져오기 실패:", error);
+          showAlertMsg("수입 카테고리를 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
         }
       })
   ).then(function() {
@@ -352,7 +350,7 @@ function loadPaymentMethods() {
 
     },
     error: function(xhr, status, error) {
-      console.error("결제 수단 가져오기 실패:", error);
+      showAlertMsg("결제 수단을 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -384,8 +382,8 @@ function calculateMonthlyTotal(memberNo, startDate, endDate) {
       $('#totalIncome').text(`월 수입: ${formatPaymentAmountNumber(totalIncome)}원`);
       $('#totalExpense').text(`월 지출: ${formatPaymentAmountNumber(totalExpense)}원`);
     },
-    error: function(err) {
-      console.error('Error fetching monthly entries:', err);
+    error: function(xhr, status, error) {
+      showAlertMsg("월 수입, 지출의 전체 데이터를 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -415,9 +413,8 @@ $(document).on("click", ".entry-info", function(e) {
       renderAccountBookDetail(data);
       loadCategoriesForDetail(data);
     },
-    error: function(error) {
-      console.error('Error fetching account book detail:', error);
-      alert('상세 정보를 불러오는 데 실패했습니다.');
+    error: function(xhr, status, error) {
+      showAlertMsg("상세 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 });
@@ -432,14 +429,11 @@ function goToDetail(accountBookNo, memberNo) {
     },
     dataType: 'json',
     success: function(data) {
-      console.log(data)
       renderAccountBookDetail(data);
       loadCategoriesForDetail(data);
-
     },
-    error: function(error) {
-      console.error('Error fetching account book detail:', error);
-      alert('상세 정보를 불러오는 데 실패했습니다.');
+    error: function(xhr, status, error) {
+      showAlertMsg("상세 정보를 불러오는 데 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -533,8 +527,7 @@ function renderAccountBookDetail(accountBook) {
     updateAmountLabel(accountBook);
     loadPaymentMethodsForDetail(accountBook);
   } catch (error) {
-    console.error('Error loading payment methods:', error);
-    alert('결제 수단을 불러오는 데 실패했습니다.');
+    showAlertMsg("결제 수단을 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
   }
 }
 
@@ -576,7 +569,7 @@ function loadPaymentMethodsForDetail(accountBook) {
       });
     },
     error: function(xhr, status, error) {
-      console.error("결제 수단 가져오기 실패:", error);
+      showAlertMsg("결제 수단을 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   });
 }
@@ -610,7 +603,7 @@ function loadCategoriesForDetail(accountBook) {
         });
       },
       error: function(xhr, status, error) {
-        console.error("수입 카테고리 가져오기 실패:", error);
+        showAlertMsg("수입 카테고리를 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
       }
     });
   } else if (accountBook.plusCategoryNo === 1) {
@@ -637,7 +630,7 @@ function loadCategoriesForDetail(accountBook) {
         });
       },
       error: function(xhr, status, error) {
-        console.error("지출 카테고리 가져오기 실패:", error);
+        showAlertMsg("지출 카테고리를 불러오는 데에 실패했습니다. 잠시 후 다시 시도해 주세요.");
       }
     });
   } else {
@@ -650,7 +643,6 @@ $(document).on("blur", "#amountInput", function(e) {
   e.preventDefault();
   formatNumber(this);
 });
-
 
 function formatDate(dateString) {
   if (!dateString) return '내용 없음'; // 값이 없으면 기본 메시지 반환
@@ -668,16 +660,12 @@ function getStartAndEndDates(year, month) {
   // 시작 날짜 (YYYY-MM-DD 형식)
   const startDate = `${year}-${month < 10 ? '0' + month : month}-01`;
 
-  // 각 월의 마지막 날을 하드코딩
-  const lastDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,31]; // 인덱스 0은 사용하지 않음 (1월부터 12월까지)
-
+  // 종료 날짜는 다음 달의 첫 번째 날로 설정
   let endDate;
-  if (month === 2) {
-    // 윤년 판단: 4로 나눠지면서 100으로 나눠지지 않거나 400으로 나눠질 때 윤년
-    const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-    endDate = `${year}-${month < 10 ? '0' + month : month}-${isLeapYear ? '29' : '28'}`; // 2월의 마지막 날
+  if (month === 12) {
+    endDate = `${year + 1}-01-01`; // 12월인 경우 다음 해 1월 1일
   } else {
-    endDate = `${year}-${month < 10 ? '0' + month : month}-${lastDays[month]}`; // 해당 월의 마지막 날
+    endDate = `${year}-${(month + 1) < 10 ? '0' + (month + 1) : (month + 1)}-01`; // 다음 달 첫째 날
   }
 
   return { startDate, endDate };
@@ -704,8 +692,6 @@ function fetchMonthlyExpenseBooks(memberNo, startDate, endDate) {
     },
     dataType: 'json',
     success: function(data) {
-      console.log("Received monthly expense data:", data);
-
       // 월별 지출 데이터가 없을 경우 메시지 출력
       if (data.length === 0) {
         $('.entry-list').html('<div class="no-data-message text__semibold text__center">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
@@ -713,10 +699,9 @@ function fetchMonthlyExpenseBooks(memberNo, startDate, endDate) {
       }
 
       renderAccountBooks(data); // 월별 지출 데이터를 렌더링하는 함수 호출
-
     },
-    error: function(error) {
-      console.error('Error fetching monthly expense books:', error);
+    error: function(xhr, status, error) {
+      showAlertMsg("월별 지출 내역 조회에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     },
   });
 }
@@ -742,8 +727,6 @@ function fetchMonthlyIncomeBooks(memberNo, startDate, endDate) {
     },
     dataType: 'json',
     success: function(data) {
-      console.log("Received monthly expense data:", data);
-
       // 월별 지출 데이터가 없을 경우 메시지 출력
       if (data.length === 0) {
         $('.entry-list').html('<div class="no-data-message">등록된 지출 내역이 없습니다.</div>'); // 지출 내역이 없음을 알리는 메시지
@@ -753,13 +736,11 @@ function fetchMonthlyIncomeBooks(memberNo, startDate, endDate) {
       renderAccountBooks(data); // 월별 지출 데이터를 렌더링하는 함수 호출
 
     },
-    error: function(error) {
-      console.error('Error fetching monthly expense books:', error);
+    error: function(xhr, status, error) {
+      showAlertMsg("월별 지출 내역 조회에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     },
   });
 }
-
-
 
 $(document).on("click", "#editBtn", function(e) {
   e.preventDefault();
@@ -775,10 +756,8 @@ $(document).on("click", "#editBtn", function(e) {
   const dateValue = $("#dateInput").val();
   const paybackNo = $("#paybackNoHidden").val();
   const sellingCardNo =$("#sellingCardNoHidden").val();
- /* const formattedDate = new Date(dateValue).toLocaleDateString("en-CA").split('T')[0];*/
   const localDate = new Date(dateValue);  // Date 객체로 변환
   const formattedDate = localDate.toLocaleDateString("en-CA"); // 'YYYY-MM-DD' 형식으로 포맷
-  console.log(formattedDate); // 2024-11-01 (로컬 타임존에 맞춰 표시)
   let plusCategoryNo = 1;
   let minusCategoryNo = 1;
   const selectedCategoryValue = parseInt(categorySelect.val(), 10);
@@ -786,7 +765,6 @@ $(document).on("click", "#editBtn", function(e) {
   // 선택된 카테고리의 data-category 값에 따라 분기
   const selectedCategoryData = categorySelect.find("option:selected").data("category");
 
-  console.log(formattedDate);
 
 // 카테고리 선택에 따른 조건 분기
   if (selectedCategoryData === "income") {
@@ -810,26 +788,20 @@ $(document).on("click", "#editBtn", function(e) {
     sellingCardNo:sellingCardNo
   };
 
-
-
   $.ajax({
     url: `/member/api/accountBook/update`,
     type: 'PUT',
     contentType: 'application/json',
     data: JSON.stringify(updatedData),
     success: function(res) {
-      console.log(res);
+
       goToDetail(accountBookNo, memberNo);
       const message = encodeURIComponent(res.alertMsg || "가계부 수정에 성공했습니다");
       window.location.href = `/member/accountBook/list?message=${message}`; // 카테고리 목록 페이지로 이동
     },
     error: function(xhr, status, error) {
-      console.error('가계부 수정 실패:', error);
+      showAlertMsg("가계부 항목 수정에 실패하였습니다. 잠시 후 다시 시도해 주세요.");
     }
-
-
-
-
 
   });
 });
@@ -848,9 +820,8 @@ $(document).on("click", "#deleteBtn", function(e) {
         window.location.href = "./list?message=" + encodeURIComponent(response.alertMsg);
 
       },
-      error: function(error) {
-        console.error("가계부 항목 삭제 실패:", error);
-        alert('가계부 항목 삭제에 실패했습니다.');
+      error: function(xhr, status, error) {
+        showAlertMsg("가계부 항목 삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.");
       }
     });
   }
@@ -879,8 +850,7 @@ function fetchMonthlyPayback(startDate, endDate, memberNo) {
       $('#payBackIncome').text('다음달 페이백 금액: ' + formatPaymentAmountNumber(totalPaybackAmount) + ' 원');
     },
     error: function(xhr, status, error) {
-      console.log("에러 발생: " + error);
-      $('#payBackIncome').text('페이백예정 금액: 오류');
+      $('#payBackIncome').text('페이백 예정 금액: 오류');
     }
   });
 }

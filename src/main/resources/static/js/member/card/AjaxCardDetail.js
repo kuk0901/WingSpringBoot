@@ -1,8 +1,10 @@
 import { showAlertMsg } from "../../util/toast.js";
 import { playScroll, stopScroll } from "./cardApplicationWindow.js";
-import { generateCardNumber } from "../../util/createCardNum.js";
+import { execDaumPostcode, initLayerPosition } from "../../util/addressApi.js";
 
 let tosData, cautionData;
+window.execDaumPostcode = execDaumPostcode;
+window.initLayerPosition = initLayerPosition;
 
 $.getJSON('/js/data/termsOfService.json', function(data) {
   tosData = data;
@@ -31,7 +33,6 @@ $('.detail-card-btn').click(function() {
     }
   });
 });
-
 
 function createDetailView(data) {
   const cardVo = data.cardVo
@@ -132,7 +133,7 @@ function createDetailView(data) {
 
   const purchaseEls  = `
     <section class="purchase-line">
-      <main class="main-container card-list-container">
+      <main class="main-container card-list-container one-line">
         <form id="purchaseCardForm">
           <div class="exist-container">
             <img id="existBtn" src="/img/close.svg" alt="X"/>
@@ -165,12 +166,22 @@ function createDetailView(data) {
               </div>
             </div>
       
-            <div class="purchaseCard-container one-line bg__gray">
+            <div class="purchaseCard-container one-line bg__gray address-container">
               <div class="label-container text__center text__semibold">
                 <label for="address">주소</label>
               </div>
-              <div class="input-container bg__gray">
-                <input id="address" name="address" class="bg__gray" required placeholder="도로명 주소를 기입해 주세요." maxlength="100" />
+              <div class="input-container bg__gray address-inputs">
+                <div class="one-line address-input">
+                  <input type="text" id="postcode" placeholder="우편번호">
+                  <input type="button" onclick="(() => execDaumPostcode())()" value="우편번호 찾기">
+                </div>
+                <div class="address-input">
+                  <input type="text" id="address" placeholder="주소">
+                </div>
+                <div class="one-line address-input">
+                  <input type="text" id="detailAddress" placeholder="상세주소">
+                  <input type="text" id="extraAddress" placeholder="참고항목">
+                </div>
               </div>
             </div>
       
@@ -204,6 +215,12 @@ function createDetailView(data) {
               </div>
             </div>
           </form>
+          
+          <div class="daum-postcode--modal">
+            <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+              <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" alt="닫기 버튼">
+            </div>
+          </div>
         </main>
       </section>
     `
@@ -211,16 +228,6 @@ function createDetailView(data) {
   $("body").append(purchaseEls);
 
   $("#content").html(cardDetail).addClass("bg__white");
-
-  $("#address").on("input", function (e) {
-    requestAnimationFrame(() => {
-      let val = $(this).val();
-      let newVal = val.replace(/[^가-힣0-9\s-]/g, "");
-      if (val !== newVal) {
-        $(this).val(newVal);
-      }
-    });
-  });
 
   $("#accountNumber").on("input", function (e) {
     let val = $(this).val();
@@ -230,6 +237,10 @@ function createDetailView(data) {
       $(this).val(newVal);
     }
   });
+
+  $("#btnCloseLayer").click(function () {
+    $("#layer").hide();
+  })
 
   $("#cardApplicationWindowBtn").click(function(e) {
     e.preventDefault();
@@ -257,7 +268,6 @@ function createDetailView(data) {
     const sellingCardData = {
       cardNo: cn,
       memberNo: mn,
-      memberCardNo: generateCardNumber()
     }
 
     const accountBookData = {
@@ -288,20 +298,4 @@ function createDetailView(data) {
     })
   })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
