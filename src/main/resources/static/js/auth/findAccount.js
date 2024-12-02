@@ -1,6 +1,6 @@
 import { formatPhoneNumber } from "../util/format.js";
 import { setupCustomValidityMessages } from "../util/validation.js";
-import { encodeCustom } from "../util/base62.js";
+
 
 const $form = $("#findAccountForm");
 
@@ -22,13 +22,7 @@ $form.on("submit", function(e) {
 
   const formData = {};
   $(this).serializeArray().forEach(function(item) {
-    switch(item.name) {
-      case "pwd":
-        formData[item.name] = encodeCustom(item.value);
-        break;
-      default:
-        formData[item.name] = item.value;
-    }
+    formData[item.name] = item.value;
   });
 
   $.ajax({

@@ -6,6 +6,7 @@ import com.edu.wing.cardBenefit.domain.CardBenefitVo;
 import com.edu.wing.cardBenefit.service.CardBenefitService;
 import com.edu.wing.sellingCard.service.SellingCardService;
 import com.edu.wing.util.CardBenefitUtil;
+import com.edu.wing.util.CustomException;
 import com.google.gson.JsonSyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,29 +100,64 @@ public class AdminApiCardController {
     }
   }
 
-  @DeleteMapping("/card/delete/{cardNo}")
-  public ResponseEntity<?> deleteCardAndBenefits(@PathVariable int cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
+  @PutMapping("/card/deactivate/{cardNo}")
+  public ResponseEntity<?> deactivateCardAndBenefits(@PathVariable int cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
     Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("curPage", curPage);
     resultMap.put("categoryName", categoryName);
 
-    int countActiveSellingCardsByCardNo = sellingCardService.countActiveSellingCardsByCardNo(cardNo);
+    try {
+      int countActiveSellingCardsByCardNo = sellingCardService.countActiveSellingCardsByCardNo(cardNo);
 
-    if (countActiveSellingCardsByCardNo > 0) {
+      if (countActiveSellingCardsByCardNo > 0) {
+        resultMap.put(STATUS, STATUS_FAIL);
+        resultMap.put(ALERT_MSG, "현재 해당 카드가 " + countActiveSellingCardsByCardNo + "개 사용되고 있으므로 비활성화할 수 없습니다.");
+        return ResponseEntity.badRequest().body(resultMap);
+      }
+
+      if (!cardService.deactivateCard(cardNo)) {
+        throw new Exception("카드 비활성화에 실패했습니다.");
+      }
+
+      resultMap.put(STATUS, STATUS_SUCCESS);
+      resultMap.put(ALERT_MSG, "카드가 비활성화 되었습니다. 해당 카드는 판매되지 않으니 유의하시길 바랍니다.");
+
+    } catch (CustomException e) {
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, e.getMessage());
+      return ResponseEntity.badRequest().body(resultMap);
+    } catch (Exception e) {
       resultMap.put(STATUS, STATUS_FAIL);
-      resultMap.put(ALERT_MSG, "현재 해당 카드가 " + countActiveSellingCardsByCardNo + "개 사용되고 있으므로 삭제할 수 없습니다.");
+      resultMap.put(ALERT_MSG, "카드 비활성화 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
       return ResponseEntity.internalServerError().body(resultMap);
     }
 
-    if (cardService.softDeleteCardAndVerify(cardNo)) {
-      resultMap.put(STATUS, STATUS_SUCCESS);
-      resultMap.put(ALERT_MSG, "요청하신 카드가 성공적으로 삭제되었습니다.");
+    return ResponseEntity.ok().body(resultMap);
+  }
 
-      return ResponseEntity.ok().body(resultMap);
+  @PutMapping("/card/activate/{cardNo}")
+  public ResponseEntity<?> activateCardAndBenefits(@PathVariable int cardNo, @RequestParam(defaultValue = "1") int curPage, @RequestParam(defaultValue = "all") String categoryName) {
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("curPage", curPage);
+    resultMap.put("categoryName", categoryName);
+
+    try {
+      if (!cardService.activateCard(cardNo)) {
+        throw new Exception("카드 활성화에 실패했습니다.");
+      }
+
+      resultMap.put(STATUS, STATUS_SUCCESS);
+      resultMap.put(ALERT_MSG, "카드가 활성화 되었습니다. 해당 카드는 회원이 구매할 수 있습니다.");
+    } catch (CustomException e) {
+      resultMap.put(STATUS, STATUS_ERROR);
+      resultMap.put(ALERT_MSG, e.getMessage());
+      return ResponseEntity.badRequest().body(resultMap);
+    } catch (Exception e) {
+      resultMap.put(STATUS, STATUS_FAIL);
+      resultMap.put(ALERT_MSG, "카드 활성화 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      return ResponseEntity.internalServerError().body(resultMap);
     }
 
-    resultMap.put(STATUS, STATUS_FAIL);
-    resultMap.put(ALERT_MSG, "카드 삭제 중 서버에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-    return ResponseEntity.internalServerError().body(resultMap);
+    return ResponseEntity.ok().body(resultMap);
   }
 }

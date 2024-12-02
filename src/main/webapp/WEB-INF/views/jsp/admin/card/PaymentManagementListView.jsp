@@ -8,7 +8,7 @@
   <title>paymentManagementList</title>
   <link rel="stylesheet" href="/css/admin/card/adminProductManagement.css" />
   <script defer type="module" src="/js/admin/card/AjaxCardDetail.js"></script>
-  <script defer type="module" src="/js/admin/card/AjaxCardDelete.js"></script>
+  <script defer type="module" src="/js/admin/card/AjaxCardStatusChange.js"></script>
 </head>
 <body>
 
@@ -66,7 +66,7 @@
       <c:choose>
         <c:when test="${not empty cardList}">
           <c:forEach items="${cardList}" var="card" >
-            <div class="list-container list-content card-content h__m">
+            <div class="list-container list-content card-content h__m ${card.isDeleted eq 'true' ? 'card_deactivate' : ''}">
               <div class="list--simple box__l">
                 <div class="text__center text__semibold card--name">${card.cardName}</div>
                 <div class="img-container">
@@ -112,7 +112,18 @@
 
               <div class="list--simple box__sm">
                 <div class="btn-container">
-                  <button class="btn btn__generate remove-card-btn btn__p" data-card-no="${card.cardNo}">삭제</button>
+                  <div class="card-status-toggle">
+                    <c:choose>
+                      <c:when test="${card.isDeleted eq 'false'}">
+                        <button class="btn btn__generate open-card-btn btn__p" data-card-no="${card.cardNo}" disabled>활성화</button>
+                        <button class="btn btn__generate remove-card-btn btn__p" data-card-no="${card.cardNo}" >비활성화</button>
+                      </c:when>
+                      <c:when test="${card.isDeleted eq 'true'}">
+                        <button class="btn btn__generate open-card-btn btn__p" data-card-no="${card.cardNo}" >활성화</button>
+                        <button class="btn btn__generate remove-card-btn btn__p" data-card-no="${card.cardNo}" disabled>비활성화</button>
+                      </c:when>
+                    </c:choose>
+                  </div>
                   <button class="btn btn__generate detail-card-btn btn__p" data-card-no="${card.cardNo}">상세보기</button>
                 </div>
               </div>

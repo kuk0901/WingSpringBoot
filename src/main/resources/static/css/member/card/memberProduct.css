@@ -366,6 +366,10 @@
   margin: 20px auto;
 }
 
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container.address-container {
+  height: 120px;
+}
+
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container:last-child {
   margin-bottom: 0;
 }
@@ -373,6 +377,11 @@
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container,
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container {
   line-height: 30px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container.address-inputs {
+  width: 400px;
+  height: auto;
 }
 
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container {
@@ -383,6 +392,15 @@
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label,
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container input {
   display: inline-block;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container.address-inputs .address-input {
+  gap: 5px;
+  margin: 5px;
+}
+
+.fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .input-container.address-inputs .address-input #address {
+  width: 380px;
 }
 
 .fixed .purchase-line .card-list-container #purchaseCardForm .purchaseCard-container .label-container label {

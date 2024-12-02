@@ -12,7 +12,8 @@ public interface CardService {
   CardVo cardSelectOne(int cardNo);
   boolean cardExist(String cardName);
   int insertCardAndBenefits(Map<String, String> formData, MultipartFile file, String benefitsJson);
-  boolean softDeleteCardAndVerify(int cardNo);
+  boolean deactivateCard(int cardNo);
+  boolean activateCard(int cardNo);
   List<CardVo> userShowCardSelectList(int start, int end, String categoryName);
   int userShowCardSelectTotalCount(String categoryName);
   CardVo getCardByName(String cardName);

@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="/css/member/card/memberProduct.css" />
   <script defer type="module" src="/js/member/card/AjaxCardDetail.js"></script>
 
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
   <%-- purchase card --%>
   <script defer type="module" src="/js/member/card/cardApplicationWindow.js"></script>
 </head>
